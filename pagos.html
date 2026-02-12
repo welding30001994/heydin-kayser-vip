@@ -1,0 +1,1579 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Heydin Kayser • Programas Elite</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES NEÓN ELITE ===== */
+        :root {
+            --primary: #00ffff;
+            --primary-glow: rgba(0, 255, 255, 0.8);
+            --secondary: #ff00d4;
+            --secondary-glow: rgba(255, 0, 212, 0.7);
+            --accent: #7700ff;
+            --accent-glow: rgba(119, 0, 255, 0.6);
+            --dark: #0a0c12;
+            --darker: #05070a;
+            --card-bg: rgba(12, 16, 22, 0.85);
+            --text-light: #e2f3ff;
+            --text-secondary: #b0b0ff;
+            --glow: 0 0 25px rgba(0, 247, 255, 0.6);
+            --sell-color: #ff2b7a;
+            --sell-glow: rgba(255, 43, 122, 0.7);
+            --transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Rajdhani', 'Syne', sans-serif;
+            background: radial-gradient(circle at 20% 20%, #0b0e14, #030507);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ===== FONDOS ===== */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,255,255,0.02) 0px, rgba(0,0,0,0.2) 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: min(30px, 4vw) min(30px, 4vw);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        /* ===== LOADER RESPONSIVE ===== */
+        .loader-container {
+            position: fixed;
+            inset: 0;
+            background: #010101;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .loader-container.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            color: #fff;
+            text-shadow: 0 0 20px cyan, 0 0 50px #ff00d4, 0 0 80px #7700ff;
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+        }
+
+        .loader-logo i {
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            color: cyan;
+            filter: drop-shadow(0 0 15px cyan);
+        }
+
+        .loader {
+            width: min(300px, 80%);
+            height: 5px;
+            background: rgba(0,255,255,0.1);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .loader::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, cyan, #ff00d4, cyan, transparent);
+            animation: loadingScan 2.4s infinite linear;
+        }
+
+        @keyframes loadingScan {
+            0% { transform: translateX(-150%); }
+            100% { transform: translateX(80%); }
+        }
+
+        .loader-text {
+            margin-top: 30px;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px cyan, 0 0 20px #ff00d4;
+            letter-spacing: 4px;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .loader-dot {
+            width: clamp(12px, 3vw, 16px);
+            height: clamp(12px, 3vw, 16px);
+            border-radius: 50%;
+            background: cyan;
+            box-shadow: 0 0 20px cyan, 0 0 40px #ff00d4;
+            animation: dotWave 1.6s infinite ease-in-out alternate;
+        }
+
+        .loader-dot:nth-child(2) { animation-delay: 0.4s; background: #ff00d4; }
+        .loader-dot:nth-child(3) { animation-delay: 0.8s; background: #7700ff; }
+
+        @keyframes dotWave {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 1; }
+        }
+
+        /* ===== CONTENEDOR RESPONSIVE ===== */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (min-width: 640px) {
+            .container { padding: 0 30px; }
+        }
+
+        /* ===== HEADER RESPONSIVE ===== */
+        header {
+            background: rgba(3, 6, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 5px 30px rgba(0,255,255,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.8rem 0;
+            width: 100%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: clamp(1.4rem, 6vw, 2.2rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-shadow: 0 0 15px cyan, 0 0 30px #ff00d4;
+            letter-spacing: 2px;
+        }
+
+        .logo i {
+            font-size: clamp(1.6rem, 7vw, 2.8rem);
+            color: cyan;
+            filter: drop-shadow(0 0 10px cyan);
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                gap: 30px;
+            }
+            
+            .nav-links a {
+                color: #e0f0ff;
+                text-decoration: none;
+                font-weight: 700;
+                font-size: 1rem;
+                letter-spacing: 2px;
+                padding: 8px 0;
+                position: relative;
+                transition: 0.2s;
+                text-transform: uppercase;
+            }
+            
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background: linear-gradient(90deg, cyan, #ff00d4);
+                box-shadow: 0 0 15px cyan;
+                transition: 0.4s;
+            }
+            
+            .nav-links a:hover {
+                color: cyan;
+                text-shadow: 0 0 10px cyan;
+            }
+            
+            .nav-links a:hover::after {
+                width: 100%;
+            }
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-buttons button {
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 480px) {
+            .auth-buttons button {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1.5px solid cyan !important;
+            color: cyan;
+        }
+
+        .login-btn:hover {
+            background: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .register-btn {
+            background: linear-gradient(145deg, #00e0ff, #0088ff);
+            color: black;
+            font-weight: 900;
+            border: 1.5px solid #00ffff;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            color: white;
+            border-color: white;
+            box-shadow: 0 0 40px #ff00d4;
+        }
+
+        .register-btn:active, .login-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ===== CYBER GLITCH ===== */
+        .cyber-glitch {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 9999;
+            opacity: 0.03;
+            background: 
+                linear-gradient(0deg, transparent 48%, var(--primary) 49%, var(--primary) 51%, transparent 52%),
+                linear-gradient(90deg, transparent 48%, var(--sell-color) 49%, var(--sell-color) 51%, transparent 52%);
+            background-size: 10px 10px;
+            animation: glitch 0.1s infinite;
+        }
+
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+
+        /* ===== HERO HEADER ===== */
+        .hero-header {
+            text-align: center;
+            padding: 2.5rem 0 1.5rem;
+        }
+
+        .hero-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-icon {
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            letter-spacing: 3px;
+        }
+
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            margin-bottom: 0.8rem;
+            font-style: italic;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .hero-description {
+            font-size: clamp(1rem, 4vw, 1.2rem);
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            color: rgba(224, 224, 255, 0.8);
+            line-height: 1.8;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 1rem 2.5rem;
+            background: linear-gradient(45deg, var(--secondary), var(--primary));
+            color: black;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid rgba(255, 255, 255, 0.5);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s, box-shadow 0.3s;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            letter-spacing: 2px;
+            font-size: 1.1rem;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.8);
+        }
+
+        .cta-button::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 255, 255, 0) 45%,
+                rgba(255, 255, 255, 0.3) 50%,
+                rgba(255, 255, 255, 0) 55%
+            );
+            transform: rotate(30deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) rotate(30deg); }
+            100% { transform: translateX(100%) rotate(30deg); }
+        }
+
+        /* ===== COURSES SECTION ===== */
+        .courses-section {
+            padding: 3rem 0 4rem;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 7vw, 2.8rem);
+            font-weight: 900;
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            letter-spacing: 3px;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* ===== COURSES GRID RESPONSIVE ===== */
+        .courses-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.8rem;
+        }
+
+        @media (min-width: 480px) {
+            .courses-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.8rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .courses-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        @media (min-width: 1280px) {
+            .courses-grid {
+                grid-template-columns: repeat(3, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* ===== COURSE CARD ===== */
+        .course-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 2rem 1.5rem;
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .course-card {
+                padding: 2.2rem;
+            }
+        }
+
+        .course-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 400%;
+            z-index: -1;
+            animation: borderGlow 6s linear infinite;
+            border-radius: 32px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .course-card:hover {
+            transform: translateY(-8px);
+            border-color: transparent;
+        }
+
+        .course-card:hover::before {
+            opacity: 0.7;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0 0; }
+            50% { background-position: 300% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .course-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.4rem, 5vw, 1.8rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary);
+            letter-spacing: 1px;
+        }
+
+        .course-card .price {
+            font-size: clamp(1.8rem, 6vw, 2.2rem);
+            font-weight: 900;
+            margin-bottom: 1rem;
+            color: white;
+            font-family: 'Syne', sans-serif;
+            text-shadow: 0 0 10px var(--primary);
+            background: rgba(0, 255, 255, 0.1);
+            padding: 0.5rem 1rem;
+            border-radius: 15px;
+            display: inline-block;
+            border: 1px solid var(--primary);
+        }
+
+        .course-card .price::before {
+            content: '$';
+            color: var(--secondary);
+            margin-right: 2px;
+        }
+
+        .course-card .payment-options {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 1rem;
+            border-radius: 15px;
+            margin-bottom: 1.2rem;
+            border-left: 4px solid var(--secondary);
+            border: 1px solid rgba(255, 0, 212, 0.3);
+        }
+
+        .course-card .payment-options p {
+            font-size: 0.95rem;
+            margin-bottom: 0.4rem;
+            color: var(--text-light);
+        }
+
+        .course-card .payment-options strong {
+            color: var(--primary);
+        }
+
+        .course-card .info-item {
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            font-size: 0.95rem;
+        }
+
+        .course-card .info-item::before {
+            content: '▹';
+            color: var(--secondary);
+            margin-right: 0.8rem;
+            font-size: 1rem;
+            text-shadow: 0 0 8px var(--secondary);
+        }
+
+        .course-card .buy-button {
+            display: inline-block;
+            padding: 0.9rem 1.5rem;
+            background: transparent;
+            color: var(--primary);
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            text-decoration: none;
+            border-radius: 50px;
+            border: 2px solid var(--primary);
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+            text-align: center;
+            width: 100%;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .course-card .buy-button:hover {
+            background: var(--primary);
+            color: black;
+            box-shadow: 0 0 20px var(--primary);
+            border-color: white;
+        }
+
+        .course-card .buy-button:active {
+            transform: scale(0.96);
+        }
+
+        /* ===== FLOATING SHAPES ===== */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .shape {
+            position: absolute;
+            opacity: 0.08;
+            border-radius: 50%;
+            filter: blur(60px);
+        }
+
+        .shape-1 {
+            width: 300px;
+            height: 300px;
+            background: var(--primary);
+            top: -100px;
+            left: -100px;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .shape-2 {
+            width: 400px;
+            height: 400px;
+            background: var(--secondary);
+            bottom: -150px;
+            right: -100px;
+            animation: float 25s infinite ease-in-out reverse;
+        }
+
+        .shape-3 {
+            width: 250px;
+            height: 250px;
+            background: var(--accent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: float 18s infinite ease-in-out;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(50px, 50px) rotate(5deg); }
+            50% { transform: translate(0, 100px) rotate(0deg); }
+            75% { transform: translate(-50px, 50px) rotate(-5deg); }
+        }
+
+        /* ===== MODAL PAGO ===== */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 16, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(15px);
+            padding: 20px;
+        }
+
+        .payment-content {
+            background: var(--darker);
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            padding: 2rem;
+            max-width: 600px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.4);
+            animation: modalGlitch 0.4s;
+        }
+
+        @media (min-width: 480px) {
+            .payment-content {
+                padding: 2.5rem;
+            }
+        }
+
+        @keyframes modalGlitch {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .payment-content h2 {
+            font-family: 'Syne', sans-serif;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: clamp(1.6rem, 6vw, 2rem);
+            text-shadow: 0 0 15px var(--primary);
+            letter-spacing: 2px;
+        }
+
+        .payment-content .close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.5rem;
+            color: var(--text-light);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+            line-height: 1;
+        }
+
+        .payment-content .close:hover {
+            color: var(--secondary);
+            transform: rotate(180deg);
+        }
+
+        .cyber-line {
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            margin: 1rem 0;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        .bank-info {
+            margin-bottom: 2rem;
+        }
+
+        .bank-info p {
+            margin-bottom: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            padding: 0.5rem;
+            background: rgba(0, 255, 255, 0.03);
+            border-radius: 10px;
+        }
+
+        .bank-info p strong {
+            min-width: 150px;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .qr-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 20px;
+            border: 2px dashed var(--primary);
+        }
+
+        .qr-container p {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        .qr-placeholder {
+            width: 200px;
+            height: 200px;
+            background: rgba(0, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            margin: 0 auto;
+            border-radius: 20px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+        }
+
+        .qr-placeholder i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            text-shadow: 0 0 20px var(--primary);
+        }
+
+        .qr-placeholder span {
+            color: var(--primary);
+            font-family: 'Syne', sans-serif;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .instructions {
+            font-size: 0.9rem;
+            color: rgba(224, 224, 255, 0.8);
+            text-align: center;
+            margin-top: 1.5rem;
+            line-height: 1.8;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border-radius: 15px;
+        }
+
+        .instructions strong {
+            color: var(--secondary);
+        }
+
+        /* ===== MODAL TÉRMINOS ===== */
+        .terms-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(5, 5, 16, 0.97);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            backdrop-filter: blur(15px);
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .terms-content {
+            background: var(--darker);
+            border: 2px solid var(--accent);
+            border-radius: 30px;
+            padding: 2rem;
+            max-width: 800px;
+            width: 100%;
+            position: relative;
+            box-shadow: 0 0 50px rgba(119, 0, 255, 0.4);
+            animation: modalGlitch 0.4s;
+            max-height: 90vh;
+            overflow-y: auto;
+        }
+
+        .terms-content h2 {
+            font-family: 'Syne', sans-serif;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: clamp(1.6rem, 6vw, 2rem);
+            text-shadow: 0 0 15px var(--accent);
+            letter-spacing: 2px;
+        }
+
+        .terms-content h3 {
+            color: var(--primary);
+            margin: 1.5rem 0 0.8rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+        }
+
+        .terms-content p {
+            margin-bottom: 1rem;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-secondary);
+        }
+
+        .terms-content ul {
+            padding-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .terms-content li {
+            margin-bottom: 0.6rem;
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+        }
+
+        .terms-content .close {
+            position: absolute;
+            top: 1.2rem;
+            right: 1.5rem;
+            color: var(--text-light);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: color 0.3s, transform 0.3s;
+            line-height: 1;
+        }
+
+        .terms-content .close:hover {
+            color: var(--accent);
+            transform: rotate(180deg);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            text-align: center;
+            padding: 2.5rem 1.5rem;
+            margin-top: 3rem;
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+            font-size: 0.95rem;
+            color: rgba(224, 224, 255, 0.7);
+            background: rgba(3, 6, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 60px 60px 0 0;
+        }
+
+        .footer-logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-logo i {
+            color: var(--primary);
+            margin-right: 8px;
+            filter: drop-shadow(0 0 8px var(--primary));
+        }
+
+        .footer-contact {
+            margin: 1rem 0;
+        }
+
+        .footer-contact a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .footer-contact a:hover {
+            background: var(--primary);
+            color: black;
+            border-color: white;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        .footer-terms a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .footer-terms a:hover {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        .footer-disclaimer {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+
+        /* ===== UTILIDADES ===== */
+        .hide-mobile {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .hide-mobile {
+                display: inline;
+            }
+        }
+
+        /* ===== AJUSTES TÁCTILES ===== */
+        @media (max-width: 768px) {
+            .course-card:hover {
+                transform: none;
+            }
+            
+            .course-card:active {
+                transform: scale(0.98);
+                border-color: var(--primary);
+            }
+            
+            .course-card:hover::before {
+                opacity: 0;
+            }
+            
+            .course-card:active::before {
+                opacity: 0.5;
+            }
+            
+            .cta-button:hover {
+                transform: none;
+            }
+            
+            .cta-button:active {
+                transform: scale(0.96);
+            }
+            
+            .shape {
+                filter: blur(40px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PARTICLES -->
+    <div id="particles-js"></div>
+    <div class="grid-overlay"></div>
+    
+    <!-- CYBER GLITCH -->
+    <div class="cyber-glitch"></div>
+    
+    <!-- FLOATING SHAPES -->
+    <div class="floating-shapes">
+        <div class="shape shape-1"></div>
+        <div class="shape shape-2"></div>
+        <div class="shape shape-3"></div>
+    </div>
+
+    <!-- LOADER -->
+    <div class="loader-container" id="loader">
+        <div class="loader-logo">
+            <i class="fas fa-graduation-cap"></i>
+            <span>HEYDIN KAYSER</span>
+        </div>
+        <div class="loader"></div>
+        <div class="loader-text">Iniciando programas elite</div>
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>HEYDIN KAYSER</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html">INICIO</a>
+                    <a href="calculadora.html">CALCULADORA</a>
+                    <a href="fibonacci.html">FIBONACCI</a>
+                    <a href="horario.html">HORARIO</a>
+                    <a href="cursos.html" style="color: cyan; text-shadow: 0 0 10px cyan;">PROGRAMAS</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="login-btn" id="openLogin"><i class="fas fa-arrow-right-to-bracket"></i> <span class="hide-mobile">ACCESO</span></button>
+                    <button class="register-btn" id="openRegister"><i class="fas fa-user-plus"></i> <span class="hide-mobile">VIP</span></button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero-header">
+            <div class="hero-logo">
+                <i class="fas fa-crown hero-icon"></i>
+                <span class="hero-title">HEYDIN KAYSER</span>
+            </div>
+            <p class="hero-subtitle">PROGRAMAS DE TRADING ÉLITE</p>
+            <p class="hero-description">
+                Formación cuántica para traders profesionales · De principiante a élite
+            </p>
+            <a href="#courses" class="cta-button" id="open-courses">
+                <i class="fas fa-rocket"></i> VER PROGRAMAS
+            </a>
+        </div>
+        
+        <section class="courses-section" id="courses">
+            <h2 class="section-title">PROGRAMAS CUÁNTICOS</h2>
+            
+            <div class="courses-grid">
+                <!-- Curso 1 -->
+                <div class="course-card">
+                    <h3>HEYDIN ESSENTIALS</h3>
+                    <div class="price">50/mes</div>
+                    <div class="payment-options">
+                        <p><strong>Pago mensual:</strong> $50</p>
+                        <p><strong>Programa completo (3 meses):</strong> $150</p>
+                    </div>
+                    <div class="info-item">Duración: 3 meses</div>
+                    <div class="info-item">Nivel: Principiante</div>
+                    <div class="info-item">Estrategias básicas de trading</div>
+                    <div class="info-item">Soporte comunitario</div>
+                    <button class="buy-button" onclick="openPaymentModal('HEYDIN ESSENTIALS', 50)">ACCEDER AL PROGRAMA</button>
+                </div>
+                
+                <!-- Curso 2 -->
+                <div class="course-card">
+                    <h3>HEYDIN ADVANCED</h3>
+                    <div class="price">100/mes</div>
+                    <div class="payment-options">
+                        <p><strong>Pago mensual:</strong> $100</p>
+                        <p><strong>Programa completo (4 meses):</strong> $400</p>
+                    </div>
+                    <div class="info-item">Duración: 4 meses</div>
+                    <div class="info-item">Nivel: Intermedio</div>
+                    <div class="info-item">Análisis técnico avanzado</div>
+                    <div class="info-item">Señales exclusivas</div>
+                    <button class="buy-button" onclick="openPaymentModal('HEYDIN ADVANCED', 100)">ACCEDER AL PROGRAMA</button>
+                </div>
+                
+                <!-- Curso 3 -->
+                <div class="course-card">
+                    <h3>HEYDIN PRO</h3>
+                    <div class="price">150/mes</div>
+                    <div class="payment-options">
+                        <p><strong>Pago mensual:</strong> $150</p>
+                        <p><strong>Programa completo (4 meses):</strong> $600</p>
+                    </div>
+                    <div class="info-item">Duración: 4 meses</div>
+                    <div class="info-item">Nivel: Avanzado</div>
+                    <div class="info-item">Estrategias institucionales</div>
+                    <div class="info-item">Mentoría personalizada</div>
+                    <button class="buy-button" onclick="openPaymentModal('HEYDIN PRO', 150)">ACCEDER AL PROGRAMA</button>
+                </div>
+                
+                <!-- Curso 4 -->
+                <div class="course-card">
+                    <h3>HEYDIN ELITE</h3>
+                    <div class="price">200/mes</div>
+                    <div class="payment-options">
+                        <p><strong>Pago mensual:</strong> $200</p>
+                        <p><strong>Programa completo (4 meses):</strong> $800</p>
+                    </div>
+                    <div class="info-item">Duración: 4 meses</div>
+                    <div class="info-item">Nivel: Experto</div>
+                    <div class="info-item">Acceso a herramientas premium</div>
+                    <div class="info-item">Sesiones one-on-one</div>
+                    <button class="buy-button" onclick="openPaymentModal('HEYDIN ELITE', 200)">ACCEDER AL PROGRAMA</button>
+                </div>
+                
+                <!-- Curso 5 -->
+                <div class="course-card">
+                    <h3>HEYDIN MASTER</h3>
+                    <div class="price">250/mes</div>
+                    <div class="payment-options">
+                        <p><strong>Pago mensual:</strong> $250</p>
+                        <p><strong>Programa completo (4 meses):</strong> $1000</p>
+                    </div>
+                    <div class="info-item">Duración: 4 meses</div>
+                    <div class="info-item">Nivel: Profesional</div>
+                    <div class="info-item">Algoritmos de trading</div>
+                    <div class="info-item">Acceso VIP a webinars</div>
+                    <button class="buy-button" onclick="openPaymentModal('HEYDIN MASTER', 250)">ACCEDER AL PROGRAMA</button>
+                </div>
+                
+                <!-- Curso 6 -->
+                <div class="course-card">
+                    <h3>HEYDIN QUANTUM</h3>
+                    <div class="price">300/mes</div>
+                    <div class="payment-options">
+                        <p><strong>Pago mensual:</strong> $300</p>
+                        <p><strong>Programa completo (4 meses):</strong> $1200</p>
+                    </div>
+                    <div class="info-item">Duración: 4 meses</div>
+                    <div class="info-item">Nivel: Élite</div>
+                    <div class="info-item">Trading algorítmico avanzado</div>
+                    <div class="info-item">Mentoría con expertos</div>
+                    <button class="buy-button" onclick="openPaymentModal('HEYDIN QUANTUM', 300)">ACCEDER AL PROGRAMA</button>
+                </div>
+            </div>
+        </section>
+        
+        <footer>
+            <div class="footer-logo">
+                <i class="fas fa-crown"></i> HEYDIN KAYSER
+            </div>
+            <div class="footer-contact">
+                <p>Contacto: <a href="tel:+5930986122265"><i class="fas fa-phone"></i> +593 0986122265</a></p>
+            </div>
+            <div class="footer-disclaimer">
+                <p>El trading implica riesgos significativos. Los resultados pasados no garantizan rendimientos futuros.</p>
+            </div>
+            <div class="footer-terms">
+                <p><a href="#" onclick="openTermsModal(); return false;"><i class="fas fa-file-contract"></i> Términos y Condiciones</a></p>
+            </div>
+            <p style="margin-top: 1.5rem; opacity: 0.7;">© 2025 HEYDIN KAYSER TRADING · Programas de formación cuántica</p>
+        </footer>
+    </div>
+    
+    <!-- Modal de Pago -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <span class="close" onclick="closePaymentModal()">&times;</span>
+            <h2 id="modalCourseTitle">PROGRAMA</h2>
+            <div class="cyber-line"></div>
+            
+            <div class="bank-info">
+                <p><strong>Banco:</strong> Banco Pichincha</p>
+                <p><strong>Cuenta:</strong> 2203838240</p>
+                <p><strong>Método de pago:</strong> USDT</p>
+                <p><strong>Monedero:</strong> TJujJqGa14F56TKDqWtz3yFvk4EubnxdeD</p>
+                <p><strong>Monto a transferir:</strong> <span id="modalCoursePrice">$0</span></p>
+                <p><strong>Contacto para pago:</strong> +5930986122265</p>
+            </div>
+            
+            <div class="qr-container">
+                <p><i class="fas fa-qrcode"></i> CONTACTA PARA OBTENER INFORMACIÓN DE PAGO</p>
+                <div class="qr-placeholder">
+                    <i class="fas fa-crown"></i>
+                    <span>HEYDIN KAYSER</span>
+                </div>
+            </div>
+            
+            <div class="instructions">
+                <p><i class="fas fa-info-circle"></i> Contacta a nuestro equipo para obtener los detalles de pago y métodos disponibles.</p>
+                <p>Envía un mensaje a <strong>+5930986122265</strong> para procesar tu inscripción.</p>
+                <p>El acceso se habilita dentro de las 24 horas posteriores a la confirmación del pago.</p>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal de Términos y Condiciones -->
+    <div class="terms-modal" id="termsModal">
+        <div class="terms-content">
+            <span class="close" onclick="closeTermsModal()">&times;</span>
+            <h2><i class="fas fa-file-contract"></i> TÉRMINOS Y CONDICIONES</h2>
+            <div class="cyber-line"></div>
+            
+            <h3>1. ACEPTACIÓN DE TÉRMINOS</h3>
+            <p>Al acceder y utilizar los servicios de HEYDIN KAYSER TRADING, usted acepta cumplir con estos términos y condiciones. Si no está de acuerdo con alguno de estos términos, no podrá utilizar nuestros servicios.</p>
+            
+            <h3>2. SERVICIOS OFRECIDOS</h3>
+            <p>HEYDIN KAYSER TRADING ofrece programas educativos sobre trading y mercados financieros. No proporcionamos asesoramiento financiero ni garantizamos resultados específicos.</p>
+            
+            <h3>3. PROPIEDAD INTELECTUAL</h3>
+            <p>Todo el material educativo proporcionado es propiedad intelectual de HEYDIN KAYSER TRADING y está protegido por derechos de autor. Queda prohibida su reproducción, distribución o comercialización sin autorización expresa.</p>
+            
+            <h3>4. POLÍTICA DE PAGOS</h3>
+            <p>Los pagos por los programas educativos son no reembolsables, excepto en casos específicos determinados por HEYDIN KAYSER TRADING a su entera discreción.</p>
+            
+            <h3>5. RIESGOS DEL TRADING</h3>
+            <p>Reconoce y acepta que el trading conlleva riesgos significativos y que puede perder parte o la totalidad de su capital invertido. HEYDIN KAYSER TRADING no se hace responsable de las pérdidas incurridas.</p>
+            
+            <h3>6. USO ADECUADO</h3>
+            <p>Usted se compromete a utilizar la información proporcionada únicamente para su educación personal y no con fines comerciales o de redistribución.</p>
+            
+            <h3>7. MODIFICACIONES</h3>
+            <p>HEYDIN KAYSER TRADING se reserva el derecho de modificar estos términos y condiciones en cualquier momento. Los cambios entrarán en vigor inmediatamente después de su publicación.</p>
+            
+            <h3>8. LIMITACIÓN DE RESPONSABILIDAD</h3>
+            <p>HEYDIN KAYSER TRADING no será responsable por daños directos, indirectos, incidentales o consecuentes resultantes del uso o la imposibilidad de uso de nuestros servicios.</p>
+            
+            <h3>9. CONTACTO</h3>
+            <p>Para cualquier consulta sobre estos términos, puede contactarnos al +5930986122265.</p>
+            
+            <div class="cyber-line"></div>
+            <p style="text-align: center; margin-top: 1.5rem; color: var(--primary);">Última actualización: Febrero 2025</p>
+        </div>
+    </div>
+
+    <!-- MODAL AUTH -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2 id="authModalTitle">ACCESO VIP</h2>
+                <button class="close-auth" id="closeAuth">&times;</button>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <div id="authError" class="auth-error"></div>
+                <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                <button type="submit" class="auth-submit">INGRESAR</button>
+            </form>
+            <form class="auth-form" id="registerForm" style="display: none;">
+                <div id="registerError" class="auth-error"></div>
+                <input type="text" id="registerName" placeholder="Nombre completo" required>
+                <input type="email" id="registerEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="registerPassword" placeholder="Contraseña" required>
+                <input type="password" id="registerConfirmPassword" placeholder="Confirmar contraseña" required>
+                <button type="submit" class="auth-submit">ACTIVAR VIP</button>
+            </form>
+            <div class="auth-toggle">
+                <span id="toggleAuthForm">¿Sin membresía? Activa VIP ahora</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // ===== FIREBASE CONFIG =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+            authDomain: "beaver-trading.firebaseapp.com",
+            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+            projectId: "beaver-trading",
+            storageBucket: "beaver-trading.firebasestorage.app",
+            messagingSenderId: "926610131904",
+            appId: "1:926610131904:web:c147bd337bd12b4d085625",
+            measurementId: "G-1K51WWF2ZJ"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // ===== PARTICLES =====
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 100, density: { enable: true, value_area: 800 } },
+                color: { value: "#00ffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.4, random: true },
+                size: { value: 2.5, random: true },
+                line_linked: { enable: true, distance: 130, color: "#00ffff", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
+            },
+            interactivity: {
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+            },
+            retina_detect: true
+        });
+
+        // ===== LOADER =====
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('fade-out');
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 800);
+            }, 2000);
+        });
+
+        function showLoader(msg) {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'flex';
+            loader.classList.remove('fade-out');
+            document.querySelector('.loader-text').textContent = msg || 'PROCESANDO...';
+        }
+
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.style.display = 'none', 800);
+        }
+
+        // ===== MODAL PAGO =====
+        function openPaymentModal(courseName, price) {
+            document.getElementById('modalCourseTitle').textContent = courseName;
+            document.getElementById('modalCoursePrice').textContent = '$' + price;
+            document.getElementById('paymentModal').style.display = 'flex';
+        }
+        
+        function closePaymentModal() {
+            document.getElementById('paymentModal').style.display = 'none';
+        }
+        
+        // ===== MODAL TÉRMINOS =====
+        function openTermsModal() {
+            document.getElementById('termsModal').style.display = 'flex';
+        }
+        
+        function closeTermsModal() {
+            document.getElementById('termsModal').style.display = 'none';
+        }
+        
+        // ===== CERRAR MODALES CLICK FUERA =====
+        window.onclick = function(event) {
+            const paymentModal = document.getElementById('paymentModal');
+            const termsModal = document.getElementById('termsModal');
+            
+            if (event.target === paymentModal) {
+                closePaymentModal();
+            }
+            
+            if (event.target === termsModal) {
+                closeTermsModal();
+            }
+        }
+        
+        // ===== SCROLL SUAVE =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // ===== BOTÓN CURSOS =====
+        document.getElementById('open-courses').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('courses').scrollIntoView({
+                behavior: 'smooth'
+            });
+        });
+        
+        // ===== MODAL AUTH =====
+        const modal = document.getElementById('authModal');
+        const openLogin = document.getElementById('openLogin');
+        const openRegister = document.getElementById('openRegister');
+        const closeBtn = document.getElementById('closeAuth');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const modalTitle = document.getElementById('authModalTitle');
+        const toggleSpan = document.getElementById('toggleAuthForm');
+        const authError = document.getElementById('authError');
+        const registerError = document.getElementById('registerError');
+
+        openLogin.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'flex';
+            registerForm.style.display = 'none';
+            modalTitle.innerText = 'ACCESO VIP';
+            toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            authError.innerText = '';
+            document.body.style.overflow = 'hidden';
+        });
+
+        openRegister.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'flex';
+            modalTitle.innerText = 'ACTIVAR VIP';
+            toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            registerError.innerText = '';
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        toggleSpan.addEventListener('click', () => {
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'flex';
+                registerForm.style.display = 'none';
+                modalTitle.innerText = 'ACCESO VIP';
+                toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'flex';
+                modalTitle.innerText = 'ACTIVAR VIP';
+                toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            }
+        });
+
+        // ===== LOGIN =====
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            showLoader('VERIFICANDO CREDENCIALES');
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    document.querySelector('.loader-text').textContent = 'REDIRIGIENDO...';
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+                })
+                .catch(error => {
+                    hideLoader();
+                    authError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+
+        // ===== REGISTRO =====
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const pass = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirmPassword').value;
+            
+            if (pass !== confirm) {
+                registerError.textContent = 'LAS CONTRASEÑAS NO COINCIDEN';
+                return;
+            }
+            if (pass.length < 6) {
+                registerError.textContent = 'MÍNIMO 6 CARACTERES';
+                return;
+            }
+            
+            showLoader('CREANDO ACCESO VIP');
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then((userCred) => {
+                    const user = userCred.user;
+                    database.ref('users/' + user.uid).set({
+                        name: name,
+                        email: email,
+                        vipAccess: true,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    document.querySelector('.loader-text').textContent = 'BIENVENIDO A LA ÉLITE';
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+                })
+                .catch(error => {
+                    hideLoader();
+                    registerError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
