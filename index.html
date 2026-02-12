@@ -1,0 +1,998 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Heydin Kayser • Trading Elite</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- Font Awesome 6 (iconos potenciados) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts: Mayor impacto cyberpunk -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* VARIABLES NEÓN ELITE */
+        :root {
+            --primary: #00ffff;
+            --primary-glow: rgba(0, 255, 255, 0.8);
+            --secondary: #ff00d4;
+            --secondary-glow: rgba(255, 0, 212, 0.7);
+            --accent: #7700ff;
+            --accent-glow: rgba(119, 0, 255, 0.6);
+            --dark: #0a0c12;
+            --darker: #05070a;
+            --card-bg: rgba(12, 16, 22, 0.75);
+            --card-bg-solid: rgba(8, 12, 18, 0.95);
+            --text-light: #e2f3ff;
+            --border-neon: 0 0 10px var(--primary), 0 0 30px rgba(0, 255, 255, 0.3);
+            --neon-box: 0 0 15px var(--primary), 0 0 45px rgba(0, 255, 255, 0.2);
+            --transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', 'Syne', sans-serif;
+            background: radial-gradient(circle at 20% 20%, #0b0e14, #030507);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* FONDO DE PARTÍCULAS + ESCANER */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,255,255,0.02) 0px, rgba(0,0,0,0.2) 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.08) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 45px 45px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.6;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 0 30px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* LOADER FUTURISTA ÉPICO */
+        .loader-container {
+            position: fixed;
+            inset: 0;
+            background: #010101;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .loader-container.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            font-size: 4.2rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            color: #fff;
+            text-shadow: 0 0 20px cyan, 0 0 50px #ff00d4, 0 0 80px #7700ff;
+            margin-bottom: 2rem;
+            letter-spacing: 6px;
+        }
+
+        .loader-logo i {
+            color: cyan;
+            filter: drop-shadow(0 0 15px cyan) drop-shadow(0 0 35px #ff00d4);
+            font-size: 5rem;
+        }
+
+        .loader {
+            width: 300px;
+            height: 5px;
+            background: rgba(0,255,255,0.1);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .loader::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, cyan, #ff00d4, cyan, transparent);
+            animation: loadingScan 2.4s infinite linear;
+        }
+
+        @keyframes loadingScan {
+            0% { transform: translateX(-150%); }
+            100% { transform: translateX(80%); }
+        }
+
+        .loader-text {
+            margin-top: 35px;
+            font-size: 1.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px cyan, 0 0 20px #ff00d4;
+            letter-spacing: 4px;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .loader-dot {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: cyan;
+            box-shadow: 0 0 20px cyan, 0 0 40px #ff00d4;
+            animation: dotWave 1.6s infinite ease-in-out alternate;
+        }
+
+        .loader-dot:nth-child(2) { animation-delay: 0.4s; background: #ff00d4; }
+        .loader-dot:nth-child(3) { animation-delay: 0.8s; background: #7700ff; }
+
+        @keyframes dotWave {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.8); opacity: 1; }
+        }
+
+        /* HEADER NEÓN */
+        header {
+            background: rgba(3, 6, 10, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 5px 30px rgba(0,255,255,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.9rem 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.2rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: white;
+            text-shadow: 0 0 15px cyan, 0 0 30px #ff00d4;
+            letter-spacing: 2px;
+        }
+
+        .logo i {
+            color: cyan;
+            filter: drop-shadow(0 0 10px cyan) drop-shadow(0 0 20px magenta);
+            font-size: 2.8rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 35px;
+        }
+
+        .nav-links a {
+            color: #e0f0ff;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 2px;
+            padding: 8px 0;
+            position: relative;
+            transition: 0.2s;
+            text-transform: uppercase;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0%;
+            height: 2px;
+            background: linear-gradient(90deg, cyan, #ff00d4);
+            box-shadow: 0 0 15px cyan;
+            transition: 0.4s;
+        }
+
+        .nav-links a:hover {
+            color: cyan;
+            text-shadow: 0 0 10px cyan;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons button {
+            padding: 14px 28px;
+            border-radius: 40px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2.5px;
+            font-size: 0.9rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Rajdhani', sans-serif;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1.5px solid cyan !important;
+            color: cyan;
+            margin-right: 12px;
+            box-shadow: 0 0 15px transparent;
+        }
+
+        .login-btn:hover {
+            background: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 30px cyan;
+            border-color: cyan;
+        }
+
+        .register-btn {
+            background: linear-gradient(145deg, #00e0ff, #0088ff);
+            color: black;
+            font-weight: 900;
+            border: 1.5px solid #00ffff;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            color: white;
+            border-color: white;
+            box-shadow: 0 0 40px #ff00d4;
+        }
+
+        /* HERO - IMPACTO TOTAL */
+        .hero {
+            padding: 12rem 0 10rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero h1 {
+            font-size: 6rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(45deg, #fff, cyan, #ff00d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 60px rgba(0, 255, 255, 0.7), 0 0 90px rgba(255, 0, 212, 0.5);
+            margin-bottom: 1.5rem;
+            letter-spacing: 10px;
+            animation: flicker 3s infinite;
+        }
+
+        @keyframes flicker {
+            0%, 100% { opacity: 1; }
+            33% { opacity: 0.95; text-shadow: 0 0 70px cyan, 0 0 110px magenta; }
+        }
+
+        .hero p {
+            font-size: 1.8rem;
+            max-width: 950px;
+            margin: 0 auto 3rem;
+            font-weight: 500;
+            color: #e6f7ff;
+            text-shadow: 0 0 15px rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(5px);
+            padding: 15px 35px;
+            border-radius: 60px;
+            border: 1px solid rgba(0,255,255,0.3);
+        }
+
+        .cta-button {
+            padding: 20px 55px;
+            font-size: 1.6rem;
+            font-weight: 900;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 2px solid cyan;
+            border-radius: 60px;
+            text-transform: uppercase;
+            letter-spacing: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 30px cyan;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-button:hover {
+            background: cyan;
+            color: black;
+            border-color: #ff00d4;
+            box-shadow: 0 0 70px cyan, 0 0 120px #ff00d4;
+            transform: scale(1.07);
+        }
+
+        /* FEATURES - TARJETAS HOLOGRÁFICAS */
+        .features {
+            padding: 6rem 0 10rem;
+        }
+
+        .section-title h2 {
+            font-size: 3.8rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, cyan, #ffffff, #ff00d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 35px rgba(0, 255, 255, 0.6);
+            margin-bottom: 1.5rem;
+            letter-spacing: 5px;
+        }
+
+        .section-title p {
+            font-size: 1.5rem;
+            color: #cdf0ff;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(330px, 1fr));
+            gap: 3rem;
+            margin-top: 5rem;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(18px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            border-radius: 30px;
+            padding: 3.5rem 2rem;
+            transition: 0.4s;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, cyan, #ff00d4, cyan);
+            border-radius: 30px;
+            z-index: -1;
+            opacity: 0;
+            transition: 0.4s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-15px) scale(1.02);
+            border-color: transparent;
+        }
+
+        .feature-card:hover::before {
+            opacity: 0.7;
+            filter: blur(8px);
+        }
+
+        .feature-icon i {
+            font-size: 4.5rem;
+            color: cyan;
+            text-shadow: 0 0 30px cyan, 0 0 60px #ff00d4;
+            margin-bottom: 1.8rem;
+        }
+
+        .feature-card h3 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, cyan, #fff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .feature-card p {
+            font-size: 1.2rem;
+            color: #d0eaff;
+            font-weight: 500;
+        }
+
+        /* FOOTER - REDES ELITE */
+        footer {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(25px);
+            border-top: 2px solid rgba(0,255,255,0.4);
+            padding: 5rem 0 2rem;
+            position: relative;
+            z-index: 20;
+        }
+
+        .footer-logo {
+            font-size: 2.6rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            color: white;
+            text-shadow: 0 0 20px cyan, 0 0 40px #ff00d4;
+        }
+
+        .footer-links a {
+            color: #bbf0ff;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0 20px;
+            transition: 0.2s;
+            position: relative;
+        }
+
+        .footer-links a:hover {
+            color: cyan;
+            text-shadow: 0 0 15px cyan;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 35px;
+            justify-content: center;
+            margin: 30px 0;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: 2.3rem;
+            width: 70px;
+            height: 70px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0,255,255,0.08);
+            border: 1px solid rgba(0,255,255,0.5);
+            transition: 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-icons a:hover {
+            background: cyan;
+            color: black;
+            border-color: #ff00d4;
+            box-shadow: 0 0 45px cyan, 0 0 90px #ff00d4;
+            transform: translateY(-10px) scale(1.1);
+        }
+
+        .copyright {
+            color: rgba(200, 240, 255, 0.7);
+            font-size: 1.1rem;
+            margin-top: 3rem;
+        }
+
+        /* MODAL AUTH NEÓN */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.9);
+            backdrop-filter: blur(25px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .auth-container {
+            background: rgba(5, 8, 15, 0.9);
+            backdrop-filter: blur(30px);
+            border: 2px solid cyan;
+            border-radius: 40px;
+            width: 100%;
+            max-width: 550px;
+            padding: 3.5rem;
+            box-shadow: 0 0 60px cyan, 0 0 120px #ff00d4;
+            animation: modalGlitch 0.5s;
+        }
+
+        @keyframes modalGlitch {
+            0% { transform: scale(0.8) rotate(-2deg); opacity: 0; }
+            100% { transform: scale(1) rotate(0); opacity: 1; }
+        }
+
+        .auth-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-header h2 {
+            font-size: 2.8rem;
+            font-weight: 900;
+            background: linear-gradient(45deg, cyan, #ff00d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 3px;
+        }
+
+        .close-auth {
+            background: none;
+            border: none;
+            color: cyan;
+            font-size: 3.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-auth:hover {
+            color: #ff00d4;
+            transform: rotate(180deg);
+            text-shadow: 0 0 30px magenta;
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+
+        .auth-form input {
+            padding: 16px 25px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1.5px solid rgba(0,255,255,0.4);
+            border-radius: 50px;
+            font-size: 1.2rem;
+            color: white;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .auth-form input:focus {
+            border-color: #ff00d4;
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 0 30px rgba(255,0,212,0.6);
+            outline: none;
+        }
+
+        .auth-submit {
+            padding: 16px;
+            background: linear-gradient(145deg, cyan, #0099ff);
+            border: none;
+            border-radius: 60px;
+            font-weight: 900;
+            font-size: 1.5rem;
+            color: black;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .auth-submit:hover {
+            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            color: white;
+            box-shadow: 0 0 60px #ff00d4;
+        }
+
+        .auth-toggle {
+            margin-top: 2.5rem;
+            color: #bbf0ff;
+            font-size: 1.2rem;
+            text-align: center;
+        }
+
+        .auth-toggle span {
+            color: cyan;
+            font-weight: 800;
+            cursor: pointer;
+            border-bottom: 1px solid cyan;
+            padding-bottom: 3px;
+            transition: 0.2s;
+        }
+
+        .auth-toggle span:hover {
+            color: #ff00d4;
+            border-bottom-color: #ff00d4;
+            text-shadow: 0 0 20px magenta;
+        }
+
+        .auth-error {
+            color: #ff7b9c;
+            font-weight: 700;
+            font-size: 1.1rem;
+            text-align: center;
+            text-shadow: 0 0 10px red;
+        }
+
+        /* RESPONSIVE */
+        @media (max-width: 900px) {
+            .hero h1 { font-size: 4.2rem; }
+            .nav-links { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <!-- PARTICLES / FONDO CYBERPUNK -->
+    <div id="particles-js"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- LOADER ELITE HEYDIN KAYSER -->
+    <div class="loader-container" id="loader">
+        <div class="loader-logo">
+            <i class="fas fa-chart-line"></i>
+            <span>HEYDIN KAYSER</span>
+        </div>
+        <div class="loader"></div>
+        <div class="loader-text">Desbloqueando terminal VIP</div>
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>HEYDIN KAYSER</span>
+                </div>
+                <div class="nav-links">
+                    <a href="beneficio.html">VENTAJAS</a>
+                    <a href="contacto.html">ÉLITE</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="login-btn" id="openLogin"><i class="fas fa-arrow-right-to-bracket"></i> ACCESO</button>
+                    <button class="register-btn" id="openRegister"><i class="fas fa-user-plus"></i> VIP</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero">
+        <div class="container">
+            <h1>HEYDIN KAYSER</h1>
+            <p><i class="fas fa-bolt" style="color:cyan;"></i> Trading cuántico · Señales láser · Élite financiera <i class="fas fa-bolt" style="color:#ff00d4;"></i></p>
+            <button class="cta-button" id="heroCta">ACTIVAR MODO VIP</button>
+        </div>
+    </section>
+
+    <section class="features" id="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>ARMA SECRETA DEL TRADER</h2>
+                <p>Solo para los que exigen máximos beneficios. Entorno hiper-futurista, señales en tiempo real.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-satellite-dish"></i></div>
+                    <h3>SEÑALES NEÓN</h3>
+                    <p>Alertas instantáneas con inteligencia artificial. Entradas, salidas y stops de alta precisión.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-robot"></i></div>
+                    <h3>BOT CUÁNTICO</h3>
+                    <p>Estrategias automatizadas con backtesting y optimización para mercados volátiles.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-shield-halos"></i></div>
+                    <h3>SOPORTE VIP</h3>
+                    <p>Atención 1 a 1, análisis de cartera y asesoría directa con expertos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fas fa-crown"></i> HEYDIN KAYSER
+            </div>
+            <div class="footer-links">
+                <a href="beneficio.html">TÉRMINOS</a>
+                <a href="contacto.html">SOPORTE</a>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=61579696913394" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@beaver_trading_oficial" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.youtube.com/@beavertrading2025" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/weldingmiguel/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/593986122265" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/+x8P5ya17Dek4YjBh" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+            <div class="copyright">
+                © 2025 HEYDIN KAYSER TRADING. RESERVADO MUNDO FUTURISTA.
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL AUTH - LOGIN / REGISTRO -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2 id="authModalTitle">ACCESO VIP</h2>
+                <button class="close-auth" id="closeAuth">&times;</button>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <div id="authError" class="auth-error"></div>
+                <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                <button type="submit" class="auth-submit">INGRESAR</button>
+            </form>
+            <form class="auth-form" id="registerForm" style="display: none;">
+                <div id="registerError" class="auth-error"></div>
+                <input type="text" id="registerName" placeholder="Nombre completo" required>
+                <input type="email" id="registerEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="registerPassword" placeholder="Contraseña" required>
+                <input type="password" id="registerConfirmPassword" placeholder="Confirmar contraseña" required>
+                <button type="submit" class="auth-submit">ACTIVAR VIP</button>
+            </form>
+            <div class="auth-toggle">
+                <span id="toggleAuthForm">¿Sin membresía? Activa VIP ahora</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // ---------- FIREBASE CONFIG (TU PROYECTO) ----------
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+            authDomain: "beaver-trading.firebaseapp.com",
+            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+            projectId: "beaver-trading",
+            storageBucket: "beaver-trading.firebasestorage.app",
+            messagingSenderId: "926610131904",
+            appId: "1:926610131904:web:c147bd337bd12b4d085625",
+            measurementId: "G-1K51WWF2ZJ"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // ---------- LOADER ----------
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('fade-out');
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 900);
+            }, 2800);
+        });
+
+        function showLoader(msg = 'PROCESANDO...') {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'flex';
+            loader.classList.remove('fade-out');
+            document.querySelector('.loader-text').textContent = msg;
+        }
+
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.style.display = 'none', 800);
+        }
+
+        // ---------- PARTICLES CYBER ----------
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 120, density: { enable: true, value_area: 800 } },
+                color: { value: "#00ffff" },
+                shape: { type: "circle" },
+                opacity: {
+                    value: 0.4,
+                    random: true,
+                    anim: { enable: true, speed: 0.8, opacity_min: 0.1 }
+                },
+                size: {
+                    value: 2.8,
+                    random: true,
+                    anim: { enable: true, speed: 2, size_min: 0.2 }
+                },
+                line_linked: {
+                    enable: true,
+                    distance: 130,
+                    color: "#00ffff",
+                    opacity: 0.2,
+                    width: 1
+                },
+                move: {
+                    enable: true,
+                    speed: 1.2,
+                    direction: "none",
+                    random: true,
+                    straight: false,
+                    out_mode: "out"
+                }
+            },
+            interactivity: {
+                detect_on: "canvas",
+                events: {
+                    onhover: { enable: true, mode: "repulse" },
+                    onclick: { enable: true, mode: "push" }
+                }
+            },
+            retina_detect: true
+        });
+
+        // ---------- MODAL CONTROL ----------
+        const modal = document.getElementById('authModal');
+        const openLogin = document.getElementById('openLogin');
+        const openRegister = document.getElementById('openRegister');
+        const closeBtn = document.getElementById('closeAuth');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const modalTitle = document.getElementById('authModalTitle');
+        const toggleSpan = document.getElementById('toggleAuthForm');
+        const authError = document.getElementById('authError');
+        const registerError = document.getElementById('registerError');
+
+        openLogin.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'flex';
+            registerForm.style.display = 'none';
+            modalTitle.innerText = 'ACCESO VIP';
+            toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            authError.innerText = '';
+        });
+
+        openRegister.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'flex';
+            modalTitle.innerText = 'ACTIVAR VIP';
+            toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            registerError.innerText = '';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        modal.addEventListener('click', (e) => { if(e.target === modal) modal.style.display = 'none'; });
+
+        toggleSpan.addEventListener('click', () => {
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'flex';
+                registerForm.style.display = 'none';
+                modalTitle.innerText = 'ACCESO VIP';
+                toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'flex';
+                modalTitle.innerText = 'ACTIVAR VIP';
+                toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            }
+        });
+
+        // ---------- LOGIN ----------
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            showLoader('VERIFICANDO CREDENCIALES VIP');
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    document.querySelector('.loader-text').textContent = 'REDIRIGIENDO AL PANEL...';
+                    setTimeout(() => {
+                        window.location.href = 'home.html'; // REDIRECCIÓN ÉLITE
+                    }, 2000);
+                })
+                .catch(error => {
+                    hideLoader();
+                    authError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+
+        // ---------- REGISTRO ----------
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const pass = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirmPassword').value;
+            if (pass !== confirm) {
+                registerError.textContent = 'CONTRASEÑAS NO COINCIDEN';
+                return;
+            }
+            if (pass.length < 6) {
+                registerError.textContent = 'MÍNIMO 6 CARACTERES';
+                return;
+            }
+            showLoader('CREANDO ACCESO VIP');
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then((userCred) => {
+                    const user = userCred.user;
+                    database.ref('users/' + user.uid).set({
+                        name: name,
+                        email: email,
+                        vipAccess: true,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    document.querySelector('.loader-text').textContent = 'BIENVENIDO A LA ÉLITE';
+                    setTimeout(() => {
+                        window.location.href = 'home.html'; // DESTINO VIP
+                    }, 2000);
+                })
+                .catch(error => {
+                    hideLoader();
+                    registerError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+
+        // CTA HERO
+        document.getElementById('heroCta').addEventListener('click', () => openRegister.click());
+
+        // OCULTAR BOTONES SI LOGUEADO (OPCIONAL)
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // Podrías redirigir directamente si quieres, pero dejamos que el usuario navegue.
+                // Solo ejemplo: cambiar botones por perfil
+                // openLogin.style.display = 'none'; openRegister.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
