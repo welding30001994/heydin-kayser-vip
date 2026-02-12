@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Heydin Kayser • Quantum Trading Signals</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES NEÓN ELITE ===== */
+        :root {
+            --primary: #00ffff;
+            --primary-glow: rgba(0, 255, 255, 0.8);
+            --secondary: #ff00d4;
+            --secondary-glow: rgba(255, 0, 212, 0.7);
+            --accent: #7700ff;
+            --accent-glow: rgba(119, 0, 255, 0.6);
+            --buy: #00ff88;
+            --buy-glow: rgba(0, 255, 136, 0.6);
+            --sell: #ff4444;
+            --sell-glow: rgba(255, 68, 68, 0.6);
+            --dark: #0a0c12;
+            --darker: #05070a;
+            --card-bg: rgba(12, 16, 22, 0.85);
+            --text-light: #e2f3ff;
+            --text-secondary: #b0b0ff;
+            --glow: 0 0 25px rgba(0, 247, 255, 0.6);
+            --transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Rajdhani', 'Syne', sans-serif;
+            background: radial-gradient(circle at 20% 20%, #0b0e14, #030507);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ===== FONDOS ===== */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,255,255,0.02) 0px, rgba(0,0,0,0.2) 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: min(30px, 4vw) min(30px, 4vw);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        /* ===== LOADER RESPONSIVE ===== */
+        .loader-container {
+            position: fixed;
+            inset: 0;
+            background: #010101;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .loader-container.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            color: #fff;
+            text-shadow: 0 0 20px cyan, 0 0 50px #ff00d4, 0 0 80px #7700ff;
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+        }
+
+        .loader-logo i {
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            color: cyan;
+            filter: drop-shadow(0 0 15px cyan);
+        }
+
+        .loader {
+            width: min(300px, 80%);
+            height: 5px;
+            background: rgba(0,255,255,0.1);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .loader::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, cyan, #ff00d4, cyan, transparent);
+            animation: loadingScan 2.4s infinite linear;
+        }
+
+        @keyframes loadingScan {
+            0% { transform: translateX(-150%); }
+            100% { transform: translateX(80%); }
+        }
+
+        .loader-text {
+            margin-top: 30px;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px cyan, 0 0 20px #ff00d4;
+            letter-spacing: 4px;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .loader-dot {
+            width: clamp(12px, 3vw, 16px);
+            height: clamp(12px, 3vw, 16px);
+            border-radius: 50%;
+            background: cyan;
+            box-shadow: 0 0 20px cyan, 0 0 40px #ff00d4;
+            animation: dotWave 1.6s infinite ease-in-out alternate;
+        }
+
+        .loader-dot:nth-child(2) { animation-delay: 0.4s; background: #ff00d4; }
+        .loader-dot:nth-child(3) { animation-delay: 0.8s; background: #7700ff; }
+
+        @keyframes dotWave {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 1; }
+        }
+
+        /* ===== CONTENEDOR RESPONSIVE ===== */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (min-width: 640px) {
+            .container { padding: 0 30px; }
+        }
+
+        /* ===== HEADER RESPONSIVE ===== */
+        header {
+            background: rgba(3, 6, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 5px 30px rgba(0,255,255,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.8rem 0;
+            width: 100%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: clamp(1.4rem, 6vw, 2.2rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-shadow: 0 0 15px cyan, 0 0 30px #ff00d4;
+            letter-spacing: 2px;
+        }
+
+        .logo i {
+            font-size: clamp(1.6rem, 7vw, 2.8rem);
+            color: cyan;
+            filter: drop-shadow(0 0 10px cyan);
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                gap: 30px;
+            }
+            
+            .nav-links a {
+                color: #e0f0ff;
+                text-decoration: none;
+                font-weight: 700;
+                font-size: 1rem;
+                letter-spacing: 2px;
+                padding: 8px 0;
+                position: relative;
+                transition: 0.2s;
+                text-transform: uppercase;
+            }
+            
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background: linear-gradient(90deg, cyan, #ff00d4);
+                box-shadow: 0 0 15px cyan;
+                transition: 0.4s;
+            }
+            
+            .nav-links a:hover {
+                color: cyan;
+                text-shadow: 0 0 10px cyan;
+            }
+            
+            .nav-links a:hover::after {
+                width: 100%;
+            }
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-buttons button {
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 480px) {
+            .auth-buttons button {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1.5px solid cyan !important;
+            color: cyan;
+        }
+
+        .login-btn:hover {
+            background: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .register-btn {
+            background: linear-gradient(145deg, #00e0ff, #0088ff);
+            color: black;
+            font-weight: 900;
+            border: 1.5px solid #00ffff;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            color: white;
+            border-color: white;
+            box-shadow: 0 0 40px #ff00d4;
+        }
+
+        .register-btn:active, .login-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ===== HERO HEADER ===== */
+        .hero-header {
+            text-align: center;
+            padding: 2.5rem 0 1.5rem;
+        }
+
+        .hero-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-icon {
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            letter-spacing: 3px;
+        }
+
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            margin-bottom: 0.8rem;
+            font-style: italic;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ===== MAIN CONTENT RESPONSIVE ===== */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr 300px;
+            }
+        }
+
+        /* ===== TOGGLE FORM BUTTON ===== */
+        .toggle-form-btn {
+            display: none;
+            width: 100%;
+            margin-bottom: 15px;
+            padding: 14px;
+            font-size: 1rem;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            border-radius: 50px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+
+        .toggle-form-btn:hover {
+            background: var(--primary);
+            color: black;
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        @media (max-width: 768px) {
+            .toggle-form-btn {
+                display: block;
+            }
+        }
+
+        /* ===== SIGNAL FORM ===== */
+        .signal-form {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            padding: 1.8rem;
+            margin-bottom: 20px;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            transition: var(--transition);
+        }
+
+        @media (min-width: 768px) {
+            .signal-form {
+                padding: 2.2rem;
+            }
+        }
+
+        .signal-form.collapsed {
+            display: none;
+        }
+
+        .signal-form h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.3rem, 5vw, 1.8rem);
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 15px var(--primary);
+        }
+
+        .signal-form h2 i {
+            color: var(--secondary);
+        }
+
+        /* ===== FORM GRID ===== */
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        @media (min-width: 640px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .form-group {
+            margin-bottom: 12px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: var(--primary);
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+        }
+
+        .form-group label i {
+            margin-right: 6px;
+            color: var(--secondary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1.5px solid rgba(0, 255, 255, 0.3);
+            border-radius: 15px;
+            color: var(--text-light);
+            font-size: 0.95rem;
+            transition: var(--transition);
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
+        }
+
+        textarea.form-control {
+            min-height: 100px;
+            resize: vertical;
+        }
+
+        /* ===== DIRECTION SELECTOR ===== */
+        .direction-selector {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 12px;
+        }
+
+        .direction-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            border-radius: 15px;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 800;
+            opacity: 0.7;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            border: 1.5px solid transparent;
+        }
+
+        .direction-btn.active {
+            opacity: 1;
+            box-shadow: 0 0 20px currentColor;
+            transform: scale(1.02);
+        }
+
+        .buy-btn {
+            background: rgba(0, 255, 136, 0.1);
+            color: var(--buy);
+            border: 1.5px solid var(--buy);
+        }
+
+        .sell-btn {
+            background: rgba(255, 68, 68, 0.1);
+            color: var(--sell);
+            border: 1.5px solid var(--sell);
+        }
+
+        .direction-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* ===== SIGNALS LIST ===== */
+        .signals-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        /* ===== SIGNAL CARD ===== */
+        .signal-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1.5px solid rgba(0, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 1.5rem;
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (min-width: 768px) {
+            .signal-card {
+                padding: 1.8rem;
+            }
+        }
+
+        .signal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.4s ease;
+        }
+
+        .signal-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 15px 35px rgba(0, 255, 255, 0.2);
+        }
+
+        .signal-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .signal-card.buy::before {
+            background: var(--buy);
+        }
+
+        .signal-card.sell::before {
+            background: var(--sell);
+        }
+
+        /* ===== SIGNAL HEADER ===== */
+        .signal-header {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        @media (min-width: 640px) {
+            .signal-header {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: flex-start;
+            }
+        }
+
+        .signal-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .signal-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: black;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .signal-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .signal-user-name {
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 1.1rem;
+        }
+
+        .signal-date {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            letter-spacing: 0.5px;
+        }
+
+        .signal-pair-direction {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .signal-pair {
+            font-size: 1.4rem;
+            font-weight: 900;
+            color: var(--primary);
+            text-shadow: 0 0 15px var(--primary);
+            font-family: 'Syne', sans-serif;
+        }
+
+        .signal-direction {
+            padding: 6px 16px;
+            border-radius: 30px;
+            font-weight: 800;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .signal-direction.buy {
+            background: rgba(0, 255, 136, 0.15);
+            color: var(--buy);
+            border: 1.5px solid var(--buy);
+        }
+
+        .signal-direction.sell {
+            background: rgba(255, 68, 68, 0.15);
+            color: var(--sell);
+            border: 1.5px solid var(--sell);
+        }
+
+        /* ===== SIGNAL DETAILS ===== */
+        .signal-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 15px;
+            background: rgba(0, 255, 255, 0.03);
+            padding: 15px;
+            border-radius: 18px;
+            border: 1px solid rgba(0, 255, 255, 0.1);
+        }
+
+        .detail-line {
+            display: flex;
+            justify-content: space-between;
+            padding: 6px 0;
+            align-items: center;
+            border-bottom: 1px solid rgba(0, 255, 255, 0.05);
+        }
+
+        .detail-line:last-child {
+            border-bottom: none;
+        }
+
+        .detail-label {
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .detail-label i {
+            color: var(--secondary);
+        }
+
+        .detail-value {
+            font-weight: 800;
+            color: var(--text-light);
+            font-family: 'Syne', monospace;
+            font-size: 1.1rem;
+        }
+
+        /* ===== SIGNAL ANALYSIS ===== */
+        .signal-analysis {
+            margin-bottom: 15px;
+            line-height: 1.7;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 15px;
+            border-radius: 15px;
+            font-size: 0.95rem;
+            white-space: pre-line;
+            border-left: 4px solid var(--primary);
+            color: var(--text-secondary);
+        }
+
+        /* ===== SIGNAL ACTIONS ===== */
+        .signal-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .action-btn {
+            background: none;
+            border: 1.5px solid rgba(0, 255, 255, 0.3);
+            color: var(--primary);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            padding: 8px 16px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+        }
+
+        .action-btn:hover {
+            background: rgba(0, 255, 255, 0.1);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .delete-btn {
+            color: var(--sell);
+            border-color: rgba(255, 68, 68, 0.3);
+        }
+
+        .delete-btn:hover {
+            background: rgba(255, 68, 68, 0.1);
+            border-color: var(--sell);
+        }
+
+        /* ===== SIDEBAR ===== */
+        .sidebar {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 2px solid var(--accent);
+            border-radius: 30px;
+            padding: 1.8rem;
+            height: fit-content;
+            box-shadow: 0 0 30px rgba(119, 0, 255, 0.2);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar {
+                padding: 2rem;
+            }
+        }
+
+        .sidebar h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            color: var(--accent);
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 15px var(--accent);
+        }
+
+        .sidebar h3 i {
+            color: var(--secondary);
+        }
+
+        /* ===== STATS GRID ===== */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 480px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .stat-card {
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.2rem;
+            text-align: center;
+            border: 1.5px solid rgba(119, 0, 255, 0.3);
+            transition: var(--transition);
+        }
+
+        .stat-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-3px);
+        }
+
+        .stat-value {
+            font-size: 1.8rem;
+            font-weight: 900;
+            color: var(--primary);
+            font-family: 'Syne', sans-serif;
+            text-shadow: 0 0 15px var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        /* ===== MODAL AUTH ===== */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(25px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .auth-container {
+            background: rgba(5, 8, 15, 0.95);
+            backdrop-filter: blur(30px);
+            border: 2px solid cyan;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 0 50px cyan;
+            animation: modalGlitch 0.4s;
+        }
+
+        @media (min-width: 480px) {
+            .auth-container {
+                padding: 2.5rem;
+            }
+        }
+
+        @keyframes modalGlitch {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .auth-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, cyan, #ff00d4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .close-auth {
+            background: none;
+            border: none;
+            color: cyan;
+            font-size: clamp(2.2rem, 7vw, 3rem);
+            cursor: pointer;
+            transition: 0.3s;
+            line-height: 1;
+        }
+
+        .close-auth:hover {
+            color: #ff00d4;
+            transform: rotate(180deg);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .auth-form input {
+            padding: 14px 20px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1.5px solid rgba(0,255,255,0.4);
+            border-radius: 50px;
+            font-size: 1rem;
+            color: white;
+            font-weight: 500;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .auth-form input:focus {
+            border-color: #ff00d4;
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 0 25px rgba(255,0,212,0.5);
+            outline: none;
+        }
+
+        .auth-submit {
+            padding: 14px;
+            background: linear-gradient(145deg, cyan, #0099ff);
+            border: none;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: black;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 25px cyan;
+            margin-top: 0.5rem;
+        }
+
+        .auth-submit:hover {
+            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            color: white;
+            box-shadow: 0 0 45px #ff00d4;
+        }
+
+        .auth-toggle {
+            margin-top: 1.8rem;
+            color: #bbf0ff;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .auth-toggle span {
+            color: cyan;
+            font-weight: 800;
+            cursor: pointer;
+            border-bottom: 1px solid cyan;
+            padding-bottom: 2px;
+        }
+
+        .auth-toggle span:hover {
+            color: #ff00d4;
+            border-bottom-color: #ff00d4;
+        }
+
+        .auth-error {
+            color: #ff7b9c;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            color: #8899ff;
+            font-size: 0.9rem;
+            padding: 1.8rem 1rem;
+            border-top: 1px solid rgba(119, 0, 255, 0.3);
+            width: 100%;
+            letter-spacing: 1px;
+        }
+
+        .footer-logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-logo i {
+            margin-right: 8px;
+            color: var(--primary);
+        }
+
+        /* ===== UTILIDADES ===== */
+        .hide-mobile {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .hide-mobile {
+                display: inline;
+            }
+        }
+
+        .glow {
+            text-shadow: 0 0 10px currentColor;
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.7; }
+            50% { opacity: 1; }
+            100% { opacity: 0.7; }
+        }
+
+        /* ===== AJUSTES TÁCTILES ===== */
+        @media (max-width: 768px) {
+            .signal-card:hover {
+                transform: none;
+            }
+            
+            .signal-card:active {
+                transform: scale(0.98);
+            }
+            
+            .action-btn:hover {
+                transform: none;
+            }
+            
+            .action-btn:active {
+                transform: scale(0.95);
+            }
+            
+            .stat-card:hover {
+                transform: none;
+            }
+            
+            .stat-card:active {
+                transform: scale(0.95);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PARTICLES -->
+    <div id="particles-js"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- LOADER -->
+    <div class="loader-container" id="loader">
+        <div class="loader-logo">
+            <i class="fas fa-satellite-dish"></i>
+            <span>HEYDIN KAYSER</span>
+        </div>
+        <div class="loader"></div>
+        <div class="loader-text">Iniciando Quantum Signals</div>
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>HEYDIN KAYSER</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html">INICIO</a>
+                    <a href="calculadora.html">CALCULADORA</a>
+                    <a href="fibonacci.html">FIBONACCI</a>
+                    <a href="horario.html">HORARIO</a>
+                    <a href="cursos.html">PROGRAMAS</a>
+                    <a href="signals.html" style="color: cyan; text-shadow: 0 0 10px cyan;">SEÑALES</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="login-btn" id="openLogin"><i class="fas fa-arrow-right-to-bracket"></i> <span class="hide-mobile">ACCESO</span></button>
+                    <button class="register-btn" id="openRegister"><i class="fas fa-user-plus"></i> <span class="hide-mobile">VIP</span></button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero-header">
+            <div class="hero-logo">
+                <i class="fas fa-satellite-dish hero-icon"></i>
+                <span class="hero-title">HEYDIN KAYSER</span>
+            </div>
+            <p class="hero-subtitle">QUANTUM TRADING SIGNALS · TIEMPO REAL</p>
+        </div>
+        
+        <div class="main-content">
+            <div class="content-left">
+                <button class="toggle-form-btn" id="toggleFormBtn">
+                    <i class="fas fa-plus-circle"></i> <span id="toggleFormText">Mostrar Formulario de Señal</span>
+                </button>
+                
+                <div class="signal-form" id="signalForm" style="display: none;">
+                    <h2>
+                        <i class="fas fa-chart-line"></i>
+                        Nueva Señal de Trading
+                    </h2>
+                    <form id="newSignalForm">
+                        <div class="form-group">
+                            <label for="pair"><i class="fas fa-coins"></i> Par de Divisas</label>
+                            <select id="pair" class="form-control" required>
+                                <option value="">Selecciona un par</option>
+                                <option value="XAU/USD">XAU/USD (Oro/Dólar)</option>
+                                <option value="EUR/USD">EUR/USD (Euro/Dólar)</option>
+                                <option value="GBP/USD">GBP/USD (Libra/Dólar)</option>
+                                <option value="USD/JPY">USD/JPY (Dólar/Yen)</option>
+                                <option value="AUD/USD">AUD/USD (Dólar Australiano/Dólar)</option>
+                                <option value="USD/CAD">USD/CAD (Dólar/Dólar Canadiense)</option>
+                                <option value="NZD/USD">NZD/USD (Dólar Neozelandés/Dólar)</option>
+                                <option value="USD/CHF">USD/CHF (Dólar/Franco Suizo)</option>
+                                <option value="EUR/GBP">EUR/GBP (Euro/Libra)</option>
+                                <option value="EUR/JPY">EUR/JPY (Euro/Yen)</option>
+                                <option value="GBP/JPY">GBP/JPY (Libra/Yen)</option>
+                                <option value="AUD/JPY">AUD/JPY (Dólar Australiano/Yen)</option>
+                                <option value="BTC/USD">BTC/USD (Bitcoin/Dólar)</option>
+                                <option value="ETH/USD">ETH/USD (Ethereum/Dólar)</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label><i class="fas fa-arrow-trend-up"></i> Dirección</label>
+                            <div class="direction-selector">
+                                <div class="direction-btn buy-btn" id="buyBtn">COMPRA</div>
+                                <div class="direction-btn sell-btn" id="sellBtn">VENTA</div>
+                            </div>
+                            <input type="hidden" id="direction" value="" required>
+                        </div>
+                        
+                        <div class="form-grid">
+                            <div class="form-group">
+                                <label for="entry"><i class="fas fa-login"></i> Punto de Entrada</label>
+                                <input type="number" id="entry" class="form-control" step="0.0001" placeholder="Ej: 1.2050" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="sl"><i class="fas fa-shield"></i> Stop Loss (SL)</label>
+                                <input type="number" id="sl" class="form-control" step="0.0001" placeholder="Ej: 1.2000" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tp1"><i class="fas fa-flag"></i> Take Profit 1 (TP1)</label>
+                                <input type="number" id="tp1" class="form-control" step="0.0001" placeholder="Ej: 1.2100" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="tp2"><i class="fas fa-flag"></i> Take Profit 2 (TP2)</label>
+                                <input type="number" id="tp2" class="form-control" step="0.0001" placeholder="Ej: 1.2150">
+                            </div>
+                            <div class="form-group">
+                                <label for="tp3"><i class="fas fa-flag"></i> Take Profit 3 (TP3)</label>
+                                <input type="number" id="tp3" class="form-control" step="0.0001" placeholder="Ej: 1.2200">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="analysis"><i class="fas fa-microchip"></i> Análisis Técnico</label>
+                            <textarea id="analysis" class="form-control" placeholder="Explica tu análisis técnico y por qué esperas que el precio suba o baje..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary" style="width: 100%; padding: 14px; background: linear-gradient(90deg, var(--primary), var(--accent)); color: black; border: none; border-radius: 50px; font-weight: 900; letter-spacing: 2px;">
+                            <i class="fas fa-rocket"></i> Publicar Señal
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="signals-list" id="signalsList">
+                    <!-- Las señales se cargarán aquí dinámicamente -->
+                </div>
+            </div>
+            
+            <div class="sidebar">
+                <h3>
+                    <i class="fas fa-chart-simple"></i>
+                    Estadísticas Cuánticas
+                </h3>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-value" id="totalSignals">0</div>
+                        <div class="stat-label">Señales Totales</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="activeUsers">0</div>
+                        <div class="stat-label">Usuarios Activos</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="buySignals">0</div>
+                        <div class="stat-label">Señales de Compra</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-value" id="sellSignals">0</div>
+                        <div class="stat-label">Señales de Venta</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div class="footer-logo">
+                <i class="fas fa-crown"></i> HEYDIN KAYSER
+            </div>
+            <p><i class="fas fa-satellite-dish"></i> Quantum Trading Signals · Precisión Cuántica <i class="fas fa-satellite-dish"></i></p>
+            <p style="margin-top: 0.5rem;">© 2025 HEYDIN KAYSER TRADING · Señales en Tiempo Real</p>
+        </div>
+    </div>
+    
+    <!-- MODAL AUTH -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2 id="authModalTitle">ACCESO VIP</h2>
+                <button class="close-auth" id="closeAuth">&times;</button>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <div id="authError" class="auth-error"></div>
+                <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                <button type="submit" class="auth-submit">INGRESAR</button>
+            </form>
+            <form class="auth-form" id="registerForm" style="display: none;">
+                <div id="registerError" class="auth-error"></div>
+                <input type="text" id="registerName" placeholder="Nombre completo" required>
+                <input type="email" id="registerEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="registerPassword" placeholder="Contraseña" required>
+                <input type="password" id="registerConfirmPassword" placeholder="Confirmar contraseña" required>
+                <button type="submit" class="auth-submit">ACTIVAR VIP</button>
+            </form>
+            <div class="auth-toggle">
+                <span id="toggleAuthForm">¿Sin membresía? Activa VIP ahora</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // ===== PARTICLES =====
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 100, density: { enable: true, value_area: 800 } },
+                color: { value: "#00ffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.4, random: true },
+                size: { value: 2.5, random: true },
+                line_linked: { enable: true, distance: 130, color: "#00ffff", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
+            },
+            interactivity: {
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+            },
+            retina_detect: true
+        });
+
+        // ===== LOADER =====
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('fade-out');
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 800);
+            }, 2000);
+        });
+
+        // ===== FIREBASE CONFIG =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+            authDomain: "beaver-trading.firebaseapp.com",
+            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+            projectId: "beaver-trading",
+            storageBucket: "beaver-trading.firebasestorage.app",
+            messagingSenderId: "926610131904",
+            appId: "1:926610131904:web:c147bd337bd12b4d085625",
+            measurementId: "G-1K51WWF2ZJ"
+        };
+
+        // Inicializar Firebase
+        firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        const auth = firebase.auth();
+
+        // ===== DOM ELEMENTS =====
+        const authSection = document.getElementById('authSection');
+        const userInfo = document.getElementById('userInfo');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const signalForm = document.getElementById('signalForm');
+        const toggleFormBtn = document.getElementById('toggleFormBtn');
+        const toggleFormText = document.getElementById('toggleFormText');
+        const newSignalForm = document.getElementById('newSignalForm');
+        const signalsList = document.getElementById('signalsList');
+        const totalSignals = document.getElementById('totalSignals');
+        const activeUsers = document.getElementById('activeUsers');
+        const buySignals = document.getElementById('buySignals');
+        const sellSignals = document.getElementById('sellSignals');
+        const buyBtn = document.getElementById('buyBtn');
+        const sellBtn = document.getElementById('sellBtn');
+        const directionInput = document.getElementById('direction');
+
+        // Estado de la aplicación
+        let currentUser = null;
+        let signals = [];
+        let currentDirection = '';
+        let isFormVisible = false;
+
+        // ===== MODAL AUTH =====
+        const modal = document.getElementById('authModal');
+        const openLogin = document.getElementById('openLogin');
+        const openRegister = document.getElementById('openRegister');
+        const closeBtn = document.getElementById('closeAuth');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const modalTitle = document.getElementById('authModalTitle');
+        const toggleSpan = document.getElementById('toggleAuthForm');
+        const authError = document.getElementById('authError');
+        const registerError = document.getElementById('registerError');
+
+        // ===== TOGGLE FORM =====
+        toggleFormBtn.addEventListener('click', () => {
+            isFormVisible = !isFormVisible;
+            if (isFormVisible) {
+                signalForm.style.display = 'block';
+                toggleFormText.textContent = 'Ocultar Formulario';
+                toggleFormBtn.innerHTML = '<i class="fas fa-minus-circle"></i> <span id="toggleFormText">Ocultar Formulario</span>';
+            } else {
+                signalForm.style.display = 'none';
+                toggleFormText.textContent = 'Mostrar Formulario de Señal';
+                toggleFormBtn.innerHTML = '<i class="fas fa-plus-circle"></i> <span id="toggleFormText">Mostrar Formulario de Señal</span>';
+            }
+        });
+
+        // ===== DIRECTION SELECTOR =====
+        function setDirection(direction, activeBtn, inactiveBtn) {
+            currentDirection = direction;
+            directionInput.value = direction;
+            activeBtn.classList.add('active');
+            inactiveBtn.classList.remove('active');
+        }
+
+        buyBtn.addEventListener('click', () => {
+            setDirection('COMPRA', buyBtn, sellBtn);
+        });
+
+        sellBtn.addEventListener('click', () => {
+            setDirection('VENTA', sellBtn, buyBtn);
+        });
+
+        // ===== MODAL CONTROLS =====
+        openLogin.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'flex';
+            registerForm.style.display = 'none';
+            modalTitle.innerText = 'ACCESO VIP';
+            toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            authError.innerText = '';
+            document.body.style.overflow = 'hidden';
+        });
+
+        openRegister.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'flex';
+            modalTitle.innerText = 'ACTIVAR VIP';
+            toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            registerError.innerText = '';
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        toggleSpan.addEventListener('click', () => {
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'flex';
+                registerForm.style.display = 'none';
+                modalTitle.innerText = 'ACCESO VIP';
+                toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'flex';
+                modalTitle.innerText = 'ACTIVAR VIP';
+                toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            }
+        });
+
+        // ===== LOGIN =====
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    loginForm.reset();
+                })
+                .catch((error) => {
+                    authError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+
+        // ===== REGISTRO =====
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const pass = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirmPassword').value;
+            
+            if (pass !== confirm) {
+                registerError.textContent = 'LAS CONTRASEÑAS NO COINCIDEN';
+                return;
+            }
+            if (pass.length < 6) {
+                registerError.textContent = 'MÍNIMO 6 CARACTERES';
+                return;
+            }
+            
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then((userCredential) => {
+                    return userCredential.user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    modal.style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    registerForm.reset();
+                })
+                .catch((error) => {
+                    registerError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+
+        // ===== AUTH STATE =====
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                currentUser = user;
+                signalForm.style.display = 'block';
+                toggleFormBtn.style.display = 'block';
+                isFormVisible = true;
+                toggleFormText.textContent = 'Ocultar Formulario';
+                toggleFormBtn.innerHTML = '<i class="fas fa-minus-circle"></i> <span id="toggleFormText">Ocultar Formulario</span>';
+                
+                // Cargar señales
+                loadSignals();
+            } else {
+                currentUser = null;
+                signalForm.style.display = 'none';
+                toggleFormBtn.style.display = 'none';
+                signalsList.innerHTML = '<div style="text-align: center; padding: 40px; color: var(--text-secondary);"><i class="fas fa-lock" style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary);"></i><h3>Acceso Restringido</h3><p style="margin-top: 1rem;">Inicia sesión para ver las señales de trading cuánticas</p></div>';
+            }
+        });
+
+        // ===== PUBLICAR SEÑAL =====
+        newSignalForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            if (!currentUser) {
+                alert('Debes iniciar sesión para publicar una señal');
+                return;
+            }
+            
+            if (!currentDirection) {
+                alert('Selecciona una dirección (COMPRA o VENTA)');
+                return;
+            }
+            
+            const pair = document.getElementById('pair').value;
+            const entry = parseFloat(document.getElementById('entry').value);
+            const sl = parseFloat(document.getElementById('sl').value);
+            const tp1 = parseFloat(document.getElementById('tp1').value);
+            const tp2 = parseFloat(document.getElementById('tp2').value) || null;
+            const tp3 = parseFloat(document.getElementById('tp3').value) || null;
+            const analysis = document.getElementById('analysis').value;
+            
+            const signal = {
+                pair,
+                direction: currentDirection,
+                entry,
+                sl,
+                tp1,
+                tp2,
+                tp3,
+                analysis,
+                userId: currentUser.uid,
+                userName: currentUser.displayName || currentUser.email.split('@')[0],
+                timestamp: firebase.firestore.FieldValue.serverTimestamp(),
+                date: new Date().toLocaleDateString('es-ES'),
+                likes: 0,
+                likedBy: []
+            };
+            
+            db.collection('signals').add(signal)
+                .then(() => {
+                    newSignalForm.reset();
+                    setDirection('', buyBtn, sellBtn);
+                    directionInput.value = '';
+                    
+                    // Ocultar formulario en móvil después de publicar
+                    if (window.innerWidth <= 768) {
+                        isFormVisible = false;
+                        signalForm.style.display = 'none';
+                        toggleFormText.textContent = 'Mostrar Formulario de Señal';
+                        toggleFormBtn.innerHTML = '<i class="fas fa-plus-circle"></i> <span id="toggleFormText">Mostrar Formulario de Señal</span>';
+                    }
+                })
+                .catch((error) => {
+                    alert('Error al publicar la señal: ' + error.message);
+                });
+        });
+
+        // ===== CARGAR SEÑALES =====
+        function loadSignals() {
+            db.collection('signals')
+                .orderBy('timestamp', 'desc')
+                .onSnapshot((snapshot) => {
+                    signals = [];
+                    let buyCount = 0;
+                    let sellCount = 0;
+                    
+                    signalsList.innerHTML = '';
+                    
+                    snapshot.forEach((doc) => {
+                        const signal = {
+                            id: doc.id,
+                            ...doc.data()
+                        };
+                        signals.push(signal);
+                        
+                        if (signal.direction === 'COMPRA') {
+                            buyCount++;
+                        } else if (signal.direction === 'VENTA') {
+                            sellCount++;
+                        }
+                        
+                        // Formatear fecha
+                        let timeString = 'Hace un momento';
+                        if (signal.timestamp) {
+                            const date = signal.timestamp.toDate();
+                            const now = new Date();
+                            const diffMs = now - date;
+                            const diffMins = Math.floor(diffMs / 60000);
+                            const diffHours = Math.floor(diffMs / 3600000);
+                            
+                            if (diffMins < 1) {
+                                timeString = 'Hace un momento';
+                            } else if (diffMins < 60) {
+                                timeString = `Hace ${diffMins} minuto${diffMins > 1 ? 's' : ''}`;
+                            } else if (diffHours < 24) {
+                                timeString = `Hace ${diffHours} hora${diffHours > 1 ? 's' : ''}`;
+                            } else {
+                                timeString = `Hace ${Math.floor(diffHours / 24)} día${Math.floor(diffHours / 24) > 1 ? 's' : ''}`;
+                            }
+                        }
+                        
+                        // Crear elemento de señal
+                        const signalElement = document.createElement('div');
+                        signalElement.className = `signal-card ${signal.direction === 'COMPRA' ? 'buy' : 'sell'}`;
+                        
+                        let tpContent = `
+                            <div class="detail-line">
+                                <span class="detail-label"><i class="fas fa-flag"></i> TP1</span>
+                                <span class="detail-value">${signal.tp1}</span>
+                            </div>
+                        `;
+                        
+                        if (signal.tp2) {
+                            tpContent += `
+                                <div class="detail-line">
+                                    <span class="detail-label"><i class="fas fa-flag"></i> TP2</span>
+                                    <span class="detail-value">${signal.tp2}</span>
+                                </div>
+                            `;
+                        }
+                        
+                        if (signal.tp3) {
+                            tpContent += `
+                                <div class="detail-line">
+                                    <span class="detail-label"><i class="fas fa-flag"></i> TP3</span>
+                                    <span class="detail-value">${signal.tp3}</span>
+                                </div>
+                            `;
+                        }
+                        
+                        signalElement.innerHTML = `
+                            <div class="signal-header">
+                                <div class="signal-user">
+                                    <div class="signal-avatar">${signal.userName ? signal.userName[0].toUpperCase() : 'U'}</div>
+                                    <div class="signal-meta">
+                                        <div class="signal-user-name glow">${signal.userName || 'Usuario'}</div>
+                                        <div class="signal-date"><i class="fas fa-clock"></i> ${signal.date} • ${timeString}</div>
+                                    </div>
+                                </div>
+                                <div class="signal-pair-direction">
+                                    <div class="signal-pair">${signal.pair}</div>
+                                    <div class="signal-direction ${signal.direction === 'COMPRA' ? 'buy' : 'sell'}">${signal.direction}</div>
+                                </div>
+                            </div>
+                            
+                            <div class="signal-details">
+                                <div class="detail-line">
+                                    <span class="detail-label"><i class="fas fa-circle-up"></i> ENTRADA</span>
+                                    <span class="detail-value">${signal.entry}</span>
+                                </div>
+                                <div class="detail-line">
+                                    <span class="detail-label"><i class="fas fa-shield"></i> SL</span>
+                                    <span class="detail-value">${signal.sl}</span>
+                                </div>
+                                ${tpContent}
+                            </div>
+                            
+                            <div class="signal-analysis">
+                                <i class="fas fa-microchip" style="color: var(--primary); margin-right: 8px;"></i> ${signal.analysis}
+                            </div>
+                            
+                            <div class="signal-actions">
+                                <button class="action-btn like-btn" data-id="${signal.id}">
+                                    <i class="fas fa-heart"></i>
+                                    <span>${signal.likes || 0}</span>
+                                </button>
+                                
+                                ${signal.userId === currentUser?.uid ? `
+                                    <button class="action-btn delete-btn" data-id="${signal.id}">
+                                        <i class="fas fa-trash"></i>
+                                        <span>Eliminar</span>
+                                    </button>
+                                ` : ''}
+                            </div>
+                        `;
+                        
+                        signalsList.appendChild(signalElement);
+                    });
+                    
+                    // Actualizar estadísticas
+                    totalSignals.textContent = signals.length;
+                    buySignals.textContent = buyCount;
+                    sellSignals.textContent = sellCount;
+                    activeUsers.textContent = "5"; // Simulamos 5 usuarios activos
+                    
+                    // Agregar event listeners para los botones de like
+                    document.querySelectorAll('.like-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const signalId = btn.getAttribute('data-id');
+                            likeSignal(signalId);
+                        });
+                    });
+                    
+                    // Agregar event listeners para los botones de eliminar
+                    document.querySelectorAll('.delete-btn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            const signalId = btn.getAttribute('data-id');
+                            deleteSignal(signalId);
+                        });
+                    });
+                });
+        }
+
+        // ===== LIKE SEÑAL =====
+        function likeSignal(signalId) {
+            if (!currentUser) return;
+            
+            const signal = signals.find(s => s.id === signalId);
+            if (!signal) return;
+            
+            const isLiked = signal.likedBy && signal.likedBy.includes(currentUser.uid);
+            const newLikes = isLiked ? (signal.likes || 0) - 1 : (signal.likes || 0) + 1;
+            const newLikedBy = isLiked 
+                ? (signal.likedBy || []).filter(id => id !== currentUser.uid)
+                : [...(signal.likedBy || []), currentUser.uid];
+            
+            db.collection('signals').doc(signalId).update({
+                likes: newLikes,
+                likedBy: newLikedBy
+            });
+        }
+
+        // ===== ELIMINAR SEÑAL =====
+        function deleteSignal(signalId) {
+            if (!currentUser) return;
+            
+            const signal = signals.find(s => s.id === signalId);
+            if (!signal || signal.userId !== currentUser.uid) {
+                alert('Solo puedes eliminar tus propias señales');
+                return;
+            }
+            
+            if (confirm('¿Estás seguro de que quieres eliminar esta señal?')) {
+                db.collection('signals').doc(signalId).delete()
+                    .then(() => {
+                        // No necesitamos hacer nada más, el snapshot actualizará automáticamente
+                    })
+                    .catch((error) => {
+                        alert('Error al eliminar la señal: ' + error.message);
+                    });
+            }
+        }
+
+        // ===== EFECTOS VISUALES =====
+        document.querySelectorAll('.btn, .action-btn').forEach(btn => {
+            btn.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.05)';
+            });
+            
+            btn.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+            });
+        });
+    </script>
+</body>
+</html>
