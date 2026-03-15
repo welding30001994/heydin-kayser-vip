@@ -1,3 +1,8 @@
 git add .
 git commit -m "Actualización"
 git push
+
+********************************************************
+https://textoo.vercel.app/
+https://github.com/welding30001994/textoo/tree/main
+********************************************************

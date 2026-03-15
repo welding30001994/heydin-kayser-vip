@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEYDIN KAYSER | Trading del Futuro</title>
+    <title>OXOMAX | Trading del Futuro</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -14,8 +14,6 @@
             --darker: #050510;
             --light: #e0e0ff;
             --accent: #ff2d7b;
-            --success: #00ff9d;
-            --warning: #ffaa00;
         }
         
         * {
@@ -85,14 +83,6 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
             letter-spacing: 2px;
-        }
-        
-        .logo span {
-            font-size: 1rem;
-            display: block;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
         }
         
         .nav-links {
@@ -275,12 +265,6 @@
             color: var(--accent);
         }
         
-        .course-card .price small {
-            font-size: 0.9rem;
-            color: var(--warning);
-            display: block;
-        }
-        
         .course-card .info-item {
             margin-bottom: 0.8rem;
             display: flex;
@@ -324,11 +308,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(5, 5, 16, 0.95);
+            background: rgba(5, 5, 16, 0.9);
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(5px);
         }
         
         .payment-content {
@@ -336,12 +320,10 @@
             border: 1px solid var(--primary);
             border-radius: 10px;
             padding: 2rem;
-            max-width: 700px;
+            max-width: 600px;
             width: 90%;
-            max-height: 90vh;
-            overflow-y: auto;
             position: relative;
-            box-shadow: 0 0 50px rgba(0, 247, 255, 0.3);
+            box-shadow: 0 0 30px rgba(0, 247, 255, 0.3);
         }
         
         .payment-content h2 {
@@ -368,27 +350,16 @@
         
         .bank-info {
             margin-bottom: 2rem;
-            padding: 1rem;
-            border: 1px solid rgba(0, 247, 255, 0.2);
-            border-radius: 5px;
         }
         
         .bank-info p {
             margin-bottom: 0.8rem;
             display: flex;
-            border-bottom: 1px solid rgba(0, 247, 255, 0.1);
-            padding-bottom: 0.5rem;
         }
         
         .bank-info p strong {
             min-width: 150px;
             color: var(--primary);
-        }
-        
-        .bank-info .highlight {
-            color: var(--success);
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
         }
         
         .qr-container {
@@ -413,146 +384,12 @@
             100% { filter: hue-rotate(20deg) drop-shadow(0 0 15px rgba(0, 247, 255, 0.8)); }
         }
         
-        .payment-form {
-            margin-top: 2rem;
-        }
-        
-        .form-group {
-            margin-bottom: 1.5rem;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 0.5rem;
-            color: var(--primary);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
-        }
-        
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 0.8rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 247, 255, 0.3);
-            border-radius: 5px;
-            color: var(--light);
-            font-family: 'Roboto', sans-serif;
-            transition: all 0.3s;
-        }
-        
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
-        }
-        
-        .form-group input[type="file"] {
-            padding: 0.5rem;
-        }
-        
-        .submit-button {
-            width: 100%;
-            padding: 1rem;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            color: var(--darker);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-        }
-        
-        .submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
-        }
-        
         .instructions {
             font-size: 0.9rem;
             color: rgba(224, 224, 255, 0.7);
             text-align: center;
             margin-top: 1.5rem;
             line-height: 1.6;
-        }
-        
-        .confirmation-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 5, 16, 0.98);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-        
-        .confirmation-content {
-            background: var(--darker);
-            border: 2px solid var(--success);
-            border-radius: 10px;
-            padding: 3rem;
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            animation: pulseSuccess 2s infinite;
-        }
-        
-        @keyframes pulseSuccess {
-            0% { box-shadow: 0 0 30px rgba(0, 255, 157, 0.3); }
-            50% { box-shadow: 0 0 60px rgba(0, 255, 157, 0.6); }
-            100% { box-shadow: 0 0 30px rgba(0, 255, 157, 0.3); }
-        }
-        
-        .confirmation-content h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--success);
-            font-size: 2.5rem;
-            margin-bottom: 1rem;
-        }
-        
-        .confirmation-content .success-icon {
-            font-size: 5rem;
-            color: var(--success);
-            margin-bottom: 1rem;
-        }
-        
-        .confirmation-content p {
-            margin-bottom: 1rem;
-            color: var(--light);
-        }
-        
-        .confirmation-content .transaction-id {
-            background: rgba(0, 255, 157, 0.1);
-            padding: 1rem;
-            border-radius: 5px;
-            font-family: 'Orbitron', sans-serif;
-            margin: 1.5rem 0;
-            border: 1px dashed var(--success);
-        }
-        
-        .close-confirmation {
-            padding: 0.8rem 2rem;
-            background: transparent;
-            border: 2px solid var(--success);
-            color: var(--success);
-            font-family: 'Orbitron', sans-serif;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s;
-        }
-        
-        .close-confirmation:hover {
-            background: var(--success);
-            color: var(--dark);
         }
         
         footer {
@@ -570,6 +407,7 @@
             margin: 1rem 0;
         }
         
+        /* Efectos futuristas adicionales */
         .floating-shapes {
             position: fixed;
             top: 0;
@@ -612,6 +450,7 @@
             75% { transform: translate(-50px, 50px) rotate(-5deg); }
         }
         
+        /* Responsive */
         @media (max-width: 768px) {
             .hero h1 {
                 font-size: 2.5rem;
@@ -623,14 +462,6 @@
             
             .nav-links {
                 display: none;
-            }
-            
-            .bank-info p {
-                flex-direction: column;
-            }
-            
-            .bank-info p strong {
-                margin-bottom: 0.3rem;
             }
         }
     </style>
@@ -644,7 +475,7 @@
     
     <div class="container">
         <header>
-            <div class="logo">HEYDIN KAYSER<span>TRADING SYSTEMS</span></div>
+            <div class="logo">HEYDIN</div>
             <nav class="nav-links">
                 <a href="#courses">Cursos</a>
                 <a href="#about">Nosotros</a>
@@ -655,83 +486,95 @@
         
         
         <section class="courses-section" id="courses">
-            <h2 class="section-title">PROGRAMAS CUÁNTICOS</h2>
+            <h2 class="section-title">NUESTROS PROGRAMAS</h2>
             
             <div class="courses-grid">
                 <!-- Curso Básico -->
                 <div class="course-card">
                     <h3>BASIC QUANTUM</h3>
-                    <div class="price">50<small>Inscripción: $20</small></div>
+                    <div class="price">30</div>
                     <div class="info-item">12 semanas (3 meses)</div>
                     <div class="info-item">Capital: $20 - $500</div>
                     <div class="info-item">Operaciones: 0.01 - 0.05</div>
                     <div class="info-item">Ganancias: $5-$20 diarios</div>
-                    <div class="info-item">Ganancias mensuales $150-$600</div>
-                    <button class="buy-button" onclick="openPaymentModal('BASIC QUANTUM', 50)">ACCEDER AL PROGRAMA</button>
+                    <div class="info-item"> Ganancias mensuales $150-$600 mensuales</div>
+                    <button class="buy-button" onclick="openPaymentModal('BASIC QUANTUM', 30)">ACCEDER AL PROGRAMA</button>
                 </div>
                 
                 <!-- Curso Medio -->
                 <div class="course-card">
                     <h3>INTERMEDIATE NEO</h3>
-                    <div class="price">100<small>Inscripción: $20</small></div>
+                    <div class="price">80</div>
                     <div class="info-item">24 semanas (6 meses)</div>
                     <div class="info-item">Capital: $500 - $1000</div>
                     <div class="info-item">Operaciones: 0.05 - 0.15</div>
-                    <div class="info-item">Ganancias mensuales $900-$1500</div>
-                    <button class="buy-button" onclick="openPaymentModal('INTERMEDIATE NEO', 100)">ACCEDER AL PROGRAMA</button>
+                    <div class="info-item"> Ganancias mensuales $900-$1500 mensuales</div>
+                    <button class="buy-button" onclick="openPaymentModal('INTERMEDIATE NEO', 80)">ACCEDER AL PROGRAMA</button>
                 </div>
                 
                 <!-- Curso Avanzado -->
                 <div class="course-card">
                     <h3>ADVANCED ALPHA</h3>
-                    <div class="price">170<small>Inscripción: $20</small></div>
+                    <div class="price">150</div>
                     <div class="info-item">12 semanas (3 meses)</div>
                     <div class="info-item">Capital: $1000 - $3000</div>
                     <div class="info-item">Operaciones: 0.15 - 0.30</div>
-                    <div class="info-item">Ganancias mensuales $1500-$3000</div>
-                    <button class="buy-button" onclick="openPaymentModal('ADVANCED ALPHA', 170)">ACCEDER AL PROGRAMA</button>
+                     <div class="info-item"> Ganancias mensuales $1500-$3000 mensuales</div>
+                    <button class="buy-button" onclick="openPaymentModal('ADVANCED ALPHA', 150)">ACCEDER AL PROGRAMA</button>
                 </div>
                 
                 <!-- Curso Zafiro -->
                 <div class="course-card">
                     <h3>SAPPHIRE PRO</h3>
-                    <div class="price">270<small>Inscripción: $20</small></div>
+                    <div class="price">250</div>
                     <div class="info-item">24 semanas (6 meses)</div>
                     <div class="info-item">Capital: $3000 - $7000</div>
                     <div class="info-item">Operaciones: 0.30 - 0.45</div>
                     <div class="info-item">Ganancias: $100-$300 diarios</div>
-                    <div class="info-item">Ganancias mensuales $3000-$9000</div>
-                    <button class="buy-button" onclick="openPaymentModal('SAPPHIRE PRO', 270)">ACCEDER AL PROGRAMA</button>
+                    <div class="info-item"> Ganancias mensuales $3000-$9000 </div>
+                    <button class="buy-button" onclick="openPaymentModal('SAPPHIRE PRO', 250)">ACCEDER AL PROGRAMA</button>
                 </div>
                 
                 <!-- Curso Platinum -->
                 <div class="course-card">
                     <h3>PLATINUM ELITE</h3>
-                    <div class="price">420<small>Inscripción: $20</small></div>
+                    <div class="price">400</div>
                     <div class="info-item">12 semanas (3 meses)</div>
                     <div class="info-item">Capital: $3000 - $7000</div>
                     <div class="info-item">Operaciones: 0.30 - 0.45</div>
                     <div class="info-item">Ganancias: $300-$800 diarios</div>
-                    <div class="info-item">Ganancias mensuales $9000-$24000</div>
-                    <button class="buy-button" onclick="openPaymentModal('PLATINUM ELITE', 420)">ACCEDER AL PROGRAMA</button>
+                    <div class="info-item"> Ganancias mensuales $9000-$24000 </div>
+                    <button class="buy-button" onclick="openPaymentModal('PLATINUM ELITE', 400)">ACCEDER AL PROGRAMA</button>
                 </div>
                 
                 <!-- Curso Oro -->
                 <div class="course-card">
                     <h3>GOLD MASTER</h3>
-                    <div class="price">720<small>Inscripción: $20</small></div>
+                    <div class="price">700</div>
                     <div class="info-item">12 semanas (3 meses)</div>
                     <div class="info-item">Capital: $7000 - $13000</div>
                     <div class="info-item">Operaciones: 0.45 - 0.70</div>
-                    <div class="info-item">Ganancias mensuales $24000-$90000</div>
-                    <button class="buy-button" onclick="openPaymentModal('GOLD MASTER', 720)">ACCEDER AL PROGRAMA</button>
+                    <div class="info-item"> Ganancias mensuales $24000-$90000</div>
+                    <button class="buy-button" onclick="openPaymentModal('GOLD MASTER', 700)">ACCEDER AL PROGRAMA</button>
                 </div>
             </div>
         </section>
 
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=61579696913394" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@heydin.kayser2026" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.youtube.com/@heydinkaysertrading" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/heydin_kayser2026/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/593991987552" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/+x8P5ya17Dek4YjBh" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+        
         <footer>
-            <p>© 2010 HEYDIN KAYSER TRADING SYSTEMS | Todos los derechos reservados</p>
+            <p>© 2010 OXOMAX TRADING SYSTEMS | Todos los derechos reservados</p>
             <p>El trading implica riesgos. Los resultados pasados no garantizan rendimientos futuros.</p>
+
+
+
         </footer>
     </div>
     
@@ -743,93 +586,41 @@
             <div class="cyber-line"></div>
             
             <div class="bank-info">
-                <p><strong>Banco:</strong> <span class="highlight">Pichincha</span></p>
-                <p><strong>Tipo de Cuenta:</strong> Ahorros</p>
-                <p><strong>Número de Cuenta:</strong> <span class="highlight">2203838240</span></p>
-                <p><strong>Titular:</strong> Miguel Alexander Fonseca Carranza</p>
-                <p><strong>Monto Total:</strong> <span class="highlight" id="modalCoursePrice">$0</span> (Incluye inscripción de $20)</p>
-                <p><strong>USDT (BEP20):</strong> TJujJqGa14F56TKDqWtz3yFvk4EubnxdeD</p>
+            
+             
+          
+
+                <p><strong>Usdt :</strong> TJujJqGa14F56TKDqWtz3yFvk4EubnxdeD </p>
+                <p><strong>Monto a transferir:</strong> <span id="modalCoursePrice">$0</span></p>
             </div>
+            
+
+
+
 
             <div class="qr-container">
-                <p>⚡ ESCANEA EL CÓDIGO QR PARA PAGO RÁPIDO ⚡</p>
+                <p>ESCANEA EL CÓDIGO QR PARA PAGO RÁPIDO</p>
                 <img src="https://raw.githubusercontent.com/welding30001994/OXOMAX/refs/heads/main/Imagen%20de%20WhatsApp%202025-07-05%20a%20las%2010.51.30_d5c53b73.jpg" alt="Código QR para transferencia">
             </div>
-
-            <form id="paymentForm" class="payment-form" onsubmit="sendPaymentConfirmation(event)">
-                <div class="form-group">
-                    <label>🔷 NOMBRE COMPLETO</label>
-                    <input type="text" id="fullName" required placeholder="Ingresa tu nombre completo">
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 CORREO ELECTRÓNICO</label>
-                    <input type="email" id="email" required placeholder="tu@email.com">
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 NÚMERO DE WHATSAPP</label>
-                    <input type="tel" id="phone" required placeholder="+593XXXXXXXXX">
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 COMPROBANTE DE PAGO</label>
-                    <input type="file" id="voucher" accept="image/*" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 MÉTODO DE PAGO</label>
-                    <select id="paymentMethod" required style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(0,247,255,0.3); border-radius: 5px; color: var(--light);">
-                        <option value="">SELECCIONA UN MÉTODO</option>
-                        <option value="pichincha">Banco Pichincha</option>
-                        <option value="usdt">USDT (BEP20)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 NÚMERO DE TRANSACCIÓN</label>
-                    <input type="text" id="transactionNumber" required placeholder="Ingresa el número de transacción">
-                </div>
-                
-                <button type="submit" class="submit-button">🚀 CONFIRMAR PAGO 🚀</button>
-            </form>
             
             <div class="instructions">
-                <p>📱 Envía el comprobante a nuestro WhatsApp +593980051394</p>
-                <p>⏳ Acceso habilitado dentro de 24 horas</p>
+                <p>Realiza la transferencia por el monto exacto indicado.</p>
+                <p>Envía el comprobante de pago a nuestro WhatsApp +593980051394 para activar tu acceso al programa.</p>
+                <p>El acceso se habilita dentro de las 24 horas posteriores a la confirmación del pago.</p>
             </div>
-        </div>
-    </div>
-    
-    <!-- Modal de Confirmación -->
-    <div class="confirmation-modal" id="confirmationModal">
-        <div class="confirmation-content">
-            <div class="success-icon">✅</div>
-            <h2>¡PAGO CONFIRMADO!</h2>
-            <p>Tu transacción ha sido procesada exitosamente</p>
-            <div class="transaction-id" id="transactionIdDisplay">
-                ID: HEYDIN-2024-XXXXXX
-            </div>
-            <p>Hemos enviado los detalles a tu correo electrónico</p>
-            <p class="instruction">Recibirás acceso al programa en máximo 24 horas</p>
-            <button class="close-confirmation" onclick="closeConfirmationModal()">CONTINUAR</button>
         </div>
     </div>
     
     <script>
         // Modal de pago
         function openPaymentModal(courseName, price) {
-            document.getElementById('modalCourseTitle').textContent = courseName + ' - ' + price;
-            document.getElementById('modalCoursePrice').textContent = '$' + price + ' USD';
+            document.getElementById('modalCourseTitle').textContent = courseName;
+            document.getElementById('modalCoursePrice').textContent = '$' + price;
             document.getElementById('paymentModal').style.display = 'flex';
         }
         
         function closePaymentModal() {
             document.getElementById('paymentModal').style.display = 'none';
-        }
-        
-        function closeConfirmationModal() {
-            document.getElementById('confirmationModal').style.display = 'none';
         }
         
         // Cerrar modal al hacer click fuera
@@ -857,112 +648,21 @@
             });
         });
         
-        // Función para enviar confirmación de pago por correo
-        function sendPaymentConfirmation(event) {
-            event.preventDefault();
-            
-            // Obtener datos del formulario
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const courseName = document.getElementById('modalCourseTitle').textContent;
-            const price = document.getElementById('modalCoursePrice').textContent;
-            const paymentMethod = document.getElementById('paymentMethod').value;
-            const transactionNumber = document.getElementById('transactionNumber').value;
-            
-            // Generar ID de transacción único
-            const transactionId = 'HEYDIN-' + new Date().getFullYear() + '-' + 
-                                 Math.random().toString(36).substr(2, 9).toUpperCase();
-            
-            // Crear el contenido del correo
-            const emailContent = `
-                <h2>🚀 NUEVO PAGO CONFIRMADO - HEYDIN KAYSER</h2>
-                
-                <h3>DETALLES DEL ESTUDIANTE:</h3>
-                <p><strong>Nombre:</strong> ${fullName}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>WhatsApp:</strong> ${phone}</p>
-                
-                <h3>DETALLES DEL PROGRAMA:</h3>
-                <p><strong>Programa:</strong> ${courseName}</p>
-                <p><strong>Monto pagado:</strong> ${price}</p>
-                <p><strong>Método de pago:</strong> ${paymentMethod === 'pichincha' ? 'Banco Pichincha' : 'USDT (BEP20)'}</p>
-                
-                <h3>DETALLES DE TRANSACCIÓN:</h3>
-                <p><strong>ID de transacción:</strong> ${transactionId}</p>
-                <p><strong>Número de transacción:</strong> ${transactionNumber}</p>
-                <p><strong>Fecha y hora:</strong> ${new Date().toLocaleString()}</p>
-                
-                <h3>DATOS BANCARIOS PARA VERIFICACIÓN:</h3>
-                <p><strong>Banco Pichincha - Ahorros:</strong> 2203838240</p>
-                <p><strong>Titular:</strong> Miguel Alexander Fonseca Carranza</p>
-                
-                <h3>PRÓXIMOS PASOS:</h3>
-                <p>✅ El acceso al programa será habilitado dentro de 24 horas</p>
-                <p>📱 Se enviarán las credenciales al WhatsApp: ${phone}</p>
-                <p>📧 Se enviarán instrucciones detalladas a: ${email}</p>
-                
-                <hr>
-                <p><em>Este es un correo automático del sistema HEYDIN KAYSER TRADING SYSTEMS</em></p>
-            `;
-            
-            // Crear un enlace mailto con los datos
-            const mailtoLink = `mailto:welding30001994@gmail.com?subject=🔷 CONFIRMACIÓN DE PAGO - ${courseName} - ${fullName}&body=${encodeURIComponent(
-                'NUEVO PAGO CONFIRMADO\n\n' +
-                'DATOS DEL ESTUDIANTE:\n' +
-                'Nombre: ' + fullName + '\n' +
-                'Email: ' + email + '\n' +
-                'WhatsApp: ' + phone + '\n\n' +
-                'PROGRAMA:\n' +
-                'Curso: ' + courseName + '\n' +
-                'Monto: ' + price + '\n' +
-                'Método: ' + (paymentMethod === 'pichincha' ? 'Banco Pichincha' : 'USDT') + '\n' +
-                'Número de transacción: ' + transactionNumber + '\n' +
-                'ID Transacción: ' + transactionId + '\n\n' +
-                'DATOS BANCARIOS PARA VERIFICACIÓN:\n' +
-                'Banco Pichincha - Ahorros: 2203838240\n' +
-                'Titular: Miguel Alexander Fonseca Carranza\n\n' +
-                'FECHA: ' + new Date().toLocaleString()
-            )}`;
-            
-            // Abrir el cliente de correo
-            window.location.href = mailtoLink;
-            
-            // Cerrar modal de pago
-            closePaymentModal();
-            
-            // Mostrar modal de confirmación
-            document.getElementById('transactionIdDisplay').textContent = 'ID: ' + transactionId;
-            document.getElementById('confirmationModal').style.display = 'flex';
-            
-            // Limpiar formulario
-            document.getElementById('paymentForm').reset();
-            
-            // Simular envío de correo (en un entorno real, esto sería una petición a un backend)
-            console.log('Enviando correo a welding30001994@gmail.com con los siguientes datos:', {
-                to: 'welding30001994@gmail.com',
-                subject: `NUEVO PAGO - ${courseName} - ${fullName}`,
-                content: emailContent
-            });
-        }
-        
         // Efecto de escritura en el título
         const heroTitle = document.querySelector('.hero h1');
-        if (heroTitle) {
-            const text = heroTitle.textContent;
-            heroTitle.textContent = '';
-            
-            let i = 0;
-            const typeWriter = () => {
-                if (i < text.length) {
-                    heroTitle.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 50);
-                }
-            };
-            
-            setTimeout(typeWriter, 1000);
-        }
+        const text = heroTitle.textContent;
+        heroTitle.textContent = '';
+        
+        let i = 0;
+        const typeWriter = () => {
+            if (i < text.length) {
+                heroTitle.textContent += text.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50);
+            }
+        };
+        
+        setTimeout(typeWriter, 1000);
     </script>
 </body>
 </html>
