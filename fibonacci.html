@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-  <title>Fibonacci Grid | BUY / SELL Trading</title>
+  <title>Fibonacci Grid Pro | Beaver Trading</title>
   <style>
     * {
       box-sizing: border-box;
@@ -13,20 +13,17 @@
       background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
       margin: 0;
       min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
       padding: 20px;
     }
     .main-card {
-      max-width: 820px;
+      max-width: 1000px;
       width: 100%;
       background: #f8fafc;
       border-radius: 2rem;
       box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      margin: 0 auto;
       overflow: hidden;
       padding: 1.8rem;
-      transition: all 0.2s ease;
     }
     h1 {
       font-size: 1.8rem;
@@ -36,28 +33,26 @@
       background-clip: text;
       -webkit-background-clip: text;
       color: transparent;
-      letter-spacing: -0.5px;
     }
     .sub {
       color: #475569;
       border-left: 4px solid #f97316;
       padding-left: 14px;
-      font-weight: 500;
       margin-bottom: 1.5rem;
-      font-size: 0.9rem;
+      font-size: 0.85rem;
     }
-    /* Botones BUY / SELL principales */
-    .direction-buttons {
+    .direction-buttons, .action-buttons {
       display: flex;
       gap: 1rem;
       margin-bottom: 1.5rem;
+      flex-wrap: wrap;
     }
-    .dir-btn {
+    .dir-btn, .action-btn {
       flex: 1;
-      padding: 14px 20px;
-      border-radius: 1.2rem;
+      padding: 12px 20px;
+      border-radius: 1rem;
       font-weight: 800;
-      font-size: 1.2rem;
+      font-size: 1rem;
       border: 2px solid #e2e8f0;
       background: white;
       cursor: pointer;
@@ -68,358 +63,178 @@
       background: #dc2626;
       border-color: #dc2626;
       color: white;
-      box-shadow: 0 8px 20px #dc262640;
     }
     .dir-btn.buy-active {
       background: #16a34a;
       border-color: #16a34a;
       color: white;
-      box-shadow: 0 8px 20px #16a34a40;
     }
-    .dir-btn:not(.sell-active):not(.buy-active):hover {
-      border-color: #f97316;
-      background: #fff7ed;
+    .action-btn {
+      background: #1e293b;
+      color: white;
+      border: none;
+    }
+    .action-btn:hover {
+      background: #f97316;
+      transform: translateY(-2px);
     }
     .input-panel {
       background: white;
       border-radius: 1.5rem;
-      padding: 1.2rem 1.5rem;
-      margin-bottom: 1.8rem;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
       border: 1px solid #e2e8f0;
     }
     .input-group {
       display: flex;
       flex-wrap: wrap;
       gap: 1rem;
-      justify-content: space-between;
       align-items: flex-end;
     }
     .field {
       flex: 1;
-      min-width: 140px;
+      min-width: 130px;
     }
     .field label {
       display: block;
       font-weight: 700;
-      font-size: 0.75rem;
+      font-size: 0.7rem;
       text-transform: uppercase;
-      letter-spacing: 0.8px;
       color: #f97316;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
     .field input {
       width: 100%;
-      padding: 12px 14px;
-      border-radius: 1rem;
+      padding: 10px 12px;
+      border-radius: 0.8rem;
       border: 2px solid #e2e8f0;
-      background: white;
       font-weight: 600;
-      font-size: 1rem;
-      transition: 0.2s;
-      outline: none;
-      font-family: 'Courier New', monospace;
-    }
-    .field input:focus {
-      border-color: #f97316;
-      box-shadow: 0 0 0 3px #f9731630;
+      font-size: 0.9rem;
+      font-family: monospace;
     }
     .btn-calc {
       background: #1e293b;
       color: white;
       border: none;
-      padding: 10px 24px;
-      border-radius: 1rem;
+      padding: 10px 20px;
+      border-radius: 0.8rem;
       font-weight: 700;
-      font-size: 0.85rem;
       cursor: pointer;
-      transition: 0.2s;
-      margin-top: 18px;
     }
-    .btn-calc:hover {
-      background: #f97316;
-      transform: translateY(-2px);
-    }
-    .fib-table {
+    .fib-table, .grid-card, .history-card {
       background: white;
-      border-radius: 1.5rem;
+      border-radius: 1.2rem;
       overflow: hidden;
-      margin-bottom: 1.8rem;
-      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      margin-bottom: 1.5rem;
       border: 1px solid #e2e8f0;
     }
-    .fib-header {
+    .fib-header, .grid-header, .history-header {
       background: linear-gradient(135deg, #1e293b, #0f172a);
       color: white;
-      padding: 1rem 1.5rem;
+      padding: 0.8rem 1.2rem;
       font-weight: 800;
-      font-size: 1rem;
       display: flex;
       justify-content: space-between;
-      align-items: center;
     }
-    .fib-row {
+    .fib-row, .grid-row {
       display: flex;
       justify-content: space-between;
-      padding: 0.85rem 1.5rem;
+      padding: 0.7rem 1.2rem;
       border-bottom: 1px solid #f1f5f9;
-      font-weight: 600;
       flex-wrap: wrap;
-      gap: 8px;
+      gap: 5px;
     }
-    .fib-row:last-child {
+    .grid-row:last-child, .fib-row:last-child {
       border-bottom: none;
     }
-    .fib-level {
-      color: #f97316;
-      font-weight: 800;
-      min-width: 70px;
-    }
-    .fib-price {
-      font-family: 'Courier New', monospace;
-      font-weight: 700;
-      color: #0f172a;
-      letter-spacing: 0.5px;
-    }
-    .fib-zone {
-      font-size: 0.75rem;
-      padding: 2px 10px;
-      border-radius: 20px;
-      background: #f1f5f9;
-      color: #475569;
-    }
-    .range-section {
-      margin: 1rem 0 1rem;
-    }
-    .range-title {
-      font-weight: 700;
-      color: #1e293b;
-      margin-bottom: 0.8rem;
-      font-size: 0.9rem;
-    }
-    .grid-buttons {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    .range-btn {
-      flex: 1;
-      background: white;
-      border: 2px solid #e2e8f0;
-      padding: 12px 16px;
-      border-radius: 1.2rem;
-      font-weight: 800;
-      font-size: 0.95rem;
-      color: #1e293b;
-      cursor: pointer;
-      transition: all 0.2s ease;
-      text-align: center;
-    }
-    .range-btn.active {
-      background: #f97316;
-      border-color: #f97316;
-      color: white;
-      box-shadow: 0 8px 20px #f9731640;
-    }
-    .grid-container {
-      margin-top: 1.5rem;
-      border-radius: 1.5rem;
-      overflow: hidden;
-    }
-    .grid-card {
-      background: white;
-      border-radius: 1.5rem;
-      overflow: hidden;
-      border: 1px solid #e2e8f0;
-    }
-    .zone-header {
-      background: linear-gradient(135deg, #f97316, #ea580c);
-      color: white;
-      padding: 1rem 1.5rem;
-      font-weight: 800;
-      font-size: 1rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .grid-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.85rem 1.5rem;
-      border-bottom: 1px solid #f1f5f9;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .grid-row:last-child {
-      border-bottom: none;
-    }
-    .level-name {
-      font-weight: 800;
-      color: #334155;
-      min-width: 90px;
-    }
-    .level-price {
-      font-family: 'Courier New', monospace;
-      font-weight: 700;
-      color: #0f172a;
-      flex: 1;
-      text-align: right;
-      padding: 0 0.5rem;
-    }
-    .level-tag {
-      min-width: 100px;
-      text-align: right;
-    }
-    .tag-sell {
-      background: #fee2e2;
-      color: #dc2626;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.75rem;
-      display: inline-block;
-    }
-    .tag-buy {
-      background: #dcfce7;
-      color: #16a34a;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.75rem;
-      display: inline-block;
-    }
-    .tag-resist {
-      background: #ffedd5;
-      color: #f97316;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.7rem;
-    }
-    .tag-support {
-      background: #e0f2fe;
-      color: #0284c7;
-      padding: 4px 12px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.7rem;
-    }
-    .info-note {
-      font-size: 0.7rem;
-      text-align: center;
-      margin-top: 1.5rem;
-      color: #64748b;
-      background: #f1f5f9;
+    .fib-level { font-weight: 800; color: #f97316; min-width: 70px; }
+    .fib-price { font-family: monospace; font-weight: 700; }
+    .level-name, .grid-level { font-weight: 800; color: #f97316; min-width: 70px; }
+    .level-price, .grid-price { font-family: monospace; font-weight: 700; }
+    .tag-sell { background: #fee2e2; color: #dc2626; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; }
+    .tag-buy { background: #dcfce7; color: #16a34a; padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; }
+    .tag-resist, .tag-support { padding: 2px 10px; border-radius: 20px; font-size: 0.7rem; background: #ffedd5; color: #f97316; }
+    .history-list { max-height: 300px; overflow-y: auto; }
+    .history-item {
       padding: 0.8rem;
-      border-radius: 1rem;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.75rem;
+      cursor: pointer;
     }
+    .history-item:hover { background: #f1f5f9; }
     @media (max-width: 600px) {
-      .main-card {
-        padding: 1rem;
-      }
-      .level-price {
-        text-align: left;
-        flex: none;
-        width: 100%;
-        padding-left: 0;
-      }
-      .level-tag {
-        text-align: left;
-      }
-      .fib-row {
-        flex-direction: column;
-        gap: 4px;
-      }
-      .dir-btn {
-        font-size: 1rem;
-        padding: 10px;
-      }
+      .main-card { padding: 1rem; }
     }
   </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 </head>
 <body>
-<div class="main-card">
-  <h1>📊 Fibonacci Grid | BUY / SELL</h1>
-  <div class="sub">Niveles de Fibonacci + Cuadrícula | Modo SELL (original) / BUY (inverso)</div>
+<div class="main-card" id="reportContent">
+  <h1>📊 Fibonacci Grid Pro</h1>
+  <div class="sub">Beaver Trading | Análisis Técnico + Niveles Fibonacci</div>
 
-  <!-- Botones principales BUY / SELL -->
   <div class="direction-buttons">
-    <div id="btnSellMode" class="dir-btn sell-active">🔻 SELL (Original)</div>
-    <div id="btnBuyMode" class="dir-btn">📈 BUY (Inverso)</div>
+    <div id="btnSellMode" class="dir-btn sell-active">🔻 SELL (Bearish)</div>
+    <div id="btnBuyMode" class="dir-btn">📈 BUY (Bullish)</div>
+  </div>
+  <div class="action-buttons">
+    <button id="downloadPDFBtn" class="action-btn">📄 DESCARGAR PDF</button>
+    <button id="saveOperationBtn" class="action-btn">💾 GUARDAR OPERACIÓN</button>
   </div>
 
   <div class="input-panel">
     <div class="input-group">
-      <div class="field">
-        <label>🔺 MÁXIMO</label>
-        <input type="text" id="maxInput" step="any" value="75996.29" placeholder="Ej: 75996.29">
-      </div>
-      <div class="field">
-        <label>🔻 MÍNIMO</label>
-        <input type="text" id="minInput" step="any" value="60000.00" placeholder="Ej: 60000.00">
-      </div>
+      <div class="field"><label>🔺 MÁXIMO</label><input type="text" id="maxInput" value="75996.29"></div>
+      <div class="field"><label>🔻 MÍNIMO</label><input type="text" id="minInput" value="60000.00"></div>
       <button class="btn-calc" id="updateBtn">⟳ CALCULAR</button>
     </div>
   </div>
 
-  <!-- Tabla de niveles Fibonacci base -->
   <div class="fib-table">
-    <div class="fib-header">
-      <span>📐 NIVELES FIBONACCI</span>
-      <span id="modeIndicator">🔻 Modo SELL</span>
-    </div>
-    <div id="fibLevelsList">
-      <!-- se llena dinámicamente -->
-    </div>
+    <div class="fib-header"><span>📐 NIVELES FIBONACCI</span><span id="modeIndicator">🔻 Modo SELL</span></div>
+    <div id="fibLevelsList"></div>
   </div>
 
-  <!-- Selección de rango para grid -->
-  <div class="range-section">
-    <div class="range-title">🎯 SELECCIONA EL RANGO PARA LA CUADRÍCULA:</div>
-    <div class="grid-buttons">
-      <div id="btnRange1" class="range-btn">📊 0% → 23.6%<br><span style="font-size:0.7rem;">Resistencia → Soporte</span></div>
-      <div id="btnRange2" class="range-btn">📈 76.2% → 100%<br><span style="font-size:0.7rem;">Resistencia → Soporte</span></div>
-    </div>
+  <div style="margin: 1rem 0 0.5rem;"><strong>🎯 SELECCIONA EL RANGO PARA LA CUADRÍCULA:</strong></div>
+  <div class="grid-buttons" style="display:flex; gap:1rem; margin-bottom:1rem;">
+    <div id="btnRange1" class="dir-btn" style="flex:1; text-align:center;">📊 0% → 23.6%</div>
+    <div id="btnRange2" class="dir-btn" style="flex:1; text-align:center;">📈 76.2% → 100%</div>
   </div>
+  <div id="gridDynamicContainer"></div>
 
-  <div id="gridDynamicContainer">
-    <div style="text-align:center; padding: 2rem; background: #fef9f0; border-radius: 1.5rem; border: 1px solid #fed7aa;">
-      ⚡ Selecciona un rango (0-23.6 o 76.2-100) para ver la cuadrícula
-    </div>
-  </div>
-  
-  <div class="info-note">
-    📐 <strong>Modo SELL:</strong> Resistencia arriba, Soporte abajo → niveles SELL cerca de resistencia, BUY cerca de soporte.<br>
-    🔄 <strong>Modo BUY:</strong> Lógica inversa (soporte arriba, resistencia abajo) → niveles BUY en zona alta, SELL en zona baja.
+  <div class="history-card">
+    <div class="history-header">📜 HISTORIAL DE OPERACIONES GUARDADAS</div>
+    <div id="historyList" class="history-list"></div>
   </div>
 </div>
 
 <script>
-  // ---------- Variables globales ----------
   let currentMax = 75996.29;
   let currentMin = 60000.00;
-  let activeRange = null;        // 'first' o 'second'
-  let isBuyMode = false;         // false = modo SELL (original), true = modo BUY (inverso)
+  let activeRange = null;
+  let isBuyMode = false;
 
-  // Elementos DOM
   const maxInput = document.getElementById('maxInput');
   const minInput = document.getElementById('minInput');
   const updateBtn = document.getElementById('updateBtn');
   const btnRange1 = document.getElementById('btnRange1');
   const btnRange2 = document.getElementById('btnRange2');
-  const gridContainer = document.getElementById('gridDynamicContainer');
-  const fibLevelsList = document.getElementById('fibLevelsList');
   const btnSellMode = document.getElementById('btnSellMode');
   const btnBuyMode = document.getElementById('btnBuyMode');
   const modeIndicator = document.getElementById('modeIndicator');
+  const gridContainer = document.getElementById('gridDynamicContainer');
+  const fibLevelsList = document.getElementById('fibLevelsList');
+  const downloadPDFBtn = document.getElementById('downloadPDFBtn');
+  const saveOperationBtn = document.getElementById('saveOperationBtn');
+  const historyList = document.getElementById('historyList');
 
-  // Formatear precio SIN comas (solo puntos decimales)
+  let operationsHistory = JSON.parse(localStorage.getItem('fibonacci_operations') || '[]');
+
   function formatPrice(value) {
     return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/,/g, '');
   }
 
-  // Calcular niveles Fibonacci base (valores numéricos puros)
   function getFibonacciRaw(max, min) {
     const diff = max - min;
     return {
@@ -432,297 +247,195 @@
     };
   }
 
-  // Renderizar tabla Fibonacci base con zona según modo SELL/BUY
   function renderFibonacciTable() {
     const raw = getFibonacciRaw(currentMax, currentMin);
     const fibOrder = ['0%', '23.6%', '38.2%', '50.0%', '76.2%', '100%'];
-    
     let html = '';
     fibOrder.forEach(level => {
       const price = raw[level];
       let zoneText = '';
-      // Definir zonas según modo SELL (original) o BUY (inverso)
       if (!isBuyMode) {
-        // Modo SELL: 0% es resistencia, 100% soporte
         if (level === '0%') zoneText = '🔴 Zona Resistencia';
         else if (level === '100%') zoneText = '🟢 Zona Soporte Fuerte';
         else if (level === '76.2%') zoneText = '🟢 Zona de soporte';
         else if (level === '23.6%' || level === '38.2%') zoneText = '🟡 Zona de transición';
         else if (level === '50.0%') zoneText = '🟡 Nivel medio';
-        else zoneText = '🟡 Nivel intermedio';
       } else {
-        // Modo BUY: invertimos sentido (el máximo pasa a ser soporte, el mínimo resistencia)
         if (level === '0%') zoneText = '🟢 Zona Soporte (máximo)';
         else if (level === '100%') zoneText = '🔴 Zona Resistencia (mínimo)';
         else if (level === '76.2%') zoneText = '🟢 Zona de soporte intermedio';
         else if (level === '23.6%' || level === '38.2%') zoneText = '🟡 Zona de transición inversa';
         else if (level === '50.0%') zoneText = '🟡 Nivel medio';
-        else zoneText = '🟡 Nivel';
       }
-      html += `
-        <div class="fib-row">
-          <div class="fib-level">${level}</div>
-          <div class="fib-price">${formatPrice(price)}</div>
-          <div class="fib-zone">${zoneText}</div>
-        </div>
-      `;
+      html += `<div class="fib-row"><div class="fib-level">${level}</div><div class="fib-price">${formatPrice(price)}</div><div class="fib-zone" style="font-size:0.7rem;">${zoneText}</div></div>`;
     });
     fibLevelsList.innerHTML = html;
     modeIndicator.innerText = isBuyMode ? '📈 Modo BUY' : '🔻 Modo SELL';
   }
 
-  // Generar cuadrícula para el rango seleccionado, respetando el modo (SELL/BUY)
   function generateGrid(rangeType, maxVal, minVal, buyMode) {
     const diffTotal = maxVal - minVal;
     const fibRaw = getFibonacciRaw(maxVal, minVal);
-    
-    // En modo SELL (original): los rangos se toman como están (0-23.6 y 76.2-100)
-    // En modo BUY: se invierte la interpretación, pero los precios se mantienen.
-    // Para modo BUY queremos que la "resistencia" y "soporte" se intercambien.
-    // La cuadrícula interna también invierte la señal: los niveles cerca de la parte superior serán BUY, y cerca de inferior SELL.
-    
     let startPrice, endPrice, zoneLeftRaw, zoneRightRaw;
-    
     if (rangeType === 'first') {
-      // Rango base: 0% y 23.6%
-      const price0 = fibRaw['0%'];
-      const price236 = fibRaw['23.6%'];
-      if (!buyMode) {
-        // SELL: 0% = resistencia (mayor), 23.6% = soporte (menor)
-        startPrice = price0;
-        endPrice = price236;
-        zoneLeftRaw = '0%';
-        zoneRightRaw = '23.6%';
-      } else {
-        // BUY: invertimos sentido. La zona de "resistencia" será el menor? En modo compra queremos que el nivel más bajo sea resistencia
-        // Pero para mantener coherencia con el grid, en modo BUY el "rango" se lee al revés: el límite superior del rango pasa a ser soporte.
-        // Definimos: startPrice (resistencia visual) = el menor precio del par (soporte técnico pasa a ser resistencia en modo inverso)
-        // Para que el grid muestre los niveles invertidos:
-        startPrice = price236;   // ahora la resistencia es el precio más bajo del rango
-        endPrice = price0;       // soporte es el precio más alto
-        zoneLeftRaw = '23.6%';
-        zoneRightRaw = '0%';
-      }
-    } else { // second range: 76.2% - 100%
-      const price762 = fibRaw['76.2%'];
-      const price100 = fibRaw['100%'];
-      if (!buyMode) {
-        startPrice = price762;   // resistencia (mayor)
-        endPrice = price100;     // soporte (menor)
-        zoneLeftRaw = '76.2%';
-        zoneRightRaw = '100%';
-      } else {
-        // Modo BUY invertido: el precio más bajo se convierte en "resistencia visual"
-        startPrice = price100;
-        endPrice = price762;
-        zoneLeftRaw = '100%';
-        zoneRightRaw = '76.2%';
-      }
+      const price0 = fibRaw['0%'], price236 = fibRaw['23.6%'];
+      if (!buyMode) { startPrice = price0; endPrice = price236; zoneLeftRaw = '0%'; zoneRightRaw = '23.6%'; }
+      else { startPrice = price236; endPrice = price0; zoneLeftRaw = '23.6%'; zoneRightRaw = '0%'; }
+    } else {
+      const price762 = fibRaw['76.2%'], price100 = fibRaw['100%'];
+      if (!buyMode) { startPrice = price762; endPrice = price100; zoneLeftRaw = '76.2%'; zoneRightRaw = '100%'; }
+      else { startPrice = price100; endPrice = price762; zoneLeftRaw = '100%'; zoneRightRaw = '76.2%'; }
     }
-    
-    // Ahora calcular los niveles internos sobre el TOTAL global, pero las etiquetas dependen del modo.
-    // Para los precios usamos siempre los mismos valores absolutos, pero la clasificación SELL/BUY cambia.
     const pctsFirst = [4.72, 9.44, 14.16, 18.88];
-    const basePctSecond = 76.2;
-    const increments = [4.72, 9.44, 14.16, 18.88];
-    
     let internalPoints = [];
     if (rangeType === 'first') {
-      internalPoints = pctsFirst.map(pct => {
-        const price = maxVal - (diffTotal * pct / 100);
-        return { pct: pct, price: price, globalPct: pct };
-      });
+      internalPoints = pctsFirst.map(pct => ({ pct: pct, price: maxVal - (diffTotal * pct / 100) }));
     } else {
-      internalPoints = increments.map(inc => {
-        const globalPct = basePctSecond + inc;
-        const price = maxVal - (diffTotal * globalPct / 100);
-        return { pct: globalPct, price: price, globalPct: globalPct };
-      });
+      internalPoints = pctsFirst.map(inc => ({ pct: 76.2 + inc, price: maxVal - (diffTotal * (76.2 + inc) / 100) }));
     }
-    
-    // Ordenar por precio descendente (mayor a menor)
     internalPoints.sort((a,b) => b.price - a.price);
-    
-    // Asignar tag según modo y posición dentro del rango visual
-    // En modo SELL: los dos primeros (más cerca de resistencia visual) = SELL, los dos últimos = BUY
-    // En modo BUY: los dos primeros (más cerca de la nueva "resistencia visual") = BUY, los dos últimos = SELL (inverso total)
     const rows = internalPoints.map((point, idx) => {
       let tag;
-      if (!buyMode) {
-        // Modo SELL original
-        tag = idx < 2 ? 'sell' : 'buy';
-      } else {
-        // Modo BUY: invertimos señales
-        tag = idx < 2 ? 'buy' : 'sell';
-      }
-      return {
-        levelName: `${point.pct.toFixed(2)}%`,
-        price: point.price,
-        tag: tag
-      };
+      if (!buyMode) tag = idx < 2 ? 'sell' : 'buy';
+      else tag = idx < 2 ? 'buy' : 'sell';
+      return { levelName: `${point.pct.toFixed(2)}%`, price: point.price, tag: tag };
     });
-    
-    return {
-      zoneResistance: startPrice,
-      zoneSupport: endPrice,
-      zoneNameLeft: zoneLeftRaw,
-      zoneNameRight: zoneRightRaw,
-      rows: rows,
-      isBuyMode: buyMode
-    };
+    return { zoneResistance: startPrice, zoneSupport: endPrice, zoneNameLeft: zoneLeftRaw, zoneNameRight: zoneRightRaw, rows };
   }
 
-  // Renderizar cuadrícula
   function renderGrid() {
-    if (!activeRange) {
-      gridContainer.innerHTML = `
-        <div style="text-align:center; padding: 2rem; background: #fef9f0; border-radius: 1.5rem; border: 1px solid #fed7aa;">
-          🎯 Selecciona un rango: <strong>"0% → 23.6%"</strong> o <strong>"76.2% → 100%"</strong> para desplegar la cuadrícula
-        </div>
-      `;
-      return;
+    if (!activeRange) { 
+      gridContainer.innerHTML = '<div style="padding:2rem;text-align:center;">📌 Selecciona un rango para ver la cuadrícula</div>'; 
+      return; 
     }
-    
     const gridData = generateGrid(activeRange, currentMax, currentMin, isBuyMode);
-    if (!gridData) {
-      gridContainer.innerHTML = `<div style="padding: 2rem; background:#ffe6e5; border-radius:1.5rem;">Error al calcular</div>`;
-      return;
-    }
-    
-    let html = `
-      <div class="grid-card">
-        <div class="zone-header">
-          <span>📌 CUADRÍCULA: ${gridData.zoneNameLeft} → ${gridData.zoneNameRight} ${isBuyMode ? '(MODO BUY)' : '(MODO SELL)'}</span>
-          <span>🎯 Fibonacci Grid</span>
-        </div>
-        <div class="grid-row" style="background:#faf7f0; font-weight:800;">
-          <div class="level-name">NIVEL</div>
-          <div class="level-price">PRECIO</div>
-          <div class="level-tag">SEÑAL</div>
-        </div>
-    `;
-    
-    // Mostrar zona de "resistencia visual" según modo
-    const resistTag = isBuyMode ? 'Zona SOPORTE (entrada BUY)' : 'Zona RESISTENCIA';
-    html += `
-      <div class="grid-row">
-        <div class="level-name">🏔️ ${gridData.zoneNameLeft}</div>
-        <div class="level-price">${formatPrice(gridData.zoneResistance)}</div>
-        <div class="level-tag"><span class="tag-resist">${resistTag}</span></div>
-      </div>
-    `;
-    
-    // Filas internas
+    let html = `<div class="grid-card"><div class="grid-header">📌 CUADRÍCULA: ${gridData.zoneNameLeft} → ${gridData.zoneNameRight} ${isBuyMode ? '(MODO BUY)' : '(MODO SELL)'}</div>`;
+    html += `<div class="grid-row" style="background:#faf7f0;font-weight:800;"><div class="level-name">NIVEL</div><div class="level-price">PRECIO</div><div class="level-tag">SEÑAL</div></div>`;
+    const resistTag = isBuyMode ? '🟢 Zona SOPORTE (Entrada BUY)' : '🔴 Zona RESISTENCIA';
+    html += `<div class="grid-row"><div class="level-name">🏔️ ${gridData.zoneNameLeft}</div><div class="level-price">${formatPrice(gridData.zoneResistance)}</div><div class="level-tag"><span class="tag-resist">${resistTag}</span></div></div>`;
     for (let row of gridData.rows) {
       const tagClass = row.tag === 'sell' ? 'tag-sell' : 'tag-buy';
       const tagText = row.tag === 'sell' ? '🔻 SELL' : '📈 BUY';
-      html += `
-        <div class="grid-row">
-          <div class="level-name">📊 ${row.levelName}</div>
-          <div class="level-price">${formatPrice(row.price)}</div>
-          <div class="level-tag"><span class="${tagClass}">${tagText}</span></div>
-        </div>
-      `;
+      html += `<div class="grid-row"><div class="level-name">📊 ${row.levelName}</div><div class="level-price">${formatPrice(row.price)}</div><div class="level-tag"><span class="${tagClass}">${tagText}</span></div></div>`;
     }
-    
-    // Zona de soporte visual
-    const supportTag = isBuyMode ? 'Zona RESISTENCIA (cierre SELL)' : 'Zona SOPORTE';
-    html += `
-      <div class="grid-row">
-        <div class="level-name">⛰️ ${gridData.zoneNameRight}</div>
-        <div class="level-price">${formatPrice(gridData.zoneSupport)}</div>
-        <div class="level-tag"><span class="tag-support">${supportTag}</span></div>
-      </div>
-    `;
-    
+    const supportTag = isBuyMode ? '🔴 Zona RESISTENCIA (Take Profit)' : '🟢 Zona SOPORTE';
+    html += `<div class="grid-row"><div class="level-name">⛰️ ${gridData.zoneNameRight}</div><div class="level-price">${formatPrice(gridData.zoneSupport)}</div><div class="level-tag"><span class="tag-support">${supportTag}</span></div></div>`;
     html += `</div>`;
     gridContainer.innerHTML = html;
   }
-  
-  // Actualizar todo (max, min, modo, rangos)
-  function updateAllValues() {
-    let rawMax = maxInput.value.trim().replace(/,/g, '');
-    let rawMin = minInput.value.trim().replace(/,/g, '');
-    let newMax = parseFloat(rawMax);
-    let newMin = parseFloat(rawMin);
-    
-    if (isNaN(newMax) || isNaN(newMin)) {
-      alert("❌ Ingresa valores numéricos válidos (sin comas)");
+
+  function saveOperation() {
+    const now = new Date();
+    const operation = {
+      date: now.toLocaleString(),
+      max: currentMax,
+      min: currentMin,
+      mode: isBuyMode ? 'BUY' : 'SELL',
+      timestamp: Date.now()
+    };
+    operationsHistory.unshift(operation);
+    if (operationsHistory.length > 20) operationsHistory.pop();
+    localStorage.setItem('fibonacci_operations', JSON.stringify(operationsHistory));
+    renderHistory();
+    alert('✅ Operación guardada');
+  }
+
+  function renderHistory() {
+    if (operationsHistory.length === 0) {
+      historyList.innerHTML = '<div style="padding:1rem;text-align:center;">📭 No hay operaciones guardadas</div>';
       return;
     }
-    if (newMax <= newMin) {
-      alert("❌ El MÁXIMO debe ser mayor que el MÍNIMO");
-      return;
-    }
-    
-    currentMax = newMax;
-    currentMin = newMin;
-    
-    // Actualizar campos sin comas
+    let html = '';
+    operationsHistory.forEach((op, idx) => {
+      html += `<div class="history-item" onclick="loadOperation(${idx})">
+        <strong>${op.date}</strong> | ${op.mode} | Máx: ${formatPrice(op.max)} | Mín: ${formatPrice(op.min)}
+      </div>`;
+    });
+    historyList.innerHTML = html;
+  }
+
+  window.loadOperation = function(idx) {
+    const op = operationsHistory[idx];
+    currentMax = op.max;
+    currentMin = op.min;
     maxInput.value = formatPrice(currentMax);
     minInput.value = formatPrice(currentMin);
-    
+    isBuyMode = (op.mode === 'BUY');
+    if (isBuyMode) { btnBuyMode.classList.add('buy-active'); btnSellMode.classList.remove('sell-active'); }
+    else { btnSellMode.classList.add('sell-active'); btnBuyMode.classList.remove('buy-active'); }
     renderFibonacciTable();
-    if (activeRange) {
-      renderGrid();
-    } else {
-      gridContainer.innerHTML = `
-        <div style="text-align:center; padding: 2rem; background: #fef9f0; border-radius: 1.5rem; border: 1px solid #fed7aa;">
-          ✅ Datos actualizados. Selecciona un rango.
-        </div>
-      `;
+    if (activeRange) renderGrid();
+  };
+
+  function updateAllValues() {
+    let rawMax = maxInput.value.replace(/,/g, '');
+    let rawMin = minInput.value.replace(/,/g, '');
+    let newMax = parseFloat(rawMax);
+    let newMin = parseFloat(rawMin);
+    if (isNaN(newMax) || isNaN(newMin) || newMax <= newMin) {
+      alert("❌ Valores inválidos");
+      return;
     }
+    currentMax = newMax;
+    currentMin = newMin;
+    maxInput.value = formatPrice(currentMax);
+    minInput.value = formatPrice(currentMin);
+    renderFibonacciTable();
+    if (activeRange) renderGrid();
   }
-  
+
   function setActiveRange(range) {
     activeRange = range;
-    if (range === 'first') {
-      btnRange1.classList.add('active');
-      btnRange2.classList.remove('active');
-    } else {
-      btnRange2.classList.add('active');
-      btnRange1.classList.remove('active');
-    }
+    btnRange1.style.background = range === 'first' ? '#f97316' : 'white';
+    btnRange1.style.color = range === 'first' ? 'white' : '#1e293b';
+    btnRange2.style.background = range === 'second' ? '#f97316' : 'white';
+    btnRange2.style.color = range === 'second' ? 'white' : '#1e293b';
     renderGrid();
   }
-  
-  function setBuyMode(mode) { // mode = true => BUY, false => SELL
+
+  function setBuyMode(mode) {
     isBuyMode = mode;
-    if (isBuyMode) {
-      btnBuyMode.classList.add('buy-active');
-      btnSellMode.classList.remove('sell-active');
-    } else {
-      btnSellMode.classList.add('sell-active');
-      btnBuyMode.classList.remove('buy-active');
-    }
+    if (isBuyMode) { btnBuyMode.classList.add('buy-active'); btnSellMode.classList.remove('sell-active'); }
+    else { btnSellMode.classList.add('sell-active'); btnBuyMode.classList.remove('buy-active'); }
     renderFibonacciTable();
-    if (activeRange) {
-      renderGrid();
-    }
+    if (activeRange) renderGrid();
   }
-  
-  // Eventos
-  btnSellMode.addEventListener('click', () => setBuyMode(false));
-  btnBuyMode.addEventListener('click', () => setBuyMode(true));
-  btnRange1.addEventListener('click', () => setActiveRange('first'));
-  btnRange2.addEventListener('click', () => setActiveRange('second'));
-  updateBtn.addEventListener('click', updateAllValues);
-  
-  // Inicialización con valores ejemplo sin comas
-  currentMax = 75996.29;
-  currentMin = 60000.00;
-  maxInput.value = "75996.29";
-  minInput.value = "60000.00";
-  isBuyMode = false;
-  activeRange = null;
-  btnSellMode.classList.add('sell-active');
-  btnBuyMode.classList.remove('buy-active');
+
+  async function downloadPDF() {
+    const element = document.getElementById('reportContent');
+    const originalOverflow = element.style.overflow;
+    element.style.overflow = 'visible';
+    const canvas = await html2canvas(element, { scale: 2, backgroundColor: '#f8fafc' });
+    element.style.overflow = originalOverflow;
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgWidth = 190;
+    const pageHeight = 277;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let heightLeft = imgHeight;
+    let position = 10;
+    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+    pdf.save(`BeaverTrading_Fibonacci_${new Date().toISOString().slice(0,19)}.pdf`);
+  }
+
+  btnSellMode.onclick = () => setBuyMode(false);
+  btnBuyMode.onclick = () => setBuyMode(true);
+  btnRange1.onclick = () => setActiveRange('first');
+  btnRange2.onclick = () => setActiveRange('second');
+  updateBtn.onclick = updateAllValues;
+  downloadPDFBtn.onclick = downloadPDF;
+  saveOperationBtn.onclick = saveOperation;
+
   renderFibonacciTable();
-  gridContainer.innerHTML = `
-    <div style="text-align:center; padding: 2rem; background: #fef9f0; border-radius: 1.5rem; border: 1px solid #fed7aa;">
-      🎯 Selecciona un rango: "0% → 23.6%" o "76.2% → 100%"
-    </div>
-  `;
+  renderHistory();
 </script>
 </body>
 </html>
