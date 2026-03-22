@@ -1,606 +1,618 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Heydin Kayser · Fibonacci Exacto</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-        }
-
-        body {
-            min-height: 100vh;
-            background: radial-gradient(circle at 70% 30%, #0d1428, #02050c);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 0.8rem;
-        }
-
-        .container {
-            max-width: 1200px;
-            width: 100%;
-            background: rgba(5, 15, 25, 0.5);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1.5px solid rgba(255, 80, 255, 0.4);
-            border-radius: 2.5rem;
-            padding: 1.5rem 1.2rem;
-            box-shadow: 0 20px 50px rgba(255, 0, 255, 0.2), 0 0 0 1px rgba(0, 255, 255, 0.2) inset;
-        }
-
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-        }
-
-        .title h1 {
-            font-size: clamp(1.8rem, 6vw, 2.8rem);
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, #ffccff, #ccccff);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px #ff88ff, 0 0 15px cyan;
-            letter-spacing: -0.02em;
-        }
-
-        .badge {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 0, 255, 0.5);
-            border-radius: 40px;
-            padding: 0.4rem 1.2rem;
-            color: #fff;
-            font-size: 0.9rem;
-            box-shadow: 0 0 20px rgba(255, 0, 255, 0.3);
-        }
-
-        .input-panel {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.8rem;
-            background: rgba(0, 15, 25, 0.4);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 40px;
-            padding: 1.2rem 1rem;
-            margin-bottom: 1.8rem;
-            align-items: center;
-        }
-
-        .input-group {
-            flex: 1 1 160px;
-            min-width: 130px;
-        }
-
-        .input-group label {
-            display: block;
-            color: #b0d0ff;
-            font-size: 0.7rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-            text-shadow: 0 0 8px magenta;
-        }
-
-        .input-group input {
-            width: 100%;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1.5px solid rgba(255, 0, 255, 0.6);
-            border-radius: 30px;
-            padding: 12px 16px;
-            font-size: 1.2rem;
-            font-weight: 500;
-            color: white;
-            outline: none;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 0 15px rgba(255, 0, 255, 0.3);
-        }
-
-        .direction-group {
-            display: flex;
-            gap: 5px;
-            background: rgba(0, 0, 0, 0.3);
-            border-radius: 40px;
-            padding: 4px;
-            border: 1px solid rgba(255, 0, 255, 0.6);
-        }
-
-        .dir-btn {
-            background: transparent;
-            border: none;
-            border-radius: 40px;
-            padding: 10px 20px;
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #ccc;
-            cursor: pointer;
-            transition: 0.15s;
-        }
-
-        .dir-btn.active {
-            background: rgba(255, 70, 255, 0.4);
-            color: white;
-            text-shadow: 0 0 15px white;
-            box-shadow: 0 0 30px #ff66ff;
-            border: 1px solid white;
-        }
-
-        #btnBuy.active {
-            background: rgba(0, 255, 200, 0.4);
-            box-shadow: 0 0 30px cyan;
-        }
-
-        .calc-btn {
-            background: rgba(255, 200, 0, 0.25);
-            border: 2px solid rgba(255, 200, 0, 0.8);
-            border-radius: 50px;
-            padding: 10px 25px;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: white;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 0 40px orange;
-            cursor: pointer;
-            min-width: 70px;
-        }
-
-        .signal-bar {
-            background: rgba(20, 0, 30, 0.4);
-            backdrop-filter: blur(16px);
-            border: 1.5px solid rgba(255, 0, 200, 0.7);
-            border-radius: 50px;
-            padding: 1rem 1.5rem;
-            margin: 1.5rem 0;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            box-shadow: 0 0 40px rgba(255, 0, 255, 0.3);
-        }
-
-        .direction-large {
-            font-size: clamp(1.4rem, 4vw, 2rem);
-            font-weight: 700;
-            background: rgba(0, 0, 0, 0.3);
-            padding: 0.3rem 1.8rem;
-            border-radius: 40px;
-            border: 1px solid white;
-            color: white;
-            text-shadow: 0 0 20px magenta;
-        }
-
-        .key-levels {
-            display: flex;
-            gap: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .key-level {
-            background: rgba(0, 20, 40, 0.6);
-            backdrop-filter: blur(8px);
-            border: 1.5px solid gold;
-            border-radius: 40px;
-            padding: 0.5rem 1.5rem;
-            font-size: 1.1rem;
-            color: white;
-            font-weight: 500;
-        }
-
-        /* Grid principal - cuadrados más pequeños como solicitaste */
-        .fibo-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin: 1.5rem 0;
-        }
-
-        .fibo-card {
-            background: rgba(8, 20, 32, 0.5);
-            backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(255, 0, 255, 0.5);
-            border-radius: 20px;
-            padding: 0.8rem 0.2rem;
-            text-align: center;
-            transition: 0.15s;
-            cursor: pointer;
-            box-shadow: 0 4px 0 rgba(0, 50, 70, 0.5);
-            color: white;
-        }
-
-        .fibo-card.selected {
-            border: 3px solid #ff44ff;
-            background: rgba(40, 10, 50, 0.7);
-            box-shadow: 0 0 40px #ff80ff, 0 4px 0 #880088;
-            transform: scale(1.02);
-        }
-
-        .fibo-label {
-            font-size: 0.9rem;
-            font-weight: 600;
-            background: rgba(0, 60, 100, 0.6);
-            backdrop-filter: blur(4px);
-            display: inline-block;
-            padding: 4px 12px;
-            border-radius: 30px;
-            border: 1px solid cyan;
-            color: white;
-            margin-bottom: 4px;
-        }
-
-        .fibo-value {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: white !important;
-            text-shadow: 0 0 15px cyan;
-            margin: 4px 0;
-            word-break: break-word;
-        }
-
-        .zone-tag {
-            font-size: 0.7rem;
-            background: rgba(30, 20, 40, 0.6);
-            backdrop-filter: blur(4px);
-            padding: 4px 8px;
-            border-radius: 30px;
-            border: 1px solid #ffaa00;
-            color: #fff0c0;
-            display: inline-block;
-            font-weight: 500;
-        }
-
-        .selection-panel {
-            background: rgba(10, 5, 20, 0.5);
-            backdrop-filter: blur(16px);
-            border: 2px solid rgba(255, 70, 255, 0.7);
-            border-radius: 50px;
-            padding: 1rem 1.2rem;
-            margin: 1.5rem 0;
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-        }
-
-        .selected-display {
-            display: flex;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-
-        .selected-chip {
-            background: rgba(0, 0, 0, 0.4);
-            border: 1.5px solid cyan;
-            border-radius: 40px;
-            padding: 0.4rem 1.2rem;
-            font-size: 0.9rem;
-            color: white;
-            font-weight: 500;
-            backdrop-filter: blur(5px);
-        }
-
-        .apply-btn {
-            background: rgba(200, 0, 255, 0.25);
-            border: 2px solid #ff88ff;
-            border-radius: 50px;
-            padding: 0.5rem 1.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            color: white;
-            backdrop-filter: blur(12px);
-            box-shadow: 0 0 40px magenta;
-            cursor: pointer;
-        }
-
-        .recursive-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin: 1rem 0;
-        }
-
-        .recursive-card {
-            background: rgba(8, 18, 35, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1.5px solid rgba(0, 255, 255, 0.5);
-            border-radius: 20px;
-            padding: 0.8rem 0.2rem;
-            text-align: center;
-            color: white;
-        }
-
-        .footnote {
-            text-align: center;
-            color: #aac0dd;
-            font-size: 0.8rem;
-            margin-top: 2rem;
-            border-top: 1px dashed rgba(255, 0, 255, 0.5);
-            padding-top: 1rem;
-        }
-
-        @media (max-width: 480px) {
-            .container { padding: 1rem 0.8rem; }
-            .fibo-grid { grid-template-columns: repeat(3, 1fr); }
-            .fibo-value { font-size: 1rem; }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>HEYDIN KAYSER </title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      margin: 0;
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+    .main-card {
+      max-width: 780px;
+      width: 100%;
+      background: #f8fafc;
+      border-radius: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      overflow: hidden;
+      padding: 1.8rem;
+      transition: all 0.2s ease;
+    }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 0 0 0.25rem 0;
+      background: linear-gradient(135deg, #f97316, #dc2626);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+      letter-spacing: -0.5px;
+    }
+    .sub {
+      color: #475569;
+      border-left: 4px solid #f97316;
+      padding-left: 14px;
+      font-weight: 500;
+      margin-bottom: 1.8rem;
+      font-size: 0.9rem;
+    }
+    .input-panel {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.2rem 1.5rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      border: 1px solid #e2e8f0;
+    }
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: space-between;
+      align-items: flex-end;
+    }
+    .field {
+      flex: 1;
+      min-width: 140px;
+    }
+    .field label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      color: #f97316;
+      margin-bottom: 6px;
+    }
+    .field input {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 1rem;
+      border: 2px solid #e2e8f0;
+      background: white;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: 0.2s;
+      outline: none;
+      font-family: 'Courier New', monospace;
+    }
+    .field input:focus {
+      border-color: #f97316;
+      box-shadow: 0 0 0 3px #f9731630;
+    }
+    .btn-calc {
+      background: #1e293b;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 1rem;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-top: 18px;
+    }
+    .btn-calc:hover {
+      background: #f97316;
+      transform: translateY(-2px);
+    }
+    
+    /* Tabla de niveles Fibonacci */
+    .fib-table {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      margin-bottom: 2rem;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+      border: 1px solid #e2e8f0;
+    }
+    .fib-header {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: white;
+      padding: 1rem 1.5rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .fib-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      border-bottom: 1px solid #f1f5f9;
+      font-weight: 600;
+    }
+    .fib-row:last-child {
+      border-bottom: none;
+    }
+    .fib-level {
+      color: #f97316;
+      font-weight: 800;
+      width: 80px;
+    }
+    .fib-price {
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      color: #0f172a;
+      letter-spacing: 0.5px;
+    }
+    .fib-zone {
+      font-size: 0.8rem;
+      padding: 2px 10px;
+      border-radius: 20px;
+      background: #f1f5f9;
+      color: #475569;
+    }
+    
+    /* Botones de rango */
+    .range-section {
+      margin: 1.5rem 0 1.2rem;
+    }
+    .range-title {
+      font-weight: 700;
+      color: #1e293b;
+      margin-bottom: 0.8rem;
+      font-size: 0.9rem;
+    }
+    .grid-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .range-btn {
+      flex: 1;
+      background: white;
+      border: 2px solid #e2e8f0;
+      padding: 14px 16px;
+      border-radius: 1.2rem;
+      font-weight: 800;
+      font-size: 1rem;
+      color: #1e293b;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
+    .range-btn:hover {
+      border-color: #f97316;
+      background: #fff7ed;
+    }
+    .range-btn.active {
+      background: #f97316;
+      border-color: #f97316;
+      color: white;
+      box-shadow: 0 8px 20px #f9731640;
+    }
+    
+    /* Grid interna */
+    .grid-container {
+      margin-top: 1.5rem;
+      border-radius: 1.5rem;
+      overflow: hidden;
+    }
+    .grid-card {
+      background: white;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      border: 1px solid #e2e8f0;
+    }
+    .zone-header {
+      background: linear-gradient(135deg, #f97316, #ea580c);
+      color: white;
+      padding: 1rem 1.5rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .grid-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.9rem 1.5rem;
+      border-bottom: 1px solid #f1f5f9;
+      align-items: center;
+    }
+    .grid-row:last-child {
+      border-bottom: none;
+    }
+    .level-name {
+      font-weight: 800;
+      color: #334155;
+      width: 100px;
+    }
+    .level-price {
+      font-family: 'Courier New', monospace;
+      font-weight: 700;
+      color: #0f172a;
+      flex: 1;
+      text-align: right;
+      padding: 0 1rem;
+    }
+    .level-tag {
+      width: 100px;
+      text-align: right;
+    }
+    .tag-sell {
+      background: #fee2e2;
+      color: #dc2626;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      display: inline-block;
+    }
+    .tag-buy {
+      background: #dcfce7;
+      color: #16a34a;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.8rem;
+      display: inline-block;
+    }
+    .tag-resist {
+      background: #ffedd5;
+      color: #f97316;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+    .tag-support {
+      background: #e0f2fe;
+      color: #0284c7;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.75rem;
+    }
+    .info-note {
+      font-size: 0.7rem;
+      text-align: center;
+      margin-top: 1.5rem;
+      color: #64748b;
+      background: #f1f5f9;
+      padding: 0.8rem;
+      border-radius: 1rem;
+    }
+    @media (max-width: 600px) {
+      .main-card {
+        padding: 1rem;
+      }
+      .grid-row {
+        flex-wrap: wrap;
+        gap: 8px;
+      }
+      .level-name, .level-price, .level-tag {
+        width: auto;
+      }
+      .level-price {
+        text-align: left;
+        flex: none;
+        padding: 0;
+      }
+      .level-tag {
+        text-align: left;
+      }
+      .fib-row {
+        flex-wrap: wrap;
+        gap: 6px;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <div class="title">
-            <h1>HEYDIN KAYSER</h1>
-        </div>
-        <div class="badge">FIBO · EXACT</div>
+<div class="main-card">
+  <h1>📊 HEYDIN KAYSER  Analyzer</h1>
+  <div class="sub">Niveles de  trading (Sell / Buy)</div>
+
+  <!-- Panel de entrada de datos -->
+  <div class="input-panel">
+    <div class="input-group">
+      <div class="field">
+        <label>🔺 MÁXIMO</label>
+        <input type="number" id="maxInput" step="0.01" value="75119.00">
+      </div>
+      <div class="field">
+        <label>🔻 MÍNIMO</label>
+        <input type="number" id="minInput" step="0.01" value="63248.00">
+      </div>
+      <button class="btn-calc" id="updateBtn">⟳ CALCULAR</button>
     </div>
+  </div>
 
-    <div class="input-panel">
-        <div class="input-group">
-            <label>MAX</label>
-            <input type="number" id="maxInput" step="0.01" value="73940.02">
-        </div>
-        <div class="input-group">
-            <label>MIN</label>
-            <input type="number" id="minInput" step="0.01" value="70297.96">
-        </div>
-        <div class="direction-group">
-            <button class="dir-btn" id="btnBuy">BUY</button>
-            <button class="dir-btn active" id="btnSell">SELL</button>
-        </div>
-        <button class="calc-btn" id="calcMain">⟳</button>
+  <!-- Tabla de niveles Fibonacci base (0, 23.6, 38.2, 50, 76.2, 100) -->
+  <div class="fib-table" id="fibTable">
+    <div class="fib-header">
+      <span>📐 NIVELES FIBONACCI</span>
+      <span>🔹 Base de análisis</span>
     </div>
-
-    <div class="signal-bar">
-        <div class="direction-large" id="mainDirection">SELL</div>
-        <div class="key-levels">
-            <div class="key-level" id="price50">50% 72126.05</div>
-            <div class="key-level" id="price618">61.8% 71160.27</div>
-        </div>
+    <div id="fibLevelsList">
+      <!-- Se llena dinámicamente -->
     </div>
+  </div>
 
-    <div class="fibo-grid" id="fiboGrid"></div>
-
-    <div class="selection-panel">
-        <div class="selected-display">
-            <div class="selected-chip" id="selectedFirst">—</div>
-            <div class="selected-chip" id="selectedSecond">—</div>
-        </div>
-        <button class="apply-btn" id="applyBtn">🔄 NUEVA SECUENCIA</button>
+  <!-- Selección de rango para grid -->
+  <div class="range-section">
+    <div class="range-title">🎯 SELECCIONA EL RANGO PARA LA CUADRÍCULA:</div>
+    <div class="grid-buttons">
+      <div id="btnRange1" class="range-btn">📊 0% → 23.6%<br><span style="font-size:0.7rem;">Resistencia → Soporte</span></div>
+      <div id="btnRange2" class="range-btn">📈 76.2% → 100%<br><span style="font-size:0.7rem;">Resistencia → Soporte</span></div>
     </div>
+  </div>
 
-    <h3 style="color:white; margin: 1rem 0 0.5rem; font-weight:400; text-shadow:0 0 15px magenta;">nueva secuencia fibonacci</h3>
-    <div class="recursive-grid" id="recursiveGrid"></div>
-
-    <div class="footnote">
-        ✦ cálculos exactos de Fibonacci · 0% = mínimo, 100% = máximo ✦
+  <!-- Contenedor de la cuadrícula interna -->
+  <div id="gridDynamicContainer">
+    <div style="text-align:center; padding: 2rem; background: #fef9f0; border-radius: 1.5rem; border: 1px solid #fed7aa;">
+      ⚡ Selecciona un rango (0-23.6 o 76.2-100) para ver la cuadrícula con niveles SELL/BUY
     </div>
+  </div>
+  
+  <div class="info-note">
+    📐 Los niveles internos se calculan con los porcentajes: 4.72%, 9.44%, 14.16%, 18.88% sobre el rango total.<br>
+    🔹 Zona resistencia → SELL (primeros dos niveles) | 🔸 Zona soporte → BUY (últimos dos niveles)
+  </div>
 </div>
 
 <script>
-    (function() {
-        const FIB_LEVELS = [0, 23.6, 38.2, 50, 61.8, 75, 100, 161.8, 261.8];
-        
-        const maxInput = document.getElementById('maxInput');
-        const minInput = document.getElementById('minInput');
-        const btnBuy = document.getElementById('btnBuy');
-        const btnSell = document.getElementById('btnSell');
-        const calcMain = document.getElementById('calcMain');
-        const fiboGrid = document.getElementById('fiboGrid');
-        const selectedFirst = document.getElementById('selectedFirst');
-        const selectedSecond = document.getElementById('selectedSecond');
-        const applyBtn = document.getElementById('applyBtn');
-        const recursiveGrid = document.getElementById('recursiveGrid');
-        const mainDirection = document.getElementById('mainDirection');
-        const price50 = document.getElementById('price50');
-        const price618 = document.getElementById('price618');
+  // Variables
+  let currentMax = 75119.00;
+  let currentMin = 63248.00;
+  let activeRange = null; // 'first' o 'second'
 
-        let currentDirection = 'SELL';
-        let selectedIndices = [];
-        let currentLevels = [];
+  // Elementos DOM
+  const maxInput = document.getElementById('maxInput');
+  const minInput = document.getElementById('minInput');
+  const updateBtn = document.getElementById('updateBtn');
+  const btnRange1 = document.getElementById('btnRange1');
+  const btnRange2 = document.getElementById('btnRange2');
+  const gridContainer = document.getElementById('gridDynamicContainer');
+  const fibLevelsList = document.getElementById('fibLevelsList');
 
-        function setDirection(dir) {
-            currentDirection = dir;
-            if (dir === 'BUY') {
-                btnBuy.classList.add('active');
-                btnSell.classList.remove('active');
-            } else {
-                btnSell.classList.add('active');
-                btnBuy.classList.remove('active');
-            }
-            mainDirection.innerText = dir;
-            computeAndRender();
-        }
+  // Formatear precio
+  function formatPrice(value) {
+    return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
 
-        btnBuy.addEventListener('click', () => setDirection('BUY'));
-        btnSell.addEventListener('click', () => setDirection('SELL'));
+  // Calcular niveles Fibonacci base (0, 23.6, 38.2, 50, 76.2, 100)
+  function calculateFibonacciLevels(max, min) {
+    const diff = max - min;
+    return {
+      '0%': { value: max, zone: '🔴 Zona Resistencia' },
+      '23.6%': { value: max - (diff * 0.236), zone: '🟡 Zona de transición' },
+      '38.2%': { value: max - (diff * 0.382), zone: '🟡 Zona de transición' },
+      '50.0%': { value: max - (diff * 0.50), zone: '🟡 Nivel medio' },
+      '76.2%': { value: max - (diff * 0.762), zone: '🟢 Zona de soporte' },
+      '100%': { value: min, zone: '🟢 Zona Soporte Fuerte' }
+    };
+  }
 
-        function getZoneLabel(pct, dir) {
-            if (pct === 50) return '⚖️ NEUTRAL';
-            if (pct === 61.8) return dir === 'BUY' ? '🟢 ENTRADA BUY' : '🔻 ENTRADA SELL';
-            if (pct === 38.2) return '⚠️ REBOTE';
-            if (pct === 75) return '🧊 SOP/RES';
-            if (pct === 23.6) return '🌊 INICIO';
-            if (pct === 100) return '🎯 100%';
-            if (pct === 161.8) return '🚀 EXTENSIÓN 161.8';
-            if (pct === 261.8) return '🚀 EXTENSIÓN 261.8';
-            return '';
-        }
+  // Renderizar tabla de Fibonacci base
+  function renderFibonacciTable() {
+    const levels = calculateFibonacciLevels(currentMax, currentMin);
+    const fibOrder = ['0%', '23.6%', '38.2%', '50.0%', '76.2%', '100%'];
+    
+    let html = '';
+    fibOrder.forEach(level => {
+      const data = levels[level];
+      html += `
+        <div class="fib-row">
+          <div class="fib-level">${level}</div>
+          <div class="fib-price">${formatPrice(data.value)}</div>
+          <div class="fib-zone">${data.zone}</div>
+        </div>
+      `;
+    });
+    fibLevelsList.innerHTML = html;
+  }
 
-        function computeAndRender() {
-            let maxVal = parseFloat(maxInput.value);
-            let minVal = parseFloat(minInput.value);
+  // Generar la cuadrícula para el rango seleccionado
+  function generateGrid(rangeType, maxVal, minVal) {
+    const diffTotal = maxVal - minVal;
+    const fibLevels = calculateFibonacciLevels(maxVal, minVal);
+    
+    if (rangeType === 'first') {
+      // Rango: 0% → 23.6%
+      const startPrice = fibLevels['0%'].value;      // resistencia
+      const endPrice = fibLevels['23.6%'].value;     // soporte
+      
+      // Porcentajes internos sobre TOTAL (4.72, 9.44, 14.16, 18.88)
+      const pcts = [4.72, 9.44, 14.16, 18.88];
+      const internalPoints = pcts.map(pct => {
+        const price = maxVal - (diffTotal * pct / 100);
+        return { pct: pct, price: price };
+      });
+      
+      const rows = internalPoints.map((point, idx) => ({
+        levelName: `${point.pct.toFixed(2)}%`,
+        price: point.price,
+        tag: idx < 2 ? 'sell' : 'buy'
+      }));
+      
+      return {
+        zoneResistance: startPrice,
+        zoneSupport: endPrice,
+        zoneNameLeft: '0%',
+        zoneNameRight: '23.6%',
+        rows: rows
+      };
+    } 
+    else if (rangeType === 'second') {
+      // Rango: 76.2% → 100%
+      const startPrice = fibLevels['76.2%'].value;   // resistencia
+      const endPrice = fibLevels['100%'].value;      // soporte
+      
+      // Porcentajes mostrados: 80.92, 85.64, 90.36, 95.08 (76.2 + 4.72, +9.44, +14.16, +18.88)
+      const basePct = 76.2;
+      const increments = [4.72, 9.44, 14.16, 18.88];
+      const internalPoints = increments.map(inc => {
+        const globalPct = basePct + inc;
+        const price = maxVal - (diffTotal * globalPct / 100);
+        return { pct: globalPct, price: price };
+      });
+      
+      const rows = internalPoints.map((point, idx) => ({
+        levelName: `${point.pct.toFixed(2)}%`,
+        price: point.price,
+        tag: idx < 2 ? 'sell' : 'buy'
+      }));
+      
+      return {
+        zoneResistance: startPrice,
+        zoneSupport: endPrice,
+        zoneNameLeft: '76.2%',
+        zoneNameRight: '100%',
+        rows: rows
+      };
+    }
+    return null;
+  }
 
-            if (isNaN(maxVal) || isNaN(minVal) || maxVal <= minVal) {
-                maxVal = 73940.02;
-                minVal = 70297.96;
-                maxInput.value = maxVal.toFixed(2);
-                minInput.value = minVal.toFixed(2);
-            }
-
-            const diff = maxVal - minVal;
-
-            let levels = FIB_LEVELS.map(pct => {
-                let value;
-                if (currentDirection === 'BUY') {
-                    // Para BUY: desde mínimo hacia arriba
-                    value = minVal + (diff * pct / 100);
-                } else {
-                    // Para SELL: desde máximo hacia abajo
-                    value = maxVal - (diff * pct / 100);
-                }
-                return { pct, value };
-            });
-
-            currentLevels = levels.slice();
-            selectedIndices = [];
-            updateSelectedDisplay();
-
-            fiboGrid.innerHTML = '';
-
-            levels.forEach((level, idx) => {
-                const card = document.createElement('div');
-                card.className = 'fibo-card';
-                card.dataset.index = idx;
-
-                card.innerHTML = `
-                    <div class="fibo-label">${level.pct}%</div>
-                    <div class="fibo-value">${level.value.toFixed(2)}</div>
-                    <div class="zone-tag">${getZoneLabel(level.pct, currentDirection)}</div>
-                `;
-
-                card.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    toggleSelect(idx, card);
-                });
-
-                fiboGrid.appendChild(card);
-            });
-
-            // Actualizar precios 50% y 61.8% según dirección
-            let v50, v618;
-            if (currentDirection === 'BUY') {
-                v50 = minVal + (diff * 50 / 100);
-                v618 = minVal + (diff * 61.8 / 100);
-            } else {
-                v50 = maxVal - (diff * 50 / 100);
-                v618 = maxVal - (diff * 61.8 / 100);
-            }
-            price50.innerText = `50% ${v50.toFixed(2)}`;
-            price618.innerText = `61.8% ${v618.toFixed(2)}`;
-
-            recursiveGrid.innerHTML = '';
-        }
-
-        function toggleSelect(index, cardElement) {
-            if (selectedIndices.includes(index)) {
-                selectedIndices = selectedIndices.filter(i => i !== index);
-                cardElement.classList.remove('selected');
-            } else {
-                if (selectedIndices.length >= 2) {
-                    const oldIdx = selectedIndices.shift();
-                    const oldCard = document.querySelector(`.fibo-card[data-index="${oldIdx}"]`);
-                    if (oldCard) oldCard.classList.remove('selected');
-                }
-                selectedIndices.push(index);
-                cardElement.classList.add('selected');
-            }
-            updateSelectedDisplay();
-        }
-
-        function updateSelectedDisplay() {
-            if (selectedIndices.length === 0) {
-                selectedFirst.innerText = '—';
-                selectedSecond.innerText = '—';
-                return;
-            }
-            const first = currentLevels[selectedIndices[0]];
-            selectedFirst.innerText = first ? `${first.pct}% ${first.value.toFixed(2)}` : '—';
-            if (selectedIndices.length >= 2) {
-                const second = currentLevels[selectedIndices[1]];
-                selectedSecond.innerText = second ? `${second.pct}% ${second.value.toFixed(2)}` : '—';
-            } else {
-                selectedSecond.innerText = '—';
-            }
-        }
-
-        function applyNewFibonacci() {
-            if (selectedIndices.length < 2) {
-                alert('selecciona dos niveles');
-                return;
-            }
-
-            const l1 = currentLevels[selectedIndices[0]];
-            const l2 = currentLevels[selectedIndices[1]];
-
-            let newMax, newMin;
-            if (l1.value > l2.value) {
-                newMax = l1.value;
-                newMin = l2.value;
-            } else {
-                newMax = l2.value;
-                newMin = l1.value;
-            }
-
-            const diff = newMax - newMin;
-
-            const newLevels = FIB_LEVELS.map(pct => {
-                let val;
-                if (currentDirection === 'BUY') {
-                    val = newMin + (diff * pct / 100);
-                } else {
-                    val = newMax - (diff * pct / 100);
-                }
-                return { pct, value: val };
-            });
-
-            recursiveGrid.innerHTML = '';
-
-            const maxCard = document.createElement('div');
-            maxCard.className = 'recursive-card';
-            maxCard.style.borderColor = '#ff8888';
-            maxCard.innerHTML = `<div style="font-weight:600">NUEVO MÁX</div><div style="font-size:1.2rem">${newMax.toFixed(2)}</div>`;
-            recursiveGrid.appendChild(maxCard);
-
-            const minCard = document.createElement('div');
-            minCard.className = 'recursive-card';
-            minCard.style.borderColor = '#8888ff';
-            minCard.innerHTML = `<div style="font-weight:600">NUEVO MÍN</div><div style="font-size:1.2rem">${newMin.toFixed(2)}</div>`;
-            recursiveGrid.appendChild(minCard);
-
-            newLevels.forEach(level => {
-                const card = document.createElement('div');
-                card.className = 'recursive-card';
-                card.innerHTML = `
-                    <div class="fibo-label" style="font-size:0.8rem; padding:3px 8px;">${level.pct}%</div>
-                    <div style="font-size:1.2rem; font-weight:500; color:white; text-shadow:0 0 15px cyan;">${level.value.toFixed(2)}</div>
-                    <div class="zone-tag" style="font-size:0.65rem;">${getZoneLabel(level.pct, currentDirection)}</div>
-                `;
-                recursiveGrid.appendChild(card);
-            });
-        }
-
-        calcMain.addEventListener('click', (e) => {
-            e.preventDefault();
-            computeAndRender();
-        });
-
-        applyBtn.addEventListener('click', applyNewFibonacci);
-
-        window.addEventListener('load', () => {
-            setDirection('SELL');
-        });
-    })();
+  // Renderizar cuadrícula en el DOM
+  function renderGrid() {
+    if (!activeRange) {
+      gridContainer.innerHTML = `
+        <div style="text-align:center; padding: 2rem; background: #fef9f0; border-radius: 1.5rem; border: 1px solid #fed7aa;">
+          🎯 Selecciona un rango: <strong>"0% → 23.6%"</strong> o <strong>"76.2% → 100%"</strong> para desplegar la cuadrícula
+        </div>
+      `;
+      return;
+    }
+    
+    const gridData = generateGrid(activeRange, currentMax, currentMin);
+    if (!gridData) {
+      gridContainer.innerHTML = `<div style="padding: 2rem; background:#ffe6e5; border-radius:1.5rem;">Error al calcular niveles</div>`;
+      return;
+    }
+    
+    let html = `
+      <div class="grid-card">
+        <div class="zone-header">
+          <span>📌 CUADRÍCULA: ${gridData.zoneNameLeft} → ${gridData.zoneNameRight}</span>
+          <span>🎯 Fibonacci Grid</span>
+        </div>
+        <div class="grid-row" style="background:#faf7f0; font-weight:800;">
+          <div class="level-name">NIVEL</div>
+          <div class="level-price">PRECIO (USD)</div>
+          <div class="level-tag">SEÑAL</div>
+        </div>
+    `;
+    
+    // Mostrar resistencia (primer nivel del rango)
+    html += `
+      <div class="grid-row">
+        <div class="level-name">🏔️ ${gridData.zoneNameLeft}</div>
+        <div class="level-price">${formatPrice(gridData.zoneResistance)}</div>
+        <div class="level-tag"><span class="tag-resist">ZONA RESISTENCIA</span></div>
+      </div>
+    `;
+    
+    // Niveles internos (sell / buy)
+    for (let row of gridData.rows) {
+      const tagClass = row.tag === 'sell' ? 'tag-sell' : 'tag-buy';
+      const tagText = row.tag === 'sell' ? '🔻 SELL' : '📈 BUY';
+      html += `
+        <div class="grid-row">
+          <div class="level-name">📊 ${row.levelName}</div>
+          <div class="level-price">${formatPrice(row.price)}</div>
+          <div class="level-tag"><span class="${tagClass}">${tagText}</span></div>
+        </div>
+      `;
+    }
+    
+    // Mostrar soporte (último nivel del rango)
+    html += `
+      <div class="grid-row">
+        <div class="level-name">⛰️ ${gridData.zoneNameRight}</div>
+        <div class="level-price">${formatPrice(gridData.zoneSupport)}</div>
+        <div class="level-tag"><span class="tag-support">ZONA SOPORTE</span></div>
+      </div>
+    `;
+    
+    html += `</div>`;
+    gridContainer.innerHTML = html;
+  }
+  
+  // Actualizar todo: recalcular Fibonacci base y si hay rango activo, actualizar grid
+  function updateAllValues() {
+    let newMax = parseFloat(maxInput.value);
+    let newMin = parseFloat(minInput.value);
+    
+    if (isNaN(newMax) || isNaN(newMin)) {
+      alert("❌ Por favor ingresa valores numéricos válidos");
+      return;
+    }
+    if (newMax <= newMin) {
+      alert("❌ El valor MÁXIMO debe ser mayor que el MÍNIMO");
+      return;
+    }
+    
+    currentMax = newMax;
+    currentMin = newMin;
+    
+    // Actualizar tabla de Fibonacci base
+    renderFibonacciTable();
+    
+    // Si hay un rango activo, actualizar la grid
+    if (activeRange) {
+      renderGrid();
+    } else {
+      gridContainer.innerHTML = `
+        <div style="text-align:center; padding: 2rem; background: #fef9f0; border-radius: 1.5rem; border: 1px solid #fed7aa;">
+          ✅ Datos actualizados. Selecciona un rango para ver la cuadrícula.
+        </div>
+      `;
+    }
+  }
+  
+  // Establecer rango activo
+  function setActiveRange(range) {
+    activeRange = range;
+    
+    // Estilos de botones
+    if (range === 'first') {
+      btnRange1.classList.add('active');
+      btnRange2.classList.remove('active');
+    } else if (range === 'second') {
+      btnRange2.classList.add('active');
+      btnRange1.classList.remove('active');
+    }
+    
+    renderGrid();
+  }
+  
+  // Eventos
+  btnRange1.addEventListener('click', () => setActiveRange('first'));
+  btnRange2.addEventListener('click', () => setActiveRange('second'));
+  updateBtn.addEventListener('click', updateAllValues);
+  
+  // Inicialización
+  renderFibonacciTable();
+  
+  // Valores por defecto del ejemplo
+  maxInput.value = currentMax;
+  minInput.value = currentMin;
+  activeRange = null;
+  btnRange1.classList.remove('active');
+  btnRange2.classList.remove('active');
+  
+  // Mensaje inicial en grid
+  gridContainer.innerHTML = `
+    <div style="text-align:center; padding: 2rem; background: #fef9f0; border-radius: 1.5rem; border: 1px solid #fed7aa;">
+      🎯 Selecciona un rango: <strong>"0% → 23.6%"</strong> o <strong>"76.2% → 100%"</strong>
+    </div>
+  `;
 </script>
 </body>
 </html>
