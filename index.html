@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>HEYDIN KAYSER TRADING | Portal Futurista VIP</title>
+    <title>HEYDIN KAYSER TRADING | Acceso VIP</title>
     <!-- Font Awesome 6 (iconos) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <!-- Google Fonts: Inter y Orbitron (toque futurista) -->
@@ -29,7 +29,7 @@
             min-height: 100vh;
             font-family: 'Inter', 'Segoe UI', sans-serif;
             background: #0a0f1f;
-            /* Imagen de fondo principal (HEYDIN.jpg) con efecto transparente + overlay futurista */
+            /* Imagen de fondo principal (HEYDIN.jpg) con overlay futurista */
             background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
             background-size: cover;
             background-position: center center;
@@ -41,7 +41,7 @@
             padding: 1.5rem;
         }
 
-        /* Overlay oscuro pero dejando ver la imagen (transparente pero legible) */
+        /* Overlay oscuro para legibilidad */
         body::before {
             content: "";
             position: fixed;
@@ -49,7 +49,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 10%, rgba(0, 0, 0, 0.65), rgba(2, 10, 22, 0.85));
+            background: radial-gradient(circle at 30% 10%, rgba(0, 0, 0, 0.7), rgba(2, 10, 22, 0.9));
             backdrop-filter: blur(2px);
             z-index: 0;
             pointer-events: none;
@@ -61,10 +61,10 @@
             z-index: 10;
             width: 100%;
             max-width: 550px;
-            background: rgba(12, 20, 35, 0.55);
+            background: rgba(12, 20, 35, 0.6);
             backdrop-filter: blur(14px);
             border-radius: 56px;
-            border: 1px solid rgba(0, 255, 255, 0.35);
+            border: 1px solid rgba(0, 255, 255, 0.45);
             box-shadow: 0 30px 50px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 255, 255, 0.2), 0 0 20px rgba(0, 200, 255, 0.3);
             padding: 2rem 1.8rem 2.2rem;
             transition: all 0.3s ease;
@@ -118,8 +118,8 @@
             letter-spacing: 0.5px;
         }
         .input-modern input {
-            background: rgba(0, 0, 0, 0.5);
-            border: 1px solid rgba(0, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.55);
+            border: 1px solid rgba(0, 255, 255, 0.6);
             border-radius: 60px;
             padding: 14px 20px;
             color: white;
@@ -178,136 +178,6 @@
             text-decoration: underline;
             cursor: pointer;
         }
-
-        /* DASHBOARD después del login */
-        .dashboard {
-            display: none;
-            background: rgba(8, 18, 28, 0.7);
-            backdrop-filter: blur(16px);
-            border-radius: 48px;
-            border: 1px solid rgba(0, 255, 255, 0.5);
-            padding: 1.8rem;
-            width: 100%;
-            max-width: 750px;
-            z-index: 10;
-            position: relative;
-        }
-        .dashboard.active {
-            display: block;
-        }
-        .welcome-header {
-            text-align: center;
-            border-bottom: 1px solid rgba(0,255,200,0.3);
-            padding-bottom: 1rem;
-            margin-bottom: 1.8rem;
-        }
-        .welcome-header h2 {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.9rem;
-            background: linear-gradient(135deg, #FFE5A3, #3effea);
-            background-clip: text;
-            -webkit-background-clip: text;
-            color: transparent;
-        }
-        .user-chip {
-            background: rgba(0,255,255,0.15);
-            display: inline-block;
-            padding: 6px 20px;
-            border-radius: 40px;
-            font-size: 0.8rem;
-            margin-top: 12px;
-            color: #aaffff;
-        }
-        /* sección de redes + explicación */
-        .social-showcase {
-            margin: 2rem 0;
-        }
-        .social-title {
-            font-size: 1.2rem;
-            font-weight: 600;
-            color: #FFD966;
-            text-align: center;
-            margin-bottom: 1rem;
-            letter-spacing: 1px;
-        }
-        .social-grid-exp {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-        }
-        .social-card-exp {
-            background: rgba(0, 0, 0, 0.55);
-            border-radius: 28px;
-            padding: 0.8rem 1.2rem;
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            backdrop-filter: blur(4px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            transition: 0.25s;
-            text-decoration: none;
-            color: white;
-        }
-        .social-card-exp:hover {
-            transform: translateX(8px);
-            border-color: #FFD966;
-            background: rgba(0, 255, 255, 0.1);
-            box-shadow: 0 0 12px rgba(0,255,200,0.3);
-        }
-        .social-icon-circle {
-            width: 52px;
-            height: 52px;
-            background: rgba(0, 20, 40, 0.7);
-            border-radius: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 2rem;
-            color: cyan;
-            border: 1px solid cyan;
-        }
-        .social-info {
-            flex: 1;
-        }
-        .social-info h4 {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 4px;
-            color: #fff5df;
-        }
-        .social-info p {
-            font-size: 0.7rem;
-            opacity: 0.8;
-            color: #cceeff;
-        }
-        .concept-badge {
-            font-size: 0.7rem;
-            background: rgba(0,0,0,0.5);
-            padding: 4px 10px;
-            border-radius: 50px;
-            color: #b3ffff;
-        }
-        .trading-note {
-            background: rgba(0, 0, 0, 0.5);
-            border-radius: 24px;
-            padding: 1rem;
-            margin: 1rem 0;
-            text-align: center;
-            font-size: 0.8rem;
-            border-left: 4px solid cyan;
-        }
-        .logout-btn {
-            background: rgba(255, 70, 70, 0.2);
-            border: 1px solid #ff8888;
-            color: #ffb5b5;
-            width: 100%;
-            margin-top: 1.5rem;
-        }
-        .logout-btn:hover {
-            background: #ff4455;
-            color: white;
-        }
-
         /* Modal términos futurista */
         .modal {
             display: none;
@@ -365,16 +235,9 @@
             border-radius: 40px;
             padding: 8px 20px;
         }
-
         @media (max-width: 600px) {
-            .glass-panel, .dashboard {
+            .glass-panel {
                 padding: 1.5rem;
-            }
-            .social-card-exp {
-                flex-wrap: wrap;
-            }
-            .social-info p {
-                font-size: 0.65rem;
             }
             .brand-futuristic h1 {
                 font-size: 1.6rem;
@@ -436,71 +299,6 @@
         </div>
     </div>
 
-    <!-- DASHBOARD POST LOGIN: REDES SOCIALES + EXPLICACION CONCEPTOS -->
-    <div id="dashboardApp" class="dashboard">
-        <div class="welcome-header">
-            <h2>⚡ HEYDIN KAYSER VIP ⚡</h2>
-            <div class="user-chip"><i class="fas fa-id-card"></i> <span id="dashboardUserEmail"></span></div>
-            <p style="font-size:0.75rem; margin-top: 10px;">Inteligencia de mercados · Señales algorítmicas</p>
-        </div>
-
-        <div class="social-showcase">
-            <div class="social-title"><i class="fas fa-globe"></i> ECOSISTEMA DIGITAL & REDES</div>
-            <div class="social-grid-exp">
-                <!-- BLOGSPOT -->
-                <a href="https://heydin-kayser-vip.blogspot.com/" target="_blank" class="social-card-exp">
-                    <div class="social-icon-circle"><i class="fab fa-blogger"></i></div>
-                    <div class="social-info">
-                        <h4>Blogspot · Análisis diario</h4>
-                        <p>📊 Señales SELL/BTC, entradas, sl/tp. <strong>Concepto:</strong> Trading es comprar barato, vender caro. Gestión de riesgo 5%.</p>
-                    </div>
-                    <div class="concept-badge"><i class="fas fa-chart-line"></i> Estrategia</div>
-                </a>
-                <!-- YOUTUBE -->
-                <a href="https://www.youtube.com/@heydinkayser2026" target="_blank" class="social-card-exp">
-                    <div class="social-icon-circle"><i class="fab fa-youtube"></i></div>
-                    <div class="social-info">
-                        <h4>YouTube · Contenido visual</h4>
-                        <p>📹 Tutoriales, market outlook y análisis técnico en tiempo real. <strong>Concepto:</strong> Backtesting y psicotrading.</p>
-                    </div>
-                    <div class="concept-badge"><i class="fas fa-video"></i> Educación</div>
-                </a>
-                <!-- FACEBOOK -->
-                <a href="https://www.facebook.com/profile.php?id=61576490987991&locale=es_LA" target="_blank" class="social-card-exp">
-                    <div class="social-icon-circle"><i class="fab fa-facebook-f"></i></div>
-                    <div class="social-info">
-                        <h4>Facebook · Comunidad</h4>
-                        <p>👥 Grupo privado, noticias económicas y alertas rápidas. <strong>Concepto:</strong> Gestión de capital y noticias macro.</p>
-                    </div>
-                    <div class="concept-badge"><i class="fas fa-users"></i> Networking</div>
-                </a>
-                <!-- TIKTOK -->
-                <a href="https://www.tiktok.com/@heydin.kayser2026" target="_blank" class="social-card-exp">
-                    <div class="social-icon-circle"><i class="fab fa-tiktok"></i></div>
-                    <div class="social-info">
-                        <h4>TikTok · Píldoras trading</h4>
-                        <p>📱 Conceptos clave en 60 segundos: Soportes, resistencias, tendencias. <strong>Concepto:</strong> Liquidez y volatilidad.</p>
-                    </div>
-                    <div class="concept-badge"><i class="fas fa-bolt"></i> Micro-learning</div>
-                </a>
-                <!-- MQL5 -->
-                <a href="https://www.mql5.com/en/channels/heydin-kayser-2026" target="_blank" class="social-card-exp">
-                    <div class="social-icon-circle"><i class="fas fa-robot"></i></div>
-                    <div class="social-info">
-                        <h4>MQL5 · Señales automatizadas</h4>
-                        <p>🤖 Copy trading y estadísticas de rendimiento. <strong>Concepto:</strong> Algoritmos cuantitativos y backtesting.</p>
-                    </div>
-                    <div class="concept-badge"><i class="fas fa-chart-simple"></i> Automatización</div>
-                </a>
-            </div>
-        </div>
-
-        <div class="trading-note">
-            <i class="fas fa-dragon"></i> <strong>HEYDIN KAYSER TRADING</strong> — Filosofía: <strong>“Riesgo medido, beneficio exponencial”</strong>. Operamos con señales SELL/BTC, gestión 5% por cada $1,000. ¡Bienvenido al futuro del trading!
-        </div>
-        <button id="logoutFinalBtn" class="btn-cyber logout-btn"><i class="fas fa-sign-out-alt"></i> CERRAR SESIÓN</button>
-    </div>
-
     <!-- Modal términos y condiciones -->
     <div id="termsModal" class="modal">
         <div class="modal-card">
@@ -525,7 +323,7 @@
     <script type="module">
         import { initializeApp } from "firebase/app";
         import { getAnalytics } from "firebase/analytics";
-        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "firebase/auth";
+        import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 
         const firebaseConfig = {
             apiKey: "AIzaSyCpFnSLx-ZUq6j27T-w_nvsdSvUrNs688g",
@@ -543,16 +341,12 @@
         const auth = getAuth(app);
 
         // DOM elements
-        const authPanel = document.getElementById('authPanel');
-        const dashboardDiv = document.getElementById('dashboardApp');
         const loginContainer = document.getElementById('loginContainer');
         const registerContainer = document.getElementById('registerContainer');
         const loginForm = document.getElementById('loginFormElement');
         const registerForm = document.getElementById('registerFormElement');
         const showRegisterLink = document.getElementById('showRegisterLink');
         const showLoginLink = document.getElementById('showLoginLink');
-        const logoutBtn = document.getElementById('logoutFinalBtn');
-        const dashboardUserSpan = document.getElementById('dashboardUserEmail');
         
         // terminos
         const termsModal = document.getElementById('termsModal');
@@ -564,7 +358,6 @@
         
         let termsAcceptedFlag = false;
 
-        // funciones UI
         function showLoginUI() {
             loginContainer.classList.add('active');
             registerContainer.classList.remove('active');
@@ -573,18 +366,7 @@
             loginContainer.classList.remove('active');
             registerContainer.classList.add('active');
         }
-        function showDashboard(userEmail) {
-            authPanel.style.display = 'none';
-            dashboardDiv.classList.add('active');
-            dashboardUserSpan.textContent = userEmail;
-        }
-        function showAuthUI() {
-            authPanel.style.display = 'block';
-            dashboardDiv.classList.remove('active');
-            showLoginUI();
-        }
 
-        // Modal lógica
         function openModal() {
             termsModal.classList.add('active');
         }
@@ -636,7 +418,7 @@
             }
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
-                alert("✅ Registro exitoso. ¡Bienvenido a HEYDIN KAYSER!");
+                alert("✅ Registro exitoso. ¡Bienvenido a HEYDIN KAYSER! Ahora inicia sesión.");
                 registerForm.reset();
                 termsCheckbox.checked = false;
                 termsAcceptedFlag = false;
@@ -649,44 +431,32 @@
             }
         });
 
-        // Login
+        // Login y redirección a home.html
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                loginForm.reset();
+                // Redirigir a home.html después de login exitoso
+                window.location.href = "home.html";
             } catch (error) {
                 alert("Credenciales incorrectas o usuario no existe.");
             }
         });
 
-        // logout
-        logoutBtn.addEventListener('click', async () => {
-            await signOut(auth);
-        });
-
-        // estado auth
+        // Si el usuario ya está logueado, redirigir directamente a home.html
         onAuthStateChanged(auth, (user) => {
             if(user) {
-                showDashboard(user.email);
-            } else {
-                showAuthUI();
+                window.location.href = "home.html";
             }
         });
 
-        // navegación entre formularios
         showRegisterLink.addEventListener('click', (e) => { e.preventDefault(); showRegisterUI(); });
         showLoginLink.addEventListener('click', (e) => { e.preventDefault(); showLoginUI(); });
-        
-        // Cierre modal clic fuera
         window.addEventListener('click', (e) => {
             if(e.target === termsModal) closeModal();
         });
-        
-        // pequeño fix para que la imagen se vea correctamente (ya está en body background)
-        console.log("Portal HEYDIN KAYSER - futurista con redes y conceptos");
     </script>
 </body>
 </html>
