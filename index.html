@@ -525,7 +525,7 @@
     </footer>
 </div>
 
-<!-- MODAL LOGIN -->
+<!-- MODAL LOGIN (ahora se abre con COMENZAR AHORA) -->
 <div id="loginModal" class="modal-overlay">
     <div class="modal-box">
         <div class="modal-header">
@@ -536,7 +536,7 @@
         <input type="email" id="loginEmail" class="input-glow" placeholder="Correo electrónico" autocomplete="email">
         <input type="password" id="loginPassword" class="input-glow" placeholder="Contraseña">
         <button class="btn-submit" id="doLoginBtn">ACCEDER</button>
-        <div class="toggle-auth">¿Sin cuenta? <span id="switchToRegister">Regístrate ahora</span></div>
+        <div class="toggle-auth">¿No tienes cuenta? <span id="switchToRegisterFromLogin">Regístrate ahora</span></div>
     </div>
 </div>
 
@@ -556,7 +556,7 @@
             <label>Acepto los <span class="terms-link" id="showTermsBtn">Términos y Condiciones</span></label>
         </div>
         <button class="btn-submit" id="doRegisterBtn">ACTIVAR CUENTA</button>
-        <div class="toggle-auth">¿Ya tienes cuenta? <span id="switchToLogin">Inicia sesión</span></div>
+        <div class="toggle-auth">¿Ya tienes cuenta? <span id="switchToLoginFromRegister">Inicia sesión</span></div>
     </div>
 </div>
 
@@ -622,13 +622,25 @@
     function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
     function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
 
+    // Botones header
     document.getElementById('openLoginModalBtn').onclick = () => openModal('loginModal');
     document.getElementById('openRegisterModalBtn').onclick = () => openModal('registerModal');
-    document.getElementById('heroCtaBtn').onclick = () => openModal('registerModal');
+    
+    // ★ CAMBIO IMPORTANTE: Botón "COMENZAR AHORA" abre el login, no el registro
+    document.getElementById('heroCtaBtn').onclick = () => openModal('loginModal');
 
-    // Switch entre modales
-    document.getElementById('switchToRegister').onclick = () => { closeModal('loginModal'); openModal('registerModal'); };
-    document.getElementById('switchToLogin').onclick = () => { closeModal('registerModal'); openModal('loginModal'); };
+    // Switch entre modales (desde login hacia registro)
+    document.getElementById('switchToRegisterFromLogin').onclick = () => { 
+        closeModal('loginModal'); 
+        openModal('registerModal'); 
+    };
+    // Switch desde registro hacia login
+    document.getElementById('switchToLoginFromRegister').onclick = () => { 
+        closeModal('registerModal'); 
+        openModal('loginModal'); 
+    };
+    
+    // Mostrar términos
     document.getElementById('showTermsBtn').onclick = (e) => { e.preventDefault(); openModal('termsModal'); };
 
     // Cerrar click fuera
@@ -676,7 +688,7 @@
             .catch(err => { hideLoader(); document.getElementById('registerError').innerText = 'Error: ' + err.message; });
     };
 
-    // Redirigir si ya está logueado
+    // Redirigir si ya está logueado (evita volver a index si ya está autenticado)
     auth.onAuthStateChanged((user) => {
         if (user && (window.location.pathname === '/' || window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/'))) {
             window.location.href = 'home.html';
