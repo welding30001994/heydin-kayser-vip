@@ -2,8 +2,8 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
-    <title>Heydin Kayser • Portal VIP</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>HEYDIN KAYSER • Portal VIP Futurista</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
@@ -11,46 +11,65 @@
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
-        /* ===== VARIABLES ===== */
-        :root {
-            --primary: #00ffff;
-            --primary-glow: rgba(0, 255, 255, 0.8);
-            --secondary: #ff00d4;
-            --secondary-glow: rgba(255, 0, 212, 0.7);
-            --accent: #7700ff;
-            --accent-glow: rgba(119, 0, 255, 0.6);
-            --dark: #0a0c12;
-            --darker: #05070a;
-            --card-bg: rgba(12, 16, 22, 0.8);
-            --text-light: #e2f3ff;
-            --transition: all 0.3s ease;
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
 
-        html {
-            font-size: 16px;
-            -webkit-tap-highlight-color: transparent;
-        }
-
         body {
-            font-family: 'Rajdhani', 'Syne', sans-serif;
-            background: radial-gradient(circle at 20% 20%, #0b0e14, #030507);
-            color: var(--text-light);
-            line-height: 1.5;
+            font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
+            background: #03050b;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            width: 100%;
+            color: #eef5ff;
         }
 
-        /* ===== FONDOS ===== */
+        /* FONDO PRINCIPAL CON IMAGEN TRANSPARENTE (HEYDIN.jpg) */
+        .bg-image-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0.32;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* OVERLAY NEÓN + GRID FUTURISTA */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.07) 0px, rgba(0, 255, 255, 0.07) 1px, transparent 1px, transparent 45px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.07) 0px, rgba(0, 255, 255, 0.07) 1px, transparent 1px, transparent 45px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.1), rgba(0, 0, 0, 0.75));
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* PARTICULAS */
         #particles-js {
             position: fixed;
             top: 0;
@@ -61,959 +80,601 @@
             pointer-events: none;
         }
 
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
+        /* CONTENIDO PRINCIPAL */
+        .content {
+            position: relative;
+            z-index: 15;
             width: 100%;
-            height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: min(30px, 4vw) min(30px, 4vw);
-            pointer-events: none;
-            z-index: 0;
-            opacity: 0.4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
         }
 
-        /* ===== LOADER RESPONSIVE ===== */
+        /* LOADER FUTURISTA */
         .loader-container {
             position: fixed;
             inset: 0;
-            background: #010101;
+            background: #01010b;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 9999;
-            transition: opacity 0.9s ease, visibility 0.9s ease;
-            backdrop-filter: blur(8px);
-            padding: 20px;
-            text-align: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            backdrop-filter: blur(12px);
         }
-
         .loader-container.fade-out {
             opacity: 0;
             visibility: hidden;
         }
-
-        .loader-logo {
-            font-size: clamp(1.8rem, 8vw, 4rem);
-            font-weight: 900;
-            font-family: 'Syne', sans-serif;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            justify-content: center;
-            color: #fff;
-            text-shadow: 0 0 20px cyan, 0 0 50px #ff00d4;
-            margin-bottom: 2rem;
-            letter-spacing: 2px;
-        }
-
-        .loader-logo i {
-            font-size: clamp(2.2rem, 10vw, 5rem);
-            color: cyan;
-            filter: drop-shadow(0 0 15px cyan);
-        }
-
-        .loader {
-            width: min(300px, 80%);
-            height: 5px;
-            background: rgba(0,255,255,0.1);
-            border-radius: 10px;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 0 30px cyan;
-        }
-
-        .loader::before {
-            content: '';
-            position: absolute;
-            width: 150%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, cyan, #ff00d4, cyan, transparent);
-            animation: loadingScan 2.4s infinite linear;
-        }
-
-        @keyframes loadingScan {
-            0% { transform: translateX(-150%); }
-            100% { transform: translateX(80%); }
-        }
-
-        .loader-text {
-            margin-top: 30px;
-            font-size: clamp(1rem, 4vw, 1.4rem);
-            font-weight: 700;
-            text-transform: uppercase;
-            color: #fff;
-            text-shadow: 0 0 10px cyan;
-            letter-spacing: 3px;
-        }
-
-        .loader-dots {
-            display: flex;
-            gap: 15px;
-            margin-top: 30px;
-        }
-
-        .loader-dot {
-            width: clamp(12px, 3vw, 16px);
-            height: clamp(12px, 3vw, 16px);
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(0,255,255,0.2);
+            border-top: 3px solid #0cf;
+            border-right: 3px solid #f0f;
             border-radius: 50%;
-            background: cyan;
-            box-shadow: 0 0 20px cyan;
-            animation: dotWave 1.6s infinite ease-in-out alternate;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 25px cyan;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+        .loader-text {
+            margin-top: 25px;
+            font-size: 1.4rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            background: linear-gradient(45deg, cyan, #ff44e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
-        .loader-dot:nth-child(2) { animation-delay: 0.4s; background: #ff00d4; }
-        .loader-dot:nth-child(3) { animation-delay: 0.8s; background: #7700ff; }
-
-        @keyframes dotWave {
-            0% { transform: scale(1); opacity: 0.8; }
-            100% { transform: scale(1.5); opacity: 1; }
-        }
-
-        /* ===== CONTENEDOR PRINCIPAL RESPONSIVE ===== */
-        .container {
-            width: 100%;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 15px;
-            position: relative;
-            z-index: 10;
-        }
-
-        @media (min-width: 640px) {
-            .container { padding: 0 20px; }
-        }
-
-        @media (min-width: 1024px) {
-            .container { padding: 0 30px; }
-        }
-
-        /* ===== HEADER RESPONSIVE ===== */
-        header {
-            background: rgba(3, 6, 10, 0.85);
+        /* HEADER GLASS */
+        .glass-header {
+            background: rgba(5, 10, 20, 0.75);
             backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
-            box-shadow: 0 5px 30px rgba(0,255,255,0.2);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.5);
+            padding: 0.8rem 1.5rem;
             position: sticky;
             top: 0;
-            z-index: 100;
-            padding: 0.7rem 0;
-            width: 100%;
+            z-index: 200;
         }
-
-        nav {
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
         }
-
-        .logo {
-            font-size: clamp(1.2rem, 5vw, 2rem);
-            font-weight: 900;
-            font-family: 'Syne', sans-serif;
+        .logo-area {
             display: flex;
             align-items: center;
-            gap: 8px;
-            color: white;
-            text-shadow: 0 0 15px cyan;
+            gap: 12px;
+        }
+        .logo-icon {
+            font-size: 2rem;
+            color: #0cf;
+            filter: drop-shadow(0 0 8px cyan);
+        }
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, #fff, #0cf);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             letter-spacing: 1px;
         }
-
-        .logo i {
-            font-size: clamp(1.4rem, 6vw, 2.5rem);
-            color: cyan;
-            filter: drop-shadow(0 0 10px cyan);
-        }
-
         .user-profile {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 15px;
             flex-wrap: wrap;
-            justify-content: flex-end;
         }
-
         .user-name {
-            color: var(--primary);
-            font-size: clamp(0.9rem, 3.5vw, 1.2rem);
+            color: #0cf;
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
             font-weight: 700;
             text-shadow: 0 0 10px cyan;
-            letter-spacing: 1px;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
+            background: rgba(0,255,255,0.1);
+            padding: 6px 16px;
+            border-radius: 60px;
+            border: 1px solid rgba(0,255,255,0.4);
         }
-
-        .user-name i {
-            font-size: clamp(1rem, 4vw, 1.3rem);
-        }
-
         .logout-btn {
             background: transparent;
             border: 1.5px solid #ff3366;
             color: #ff3366;
-            padding: 8px 16px;
-            border-radius: 30px;
-            font-weight: 700;
+            padding: 8px 20px;
+            border-radius: 40px;
+            font-weight: 800;
             cursor: pointer;
             transition: 0.3s;
             text-transform: uppercase;
             letter-spacing: 1.5px;
-            font-size: clamp(0.7rem, 3vw, 0.9rem);
-            white-space: nowrap;
+            font-size: 0.8rem;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 8px;
         }
-
-        @media (min-width: 480px) {
-            .logout-btn {
-                padding: 10px 20px;
-                letter-spacing: 2px;
-            }
-        }
-
         .logout-btn:hover {
             background: #ff3366;
             color: black;
             box-shadow: 0 0 30px #ff3366;
+            transform: scale(1.02);
         }
 
-        .logout-btn:active {
-            transform: scale(0.95);
-        }
-
-        /* ===== BIENVENIDA RESPONSIVE ===== */
+        /* BIENVENIDA */
         .welcome-section {
-            padding: 2rem 0 1.5rem;
             text-align: center;
+            padding: 2.5rem 1.5rem 1rem;
         }
-
-        @media (min-width: 768px) {
-            .welcome-section { padding: 3rem 0 2rem; }
-        }
-
         .welcome-title {
-            font-size: clamp(1.8rem, 8vw, 3.2rem);
+            font-size: clamp(1.8rem, 8vw, 3.5rem);
             font-weight: 900;
             font-family: 'Syne', sans-serif;
-            background: linear-gradient(45deg, #fff, cyan, #ff00d4);
+            background: linear-gradient(45deg, #fff, cyan, #ff44e6);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 40px rgba(0, 255, 255, 0.5);
-            margin-bottom: 0.5rem;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(0,255,255,0.5);
             letter-spacing: 2px;
-            line-height: 1.2;
-            padding: 0 10px;
         }
-
         .welcome-subtitle {
-            font-size: clamp(0.9rem, 4vw, 1.3rem);
-            color: #aad0ff;
-            text-shadow: 0 0 15px rgba(0,255,255,0.5);
-            padding: 0 15px;
+            font-size: clamp(1rem, 4vw, 1.3rem);
+            color: #b3e4ff;
+            text-shadow: 0 0 10px rgba(0,255,255,0.3);
         }
 
-        /* ===== RELOJ RESPONSIVE ===== */
+        /* RELOJ NEÓN */
         .time-container {
             display: flex;
             justify-content: center;
-            margin-bottom: 1.5rem;
+            margin: 1rem 0 2rem;
             padding: 0 15px;
         }
-
-        @media (min-width: 768px) {
-            .time-container { margin-bottom: 2rem; }
-        }
-
         .neon-clock {
-            background: rgba(0,0,0,0.6);
-            backdrop-filter: blur(10px);
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(12px);
             border: 2px solid cyan;
-            border-radius: 60px;
-            padding: 12px 25px;
+            border-radius: 80px;
+            padding: 12px 30px;
             display: flex;
             align-items: center;
-            gap: 15px;
-            box-shadow: 0 0 30px cyan;
-            width: 100%;
-            max-width: 500px;
-            justify-content: center;
+            gap: 20px;
             flex-wrap: wrap;
+            justify-content: center;
+            box-shadow: 0 0 35px cyan;
         }
-
-        @media (min-width: 480px) {
-            .neon-clock {
-                padding: 15px 40px;
-                gap: 20px;
-                flex-wrap: nowrap;
-            }
-        }
-
         .neon-clock i {
-            font-size: clamp(1.5rem, 6vw, 2.2rem);
+            font-size: 2rem;
             color: cyan;
             filter: drop-shadow(0 0 10px cyan);
         }
-
         #current-time {
             font-size: clamp(1.3rem, 5vw, 2rem);
             font-weight: 800;
             color: white;
-            text-shadow: 0 0 15px cyan;
-            letter-spacing: 2px;
-            font-family: 'Syne', monospace;
+            text-shadow: 0 0 12px cyan;
+            font-family: 'Orbitron', monospace;
         }
-
         #current-date {
-            font-size: clamp(0.9rem, 3.5vw, 1.2rem);
-            color: #ff00d4;
-            text-shadow: 0 0 10px #ff00d4;
-            text-align: center;
+            font-size: clamp(0.9rem, 3.5vw, 1.1rem);
+            color: #ff44e6;
+            text-shadow: 0 0 8px #ff44e6;
         }
 
-        /* ===== PORTAL DE ACCESOS RESPONSIVE ===== */
+        /* PORTAL TÍTULO */
         .portal-title {
+            text-align: center;
             font-size: clamp(1.8rem, 7vw, 2.8rem);
             font-weight: 900;
-            text-align: center;
-            margin: 2rem 0 1.5rem;
-            background: linear-gradient(135deg, cyan, #fff);
+            margin: 2rem 0 1.8rem;
+            background: linear-gradient(135deg, cyan, #fff, #ff44e6);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 30px rgba(0,255,255,0.5);
-            letter-spacing: 2px;
-            padding: 0 15px;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 3px;
         }
-
         .portal-title i {
-            margin: 0 8px;
-            font-size: clamp(1.5rem, 6vw, 2.2rem);
+            margin: 0 10px;
         }
 
+        /* GRID DE MÓDULOS FUTURISTA */
         .modules-grid {
             display: grid;
-            grid-template-columns: 1fr;
-            gap: 1.2rem;
+            grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+            gap: 1.5rem;
+            padding: 0 1.5rem;
             margin-bottom: 3rem;
-            padding: 0 15px;
         }
-
-        @media (min-width: 480px) {
+        @media (min-width: 640px) {
             .modules-grid {
-                grid-template-columns: repeat(2, 1fr);
-                gap: 1.5rem;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .modules-grid {
-                grid-template-columns: repeat(3, 1fr);
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
                 gap: 1.8rem;
             }
         }
-
         @media (min-width: 1024px) {
             .modules-grid {
-                grid-template-columns: repeat(4, 1fr);
+                grid-template-columns: repeat(6, 1fr);
                 gap: 2rem;
             }
         }
-
-        @media (min-width: 1280px) {
-            .modules-grid {
-                grid-template-columns: repeat(6, 1fr);
-                gap: 1.8rem;
-            }
-        }
-
         .module-card {
-            background: var(--card-bg);
+            background: rgba(12, 20, 32, 0.7);
             backdrop-filter: blur(15px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 20px;
-            padding: 1.5rem 1rem;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            border-radius: 28px;
+            padding: 1.8rem 1rem;
             text-align: center;
-            transition: var(--transition);
+            cursor: pointer;
+            transition: all 0.25s ease;
             position: relative;
             overflow: hidden;
-            cursor: pointer;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            height: 100%;
         }
-
-        @media (min-width: 768px) {
-            .module-card {
-                padding: 2rem 1.2rem;
-                border-radius: 25px;
-            }
-        }
-
         .module-card:active {
-            transform: scale(0.98);
+            transform: scale(0.97);
             border-color: cyan;
             box-shadow: 0 0 25px cyan;
         }
-
         @media (min-width: 1024px) {
             .module-card:hover {
                 transform: translateY(-8px);
-                border-color: cyan;
-                box-shadow: 0 0 30px rgba(0,255,255,0.3);
+                border-color: #ff44e6;
+                box-shadow: 0 0 35px rgba(255, 68, 230, 0.4);
             }
         }
-
         .module-icon {
             font-size: clamp(2.2rem, 8vw, 3.5rem);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
             color: cyan;
-            text-shadow: 0 0 20px cyan, 0 0 40px #ff00d4;
+            text-shadow: 0 0 15px cyan;
         }
-
         .module-card h3 {
-            font-size: clamp(1.1rem, 5vw, 1.5rem);
+            font-size: clamp(1rem, 4vw, 1.4rem);
             font-weight: 800;
-            margin-bottom: 0.5rem;
             background: linear-gradient(45deg, cyan, #fff);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.4rem;
         }
-
         .module-card p {
-            color: #b0e0ff;
-            font-size: clamp(0.8rem, 3vw, 0.95rem);
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            line-height: 1.4;
+            font-size: 0.8rem;
+            color: #b8dcff;
             display: none;
         }
-
         @media (min-width: 768px) {
             .module-card p {
                 display: block;
             }
         }
 
-        /* ===== SECCIÓN DESCARGA RESPONSIVE ===== */
+        /* SECCIÓN DESCARGA APP */
         .download-section {
-            background: rgba(0,0,0,0.6);
+            background: rgba(0, 0, 0, 0.65);
             backdrop-filter: blur(20px);
-            border-radius: 40px;
-            padding: 2rem 1.5rem;
-            margin: 2rem 15px 3rem;
-            border: 2px solid #ff00d4;
-            box-shadow: 0 0 40px #ff00d4;
+            border-radius: 60px;
+            padding: 2rem 1.8rem;
+            margin: 1.5rem 1.5rem 3rem;
+            border: 2px solid #ff44e6;
+            box-shadow: 0 0 40px rgba(255, 68, 230, 0.5);
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: center;
+            justify-content: space-between;
             gap: 1.5rem;
             text-align: center;
         }
-
         @media (min-width: 640px) {
             .download-section {
                 flex-direction: row;
-                padding: 2.5rem;
-                margin: 3rem 20px;
-                justify-content: space-around;
+                padding: 2rem 2.5rem;
+                margin: 2rem 2rem 3rem;
             }
         }
-
-        @media (min-width: 1024px) {
-            .download-section {
-                padding: 3rem;
-                margin: 3rem 30px;
-            }
-        }
-
         .download-info h2 {
-            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            font-size: clamp(1.4rem, 6vw, 2rem);
             font-weight: 900;
             color: white;
-            text-shadow: 0 0 20px #ff00d4;
-            margin-bottom: 0.5rem;
+            text-shadow: 0 0 20px #ff44e6;
         }
-
         .download-info p {
-            font-size: clamp(1rem, 4vw, 1.3rem);
+            font-size: clamp(0.9rem, 3.5vw, 1.2rem);
             color: #aaffff;
         }
-
         .download-btn {
-            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            background: linear-gradient(145deg, #ff44e6, #7700ff);
             border: none;
-            color: white;
-            padding: 14px 30px;
+            padding: 14px 32px;
             border-radius: 60px;
-            font-size: clamp(1.1rem, 5vw, 1.5rem);
+            font-size: 1.2rem;
             font-weight: 900;
             display: flex;
             align-items: center;
             gap: 12px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 30px #ff00d4;
-            border: 1px solid white;
-            white-space: nowrap;
+            transition: 0.25s;
+            box-shadow: 0 0 25px #ff44e6;
+            color: white;
         }
-
-        @media (min-width: 480px) {
-            .download-btn {
-                padding: 16px 40px;
-                font-size: 1.3rem;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .download-btn {
-                padding: 18px 45px;
-            }
-        }
-
         .download-btn:active {
             transform: scale(0.96);
-            box-shadow: 0 0 50px #ff00d4;
         }
-
         @media (min-width: 1024px) {
             .download-btn:hover {
-                transform: scale(1.05);
-                box-shadow: 0 0 60px #ff00d4;
+                transform: scale(1.03);
+                box-shadow: 0 0 45px #ff44e6;
             }
         }
 
-        .download-btn i {
-            font-size: clamp(1.3rem, 5vw, 1.8rem);
-        }
-
-        /* ===== FOOTER RESPONSIVE ===== */
+        /* FOOTER */
         footer {
-            background: rgba(0,0,0,0.85);
-            backdrop-filter: blur(25px);
-            border-top: 2px solid rgba(0,255,255,0.4);
-            padding: 2rem 0 1.5rem;
-            position: relative;
-            z-index: 20;
-            width: 100%;
+            background: rgba(3, 5, 12, 0.9);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid rgba(0, 255, 255, 0.4);
+            padding: 2.5rem 1rem 1.8rem;
             margin-top: 2rem;
         }
-
-        @media (min-width: 768px) {
-            footer { 
-                padding: 3rem 0 2rem;
-                margin-top: 3rem;
-            }
-        }
-
         .footer-logo {
-            font-size: clamp(1.4rem, 6vw, 2rem);
+            text-align: center;
+            font-size: 1.5rem;
             font-weight: 900;
             font-family: 'Syne', sans-serif;
             color: white;
             text-shadow: 0 0 20px cyan;
-            text-align: center;
-            margin-bottom: 1.2rem;
-            padding: 0 15px;
+            margin-bottom: 1.5rem;
         }
-
-        .footer-logo i {
-            margin-right: 8px;
-        }
-
         .social-icons {
             display: flex;
             flex-wrap: wrap;
-            gap: 12px;
             justify-content: center;
+            gap: 18px;
             margin: 20px 0;
-            padding: 0 15px;
         }
-
         .social-icons a {
-            color: white;
-            font-size: clamp(1.3rem, 5vw, 1.8rem);
-            width: clamp(40px, 10vw, 55px);
-            height: clamp(40px, 10vw, 55px);
+            width: 55px;
+            height: 55px;
+            background: rgba(0, 255, 255, 0.08);
+            border: 1.5px solid rgba(0, 255, 255, 0.5);
+            border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 50%;
-            background: rgba(0,255,255,0.08);
-            border: 1px solid rgba(0,255,255,0.5);
-            transition: 0.3s;
+            font-size: 1.6rem;
+            color: white;
+            transition: 0.25s;
         }
-
         .social-icons a:active {
             background: cyan;
             color: black;
-            transform: scale(0.9);
+            transform: scale(0.92);
         }
-
         @media (min-width: 1024px) {
             .social-icons a:hover {
                 background: cyan;
                 color: black;
-                border-color: #ff00d4;
                 box-shadow: 0 0 30px cyan;
                 transform: translateY(-5px);
             }
         }
-
         .copyright {
-            color: rgba(200, 240, 255, 0.7);
-            font-size: clamp(0.75rem, 3vw, 0.9rem);
             text-align: center;
+            font-size: 0.8rem;
+            color: #9bc0e0;
             margin-top: 1.5rem;
-            padding: 0 20px;
         }
-
-        /* ===== AJUSTES TÁCTILES MÓVIL ===== */
-        @media (max-width: 768px) {
+        @media (max-width: 550px) {
+            .social-icons a {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
             .module-card {
-                -webkit-tap-highlight-color: transparent;
+                padding: 1.2rem 0.8rem;
             }
-            
-            .module-card:active {
-                background: rgba(0, 255, 255, 0.1);
-            }
-            
-            .download-btn:active {
-                background: linear-gradient(145deg, #7700ff, #ff00d4);
-            }
-            
-            .logout-btn:active {
-                background: #ff3366;
-                color: black;
-            }
-        }
-
-        /* ===== UTILIDADES ===== */
-        .hide-mobile {
-            display: none;
-        }
-
-        @media (min-width: 768px) {
-            .hide-mobile {
-                display: block;
-            }
-        }
-
-        .text-center {
-            text-align: center;
-        }
-
-        .w-100 {
-            width: 100%;
         }
     </style>
 </head>
 <body>
-    <!-- PARTICLES -->
-    <div id="particles-js"></div>
-    <div class="grid-overlay"></div>
+<div class="bg-image-layer"></div>
+<div class="cyber-grid"></div>
+<div class="glow-overlay"></div>
+<div id="particles-js"></div>
 
+<div class="content">
     <!-- LOADER -->
     <div class="loader-container" id="loader">
-        <div class="loader-logo">
-            <i class="fas fa-chart-line"></i>
-            <span>PORTAL VIP</span>
-        </div>
-        <div class="loader"></div>
-        <div class="loader-text">Cargando terminal cuántica</div>
-        <div class="loader-dots">
-            <div class="loader-dot"></div>
-            <div class="loader-dot"></div>
-            <div class="loader-dot"></div>
-        </div>
+        <div class="loader-ring"></div>
+        <div class="loader-text">PORTAL VIP ACTIVADO</div>
+        <div style="margin-top: 20px; font-size:0.9rem; letter-spacing:2px;">CARGANDO TERMINAL CUÁNTICA</div>
     </div>
 
-    <header>
-        <div class="container">
-            <nav>
-                <div class="logo">
-                    <i class="fas fa-crown"></i>
-                    <span>HEYDIN KAYSER</span>
-                </div>
-                <div class="user-profile" id="userProfile">
-                    <span class="user-name" id="displayName">
-                        <i class="fas fa-user-astronaut"></i>
-                        <span>Cargando...</span>
-                    </span>
-                    <button class="logout-btn" id="logoutBtn">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span class="hide-mobile">SALIR</span>
-                    </button>
-                </div>
-            </nav>
+    <header class="glass-header">
+        <div class="nav-container">
+            <div class="logo-area">
+                <i class="fas fa-crown logo-icon"></i>
+                <span class="logo-text">HEYDIN KAYSER</span>
+            </div>
+            <div class="user-profile" id="userProfile">
+                <span class="user-name" id="displayName">
+                    <i class="fas fa-user-astronaut"></i>
+                    <span>Trader</span>
+                </span>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>SALIR</span>
+                </button>
+            </div>
         </div>
     </header>
 
-    <main class="container">
-        <!-- BIENVENIDA -->
+    <main>
         <div class="welcome-section">
             <h1 class="welcome-title" id="welcomeMessage">BIENVENIDO, TRADER</h1>
-            <p class="welcome-subtitle">Terminal cuántica de alto rendimiento</p>
+            <p class="welcome-subtitle">APRENDE TRADING DESDE CERO </p>
         </div>
 
-        <!-- RELOJ -->
-        <div class="time-container">
-            <div class="neon-clock">
-                <i class="fas fa-clock"></i>
-                <div>
-                    <div id="current-time">--:--:--</div>
-                    <div id="current-date">--/--/----</div>
-                </div>
-            </div>
-        </div>
 
-        <!-- PORTAL DE ACCESOS -->
+
         <h2 class="portal-title">
-            <i class="fas fa-cube"></i> 
-            PORTAL DE ACCESOS 
-            <i class="fas fa-cube"></i>
+            <i class="fas fa-cube"></i> PORTAL DE ACCESOS <i class="fas fa-cube"></i>
         </h2>
-        
+
         <div class="modules-grid">
-            <!-- Módulo 1: Módulos -->
-            <div class="module-card" onclick="window.location.href='modulos.html'">
-                <div class="module-icon"><i class="fas fa-puzzle-piece"></i></div>
-                <h3>Módulos</h3>
-                <p>Gestión de componentes</p>
-            </div>
-            <!-- Módulo 2: Gestión -->
-            <div class="module-card" onclick="window.location.href='gestion.html'">
-                <div class="module-icon"><i class="fas fa-gears"></i></div>
-                <h3>Gestión</h3>
-                <p>Control y administración</p>
-            </div>
-            <!-- Módulo 3: Fibonacci -->
-            <div class="module-card" onclick="window.location.href='fibonacci.html'">
-                <div class="module-icon"><i class="fas fa-chart-pie"></i></div>
-                <h3>Fibonacci</h3>
-                <p>Herramientas avanzadas</p>
-            </div>
-            <!-- Módulo 4: Chats online -->
-            <div class="module-card" onclick="window.location.href='chats.html'">
-                <div class="module-icon"><i class="fas fa-comments"></i></div>
-                <h3>Chats online</h3>
-                <p>Soporte en tiempo real</p>
-            </div>
-            <!-- Módulo 5: Pagos -->
-            <div class="module-card" onclick="window.location.href='pagos.html'">
-                <div class="module-icon"><i class="fas fa-credit-card"></i></div>
-                <h3>Pagos</h3>
-                <p>Suscripciones y facturas</p>
-            </div>
-            <!-- Módulo 6: Hora -->
-            <div class="module-card" onclick="window.location.href='hora.html'">
-                <div class="module-icon"><i class="fas fa-globe"></i></div>
-                <h3>Hora</h3>
-                <p>Mercados mundiales</p>
-            </div>
-            <!-- Módulo 7: Contenido -->
-            <div class="module-card" onclick="window.location.href='contenido.html'">
-                <div class="module-icon"><i class="fas fa-newspaper"></i></div>
-                <h3>Contenido</h3>
-                <p>Análisis y noticias</p>
-            </div>
-            <!-- Módulo 8: Soporte -->
-            <div class="module-card" onclick="window.location.href='soporte.html'">
-                <div class="module-icon"><i class="fas fa-headset"></i></div>
-                <h3>Soporte</h3>
-                <p>Atención preferencial</p>
-            </div>
-            <!-- Módulo 9: Señales -->
-            <div class="module-card" onclick="window.location.href='senales.html'">
-                <div class="module-icon"><i class="fas fa-satellite-dish"></i></div>
-                <h3>Señales</h3>
-                <p>Alertas precisas</p>
-            </div>
-            <!-- Módulo 10: Videos -->
-            <div class="module-card" onclick="window.location.href='videos.html'">
-                <div class="module-icon"><i class="fas fa-video"></i></div>
-                <h3>Videos</h3>
-                <p>Tutoriales y webinars</p>
-            </div>
-            <!-- Módulo 11: Pdf -->
-            <div class="module-card" onclick="window.location.href='pdf.html'">
-                <div class="module-icon"><i class="fas fa-file-pdf"></i></div>
-                <h3>Pdf</h3>
-                <p>Ebooks y guías</p>
-            </div>
-            <!-- Módulo 12: App Descarga -->
-            <div class="module-card" onclick="window.location.href='app-descarga.html'">
-                <div class="module-icon"><i class="fas fa-mobile-screen-button"></i></div>
-                <h3>App Descarga</h3>
-                <p>Terminal móvil</p>
-            </div>
+            <div class="module-card" onclick="window.location.href='modulos.html'"><div class="module-icon"><i class="fas fa-puzzle-piece"></i></div><h3>Módulos</h3><p>Componentes</p></div>
+            
+            <div class="module-card" onclick="window.location.href='gestion.html'"><div class="module-icon"><i class="fas fa-gears"></i></div><h3>Gestión</h3><p>Control total</p></div>
+
+             <div class="module-card" onclick="window.location.href='invest.html'"><div class="module-icon"><i class="fas fa-newspaper"></i></div><h3>Inversion</h3><p>ganancias</p></div>
+
+
+            <div class="module-card" onclick="window.location.href='fibonacci.html'"><div class="module-icon"><i class="fas fa-chart-pie"></i></div><h3>Fibonacci</h3><p>Herramientas</p></div>
+            <div class="module-card" onclick="window.location.href='chats.html'"><div class="module-icon"><i class="fas fa-comments"></i></div><h3>Chats online</h3><p>Soporte real</p></div>
+            <div class="module-card" onclick="window.location.href='pagos.html'"><div class="module-icon"><i class="fas fa-credit-card"></i></div><h3>Pagos</h3><p>Suscripciones</p></div>
+            <div class="module-card" onclick="window.location.href='hora.html'"><div class="module-icon"><i class="fas fa-globe"></i></div><h3>Hora</h3><p>Mercados</p></div>
+            <div class="module-card" onclick="window.location.href='contenido.html'"><div class="module-icon"><i class="fas fa-newspaper"></i></div><h3>Contenido</h3><p>Noticias</p></div>
+            <div class="module-card" onclick="window.location.href='soporte.html'"><div class="module-icon"><i class="fas fa-headset"></i></div><h3>Soporte</h3><p>Preferencial</p></div>
+            <div class="module-card" onclick="window.location.href='senales.html'"><div class="module-icon"><i class="fas fa-satellite-dish"></i></div><h3>Señales</h3><p>Alertas IA</p></div>
+            <div class="module-card" onclick="window.location.href='https://subtle-eclair-8499ec.netlify.app/'"><div class="module-icon"><i class="fas fa-video"></i></div><h3>Videos</h3><p>Tutoriales</p></div>
+            <div class="module-card" onclick="window.location.href='pdf.html'"><div class="module-icon"><i class="fas fa-file-pdf"></i></div><h3>Pdf</h3><p>Ebooks</p></div>
+            <div class="module-card" onclick="window.location.href='app-descarga.html'"><div class="module-icon"><i class="fas fa-mobile-screen-button"></i></div><h3>App Descarga</h3><p>Móvil</p></div>
         </div>
 
-        <!-- SECCIÓN DESCARGA APP -->
         <div class="download-section">
             <div class="download-info">
                 <h2><i class="fas fa-bolt"></i> HEYDIN KAYSER APP</h2>
                 <p>Lleva el poder cuántico en tu bolsillo</p>
             </div>
             <button class="download-btn" onclick="window.location.href='app-descarga.html'">
-                <i class="fas fa-download"></i> 
-                <span>DESCARGAR</span>
+                <i class="fas fa-download"></i> DESCARGAR
             </button>
         </div>
     </main>
 
     <footer>
-        <div class="container">
-            <div class="footer-logo">
-                <i class="fas fa-crown"></i> HEYDIN KAYSER TRADING
-            </div>
-            <div class="social-icons">
-                <a href="https://www.facebook.com/profile.php?id=61579696913394" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.tiktok.com/@heydin.kayser2026" target="_blank"><i class="fab fa-tiktok"></i></a>
-                <a href="https://www.youtube.com/@heydinkaysertrading" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.instagram.com/heydin_kayser2026/" target="_blank"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/593991987552" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://t.me/+x8P5ya17Dek4YjBh" target="_blank"><i class="fab fa-telegram-plane"></i></a>
-            </div>
-            <div class="copyright">
-                © 2025 HEYDIN KAYSER • ÉLITE TRADING • TERMINAL CUÁNTICA
-            </div>
+        <div class="footer-logo">
+            <i class="fas fa-crown"></i> HEYDIN KAYSER TRADING
+        </div>
+        <div class="social-icons">
+            <a href="https://www.facebook.com/profile.php?id=61579696913394" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.tiktok.com/@heydin.kayser2026" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@heydinkaysertrading" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.instagram.com/heydin_kayser2026/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/593991987552" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://t.me/+x8P5ya17Dek4YjBh" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+        </div>
+        <div class="copyright">
+            © 2025 HEYDIN KAYSER • ÉLITE TRADING • TERMINAL CUÁNTICA
         </div>
     </footer>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // ===== FIREBASE CONFIG =====
-        const firebaseConfig = {
-            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
-            authDomain: "beaver-trading.firebaseapp.com",
-            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
-            projectId: "beaver-trading",
-            storageBucket: "beaver-trading.firebasestorage.app",
-            messagingSenderId: "926610131904",
-            appId: "1:926610131904:web:c147bd337bd12b4d085625",
-            measurementId: "G-1K51WWF2ZJ"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const database = firebase.database();
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // ========== FIREBASE CONFIG (original de tu proyecto) ==========
+    const firebaseConfig = {
+        apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+        authDomain: "beaver-trading.firebaseapp.com",
+        databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+        projectId: "beaver-trading",
+        storageBucket: "beaver-trading.firebasestorage.app",
+        messagingSenderId: "926610131904",
+        appId: "1:926610131904:web:c147bd337bd12b4d085625",
+        measurementId: "G-1K51WWF2ZJ"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
 
-        // ===== LOADER =====
-        window.addEventListener('load', function() {
-            setTimeout(() => {
-                document.getElementById('loader').classList.add('fade-out');
-                setTimeout(() => document.getElementById('loader').style.display = 'none', 800);
-            }, 2000);
-        });
-
-        function showLoader(msg) {
-            const loader = document.getElementById('loader');
-            loader.style.display = 'flex';
-            loader.classList.remove('fade-out');
-            document.querySelector('.loader-text').textContent = msg || 'PROCESANDO...';
-        }
-
-        function hideLoader() {
+    // LOADER
+    window.addEventListener('load', () => {
+        setTimeout(() => {
             const loader = document.getElementById('loader');
             loader.classList.add('fade-out');
             setTimeout(() => loader.style.display = 'none', 800);
-        }
+        }, 2000);
+    });
 
-        // ===== PARTICULAS =====
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 80, density: { enable: true, value_area: 800 } },
-                color: { value: "#00ffff" },
-                shape: { type: "circle" },
-                opacity: { value: 0.4, random: true },
-                size: { value: 2.5, random: true },
-                line_linked: { enable: true, distance: 130, color: "#00ffff", opacity: 0.2, width: 1 },
-                move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
-            },
-            interactivity: {
-                events: { 
-                    onhover: { enable: true, mode: "repulse" }, 
-                    onclick: { enable: true, mode: "push" } 
+    function showLoaderMsg(msg) {
+        const loader = document.getElementById('loader');
+        if (loader.style.display === 'none') loader.style.display = 'flex';
+        loader.classList.remove('fade-out');
+        document.querySelector('.loader-text').textContent = msg || 'PROCESANDO...';
+    }
+    function hideLoader() {
+        const loader = document.getElementById('loader');
+        loader.classList.add('fade-out');
+        setTimeout(() => loader.style.display = 'none', 600);
+    }
+
+    // PARTICULAS
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 70, density: { enable: true, value_area: 800 } },
+            color: { value: "#00ffff" },
+            shape: { type: "circle" },
+            opacity: { value: 0.4, random: true },
+            size: { value: 2.5, random: true },
+            line_linked: { enable: true, distance: 140, color: "#00ffff", opacity: 0.2, width: 1 },
+            move: { enable: true, speed: 0.9, direction: "none", random: true, out_mode: "out" }
+        },
+        interactivity: {
+            events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+        },
+        retina_detect: true
+    });
+
+    // RELOJ DINÁMICO
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('current-time').textContent = now.toLocaleTimeString('es-ES', { hour12: false });
+        document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
+
+    // VERIFICAR AUTENTICACIÓN Y MOSTRAR NOMBRE
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            window.location.href = 'index.html';
+        } else {
+            const userId = user.uid;
+            database.ref('users/' + userId).once('value').then((snapshot) => {
+                const userData = snapshot.val();
+                let displayName = 'Trader';
+                if (userData && userData.name) {
+                    displayName = userData.name.split(' ')[0];
+                } else if (user.email) {
+                    displayName = user.email.split('@')[0];
                 }
-            },
-            retina_detect: true
-        });
-
-        // ===== RELOJ EN TIEMPO REAL =====
-        function updateClock() {
-            const now = new Date();
-            const timeStr = now.toLocaleTimeString('es-ES', { hour12: false });
-            const dateStr = now.toLocaleDateString('es-ES', { 
-                weekday: 'long', 
-                year: 'numeric', 
-                month: 'long', 
-                day: 'numeric' 
+                document.querySelector('#displayName span').textContent = displayName;
+                document.getElementById('welcomeMessage').innerHTML = `BIENVENIDO, ${displayName.toUpperCase()}`;
+            }).catch(() => {
+                document.querySelector('#displayName span').textContent = 'TRADER';
             });
-            document.getElementById('current-time').textContent = timeStr;
-            document.getElementById('current-date').textContent = dateStr;
         }
-        updateClock();
-        setInterval(updateClock, 1000);
+    });
 
-        // ===== VERIFICAR AUTENTICACIÓN =====
-        auth.onAuthStateChanged((user) => {
-            if (!user) {
-                // No autenticado -> redirigir a index
-                window.location.href = 'index.html';
-            } else {
-                // Usuario autenticado
-                const userId = user.uid;
-                const userRef = database.ref('users/' + userId);
-                
-                userRef.once('value').then((snapshot) => {
-                    const userData = snapshot.val();
-                    let displayName = 'Trader';
-                    
-                    if (userData && userData.name) {
-                        displayName = userData.name.split(' ')[0];
-                    } else if (user.email) {
-                        displayName = user.email.split('@')[0];
-                    }
-                    
-                    // Actualizar elementos
-                    document.querySelector('#displayName span').textContent = displayName;
-                    document.getElementById('welcomeMessage').innerHTML = `BIENVENIDO, ${displayName.toUpperCase()}`;
-                }).catch((error) => {
-                    console.error("Error:", error);
-                    document.querySelector('#displayName span').textContent = 'TRADER';
-                });
-            }
+    // CERRAR SESIÓN
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        showLoaderMsg('Cerrando sesión...');
+        auth.signOut().then(() => {
+            setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+        }).catch((err) => {
+            alert('Error: ' + err.message);
+            hideLoader();
         });
-
-        // ===== CERRAR SESIÓN =====
-        document.getElementById('logoutBtn').addEventListener('click', function() {
-            showLoader('Cerrando sesión...');
-            
-            auth.signOut().then(() => {
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
-            }).catch((error) => {
-                alert('Error: ' + error.message);
-                hideLoader();
-            });
-        });
-
-        // ===== PREVENIR ZOOM ACCIDENTAL EN INPUTS (MÓVIL) =====
-        document.addEventListener('touchstart', (e) => {
-            if (e.target.nodeName === 'INPUT' || e.target.nodeName === 'BUTTON') {
-                e.target.style.fontSize = '16px';
-            }
-        }, false);
-    </script>
+    });
+</script>
 </body>
 </html>
