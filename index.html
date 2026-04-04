@@ -4,11 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
     <title>HEYDIN KAYSER TRADING | Acceso VIP</title>
-    <!-- Font Awesome 6 (iconos) -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts: Inter y Orbitron (toque futurista) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
-    <!-- Firebase Modular SDK (CDN) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;400;600;700&family=Orbitron:wght@400;600;800&display=swap" rel="stylesheet">
     <script type="importmap">
         {
             "imports": {
@@ -29,7 +26,6 @@
             min-height: 100vh;
             font-family: 'Inter', 'Segoe UI', sans-serif;
             background: #0a0f1f;
-            /* Imagen de fondo principal (HEYDIN.jpg) con overlay futurista */
             background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
             background-size: cover;
             background-position: center center;
@@ -41,7 +37,6 @@
             padding: 1.5rem;
         }
 
-        /* Overlay oscuro para legibilidad */
         body::before {
             content: "";
             position: fixed;
@@ -55,7 +50,6 @@
             pointer-events: none;
         }
 
-        /* Contenedor principal estilo vidrio futurista */
         .glass-panel {
             position: relative;
             z-index: 10;
@@ -70,7 +64,6 @@
             transition: all 0.3s ease;
         }
 
-        /* Logo y marca */
         .brand-futuristic {
             text-align: center;
             margin-bottom: 2rem;
@@ -97,7 +90,6 @@
             margin-top: 8px;
         }
 
-        /* Formularios */
         .form-container {
             display: none;
             flex-direction: column;
@@ -178,7 +170,6 @@
             text-decoration: underline;
             cursor: pointer;
         }
-        /* Modal términos futurista */
         .modal {
             display: none;
             position: fixed;
@@ -206,6 +197,7 @@
             font-size: 1.8rem;
             text-align: center;
             margin-bottom: 1rem;
+            font-family: 'Orbitron', monospace;
         }
         .terms-scroll {
             max-height: 320px;
@@ -227,6 +219,7 @@
             border-radius: 40px;
             padding: 8px 24px;
             font-weight: bold;
+            cursor: pointer;
         }
         .btn-cancel-modal {
             background: transparent;
@@ -234,6 +227,7 @@
             color: #ffb5b5;
             border-radius: 40px;
             padding: 8px 20px;
+            cursor: pointer;
         }
         @media (max-width: 600px) {
             .glass-panel {
@@ -247,14 +241,12 @@
 </head>
 <body>
 
-    <!-- Panel de autenticación (login/registro) -->
     <div class="glass-panel" id="authPanel">
         <div class="brand-futuristic">
             <h1>HEYDIN KAYSER</h1>
             <div class="tagline">TRADING · QUANTUM EDGE</div>
         </div>
 
-        <!-- Login Container -->
         <div id="loginContainer" class="form-container active">
             <form id="loginFormElement">
                 <div class="input-modern">
@@ -272,7 +264,6 @@
             </form>
         </div>
 
-        <!-- Register Container -->
         <div id="registerContainer" class="form-container">
             <form id="registerFormElement">
                 <div class="input-modern">
@@ -299,7 +290,6 @@
         </div>
     </div>
 
-    <!-- Modal términos y condiciones -->
     <div id="termsModal" class="modal">
         <div class="modal-card">
             <h3>📜 Términos & Condiciones</h3>
@@ -340,15 +330,12 @@
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
 
-        // DOM elements
         const loginContainer = document.getElementById('loginContainer');
         const registerContainer = document.getElementById('registerContainer');
         const loginForm = document.getElementById('loginFormElement');
         const registerForm = document.getElementById('registerFormElement');
         const showRegisterLink = document.getElementById('showRegisterLink');
         const showLoginLink = document.getElementById('showLoginLink');
-        
-        // terminos
         const termsModal = document.getElementById('termsModal');
         const openTermsLink = document.getElementById('openTermsModalLink');
         const termsCheckbox = document.getElementById('termsCheckbox');
@@ -398,7 +385,6 @@
             }
         });
 
-        // Registro
         registerForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             if(!termsAcceptedFlag && !termsCheckbox.checked) {
@@ -418,7 +404,7 @@
             }
             try {
                 await createUserWithEmailAndPassword(auth, email, password);
-                alert("✅ Registro exitoso. ¡Bienvenido a HEYDIN KAYSER! Ahora inicia sesión.");
+                alert("✅ Registro exitoso. ¡Bienvenido! Ahora inicia sesión.");
                 registerForm.reset();
                 termsCheckbox.checked = false;
                 termsAcceptedFlag = false;
@@ -431,21 +417,18 @@
             }
         });
 
-        // Login y redirección a home.html
         loginForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value.trim();
             const password = document.getElementById('loginPassword').value;
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                // Redirigir a home.html después de login exitoso
                 window.location.href = "home.html";
             } catch (error) {
                 alert("Credenciales incorrectas o usuario no existe.");
             }
         });
 
-        // Si el usuario ya está logueado, redirigir directamente a home.html
         onAuthStateChanged(auth, (user) => {
             if(user) {
                 window.location.href = "home.html";
