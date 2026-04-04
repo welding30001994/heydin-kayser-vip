@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Fibonacci Grid Pro | Sistema de Cuadrículas</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: system-ui, 'Segoe UI', 'Roboto', 'Helvetica Neue', sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      margin: 0;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .main-card {
+      max-width: 1400px;
+      width: 100%;
+      background: #f8fafc;
+      border-radius: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+      margin: 0 auto;
+      overflow: hidden;
+      padding: 1.8rem;
+    }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin: 0 0 0.25rem 0;
+      background: linear-gradient(135deg, #f97316, #dc2626);
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+    .sub {
+      color: #475569;
+      border-left: 4px solid #f97316;
+      padding-left: 14px;
+      margin-bottom: 1.5rem;
+      font-size: 0.85rem;
+    }
+    .input-panel {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.2rem;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e2e8f0;
+    }
+    .input-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-end;
+    }
+    .field {
+      flex: 1;
+      min-width: 130px;
+    }
+    .field label {
+      display: block;
+      font-weight: 700;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      color: #f97316;
+      margin-bottom: 4px;
+    }
+    .field input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 0.8rem;
+      border: 2px solid #e2e8f0;
+      font-weight: 600;
+      font-size: 0.9rem;
+      font-family: monospace;
+    }
+    .btn-calc {
+      background: #1e293b;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .btn-calc:hover {
+      background: #f97316;
+      transform: translateY(-2px);
+    }
+    .fib-table, .grid-card, .history-card {
+      background: white;
+      border-radius: 1.2rem;
+      overflow: hidden;
+      margin-bottom: 1.5rem;
+      border: 1px solid #e2e8f0;
+    }
+    .fib-header, .grid-header, .history-header {
+      background: linear-gradient(135deg, #1e293b, #0f172a);
+      color: white;
+      padding: 0.8rem 1.2rem;
+      font-weight: 800;
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+    .fib-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem 1.2rem;
+      border-bottom: 1px solid #f1f5f9;
+      flex-wrap: wrap;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .fib-row:hover {
+      background: #fef9f0;
+      transform: translateX(4px);
+    }
+    .fib-row.selected {
+      background: #fed7aa;
+      border-left: 4px solid #f97316;
+    }
+    .fib-row:last-child {
+      border-bottom: none;
+    }
+    .fib-level { font-weight: 800; color: #f97316; min-width: 70px; }
+    .fib-price { font-family: monospace; font-weight: 700; color: #0f172a; }
+    .grid-row {
+      display: flex;
+      justify-content: space-between;
+      padding: 0.8rem 1.2rem;
+      border-bottom: 1px solid #f1f5f9;
+      flex-wrap: wrap;
+      gap: 8px;
+      transition: background 0.2s;
+    }
+    .grid-row:hover {
+      background: #fef9f0;
+    }
+    .grid-row:last-child {
+      border-bottom: none;
+    }
+    .level-name { font-weight: 800; color: #f97316; min-width: 90px; }
+    .level-price { font-family: monospace; font-weight: 700; color: #0f172a; }
+    .tag-sell { background: #fee2e2; color: #dc2626; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; display: inline-block; font-weight: 700; }
+    .tag-buy { background: #dcfce7; color: #16a34a; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; display: inline-block; font-weight: 700; }
+    .tag-resist { background: #ffedd5; color: #f97316; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; display: inline-block; font-weight: 700; }
+    .tag-support { background: #e0f2fe; color: #0284c7; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; display: inline-block; font-weight: 700; }
+    .tag-neutral { background: #f1f5f9; color: #475569; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; display: inline-block; font-weight: 700; }
+    .range-selector {
+      background: #fef9f0;
+      padding: 1rem;
+      border-radius: 1rem;
+      margin-bottom: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      flex-wrap: wrap;
+      border: 1px solid #fed7aa;
+    }
+    .range-selector select {
+      padding: 10px 14px;
+      border-radius: 0.8rem;
+      border: 1px solid #cbd5e1;
+      font-weight: 600;
+      background: white;
+      cursor: pointer;
+      flex: 1;
+      min-width: 180px;
+    }
+    .range-selector button {
+      background: #f97316;
+      color: white;
+      border: none;
+      padding: 10px 24px;
+      border-radius: 0.8rem;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .range-selector button:hover {
+      background: #ea580c;
+      transform: translateY(-2px);
+    }
+    .range-selector button.clear-btn {
+      background: #64748b;
+    }
+    .range-selector button.clear-btn:hover {
+      background: #475569;
+    }
+    .two-columns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+    }
+    @media (max-width: 900px) {
+      .two-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+    .history-list { max-height: 300px; overflow-y: auto; }
+    .history-item {
+      padding: 0.8rem;
+      border-bottom: 1px solid #e2e8f0;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .history-item:hover { background: #f1f5f9; }
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+      flex-wrap: wrap;
+    }
+    .action-btn {
+      flex: 1;
+      padding: 12px 20px;
+      border-radius: 1rem;
+      font-weight: 800;
+      font-size: 1rem;
+      background: #1e293b;
+      color: white;
+      border: none;
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+    .action-btn:hover {
+      background: #f97316;
+      transform: translateY(-2px);
+    }
+    .info-hover {
+      font-size: 0.7rem;
+      color: #64748b;
+      text-align: center;
+      padding: 0.5rem;
+    }
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</head>
+<body>
+<div class="main-card" id="reportContent">
+  <h1>📊 Fibonacci Grid Pro</h1>
+  <div class="sub">Sistema de Cuadrículas | Selecciona dos niveles para crear una nueva escala Fibonacci</div>
+
+  <div class="action-buttons">
+    <button id="downloadPDFBtn" class="action-btn">📄 DESCARGAR PDF</button>
+    <button id="saveOperationBtn" class="action-btn">💾 GUARDAR OPERACIÓN</button>
+  </div>
+
+  <div class="input-panel">
+    <div class="input-group">
+      <div class="field"><label>🔺 MÁXIMO</label><input type="text" id="maxInput" value="4735.81"></div>
+      <div class="field"><label>🔻 MÍNIMO</label><input type="text" id="minInput" value="4319.45"></div>
+      <button class="btn-calc" id="updateBtn">⟳ CALCULAR</button>
+    </div>
+  </div>
+
+  <!-- Niveles Fibonacci base -->
+  <div class="fib-table">
+    <div class="fib-header">
+      <span>📐 NIVELES FIBONACCI (BASE)</span>
+      <span>📌 Haz clic en dos niveles: MÁXIMO y MÍNIMO</span>
+    </div>
+    <div id="fibLevelsList"></div>
+    <div class="info-hover">✨ Pasa el cursor sobre cualquier nivel para resaltar | Haz clic para seleccionar</div>
+  </div>
+
+  <!-- Selector de rango personalizado -->
+  <div class="range-selector">
+    <span style="font-weight:800;">🎯 SELECCIONA DOS NIVELES:</span>
+    <select id="selectMax">
+      <option value="">MÁXIMO</option>
+    </select>
+    <select id="selectMin">
+      <option value="">MÍNIMO</option>
+    </select>
+    <button id="applyRangeBtn">APLICAR RANGO</button>
+    <button id="clearRangeBtn" class="clear-btn">LIMPIAR</button>
+  </div>
+
+  <!-- Sección de nueva escala Fibonacci -->
+  <div id="newScaleSection" style="display:none;">
+    <div class="fib-table">
+      <div class="fib-header">
+        <span>📐 NUEVA ESCALA FIBONACCI</span>
+        <span id="newScaleRange"></span>
+      </div>
+      <div id="newScaleList"></div>
+    </div>
+
+    <div class="two-columns">
+      <!-- Rango 0% → 23.6% -->
+      <div class="grid-card">
+        <div class="grid-header">📊 RANGO: 0% → 23.6% (SELL/BUY)</div>
+        <div id="range1Grid"></div>
+      </div>
+
+      <!-- Rango 76.2% → 100% -->
+      <div class="grid-card">
+        <div class="grid-header">📈 RANGO: 76.2% → 100% (BUY/SELL)</div>
+        <div id="range2Grid"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="history-card">
+    <div class="history-header">📜 HISTORIAL DE OPERACIONES GUARDADAS</div>
+    <div id="historyList" class="history-list"></div>
+  </div>
+</div>
+
+<script>
+  let currentMax = 4735.81;
+  let currentMin = 4319.45;
+  let baseLevels = {};
+  let selectedMaxPrice = null;
+  let selectedMaxLabel = null;
+  let selectedMinPrice = null;
+  let selectedMinLabel = null;
+  let newScaleLevels = {};
+
+  const maxInput = document.getElementById('maxInput');
+  const minInput = document.getElementById('minInput');
+  const updateBtn = document.getElementById('updateBtn');
+  const fibLevelsList = document.getElementById('fibLevelsList');
+  const selectMax = document.getElementById('selectMax');
+  const selectMin = document.getElementById('selectMin');
+  const applyRangeBtn = document.getElementById('applyRangeBtn');
+  const clearRangeBtn = document.getElementById('clearRangeBtn');
+  const newScaleSection = document.getElementById('newScaleSection');
+  const newScaleList = document.getElementById('newScaleList');
+  const newScaleRange = document.getElementById('newScaleRange');
+  const range1Grid = document.getElementById('range1Grid');
+  const range2Grid = document.getElementById('range2Grid');
+  const downloadPDFBtn = document.getElementById('downloadPDFBtn');
+  const saveOperationBtn = document.getElementById('saveOperationBtn');
+  const historyList = document.getElementById('historyList');
+
+  let operationsHistory = JSON.parse(localStorage.getItem('fibonacci_operations') || '[]');
+
+  function formatPrice(value) {
+    return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/,/g, '');
+  }
+
+  function calculateBaseLevels(max, min) {
+    const diff = max - min;
+    return {
+      '0%': max,
+      '23.6%': max - (diff * 0.236),
+      '38.2%': max - (diff * 0.382),
+      '50%': max - (diff * 0.50),
+      '61.8%': max - (diff * 0.618),
+      '76.2%': max - (diff * 0.762),
+      '100%': min
+    };
+  }
+
+  function renderBaseFibonacci() {
+    baseLevels = calculateBaseLevels(currentMax, currentMin);
+    const fibOrder = ['0%', '23.6%', '38.2%', '50%', '61.8%', '76.2%', '100%'];
+    let html = '';
+    fibOrder.forEach(level => {
+      const price = baseLevels[level];
+      let zoneText = '';
+      if (level === '0%') zoneText = '🔴 Zona Resistencia';
+      else if (level === '100%') zoneText = '🟢 Zona Soporte Fuerte';
+      else if (level === '23.6%') zoneText = '📉 SELL - Zona de venta';
+      else if (level === '38.2%') zoneText = '📉 SELL - Zona de venta';
+      else if (level === '50%') zoneText = '⚖️ NEUTRO - Nivel medio';
+      else if (level === '61.8%') zoneText = '📈 BUY - Zona de compra';
+      else if (level === '76.2%') zoneText = '📈 BUY - Zona de compra';
+      
+      const isSelected = (selectedMaxPrice === price) || (selectedMinPrice === price);
+      const selectedClass = isSelected ? 'selected' : '';
+      
+      html += `<div class="fib-row ${selectedClass}" onclick="selectBaseLevel('${level}', ${price})">
+        <div class="fib-level">${level}</div>
+        <div class="fib-price">${formatPrice(price)}</div>
+        <div class="fib-zone" style="font-size:0.7rem;">${zoneText}</div>
+      </div>`;
+    });
+    fibLevelsList.innerHTML = html;
+    
+    // Actualizar selects
+    let options = '<option value="">MÁXIMO</option>';
+    fibOrder.forEach(level => {
+      const price = baseLevels[level];
+      options += `<option value="${level}|${price}">${level} - ${formatPrice(price)}</option>`;
+    });
+    selectMax.innerHTML = options;
+    
+    options = '<option value="">MÍNIMO</option>';
+    fibOrder.forEach(level => {
+      const price = baseLevels[level];
+      options += `<option value="${level}|${price}">${level} - ${formatPrice(price)}</option>`;
+    });
+    selectMin.innerHTML = options;
+  }
+
+  window.selectBaseLevel = function(level, price) {
+    if (selectedMaxPrice === null) {
+      selectedMaxPrice = price;
+      selectedMaxLabel = level;
+      alert(`✅ MÁXIMO seleccionado: ${level} = ${formatPrice(price)}\nAhora selecciona el MÍNIMO (precio menor)`);
+    } else if (selectedMinPrice === null) {
+      if (price >= selectedMaxPrice) {
+        alert(`❌ El MÍNIMO debe ser menor que el MÁXIMO (${formatPrice(selectedMaxPrice)})`);
+        return;
+      }
+      selectedMinPrice = price;
+      selectedMinLabel = level;
+      alert(`✅ MÍNIMO seleccionado: ${level} = ${formatPrice(price)}\n¡Nueva escala Fibonacci creada!`);
+      generateNewScale();
+    } else {
+      selectedMaxPrice = price;
+      selectedMaxLabel = level;
+      selectedMinPrice = null;
+      selectedMinLabel = null;
+      alert(`✅ Selección reiniciada. MÁXIMO: ${level} = ${formatPrice(price)}`);
+      newScaleSection.style.display = 'none';
+    }
+    renderBaseFibonacci();
+  };
+
+  function generateNewScale() {
+    if (selectedMaxPrice === null || selectedMinPrice === null) return;
+    
+    const newMax = selectedMaxPrice;
+    const newMin = selectedMinPrice;
+    const diff = newMax - newMin;
+    
+    newScaleLevels = {
+      '0%': newMax,
+      '23.6%': newMax - (diff * 0.236),
+      '38.2%': newMax - (diff * 0.382),
+      '50%': newMax - (diff * 0.50),
+      '61.8%': newMax - (diff * 0.618),
+      '76.2%': newMax - (diff * 0.762),
+      '100%': newMin
+    };
+    
+    const fibOrder = ['0%', '23.6%', '38.2%', '50%', '61.8%', '76.2%', '100%'];
+    let html = '';
+    fibOrder.forEach(level => {
+      const price = newScaleLevels[level];
+      let zoneText = '';
+      if (level === '0%') zoneText = '🔴 Zona Resistencia (Nuevo Máximo)';
+      else if (level === '100%') zoneText = '🟢 Zona Soporte (Nuevo Mínimo)';
+      else if (level === '23.6%') zoneText = '📉 SELL';
+      else if (level === '38.2%') zoneText = '📉 SELL';
+      else if (level === '50%') zoneText = '⚖️ NEUTRO';
+      else if (level === '61.8%') zoneText = '📈 BUY';
+      else if (level === '76.2%') zoneText = '📈 BUY';
+      
+      html += `<div class="fib-row"><div class="fib-level">${level}</div><div class="fib-price">${formatPrice(price)}</div><div class="fib-zone" style="font-size:0.7rem;">${zoneText}</div></div>`;
+    });
+    newScaleList.innerHTML = html;
+    newScaleRange.innerHTML = `${selectedMaxLabel} → ${selectedMinLabel}`;
+    
+    generateRange1();
+    generateRange2();
+    
+    newScaleSection.style.display = 'block';
+  }
+  
+  function generateRange1() {
+    const startPrice = newScaleLevels['0%'];
+    const endPrice = newScaleLevels['23.6%'];
+    const diffTotal = startPrice - endPrice;
+    
+    const levels = [
+      { pct: 0, name: '0%', type: 'resist' },
+      { pct: 4.72, name: '4.72%', type: 'sell' },
+      { pct: 9.44, name: '9.44%', type: 'sell' },
+      { pct: 14.16, name: '14.16%', type: 'buy' },
+      { pct: 18.88, name: '18.88%', type: 'buy' },
+      { pct: 23.6, name: '23.6%', type: 'support' }
+    ];
+    
+    let html = `<div class="grid-row" style="background:#faf7f0;font-weight:800;"><div class="level-name">NIVEL</div><div class="level-price">PRECIO</div><div class="level-tag">SEÑAL</div></div>`;
+    
+    for (let level of levels) {
+      let price;
+      if (level.pct === 0) price = startPrice;
+      else if (level.pct === 23.6) price = endPrice;
+      else price = startPrice - (diffTotal * level.pct / 100);
+      
+      let tagClass = '';
+      let tagText = '';
+      if (level.type === 'resist') { tagClass = 'tag-resist'; tagText = '🔴 Zona RESISTENCIA'; }
+      else if (level.type === 'sell') { tagClass = 'tag-sell'; tagText = '🔻 SELL'; }
+      else if (level.type === 'buy') { tagClass = 'tag-buy'; tagText = '📈 BUY'; }
+      else if (level.type === 'support') { tagClass = 'tag-support'; tagText = '🟢 Zona SOPORTE'; }
+      
+      html += `<div class="grid-row">
+        <div class="level-name">🏔️ ${level.name}</div>
+        <div class="level-price">${formatPrice(price)}</div>
+        <div class="level-tag"><span class="${tagClass}">${tagText}</span></div>
+      </div>`;
+    }
+    
+    range1Grid.innerHTML = html;
+  }
+  
+  function generateRange2() {
+    const startPrice = newScaleLevels['76.2%'];
+    const endPrice = newScaleLevels['100%'];
+    const globalDiff = currentMax - currentMin;
+    
+    const levels = [
+      { pct: 76.2, name: '76.2%', type: 'resist' },
+      { pct: 80.92, name: '80.92%', type: 'sell' },
+      { pct: 85.64, name: '85.64%', type: 'sell' },
+      { pct: 90.36, name: '90.36%', type: 'buy' },
+      { pct: 95.08, name: '95.08%', type: 'buy' },
+      { pct: 100, name: '100%', type: 'support' }
+    ];
+    
+    let html = `<div class="grid-row" style="background:#faf7f0;font-weight:800;"><div class="level-name">NIVEL</div><div class="level-price">PRECIO</div><div class="level-tag">SEÑAL</div></div>`;
+    
+    for (let level of levels) {
+      let price;
+      if (level.pct === 76.2) price = startPrice;
+      else if (level.pct === 100) price = endPrice;
+      else price = currentMax - (globalDiff * level.pct / 100);
+      
+      let tagClass = '';
+      let tagText = '';
+      if (level.type === 'resist') { tagClass = 'tag-resist'; tagText = '🔴 Zona RESISTENCIA'; }
+      else if (level.type === 'sell') { tagClass = 'tag-sell'; tagText = '🔻 SELL'; }
+      else if (level.type === 'buy') { tagClass = 'tag-buy'; tagText = '📈 BUY'; }
+      else if (level.type === 'support') { tagClass = 'tag-support'; tagText = '🟢 Zona SOPORTE'; }
+      
+      html += `<div class="grid-row">
+        <div class="level-name">🏔️ ${level.name}</div>
+        <div class="level-price">${formatPrice(price)}</div>
+        <div class="level-tag"><span class="${tagClass}">${tagText}</span></div>
+      </div>`;
+    }
+    
+    range2Grid.innerHTML = html;
+  }
+  
+  function applyRangeFromSelect() {
+    const maxVal = selectMax.value;
+    const minVal = selectMin.value;
+    
+    if (!maxVal || !minVal) {
+      alert("Selecciona ambos niveles (MÁXIMO y MÍNIMO)");
+      return;
+    }
+    
+    const [maxLabel, maxPrice] = maxVal.split('|');
+    const [minLabel, minPrice] = minVal.split('|');
+    
+    if (parseFloat(minPrice) >= parseFloat(maxPrice)) {
+      alert("El MÍNIMO debe ser menor que el MÁXIMO");
+      return;
+    }
+    
+    selectedMaxPrice = parseFloat(maxPrice);
+    selectedMaxLabel = maxLabel;
+    selectedMinPrice = parseFloat(minPrice);
+    selectedMinLabel = minLabel;
+    
+    generateNewScale();
+    renderBaseFibonacci();
+  }
+  
+  function clearSelection() {
+    selectedMaxPrice = null;
+    selectedMaxLabel = null;
+    selectedMinPrice = null;
+    selectedMinLabel = null;
+    newScaleSection.style.display = 'none';
+    selectMax.value = '';
+    selectMin.value = '';
+    renderBaseFibonacci();
+  }
+  
+  function updateAllValues() {
+    let rawMax = maxInput.value.replace(/,/g, '');
+    let rawMin = minInput.value.replace(/,/g, '');
+    let newMax = parseFloat(rawMax);
+    let newMin = parseFloat(rawMin);
+    if (isNaN(newMax) || isNaN(newMin) || newMax <= newMin) {
+      alert("❌ Valores inválidos. El máximo debe ser mayor al mínimo.");
+      return;
+    }
+    currentMax = newMax;
+    currentMin = newMin;
+    maxInput.value = formatPrice(currentMax);
+    minInput.value = formatPrice(currentMin);
+    clearSelection();
+    renderBaseFibonacci();
+  }
+  
+  function saveOperation() {
+    const now = new Date();
+    const operation = {
+      date: now.toLocaleString(),
+      max: currentMax,
+      min: currentMin,
+      timestamp: Date.now()
+    };
+    operationsHistory.unshift(operation);
+    if (operationsHistory.length > 20) operationsHistory.pop();
+    localStorage.setItem('fibonacci_operations', JSON.stringify(operationsHistory));
+    renderHistory();
+    alert('✅ Operación guardada');
+  }
+  
+  function renderHistory() {
+    if (operationsHistory.length === 0) {
+      historyList.innerHTML = '<div style="padding:1rem;text-align:center;">📭 No hay operaciones guardadas</div>';
+      return;
+    }
+    let html = '';
+    operationsHistory.forEach((op, idx) => {
+      html += `<div class="history-item" onclick="loadOperation(${idx})">
+        <strong>${op.date}</strong> | Máx: ${formatPrice(op.max)} | Mín: ${formatPrice(op.min)}
+      </div>`;
+    });
+    historyList.innerHTML = html;
+  }
+  
+  window.loadOperation = function(idx) {
+    const op = operationsHistory[idx];
+    currentMax = op.max;
+    currentMin = op.min;
+    maxInput.value = formatPrice(currentMax);
+    minInput.value = formatPrice(currentMin);
+    clearSelection();
+    renderBaseFibonacci();
+  };
+  
+  async function downloadPDF() {
+    const element = document.getElementById('reportContent');
+    const originalOverflow = element.style.overflow;
+    element.style.overflow = 'visible';
+    const canvas = await html2canvas(element, { scale: 2, backgroundColor: '#f8fafc' });
+    element.style.overflow = originalOverflow;
+    const imgData = canvas.toDataURL('image/png');
+    const { jsPDF } = window.jspdf;
+    const pdf = new jsPDF('p', 'mm', 'a4');
+    const imgWidth = 190;
+    const pageHeight = 277;
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+    let heightLeft = imgHeight;
+    let position = 10;
+    pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+    heightLeft -= pageHeight;
+    while (heightLeft > 0) {
+      position = heightLeft - imgHeight;
+      pdf.addPage();
+      pdf.addImage(imgData, 'PNG', 10, position, imgWidth, imgHeight);
+      heightLeft -= pageHeight;
+    }
+    pdf.save(`Fibonacci_Grid_${new Date().toISOString().slice(0,19)}.pdf`);
+  }
+  
+  updateBtn.onclick = updateAllValues;
+  applyRangeBtn.onclick = applyRangeFromSelect;
+  clearRangeBtn.onclick = clearSelection;
+  downloadPDFBtn.onclick = downloadPDF;
+  saveOperationBtn.onclick = saveOperation;
+  
+  renderBaseFibonacci();
+  renderHistory();
+</script>
+</body>
+</html>

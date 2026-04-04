@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Heydin Kayser • Calculadora de Trading</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES NEÓN ELITE ===== */
+        :root {
+            --primary: #00ffff;
+            --primary-glow: rgba(0, 255, 255, 0.8);
+            --secondary: #ff00d4;
+            --secondary-glow: rgba(255, 0, 212, 0.7);
+            --accent: #7700ff;
+            --accent-glow: rgba(119, 0, 255, 0.6);
+            --success: #00ff8c;
+            --warning: #ffbd44;
+            --dark: #0a0c12;
+            --darker: #05070a;
+            --card-bg: rgba(12, 16, 22, 0.85);
+            --text-light: #e2f3ff;
+            --transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Rajdhani', 'Syne', sans-serif;
+            background: radial-gradient(circle at 20% 20%, #0b0e14, #030507);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ===== FONDOS ===== */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,255,255,0.02) 0px, rgba(0,0,0,0.2) 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: min(30px, 4vw) min(30px, 4vw);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        /* ===== LOADER RESPONSIVE ===== */
+        .loader-container {
+            position: fixed;
+            inset: 0;
+            background: #010101;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .loader-container.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            color: #fff;
+            text-shadow: 0 0 20px cyan, 0 0 50px #ff00d4, 0 0 80px #7700ff;
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+        }
+
+        .loader-logo i {
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            color: cyan;
+            filter: drop-shadow(0 0 15px cyan);
+        }
+
+        .loader {
+            width: min(300px, 80%);
+            height: 5px;
+            background: rgba(0,255,255,0.1);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .loader::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, cyan, #ff00d4, cyan, transparent);
+            animation: loadingScan 2.4s infinite linear;
+        }
+
+        @keyframes loadingScan {
+            0% { transform: translateX(-150%); }
+            100% { transform: translateX(80%); }
+        }
+
+        .loader-text {
+            margin-top: 30px;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px cyan, 0 0 20px #ff00d4;
+            letter-spacing: 4px;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .loader-dot {
+            width: clamp(12px, 3vw, 16px);
+            height: clamp(12px, 3vw, 16px);
+            border-radius: 50%;
+            background: cyan;
+            box-shadow: 0 0 20px cyan, 0 0 40px #ff00d4;
+            animation: dotWave 1.6s infinite ease-in-out alternate;
+        }
+
+        .loader-dot:nth-child(2) { animation-delay: 0.4s; background: #ff00d4; }
+        .loader-dot:nth-child(3) { animation-delay: 0.8s; background: #7700ff; }
+
+        @keyframes dotWave {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 1; }
+        }
+
+        /* ===== CONTENEDOR RESPONSIVE ===== */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (min-width: 640px) {
+            .container { padding: 0 30px; }
+        }
+
+        /* ===== HEADER RESPONSIVE ===== */
+        header {
+            background: rgba(3, 6, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 5px 30px rgba(0,255,255,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.8rem 0;
+            width: 100%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: clamp(1.4rem, 6vw, 2.2rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-shadow: 0 0 15px cyan, 0 0 30px #ff00d4;
+            letter-spacing: 2px;
+        }
+
+        .logo i {
+            font-size: clamp(1.6rem, 7vw, 2.8rem);
+            color: cyan;
+            filter: drop-shadow(0 0 10px cyan);
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                gap: 30px;
+            }
+            
+            .nav-links a {
+                color: #e0f0ff;
+                text-decoration: none;
+                font-weight: 700;
+                font-size: 1rem;
+                letter-spacing: 2px;
+                padding: 8px 0;
+                position: relative;
+                transition: 0.2s;
+                text-transform: uppercase;
+            }
+            
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background: linear-gradient(90deg, cyan, #ff00d4);
+                box-shadow: 0 0 15px cyan;
+                transition: 0.4s;
+            }
+            
+            .nav-links a:hover {
+                color: cyan;
+                text-shadow: 0 0 10px cyan;
+            }
+            
+            .nav-links a:hover::after {
+                width: 100%;
+            }
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-buttons button {
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 480px) {
+            .auth-buttons button {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1.5px solid cyan !important;
+            color: cyan;
+        }
+
+        .login-btn:hover {
+            background: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .register-btn {
+            background: linear-gradient(145deg, #00e0ff, #0088ff);
+            color: black;
+            font-weight: 900;
+            border: 1.5px solid #00ffff;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            color: white;
+            border-color: white;
+            box-shadow: 0 0 40px #ff00d4;
+        }
+
+        .register-btn:active, .login-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ===== CALCULADORA - ESTILO HEYDIN KAYSER ===== */
+        .calculator-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+            padding: 2rem 0;
+        }
+
+        .calculator-container {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 50px rgba(0, 255, 255, 0.3);
+            width: 100%;
+            max-width: 600px;
+            padding: 2rem 1.8rem;
+            position: relative;
+            overflow: hidden;
+            animation: containerPulse 4s infinite alternate;
+        }
+
+        @media (min-width: 480px) {
+            .calculator-container {
+                padding: 2.5rem;
+            }
+        }
+
+        @media (min-width: 768px) {
+            .calculator-container {
+                padding: 3rem;
+            }
+        }
+
+        .calculator-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.08), transparent);
+            transform: rotate(45deg);
+            z-index: -1;
+            animation: shine 8s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        @keyframes containerPulse {
+            0% { box-shadow: 0 0 30px rgba(0, 255, 255, 0.3); }
+            100% { box-shadow: 0 0 60px rgba(0, 255, 255, 0.5), 0 0 30px rgba(255, 0, 212, 0.3); }
+        }
+
+        .calculator-title {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .calculator-title h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 7vw, 2.5rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #fff, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.5);
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+
+        .calculator-title p {
+            color: var(--text-light);
+            font-size: clamp(0.9rem, 4vw, 1.1rem);
+            opacity: 0.9;
+        }
+
+        .input-group {
+            margin-bottom: 1.8rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+            color: var(--text-light);
+            font-size: clamp(0.95rem, 4vw, 1.1rem);
+            letter-spacing: 1px;
+        }
+
+        label i {
+            color: var(--primary);
+            margin-right: 8px;
+            text-shadow: 0 0 10px var(--primary);
+        }
+
+        input[type="number"] {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1.5px solid rgba(0, 255, 255, 0.4);
+            border-radius: 15px;
+            color: var(--text-light);
+            font-size: 1rem;
+            font-weight: 500;
+            transition: var(--transition);
+            font-family: 'Rajdhani', sans-serif;
+        }
+
+        @media (min-width: 768px) {
+            input[type="number"] {
+                padding: 16px 22px;
+                font-size: 1.1rem;
+            }
+        }
+
+        input[type="number"]:focus {
+            outline: none;
+            border-color: var(--secondary);
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 25px rgba(255, 0, 212, 0.5);
+        }
+
+        /* ===== SLIDER ESTILO NEÓN ===== */
+        .slider-container {
+            margin-top: 0.8rem;
+        }
+
+        .slider {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 10px;
+            background: rgba(0, 255, 255, 0.1);
+            outline: none;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary), var(--secondary));
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+            border: 1px solid white;
+            transition: var(--transition);
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .slider::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--primary), var(--secondary));
+            cursor: pointer;
+            box-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+            border: 1px solid white;
+            transition: var(--transition);
+        }
+
+        .slider::-moz-range-thumb:hover {
+            transform: scale(1.2);
+        }
+
+        .percentage-value {
+            text-align: center;
+            margin-top: 0.6rem;
+            font-weight: 700;
+            color: var(--primary);
+            font-size: 1.2rem;
+            text-shadow: 0 0 15px var(--primary);
+            letter-spacing: 1px;
+        }
+
+        /* ===== BOTÓN CALCULAR ===== */
+        .calculate-btn {
+            width: 100%;
+            padding: 16px 20px;
+            background: linear-gradient(145deg, var(--primary), #0099ff);
+            border: none;
+            border-radius: 50px;
+            color: black;
+            font-weight: 900;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: var(--transition);
+            margin: 1.8rem 0 1.5rem;
+            font-family: 'Syne', sans-serif;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            box-shadow: 0 0 30px var(--primary);
+        }
+
+        @media (min-width: 768px) {
+            .calculate-btn {
+                padding: 18px 25px;
+                font-size: 1.3rem;
+            }
+        }
+
+        .calculate-btn:hover {
+            background: linear-gradient(145deg, var(--secondary), #7700ff);
+            color: white;
+            box-shadow: 0 0 50px var(--secondary), 0 0 30px var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+
+        .calculate-btn i {
+            margin-right: 10px;
+        }
+
+        /* ===== RESULTADOS ===== */
+        .results {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1.5rem;
+        }
+
+        @media (min-width: 480px) {
+            .results {
+                grid-template-columns: 1fr 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        .result-box {
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border: 2px solid;
+            backdrop-filter: blur(10px);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .result-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 0 30px currentColor;
+        }
+
+        .result-box.risk {
+            border-color: var(--warning);
+            box-shadow: 0 0 20px rgba(255, 189, 68, 0.2);
+        }
+
+        .result-box.profit {
+            border-color: var(--success);
+            box-shadow: 0 0 20px rgba(0, 255, 140, 0.2);
+        }
+
+        .result-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: rotate(45deg);
+            z-index: -1;
+            animation: shine-result 6s infinite;
+        }
+
+        @keyframes shine-result {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+
+        .result-title {
+            color: var(--text-light);
+            margin-bottom: 0.8rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .result-value {
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+        }
+
+        .risk-value {
+            color: var(--warning);
+            text-shadow: 0 0 20px var(--warning);
+        }
+
+        .profit-value {
+            color: var(--success);
+            text-shadow: 0 0 20px var(--success);
+        }
+
+        .glow {
+            animation: numberGlow 0.8s ease-out;
+        }
+
+        @keyframes numberGlow {
+            0%, 100% { text-shadow: 0 0 10px currentColor; }
+            50% { text-shadow: 0 0 30px currentColor, 0 0 60px currentColor; }
+        }
+
+        .info {
+            margin-top: 1.5rem;
+            font-size: 0.85rem;
+            color: #8892b0;
+            text-align: center;
+            padding: 1rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            font-weight: 500;
+        }
+
+        .info i {
+            color: var(--primary);
+            margin-right: 5px;
+        }
+
+        /* ===== FOOTER RESPONSIVE ===== */
+        footer {
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(25px);
+            border-top: 2px solid rgba(0,255,255,0.4);
+            padding: 2.5rem 0 1.5rem;
+            position: relative;
+            z-index: 20;
+            width: 100%;
+            margin-top: 3rem;
+        }
+
+        .footer-logo {
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            color: white;
+            text-shadow: 0 0 20px cyan, 0 0 40px #ff00d4;
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-logo i {
+            margin-right: 10px;
+            color: cyan;
+            filter: drop-shadow(0 0 10px cyan);
+        }
+
+        .footer-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px 25px;
+            margin-bottom: 1.8rem;
+        }
+
+        .footer-links a {
+            color: #bbf0ff;
+            text-decoration: none;
+            font-size: clamp(0.9rem, 3vw, 1.1rem);
+            font-weight: 600;
+            transition: 0.2s;
+            padding: 5px 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .footer-links a:hover {
+            color: cyan;
+            text-shadow: 0 0 15px cyan;
+        }
+
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            justify-content: center;
+            margin: 25px 0;
+        }
+
+        .social-icons a {
+            color: white;
+            font-size: clamp(1.4rem, 5vw, 2rem);
+            width: clamp(45px, 10vw, 60px);
+            height: clamp(45px, 10vw, 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(0,255,255,0.08);
+            border: 1px solid rgba(0,255,255,0.5);
+            transition: 0.3s;
+        }
+
+        .social-icons a:hover {
+            background: cyan;
+            color: black;
+            border-color: #ff00d4;
+            box-shadow: 0 0 30px cyan;
+            transform: translateY(-5px);
+        }
+
+        .social-icons a:active {
+            transform: scale(0.9);
+        }
+
+        .copyright {
+            color: rgba(200, 240, 255, 0.7);
+            font-size: clamp(0.75rem, 3vw, 0.95rem);
+            text-align: center;
+            margin-top: 2rem;
+            padding: 0 20px;
+        }
+
+        /* ===== MODAL AUTH ===== */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(25px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .auth-container {
+            background: rgba(5, 8, 15, 0.95);
+            backdrop-filter: blur(30px);
+            border: 2px solid cyan;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 0 50px cyan;
+            animation: modalGlitch 0.4s;
+        }
+
+        @media (min-width: 480px) {
+            .auth-container {
+                padding: 2.5rem;
+            }
+        }
+
+        @keyframes modalGlitch {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .auth-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, cyan, #ff00d4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .close-auth {
+            background: none;
+            border: none;
+            color: cyan;
+            font-size: clamp(2.2rem, 7vw, 3rem);
+            cursor: pointer;
+            transition: 0.3s;
+            line-height: 1;
+        }
+
+        .close-auth:hover {
+            color: #ff00d4;
+            transform: rotate(180deg);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .auth-form input {
+            padding: 14px 20px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1.5px solid rgba(0,255,255,0.4);
+            border-radius: 50px;
+            font-size: 1rem;
+            color: white;
+            font-weight: 500;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .auth-form input:focus {
+            border-color: #ff00d4;
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 0 25px rgba(255,0,212,0.5);
+            outline: none;
+        }
+
+        .auth-submit {
+            padding: 14px;
+            background: linear-gradient(145deg, cyan, #0099ff);
+            border: none;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: black;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 25px cyan;
+            margin-top: 0.5rem;
+        }
+
+        .auth-submit:hover {
+            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            color: white;
+            box-shadow: 0 0 45px #ff00d4;
+        }
+
+        .auth-toggle {
+            margin-top: 1.8rem;
+            color: #bbf0ff;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .auth-toggle span {
+            color: cyan;
+            font-weight: 800;
+            cursor: pointer;
+            border-bottom: 1px solid cyan;
+            padding-bottom: 2px;
+        }
+
+        .auth-toggle span:hover {
+            color: #ff00d4;
+            border-bottom-color: #ff00d4;
+        }
+
+        .auth-error {
+            color: #ff7b9c;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* ===== UTILIDADES ===== */
+        .hide-mobile {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .hide-mobile {
+                display: inline;
+            }
+        }
+
+        /* ===== AJUSTES TÁCTILES ===== */
+        @media (max-width: 768px) {
+            .calculate-btn:hover {
+                transform: none;
+            }
+            
+            .calculate-btn:active {
+                transform: scale(0.98);
+            }
+            
+            .result-box:hover {
+                transform: none;
+            }
+            
+            .result-box:active {
+                transform: scale(0.98);
+            }
+            
+            .social-icons a:active {
+                background: cyan;
+                color: black;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PARTICLES -->
+    <div id="particles-js"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- LOADER -->
+    <div class="loader-container" id="loader">
+        <div class="loader-logo">
+            <i class="fas fa-calculator"></i>
+            <span>HEYDIN KAYSER</span>
+        </div>
+        <div class="loader"></div>
+        <div class="loader-text">Iniciando calculadora cuántica</div>
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>HEYDIN KAYSER</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html">INICIO</a>
+                    <a href="calculadora.html" style="color: cyan; text-shadow: 0 0 10px cyan;">CALCULADORA</a>
+                    <a href="contacto.html">CONTACTO</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="login-btn" id="openLogin"><i class="fas fa-arrow-right-to-bracket"></i> <span class="hide-mobile">ACCESO</span></button>
+                    <button class="register-btn" id="openRegister"><i class="fas fa-user-plus"></i> <span class="hide-mobile">VIP</span></button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- CALCULADORA -->
+    <div class="calculator-wrapper">
+        <div class="calculator-container">
+            <div class="calculator-title">
+                <h1><i class="fas fa-calculator"></i> CALCULADORA</h1>
+                <p>Gestión de riesgo y ganancias · Precisión cuántica</p>
+            </div>
+            
+            <div class="input-group">
+                <label for="capital"><i class="fas fa-coins"></i> Capital de Inversión ($)</label>
+                <input type="number" id="capital" step="0.01" min="0" value="1000" placeholder="Ej: 1000">
+            </div>
+            
+            <div class="input-group">
+                <label for="riskPercentage"><i class="fas fa-chart-line"></i> Porcentaje de Riesgo (%)</label>
+                <input type="range" id="riskPercentage" class="slider" min="0.5" max="5" step="0.5" value="2">
+                <div class="percentage-value"><span id="riskValue">2</span>%</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="lotSize"><i class="fas fa-weight-scale"></i> Tamaño del Lote</label>
+                <input type="number" id="lotSize" step="0.01" min="0.01" value="0.01" placeholder="Ej: 0.01">
+            </div>
+            
+            <div class="input-group">
+                <label for="pips"><i class="fas fa-arrows-up-down"></i> Movimiento en Pips</label>
+                <input type="number" id="pips" step="1" min="1" value="100" placeholder="Ej: 100">
+            </div>
+            
+            <button id="calculate" class="calculate-btn">
+                <i class="fas fa-bolt"></i> CALCULAR
+            </button>
+            
+            <div class="results">
+                <div class="result-box risk">
+                    <div class="result-title">MONTO A RIESGO</div>
+                    <div id="riskAmount" class="result-value risk-value">$20.00</div>
+                </div>
+                
+                <div class="result-box profit">
+                    <div class="result-title">GANANCIA POTENCIAL</div>
+                    <div id="profitAmount" class="result-value profit-value">$10.00</div>
+                </div>
+            </div>
+            
+            <div class="info">
+                <p><i class="fas fa-info-circle"></i> Cálculo basado en $10 por pip por lote estándar. El riesgo se calcula como porcentaje de tu capital.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo">
+                <i class="fas fa-crown"></i> HEYDIN KAYSER
+            </div>
+            <div class="footer-links">
+                <a href="terminos.html">TÉRMINOS</a>
+                <a href="privacidad.html">PRIVACIDAD</a>
+                <a href="soporte.html">SOPORTE</a>
+            </div>
+            <div class="social-icons">
+                <a href="https://www.facebook.com/profile.php?id=61579696913394" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@beaver_trading_oficial" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://www.youtube.com/@beavertrading2025" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/weldingmiguel/" target="_blank"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/593986122265" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://t.me/+x8P5ya17Dek4YjBh" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+            </div>
+            <div class="copyright">
+                © 2025 HEYDIN KAYSER TRADING · Calculadora Cuántica · Todos los derechos reservados
+            </div>
+        </div>
+    </footer>
+
+    <!-- MODAL AUTH -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2 id="authModalTitle">ACCESO VIP</h2>
+                <button class="close-auth" id="closeAuth">&times;</button>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <div id="authError" class="auth-error"></div>
+                <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                <button type="submit" class="auth-submit">INGRESAR</button>
+            </form>
+            <form class="auth-form" id="registerForm" style="display: none;">
+                <div id="registerError" class="auth-error"></div>
+                <input type="text" id="registerName" placeholder="Nombre completo" required>
+                <input type="email" id="registerEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="registerPassword" placeholder="Contraseña" required>
+                <input type="password" id="registerConfirmPassword" placeholder="Confirmar contraseña" required>
+                <button type="submit" class="auth-submit">ACTIVAR VIP</button>
+            </form>
+            <div class="auth-toggle">
+                <span id="toggleAuthForm">¿Sin membresía? Activa VIP ahora</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // ===== FIREBASE CONFIG =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+            authDomain: "beaver-trading.firebaseapp.com",
+            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+            projectId: "beaver-trading",
+            storageBucket: "beaver-trading.firebasestorage.app",
+            messagingSenderId: "926610131904",
+            appId: "1:926610131904:web:c147bd337bd12b4d085625",
+            measurementId: "G-1K51WWF2ZJ"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // ===== PARTICLES =====
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 100, density: { enable: true, value_area: 800 } },
+                color: { value: "#00ffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.4, random: true },
+                size: { value: 2.5, random: true },
+                line_linked: { enable: true, distance: 130, color: "#00ffff", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
+            },
+            interactivity: {
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+            },
+            retina_detect: true
+        });
+
+        // ===== LOADER =====
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('fade-out');
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 800);
+            }, 2000);
+            
+            // Inicializar calculadora
+            calculateRiskAndProfit();
+        });
+
+        function showLoader(msg) {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'flex';
+            loader.classList.remove('fade-out');
+            document.querySelector('.loader-text').textContent = msg || 'PROCESANDO...';
+        }
+
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.style.display = 'none', 800);
+        }
+
+        // ===== CALCULADORA =====
+        document.addEventListener('DOMContentLoaded', function() {
+            const calculateBtn = document.getElementById('calculate');
+            const capitalInput = document.getElementById('capital');
+            const riskPercentageInput = document.getElementById('riskPercentage');
+            const riskValueElement = document.getElementById('riskValue');
+            const lotSizeInput = document.getElementById('lotSize');
+            const pipsInput = document.getElementById('pips');
+            const riskAmountElement = document.getElementById('riskAmount');
+            const profitAmountElement = document.getElementById('profitAmount');
+            
+            // Actualizar el valor del porcentaje de riesgo
+            riskPercentageInput.addEventListener('input', function() {
+                riskValueElement.textContent = this.value;
+                calculateRiskAndProfit();
+            });
+            
+            // Calcular cuando se hace clic en el botón
+            calculateBtn.addEventListener('click', calculateRiskAndProfit);
+            
+            // Calcular cuando cambian los inputs
+            capitalInput.addEventListener('input', calculateRiskAndProfit);
+            lotSizeInput.addEventListener('input', calculateRiskAndProfit);
+            pipsInput.addEventListener('input', calculateRiskAndProfit);
+            
+            function calculateRiskAndProfit() {
+                const capital = parseFloat(capitalInput.value) || 0;
+                const riskPercentage = parseFloat(riskPercentageInput.value) || 0;
+                const lotSize = parseFloat(lotSizeInput.value) || 0;
+                const pips = parseFloat(pipsInput.value) || 0;
+                
+                // Calcular monto arriesgado (capital * porcentaje de riesgo)
+                const riskAmount = capital * (riskPercentage / 100);
+                
+                // Calcular ganancia potencial (lote * pips * valor del pip por lote estándar)
+                // Asumiendo que 1 lote estándar = $10 por pip
+                const profitAmount = lotSize * pips * 10;
+                
+                // Mostrar resultados formateados
+                riskAmountElement.textContent = `$${riskAmount.toFixed(2)}`;
+                profitAmountElement.textContent = `$${profitAmount.toFixed(2)}`;
+                
+                // Efecto de resaltado
+                riskAmountElement.classList.remove('glow');
+                profitAmountElement.classList.remove('glow');
+                void riskAmountElement.offsetWidth;
+                void profitAmountElement.offsetWidth;
+                riskAmountElement.classList.add('glow');
+                profitAmountElement.classList.add('glow');
+            }
+
+            // Exponer función globalmente
+            window.calculateRiskAndProfit = calculateRiskAndProfit;
+        });
+
+        // ===== MODAL CONTROL =====
+        const modal = document.getElementById('authModal');
+        const openLogin = document.getElementById('openLogin');
+        const openRegister = document.getElementById('openRegister');
+        const closeBtn = document.getElementById('closeAuth');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const modalTitle = document.getElementById('authModalTitle');
+        const toggleSpan = document.getElementById('toggleAuthForm');
+        const authError = document.getElementById('authError');
+        const registerError = document.getElementById('registerError');
+
+        openLogin.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'flex';
+            registerForm.style.display = 'none';
+            modalTitle.innerText = 'ACCESO VIP';
+            toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            authError.innerText = '';
+            document.body.style.overflow = 'hidden';
+        });
+
+        openRegister.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'flex';
+            modalTitle.innerText = 'ACTIVAR VIP';
+            toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            registerError.innerText = '';
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        toggleSpan.addEventListener('click', () => {
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'flex';
+                registerForm.style.display = 'none';
+                modalTitle.innerText = 'ACCESO VIP';
+                toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'flex';
+                modalTitle.innerText = 'ACTIVAR VIP';
+                toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            }
+        });
+
+        // ===== LOGIN =====
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            showLoader('VERIFICANDO CREDENCIALES');
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    document.querySelector('.loader-text').textContent = 'REDIRIGIENDO...';
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+                })
+                .catch(error => {
+                    hideLoader();
+                    authError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+
+        // ===== REGISTRO =====
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const pass = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirmPassword').value;
+            
+            if (pass !== confirm) {
+                registerError.textContent = 'LAS CONTRASEÑAS NO COINCIDEN';
+                return;
+            }
+            if (pass.length < 6) {
+                registerError.textContent = 'MÍNIMO 6 CARACTERES';
+                return;
+            }
+            
+            showLoader('CREANDO ACCESO VIP');
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then((userCred) => {
+                    const user = userCred.user;
+                    database.ref('users/' + user.uid).set({
+                        name: name,
+                        email: email,
+                        vipAccess: true,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    document.querySelector('.loader-text').textContent = 'BIENVENIDO A LA ÉLITE';
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+                })
+                .catch(error => {
+                    hideLoader();
+                    registerError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+
+        // ===== VERIFICAR AUTENTICACIÓN =====
+        auth.onAuthStateChanged((user) => {
+            if (user) {
+                // Usuario autenticado - actualizar UI si es necesario
+                console.log('Usuario autenticado:', user.email);
+            }
+        });
+    </script>
+</body>
+</html>

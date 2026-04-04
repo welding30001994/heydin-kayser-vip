@@ -1,0 +1,1134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+    <title>Heydin Kayser • Horario Mundial</title>
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ===== VARIABLES NEÓN ELITE ===== */
+        :root {
+            --primary: #00ffff;
+            --primary-glow: rgba(0, 255, 255, 0.8);
+            --secondary: #ff00d4;
+            --secondary-glow: rgba(255, 0, 212, 0.7);
+            --accent: #7700ff;
+            --accent-glow: rgba(119, 0, 255, 0.6);
+            --dark: #0a0c12;
+            --darker: #05070a;
+            --card-bg: rgba(12, 16, 22, 0.85);
+            --text-light: #e2f3ff;
+            --text-secondary: #b0b0ff;
+            --glow: 0 0 25px rgba(0, 247, 255, 0.6);
+            --transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            font-size: 16px;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        body {
+            font-family: 'Rajdhani', 'Syne', sans-serif;
+            background: radial-gradient(circle at 20% 20%, #0b0e14, #030507);
+            color: var(--text-light);
+            line-height: 1.6;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            width: 100%;
+        }
+
+        /* ===== FONDOS ===== */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(0deg, rgba(0,255,255,0.02) 0px, rgba(0,0,0,0.2) 1px, transparent 2px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .grid-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
+            background-size: min(30px, 4vw) min(30px, 4vw);
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        /* ===== LOADER RESPONSIVE ===== */
+        .loader-container {
+            position: fixed;
+            inset: 0;
+            background: #010101;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.9s ease, visibility 0.9s ease;
+            backdrop-filter: blur(8px);
+            padding: 20px;
+            text-align: center;
+        }
+
+        .loader-container.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .loader-logo {
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            justify-content: center;
+            color: #fff;
+            text-shadow: 0 0 20px cyan, 0 0 50px #ff00d4, 0 0 80px #7700ff;
+            margin-bottom: 2rem;
+            letter-spacing: 3px;
+        }
+
+        .loader-logo i {
+            font-size: clamp(2.5rem, 10vw, 5rem);
+            color: cyan;
+            filter: drop-shadow(0 0 15px cyan);
+        }
+
+        .loader {
+            width: min(300px, 80%);
+            height: 5px;
+            background: rgba(0,255,255,0.1);
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .loader::before {
+            content: '';
+            position: absolute;
+            width: 150%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, cyan, #ff00d4, cyan, transparent);
+            animation: loadingScan 2.4s infinite linear;
+        }
+
+        @keyframes loadingScan {
+            0% { transform: translateX(-150%); }
+            100% { transform: translateX(80%); }
+        }
+
+        .loader-text {
+            margin-top: 30px;
+            font-size: clamp(1rem, 4vw, 1.4rem);
+            font-weight: 700;
+            text-transform: uppercase;
+            color: #fff;
+            text-shadow: 0 0 10px cyan, 0 0 20px #ff00d4;
+            letter-spacing: 4px;
+        }
+
+        .loader-dots {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .loader-dot {
+            width: clamp(12px, 3vw, 16px);
+            height: clamp(12px, 3vw, 16px);
+            border-radius: 50%;
+            background: cyan;
+            box-shadow: 0 0 20px cyan, 0 0 40px #ff00d4;
+            animation: dotWave 1.6s infinite ease-in-out alternate;
+        }
+
+        .loader-dot:nth-child(2) { animation-delay: 0.4s; background: #ff00d4; }
+        .loader-dot:nth-child(3) { animation-delay: 0.8s; background: #7700ff; }
+
+        @keyframes dotWave {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 1; }
+        }
+
+        /* ===== CONTENEDOR RESPONSIVE ===== */
+        .container {
+            width: 100%;
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
+        }
+
+        @media (min-width: 640px) {
+            .container { padding: 0 30px; }
+        }
+
+        /* ===== HEADER RESPONSIVE ===== */
+        header {
+            background: rgba(3, 6, 10, 0.85);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.3);
+            box-shadow: 0 5px 30px rgba(0,255,255,0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            padding: 0.8rem 0;
+            width: 100%;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .logo {
+            font-size: clamp(1.4rem, 6vw, 2.2rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            text-shadow: 0 0 15px cyan, 0 0 30px #ff00d4;
+            letter-spacing: 2px;
+        }
+
+        .logo i {
+            font-size: clamp(1.6rem, 7vw, 2.8rem);
+            color: cyan;
+            filter: drop-shadow(0 0 10px cyan);
+        }
+
+        .nav-links {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                gap: 30px;
+            }
+            
+            .nav-links a {
+                color: #e0f0ff;
+                text-decoration: none;
+                font-weight: 700;
+                font-size: 1rem;
+                letter-spacing: 2px;
+                padding: 8px 0;
+                position: relative;
+                transition: 0.2s;
+                text-transform: uppercase;
+            }
+            
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background: linear-gradient(90deg, cyan, #ff00d4);
+                box-shadow: 0 0 15px cyan;
+                transition: 0.4s;
+            }
+            
+            .nav-links a:hover {
+                color: cyan;
+                text-shadow: 0 0 10px cyan;
+            }
+            
+            .nav-links a:hover::after {
+                width: 100%;
+            }
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .auth-buttons button {
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            font-size: 0.75rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.3s;
+            white-space: nowrap;
+        }
+
+        @media (min-width: 480px) {
+            .auth-buttons button {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+                letter-spacing: 2px;
+            }
+        }
+
+        .login-btn {
+            background: transparent;
+            border: 1.5px solid cyan !important;
+            color: cyan;
+        }
+
+        .login-btn:hover {
+            background: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 30px cyan;
+        }
+
+        .register-btn {
+            background: linear-gradient(145deg, #00e0ff, #0088ff);
+            color: black;
+            font-weight: 900;
+            border: 1.5px solid #00ffff;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
+        }
+
+        .register-btn:hover {
+            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            color: white;
+            border-color: white;
+            box-shadow: 0 0 40px #ff00d4;
+        }
+
+        .register-btn:active, .login-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* ===== HERO HEADER ===== */
+        .hero-header {
+            text-align: center;
+            padding: 2.5rem 0 1.5rem;
+        }
+
+        .hero-logo {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .hero-icon {
+            font-size: clamp(2.5rem, 10vw, 4rem);
+            color: var(--primary);
+            text-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+        }
+
+        .hero-title {
+            font-size: clamp(2rem, 8vw, 3.5rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, #fff, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 30px rgba(0, 255, 255, 0.5);
+            letter-spacing: 3px;
+        }
+
+        .hero-subtitle {
+            color: var(--text-secondary);
+            font-size: clamp(0.9rem, 4vw, 1.2rem);
+            margin-bottom: 0.8rem;
+            font-style: italic;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* ===== NOTE ===== */
+        .note {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+            padding: 1.2rem;
+            background: rgba(0, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border-radius: 50px;
+            border: 1.5px solid rgba(0, 255, 255, 0.3);
+            font-size: 0.95rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .note i {
+            color: var(--primary);
+            text-shadow: 0 0 10px var(--primary);
+            font-size: 1.1rem;
+        }
+
+        /* ===== CLOCKS GRID RESPONSIVE ===== */
+        .clocks-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+
+        @media (min-width: 480px) {
+            .clocks-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.8rem;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .clocks-grid {
+                grid-template-columns: repeat(4, 1fr);
+                gap: 2rem;
+            }
+        }
+
+        /* ===== CLOCK CARD ===== */
+        .clock-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border-radius: 30px;
+            padding: 1.8rem 1.2rem;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(0, 255, 255, 0.2);
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        @media (min-width: 768px) {
+            .clock-card {
+                padding: 2rem 1.5rem;
+            }
+        }
+
+        .clock-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary), var(--accent), var(--primary));
+            background-size: 400%;
+            z-index: -1;
+            animation: borderGlow 6s linear infinite;
+            border-radius: 32px;
+            opacity: 0;
+            transition: opacity 0.4s ease;
+        }
+
+        .clock-card:hover {
+            transform: translateY(-8px);
+            border-color: transparent;
+        }
+
+        .clock-card:hover::before {
+            opacity: 0.7;
+        }
+
+        @keyframes borderGlow {
+            0% { background-position: 0 0; }
+            50% { background-position: 300% 0; }
+            100% { background-position: 0 0; }
+        }
+
+        .city-name {
+            font-size: clamp(1.6rem, 6vw, 2rem);
+            font-weight: 800;
+            margin-bottom: 0.8rem;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-shadow: 0 0 15px var(--primary);
+            font-family: 'Syne', sans-serif;
+        }
+
+        .city-name i {
+            font-size: clamp(1.4rem, 5vw, 1.8rem);
+            color: var(--secondary);
+            filter: drop-shadow(0 0 8px var(--secondary));
+        }
+
+        .time-display {
+            font-size: clamp(2rem, 8vw, 2.8rem);
+            font-weight: 900;
+            margin: 1rem 0;
+            font-family: 'Syne', monospace;
+            color: white;
+            text-shadow: 0 0 20px var(--primary), 0 0 40px var(--secondary);
+            letter-spacing: 3px;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            width: 100%;
+        }
+
+        .date-display {
+            font-size: clamp(0.9rem, 4vw, 1.1rem);
+            opacity: 0.9;
+            margin-bottom: 1.2rem;
+            color: var(--text-secondary);
+            text-transform: capitalize;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .timezone {
+            background: rgba(0, 255, 255, 0.1);
+            padding: 0.6rem 1.2rem;
+            border-radius: 40px;
+            display: inline-block;
+            font-size: 0.85rem;
+            font-weight: 700;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            color: var(--primary);
+            letter-spacing: 1px;
+        }
+
+        /* ===== WORLD MAP ===== */
+        .world-map {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            position: relative;
+        }
+
+        .world-map i {
+            font-size: clamp(4rem, 15vw, 6rem);
+            color: rgba(0, 255, 255, 0.2);
+            text-shadow: 0 0 30px var(--primary);
+            animation: globeRotate 20s infinite linear;
+        }
+
+        @keyframes globeRotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: rgba(3, 6, 10, 0.8);
+            backdrop-filter: blur(20px);
+            border-radius: 60px 60px 0 0;
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem 1.5rem;
+            border-top: 2px solid rgba(0, 255, 255, 0.3);
+            font-size: 0.95rem;
+            color: var(--text-secondary);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            box-shadow: 0 -5px 30px rgba(0, 255, 255, 0.1);
+        }
+
+        .footer-logo {
+            font-size: 1.6rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.8rem;
+            letter-spacing: 2px;
+        }
+
+        .footer-logo i {
+            color: var(--primary);
+            margin-right: 8px;
+            filter: drop-shadow(0 0 8px var(--primary));
+        }
+
+        .footer-text {
+            margin-bottom: 0.5rem;
+            opacity: 0.9;
+        }
+
+        .footer-small {
+            font-size: 0.85rem;
+            opacity: 0.7;
+            margin-top: 1rem;
+        }
+
+        /* ===== MODAL AUTH ===== */
+        .auth-modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(25px);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+        }
+
+        .auth-container {
+            background: rgba(5, 8, 15, 0.95);
+            backdrop-filter: blur(30px);
+            border: 2px solid cyan;
+            border-radius: 30px;
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 0 50px cyan;
+            animation: modalGlitch 0.4s;
+        }
+
+        @media (min-width: 480px) {
+            .auth-container {
+                padding: 2.5rem;
+            }
+        }
+
+        @keyframes modalGlitch {
+            0% { transform: scale(0.9); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+
+        .auth-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .auth-header h2 {
+            font-size: clamp(1.8rem, 6vw, 2.4rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, cyan, #ff00d4);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 2px;
+        }
+
+        .close-auth {
+            background: none;
+            border: none;
+            color: cyan;
+            font-size: clamp(2.2rem, 7vw, 3rem);
+            cursor: pointer;
+            transition: 0.3s;
+            line-height: 1;
+        }
+
+        .close-auth:hover {
+            color: #ff00d4;
+            transform: rotate(180deg);
+        }
+
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .auth-form input {
+            padding: 14px 20px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1.5px solid rgba(0,255,255,0.4);
+            border-radius: 50px;
+            font-size: 1rem;
+            color: white;
+            font-weight: 500;
+            transition: 0.3s;
+            width: 100%;
+        }
+
+        .auth-form input:focus {
+            border-color: #ff00d4;
+            background: rgba(0,0,0,0.5);
+            box-shadow: 0 0 25px rgba(255,0,212,0.5);
+            outline: none;
+        }
+
+        .auth-submit {
+            padding: 14px;
+            background: linear-gradient(145deg, cyan, #0099ff);
+            border: none;
+            border-radius: 50px;
+            font-weight: 900;
+            font-size: 1.2rem;
+            color: black;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 0 25px cyan;
+            margin-top: 0.5rem;
+        }
+
+        .auth-submit:hover {
+            background: linear-gradient(145deg, #ff00d4, #7700ff);
+            color: white;
+            box-shadow: 0 0 45px #ff00d4;
+        }
+
+        .auth-toggle {
+            margin-top: 1.8rem;
+            color: #bbf0ff;
+            font-size: 1rem;
+            text-align: center;
+        }
+
+        .auth-toggle span {
+            color: cyan;
+            font-weight: 800;
+            cursor: pointer;
+            border-bottom: 1px solid cyan;
+            padding-bottom: 2px;
+        }
+
+        .auth-toggle span:hover {
+            color: #ff00d4;
+            border-bottom-color: #ff00d4;
+        }
+
+        .auth-error {
+            color: #ff7b9c;
+            font-weight: 700;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        /* ===== UTILIDADES ===== */
+        .hide-mobile {
+            display: none;
+        }
+
+        @media (min-width: 768px) {
+            .hide-mobile {
+                display: inline;
+            }
+        }
+
+        /* ===== AJUSTES TÁCTILES ===== */
+        @media (max-width: 768px) {
+            .clock-card:hover {
+                transform: none;
+            }
+            
+            .clock-card:active {
+                transform: scale(0.98);
+                border-color: var(--primary);
+            }
+            
+            .clock-card:hover::before {
+                opacity: 0;
+            }
+            
+            .clock-card:active::before {
+                opacity: 0.5;
+            }
+            
+            .world-map i {
+                animation: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- PARTICLES -->
+    <div id="particles-js"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- LOADER -->
+    <div class="loader-container" id="loader">
+        <div class="loader-logo">
+            <i class="fas fa-globe-americas"></i>
+            <span>HEYDIN KAYSER</span>
+        </div>
+        <div class="loader"></div>
+        <div class="loader-text">Sincronizando husos horarios</div>
+        <div class="loader-dots">
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+            <div class="loader-dot"></div>
+        </div>
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">
+                    <i class="fas fa-crown"></i>
+                    <span>HEYDIN KAYSER</span>
+                </div>
+                <div class="nav-links">
+                    <a href="index.html">INICIO</a>
+                    <a href="calculadora.html">CALCULADORA</a>
+                    <a href="fibonacci.html">FIBONACCI</a>
+                    <a href="horario.html" style="color: cyan; text-shadow: 0 0 10px cyan;">HORARIO</a>
+                </div>
+                <div class="auth-buttons">
+                    <button class="login-btn" id="openLogin"><i class="fas fa-arrow-right-to-bracket"></i> <span class="hide-mobile">ACCESO</span></button>
+                    <button class="register-btn" id="openRegister"><i class="fas fa-user-plus"></i> <span class="hide-mobile">VIP</span></button>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="hero-header">
+            <div class="hero-logo">
+                <i class="fas fa-clock hero-icon"></i>
+                <span class="hero-title">HEYDIN KAYSER</span>
+            </div>
+            <p class="hero-subtitle">HORARIO MUNDIAL · TIEMPO REAL</p>
+        </div>
+        
+        <div class="note">
+            <i class="fas fa-info-circle"></i> 
+            <span>Sincronización cuántica · Principales centros financieros del mundo</span>
+        </div>
+        
+        <div class="clocks-grid">
+            <div class="clock-card">
+                <h2 class="city-name"><i class="fas fa-flag"></i> Sídney</h2>
+                <div class="time-display" id="sydney-time">00:00:00</div>
+                <div class="date-display" id="sydney-date">Cargando...</div>
+                <div class="timezone">AEST (UTC+10:00)</div>
+            </div>
+            
+            <div class="clock-card">
+                <h2 class="city-name"><i class="fas fa-flag"></i> Tokio</h2>
+                <div class="time-display" id="tokyo-time">00:00:00</div>
+                <div class="date-display" id="tokyo-date">Cargando...</div>
+                <div class="timezone">JST (UTC+9:00)</div>
+            </div>
+            
+            <div class="clock-card">
+                <h2 class="city-name"><i class="fas fa-flag"></i> Londres</h2>
+                <div class="time-display" id="london-time">00:00:00</div>
+                <div class="date-display" id="london-date">Cargando...</div>
+                <div class="timezone">BST (UTC+1:00)</div>
+            </div>
+            
+            <div class="clock-card">
+                <h2 class="city-name"><i class="fas fa-flag"></i> Nueva York</h2>
+                <div class="time-display" id="newyork-time">00:00:00</div>
+                <div class="date-display" id="newyork-date">Cargando...</div>
+                <div class="timezone">EDT (UTC-4:00)</div>
+            </div>
+        </div>
+        
+        <div class="world-map">
+            <i class="fas fa-globe-americas"></i>
+        </div>
+        
+        <footer>
+            <div class="footer-logo">
+                <i class="fas fa-crown"></i> HEYDIN KAYSER
+            </div>
+            <div class="footer-text">
+                <i class="fas fa-clock"></i> Monitoreo de mercados internacionales en tiempo real
+            </div>
+            <div class="footer-text">
+                Sincronización cuántica · Latencia cero
+            </div>
+            <div class="footer-small">
+                © 2025 HEYDIN KAYSER TRADING · Terminal horaria global
+            </div>
+        </footer>
+    </div>
+
+    <!-- MODAL AUTH -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <div class="auth-header">
+                <h2 id="authModalTitle">ACCESO VIP</h2>
+                <button class="close-auth" id="closeAuth">&times;</button>
+            </div>
+            <form class="auth-form" id="loginForm">
+                <div id="authError" class="auth-error"></div>
+                <input type="email" id="loginEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="loginPassword" placeholder="Contraseña" required>
+                <button type="submit" class="auth-submit">INGRESAR</button>
+            </form>
+            <form class="auth-form" id="registerForm" style="display: none;">
+                <div id="registerError" class="auth-error"></div>
+                <input type="text" id="registerName" placeholder="Nombre completo" required>
+                <input type="email" id="registerEmail" placeholder="Correo electrónico" required>
+                <input type="password" id="registerPassword" placeholder="Contraseña" required>
+                <input type="password" id="registerConfirmPassword" placeholder="Confirmar contraseña" required>
+                <button type="submit" class="auth-submit">ACTIVAR VIP</button>
+            </form>
+            <div class="auth-toggle">
+                <span id="toggleAuthForm">¿Sin membresía? Activa VIP ahora</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script>
+        // ===== FIREBASE CONFIG =====
+        const firebaseConfig = {
+            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+            authDomain: "beaver-trading.firebaseapp.com",
+            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+            projectId: "beaver-trading",
+            storageBucket: "beaver-trading.firebasestorage.app",
+            messagingSenderId: "926610131904",
+            appId: "1:926610131904:web:c147bd337bd12b4d085625",
+            measurementId: "G-1K51WWF2ZJ"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const database = firebase.database();
+
+        // ===== PARTICLES =====
+        particlesJS('particles-js', {
+            particles: {
+                number: { value: 100, density: { enable: true, value_area: 800 } },
+                color: { value: "#00ffff" },
+                shape: { type: "circle" },
+                opacity: { value: 0.4, random: true },
+                size: { value: 2.5, random: true },
+                line_linked: { enable: true, distance: 130, color: "#00ffff", opacity: 0.2, width: 1 },
+                move: { enable: true, speed: 1, direction: "none", random: true, out_mode: "out" }
+            },
+            interactivity: {
+                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+            },
+            retina_detect: true
+        });
+
+        // ===== LOADER =====
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('fade-out');
+                setTimeout(() => document.getElementById('loader').style.display = 'none', 800);
+            }, 2000);
+        });
+
+        function showLoader(msg) {
+            const loader = document.getElementById('loader');
+            loader.style.display = 'flex';
+            loader.classList.remove('fade-out');
+            document.querySelector('.loader-text').textContent = msg || 'PROCESANDO...';
+        }
+
+        function hideLoader() {
+            const loader = document.getElementById('loader');
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.style.display = 'none', 800);
+        }
+
+        // ===== RELOJES MUNDIALES =====
+        function updateClocks() {
+            const now = new Date();
+            const utc = now.getTime() + (now.getTimezoneOffset() * 60000);
+            
+            // Sídney (UTC+11 - Horario de verano)
+            const sydneyTime = new Date(utc + (3600000 * 11));
+            document.getElementById('sydney-time').textContent = formatTime(sydneyTime);
+            document.getElementById('sydney-date').textContent = formatDate(sydneyTime);
+            
+            // Tokio (UTC+9)
+            const tokyoTime = new Date(utc + (3600000 * 9));
+            document.getElementById('tokyo-time').textContent = formatTime(tokyoTime);
+            document.getElementById('tokyo-date').textContent = formatDate(tokyoTime);
+            
+            // Londres (UTC+1 - Horario de verano)
+            const londonTime = new Date(utc + (3600000 * 1));
+            document.getElementById('london-time').textContent = formatTime(londonTime);
+            document.getElementById('london-date').textContent = formatDate(londonTime);
+            
+            // Nueva York (UTC-4 - Horario de verano)
+            const newYorkTime = new Date(utc + (3600000 * -4));
+            document.getElementById('newyork-time').textContent = formatTime(newYorkTime);
+            document.getElementById('newyork-date').textContent = formatDate(newYorkTime);
+        }
+        
+        function formatTime(date) {
+            return date.toLocaleTimeString('es-ES', { 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                hour12: false 
+            });
+        }
+        
+        function formatDate(date) {
+            return date.toLocaleDateString('es-ES', { 
+                weekday: 'long', 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+            });
+        }
+        
+        // Actualizar cada segundo
+        setInterval(updateClocks, 1000);
+        updateClocks();
+
+        // ===== MODAL AUTH =====
+        const modal = document.getElementById('authModal');
+        const openLogin = document.getElementById('openLogin');
+        const openRegister = document.getElementById('openRegister');
+        const closeBtn = document.getElementById('closeAuth');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const modalTitle = document.getElementById('authModalTitle');
+        const toggleSpan = document.getElementById('toggleAuthForm');
+        const authError = document.getElementById('authError');
+        const registerError = document.getElementById('registerError');
+
+        openLogin.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'flex';
+            registerForm.style.display = 'none';
+            modalTitle.innerText = 'ACCESO VIP';
+            toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            authError.innerText = '';
+            document.body.style.overflow = 'hidden';
+        });
+
+        openRegister.addEventListener('click', () => {
+            modal.style.display = 'flex';
+            loginForm.style.display = 'none';
+            registerForm.style.display = 'flex';
+            modalTitle.innerText = 'ACTIVAR VIP';
+            toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            registerError.innerText = '';
+            document.body.style.overflow = 'hidden';
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+
+        modal.addEventListener('click', (e) => {
+            if(e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+
+        toggleSpan.addEventListener('click', () => {
+            if (loginForm.style.display === 'none') {
+                loginForm.style.display = 'flex';
+                registerForm.style.display = 'none';
+                modalTitle.innerText = 'ACCESO VIP';
+                toggleSpan.innerText = '¿Sin membresía? Activa VIP ahora';
+            } else {
+                loginForm.style.display = 'none';
+                registerForm.style.display = 'flex';
+                modalTitle.innerText = 'ACTIVAR VIP';
+                toggleSpan.innerText = '¿Ya eres VIP? Inicia sesión';
+            }
+        });
+
+        // ===== LOGIN =====
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+            showLoader('VERIFICANDO CREDENCIALES');
+            auth.signInWithEmailAndPassword(email, password)
+                .then(() => {
+                    document.querySelector('.loader-text').textContent = 'REDIRIGIENDO...';
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+                })
+                .catch(error => {
+                    hideLoader();
+                    authError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+
+        // ===== REGISTRO =====
+        registerForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const name = document.getElementById('registerName').value;
+            const email = document.getElementById('registerEmail').value;
+            const pass = document.getElementById('registerPassword').value;
+            const confirm = document.getElementById('registerConfirmPassword').value;
+            
+            if (pass !== confirm) {
+                registerError.textContent = 'LAS CONTRASEÑAS NO COINCIDEN';
+                return;
+            }
+            if (pass.length < 6) {
+                registerError.textContent = 'MÍNIMO 6 CARACTERES';
+                return;
+            }
+            
+            showLoader('CREANDO ACCESO VIP');
+            auth.createUserWithEmailAndPassword(email, pass)
+                .then((userCred) => {
+                    const user = userCred.user;
+                    database.ref('users/' + user.uid).set({
+                        name: name,
+                        email: email,
+                        vipAccess: true,
+                        createdAt: firebase.database.ServerValue.TIMESTAMP
+                    });
+                    document.querySelector('.loader-text').textContent = 'BIENVENIDO A LA ÉLITE';
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+                })
+                .catch(error => {
+                    hideLoader();
+                    registerError.textContent = 'ERROR: ' + error.message;
+                });
+        });
+    </script>
+</body>
+</html>
