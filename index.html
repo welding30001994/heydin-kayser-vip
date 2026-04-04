@@ -581,6 +581,7 @@
     </div>
 </div>
 
+<script><!-- SOLO TE MUESTRO LA PARTE CORREGIDA DEL SCRIPT -->
 <script>
     // FIREBASE CONFIGURACIÓN (proporcionada por ti)
     const firebaseConfig = {
@@ -597,6 +598,8 @@
     const auth = firebase.auth();
     const db = firebase.database();
 
+    let alreadyRedirected = false; // ✅ CONTROL ANTI-BUCLE
+
     // LOADER
     window.addEventListener('load', () => {
         setTimeout(() => {
@@ -612,69 +615,66 @@
         loader.classList.remove('fade-out');
         document.querySelector('.loader-text').innerText = msg || 'PROCESANDO...';
     }
+
     function hideLoader() {
         const loader = document.getElementById('loader');
         loader.classList.add('fade-out');
         setTimeout(() => loader.style.display = 'none', 600);
     }
 
-    // MODALES
-    function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
-    function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
-
-    // Botones header
-    document.getElementById('openLoginModalBtn').onclick = () => openModal('loginModal');
-    document.getElementById('openRegisterModalBtn').onclick = () => openModal('registerModal');
-    
-    // ★ CAMBIO IMPORTANTE: Botón "COMENZAR AHORA" abre el login, no el registro
-    document.getElementById('heroCtaBtn').onclick = () => openModal('loginModal');
-
-    // Switch entre modales (desde login hacia registro)
-    document.getElementById('switchToRegisterFromLogin').onclick = () => { 
-        closeModal('loginModal'); 
-        openModal('registerModal'); 
-    };
-    // Switch desde registro hacia login
-    document.getElementById('switchToLoginFromRegister').onclick = () => { 
-        closeModal('registerModal'); 
-        openModal('loginModal'); 
-    };
-    
-    // Mostrar términos
-    document.getElementById('showTermsBtn').onclick = (e) => { e.preventDefault(); openModal('termsModal'); };
-
-    // Cerrar click fuera
-    window.onclick = (e) => {
-        if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none';
-    };
-
     // LOGIN
     document.getElementById('doLoginBtn').onclick = () => {
         const email = document.getElementById('loginEmail').value.trim();
         const password = document.getElementById('loginPassword').value;
-        if (!email || !password) { document.getElementById('loginError').innerText = 'Completa todos los campos'; return; }
+
+        if (!email || !password) {
+            document.getElementById('loginError').innerText = 'Completa todos los campos';
+            return;
+        }
+
         showLoaderMsg('VERIFICANDO ACCESO');
+
         auth.signInWithEmailAndPassword(email, password)
             .then(() => {
                 document.querySelector('.loader-text').innerText = 'REDIRIGIENDO A HOME';
-                setTimeout(() => { window.location.href = 'home.html'; }, 1200);
+                setTimeout(() => {
+                    window.location.replace('home.html'); // ✅ FIX
+                }, 1200);
             })
-            .catch(err => { hideLoader(); document.getElementById('loginError').innerText = 'Error: ' + err.message; });
+            .catch(err => {
+                hideLoader();
+                document.getElementById('loginError').innerText = 'Error: ' + err.message;
+            });
     };
 
-    // REGISTRO con términos
+    // REGISTRO
     document.getElementById('doRegisterBtn').onclick = () => {
         const name = document.getElementById('regName').value.trim();
         const email = document.getElementById('regEmail').value.trim();
         const pass = document.getElementById('regPassword').value;
         const termsAccepted = document.getElementById('termsCheckbox').checked;
-        if (!name || !email || !pass) { document.getElementById('registerError').innerText = 'Todos los campos son obligatorios'; return; }
-        if (!termsAccepted) { document.getElementById('registerError').innerText = 'Debes aceptar los Términos y Condiciones'; return; }
-        if (pass.length < 6) { document.getElementById('registerError').innerText = 'La contraseña debe tener mínimo 6 caracteres'; return; }
+
+        if (!name || !email || !pass) {
+            document.getElementById('registerError').innerText = 'Todos los campos son obligatorios';
+            return;
+        }
+
+        if (!termsAccepted) {
+            document.getElementById('registerError').innerText = 'Debes aceptar los Términos y Condiciones';
+            return;
+        }
+
+        if (pass.length < 6) {
+            document.getElementById('registerError').innerText = 'La contraseña debe tener mínimo 6 caracteres';
+            return;
+        }
+
         showLoaderMsg('CREANDO CUENTA VIP');
+
         auth.createUserWithEmailAndPassword(email, pass)
             .then((userCred) => {
                 const uid = userCred.user.uid;
+
                 db.ref('users/' + uid).set({
                     fullName: name,
                     email: email,
@@ -682,18 +682,34 @@
                     termsAccepted: true
                 }).then(() => {
                     document.querySelector('.loader-text').innerText = 'REGISTRO EXITOSO';
-                    setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+                    setTimeout(() => {
+                        window.location.replace('home.html'); // ✅ FIX
+                    }, 1500);
                 });
             })
-            .catch(err => { hideLoader(); document.getElementById('registerError').innerText = 'Error: ' + err.message; });
+            .catch(err => {
+                hideLoader();
+                document.getElementById('registerError').innerText = 'Error: ' + err.message;
+            });
     };
 
-    // Redirigir si ya está logueado (evita volver a index si ya está autenticado)
+    // ✅ REDIRECCIÓN CONTROLADA (SIN BUCLE)
     auth.onAuthStateChanged((user) => {
-        if (user && (window.location.pathname === '/' || window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/'))) {
-            window.location.href = 'home.html';
+        if (user && !alreadyRedirected) {
+            alreadyRedirected = true;
+
+            const path = window.location.pathname;
+
+            if (
+                path === '/' ||
+                path.includes('index.html') ||
+                path.endsWith('/')
+            ) {
+                window.location.replace('home.html');
+            }
         }
     });
+</script>
 </script>
 </body>
 </html>
