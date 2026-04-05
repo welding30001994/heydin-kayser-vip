@@ -1,0 +1,455 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beader Trading • biblioteca futurista</title>
+    <!-- Fuente tecnológica -->
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00f7ff;        /* neón cian */
+            --secondary: #b300ff;       /* violeta neón */
+            --accent: #ff00d4;          /* magenta para detalles */
+            --dark-bg: #0a0c12;         /* base casi negra con matiz azulado */
+            --card-bg: rgba(16, 20, 30, 0.75);
+            --glow: 0 0 20px rgba(0, 247, 255, 0.5);
+            --grid-color: rgba(0, 247, 255, 0.08);
+        }
+
+        body {
+            font-family: 'Exo 2', sans-serif;
+            background-color: var(--dark-bg);
+            color: #f0fcff;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Fondo futurista : malla isométrica + gradiente + partículas */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                linear-gradient(135deg, rgba(0,247,255,0.03) 0%, transparent 40%),
+                repeating-linear-gradient(45deg, var(--grid-color) 0px, var(--grid-color) 2px, transparent 2px, transparent 20px);
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* capa de luz difusa (vignette + destellos) */
+        body::after {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 70% 20%, rgba(179, 0, 255, 0.15) 0%, transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(0, 247, 255, 0.12) 0%, transparent 55%),
+                        radial-gradient(circle at 0% 50%, rgba(255, 0, 212, 0.08) 0%, transparent 60%);
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* líneas horizontales animadas (efecto scanning) */
+        .scan-line {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            opacity: 0.4;
+            filter: blur(2px);
+            animation: scanMove 8s linear infinite;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        @keyframes scanMove {
+            0% { top: -10px; }
+            100% { top: 110%; }
+        }
+
+        /* partículas flotantes (neón) */
+        .particle-field {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: rgba(0, 247, 255, 0.25);
+            border-radius: 50%;
+            box-shadow: 0 0 20px #00f7ff, 0 0 40px #b300ff;
+            filter: blur(2px);
+            animation: floatParticle 18s infinite alternate ease-in-out;
+        }
+
+        @keyframes floatParticle {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.2; }
+            100% { transform: translate(30px, -60px) scale(1.5); opacity: 0.5; }
+        }
+
+        /* partículas individuales */
+        .particle:nth-child(1) { width: 6px; height: 6px; top: 15%; left: 8%; animation-duration: 22s; }
+        .particle:nth-child(2) { width: 12px; height: 12px; top: 70%; left: 85%; background: rgba(179,0,255,0.3); box-shadow: 0 0 30px #b300ff; animation-duration: 17s; }
+        .particle:nth-child(3) { width: 8px; height: 8px; top: 40%; left: 20%; background: rgba(255,0,212,0.4); box-shadow: 0 0 30px #ff00d4; animation-duration: 14s; }
+        .particle:nth-child(4) { width: 15px; height: 15px; top: 85%; left: 40%; opacity: 0.15; filter: blur(3px); animation-duration: 25s; }
+        .particle:nth-child(5) { width: 5px; height: 5px; top: 10%; left: 92%; animation-duration: 12s; }
+
+        /* contenedor principal con elevado z-index */
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+            width: 100%;
+        }
+
+        /* header neón */
+        header {
+            text-align: center;
+            padding: 30px 0 20px;
+        }
+
+        .logo {
+            font-size: 4.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #fff 0%, var(--primary) 40%, var(--secondary) 80%, #ffb3ff 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            filter: drop-shadow(0 0 20px var(--primary));
+            margin-bottom: 8px;
+            animation: textGlitch 3s infinite;
+        }
+
+        @keyframes textGlitch {
+            0%, 100% { filter: drop-shadow(0 0 15px var(--primary)) drop-shadow(2px 2px 0 var(--secondary)); }
+            33% { filter: drop-shadow(0 0 25px var(--secondary)) drop-shadow(-2px -1px 0 var(--primary)); }
+            66% { filter: drop-shadow(0 0 20px #ff00d4) drop-shadow(1px -2px 0 var(--primary)); }
+        }
+
+        .subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            letter-spacing: 2px;
+            color: rgba(255,255,255,0.7);
+            text-shadow: 0 0 10px rgba(0,247,255,0.3);
+            backdrop-filter: blur(2px);
+            display: inline-block;
+            padding: 5px 20px;
+            border-radius: 40px;
+            border: 1px solid rgba(0,247,255,0.2);
+            background: rgba(10,12,20,0.3);
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            gap: 30px;
+            margin: 50px 0;
+        }
+
+        /* tarjetas con cristal neón */
+        .card {
+            background: var(--card-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 247, 255, 0.25);
+            border-radius: 24px;
+            overflow: hidden;
+            transition: 0.3s ease;
+            box-shadow: 0 20px 30px -10px rgba(0,0,0,0.8), 0 0 0 1px rgba(0,247,255,0.1) inset;
+            position: relative;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, var(--primary), var(--secondary), transparent);
+            filter: blur(2px);
+            opacity: 0.6;
+        }
+
+        .card:hover {
+            transform: translateY(-10px) scale(1.01);
+            border-color: var(--primary);
+            box-shadow: 0 0 35px rgba(0,247,255,0.4), 0 25px 40px -12px black;
+        }
+
+        .card-header {
+            padding: 20px 22px 10px;
+            border-bottom: 1px dashed rgba(0,247,255,0.3);
+            background: rgba(0,247,255,0.02);
+        }
+
+        .card-title {
+            font-size: 1.6rem;
+            font-weight: 600;
+            background: linear-gradient(145deg, #fff, var(--primary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+            filter: drop-shadow(0 0 8px rgba(0,247,255,0.3));
+        }
+
+        .card-body {
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .card-description {
+            color: #cfddee;
+            font-size: 0.98rem;
+            line-height: 1.5;
+            font-weight: 300;
+            border-left: 2px solid var(--secondary);
+            padding-left: 15px;
+            background: rgba(0,0,0,0.15);
+            border-radius: 0 8px 8px 0;
+        }
+
+        .card-actions {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+        }
+
+        .btn {
+            flex: 1;
+            padding: 12px 0;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: all 0.25s;
+            border: 1px solid transparent;
+            letter-spacing: 0.5px;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-primary {
+            background: rgba(0, 247, 255, 0.12);
+            color: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(0,247,255,0.2);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary);
+            color: #0a0c12;
+            box-shadow: 0 0 30px var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-secondary {
+            background: rgba(179, 0, 255, 0.1);
+            color: var(--secondary);
+            border-color: var(--secondary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--secondary);
+            color: #0a0c12;
+            box-shadow: 0 0 30px var(--secondary);
+        }
+
+        .btn svg {
+            width: 18px;
+            height: 18px;
+            fill: currentColor;
+        }
+
+        /* footer elegante */
+        footer {
+            text-align: center;
+            padding: 30px 0 10px;
+            color: rgba(200,220,255,0.4);
+            font-size: 0.9rem;
+            border-top: 1px solid rgba(0,247,255,0.15);
+            margin-top: 30px;
+            backdrop-filter: blur(2px);
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        footer p:first-child {
+            color: rgba(0,247,255,0.7);
+            font-weight: 400;
+        }
+
+        .footer-glow {
+            text-shadow: 0 0 5px var(--primary);
+        }
+
+        /* adaptación móvil */
+        @media (max-width: 700px) {
+            .logo { font-size: 3rem; letter-spacing: 2px; }
+            .subtitle { font-size: 1rem; }
+            .grid { gap: 20px; }
+            footer { flex-direction: column; align-items: center; }
+        }
+
+        @media (max-width: 450px) {
+            .card-actions { flex-direction: column; }
+        }
+    </style>
+</head>
+<body>
+    <!-- scanlines y partículas futuristas (sin imagen de fondo) -->
+    <div class="scan-line"></div>
+    <div class="particle-field">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+
+    <div class="container">
+        <header>
+            <h1 class="logo">BEADER TRADING</h1>
+            <p class="subtitle">⚡ biblioteca de estrategias cuánticas ⚡</p>
+        </header>
+        
+        <div class="grid">
+            <!-- tarjeta 1 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Manual Avanzado de Trading</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Estrategias institucionales, gestión de riesgo y análisis multicapa. Para operadores que buscan precisión algorítmica.</p>
+                    <div class="card-actions">
+                        <a href="https://admiralfiles.s3.amazonaws.com/books/es/Manual%20de%20trading%20avanzado-2.pdf" class="btn btn-primary" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6z"/></svg>
+                            vista neón
+                        </a>
+                        <a href="https://admiralfiles.s3.amazonaws.com/books/es/Manual%20de%20trading%20avanzado-2.pdf" class="btn btn-secondary" download>
+                            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                            descargar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- tarjeta 2 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Soportes y Resistencias</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Dominio de zonas de liquidez, órdenes ocultas y estructura de mercado. Manual táctico de niveles clave.</p>
+                    <div class="card-actions">
+                        <a href="https://dbinvesting.com/assets/pdf/Manual-de-Trading-Soportes-y-Resistencias-Que-son.pdf" class="btn btn-primary" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6z"/></svg>
+                            vista neón
+                        </a>
+                        <a href="https://dbinvesting.com/assets/pdf/Manual-de-Trading-Soportes-y-Resistencias-Que-son.pdf" class="btn btn-secondary" download>
+                            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                            descargar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- tarjeta 3 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Forex cuántico</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Análisis de flujo en divisas, correlaciones y ejecución algorítmica. Manual para dominar el mercado Forex.</p>
+                    <div class="card-actions">
+                        <a href="https://core.ac.uk/reader/211101570" class="btn btn-primary" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6z"/></svg>
+                            vista neón
+                        </a>
+                        <a href="https://core.ac.uk/reader/211101570" class="btn btn-secondary" download>
+                            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                            descargar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- tarjeta 4 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Vivir del Trading</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Hoja de ruta para la independencia financiera: gestión de cartera, psicología y consistencia a largo plazo.</p>
+                    <div class="card-actions">
+                        <a href="https://inverquito.com/wp-content/uploads/2021/02/VIVIR-DEL-TRADING.pdf" class="btn btn-primary" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6z"/></svg>
+                            vista neón
+                        </a>
+                        <a href="https://inverquito.com/wp-content/uploads/2021/02/VIVIR-DEL-TRADING.pdf" class="btn btn-secondary" download>
+                            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                            descargar
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <!-- tarjeta 5 -->
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Trading en la Zona</h2>
+                </div>
+                <div class="card-body">
+                    <p class="card-description">Psicología del trader de élite. Toma de decisiones sin sesgos, disciplina y flujo mental en mercados volátiles.</p>
+                    <div class="card-actions">
+                        <a href="https://cdn.bookey.app/files/pdf/book/es/trading-en-la-zona.pdf" class="btn btn-primary" target="_blank">
+                            <svg viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 15h-2v-6h2v6zm4 0h-2v-6h2v6z"/></svg>
+                            vista neón
+                        </a>
+                        <a href="https://cdn.bookey.app/files/pdf/book/es/trading-en-la-zona.pdf" class="btn btn-secondary" download>
+                            <svg viewBox="0 0 24 24"><path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z"/></svg>
+                            descargar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>© 2025 BEADER TRADING — <span class="footer-glow">tecnología cuántica aplicada</span></p>
+            <p>⚠️ El trading implica riesgos sustanciales. Material educativo avanzado.</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -35,6 +36,7 @@
             position: relative;
         }
 
+        /* Partículas */
         #particles-js {
             position: fixed;
             width: 100%;
@@ -45,11 +47,13 @@
             pointer-events: none;
         }
 
+        /* Scrollbar */
         ::-webkit-scrollbar { width: 8px; height: 8px; }
         ::-webkit-scrollbar-track { background: rgba(0, 0, 0, 0.3); border-radius: 10px; }
         ::-webkit-scrollbar-thumb { background: linear-gradient(45deg, var(--primary), var(--secondary)); border-radius: 10px; }
         ::-webkit-scrollbar-thumb:hover { background: linear-gradient(45deg, var(--secondary), var(--primary)); }
 
+        /* Modal Autenticación */
         .auth-modal {
             display: none;
             position: fixed;
@@ -157,6 +161,7 @@
         }
         .auth-message { text-align: center; margin-top: 20px; color: #ff4444; min-height: 20px; }
 
+        /* Modal Perfil */
         .profile-modal {
             display: none;
             position: fixed;
@@ -273,6 +278,7 @@
             box-shadow: 0 0 20px #ff4444;
         }
 
+        /* Navbar */
         .navbar {
             position: fixed;
             top: 20px;
@@ -310,6 +316,8 @@
             -webkit-text-fill-color: transparent;
             cursor: pointer;
         }
+        .logo .glow { animation: pulse 2s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.7; } }
 
         .nav-menu {
             display: flex;
@@ -361,6 +369,7 @@
             transition: all 0.3s ease;
         }
 
+        /* Main Content */
         .main-content {
             position: relative;
             z-index: 1;
@@ -406,6 +415,7 @@
             75% { text-shadow: -0.025em -0.05em 0 var(--primary), 0.05em 0.025em 0 var(--secondary); }
         }
 
+        /* Cards con estilo elegante */
         .card {
             background: linear-gradient(135deg, rgba(20, 30, 40, 0.6), rgba(10, 20, 30, 0.6));
             backdrop-filter: blur(10px);
@@ -430,6 +440,7 @@
             font-weight: 700;
         }
 
+        /* Feed de inicio */
         .feed-container {
             display: grid;
             gap: 30px;
@@ -510,6 +521,7 @@
         .detail-label { font-size: 0.8rem; color: #888; text-transform: uppercase; }
         .detail-value { font-size: 1.2rem; font-weight: 700; color: #fff; }
 
+        /* Señales elegantes */
         .signals-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
@@ -562,8 +574,10 @@
             border-radius: 0 10px 10px 0;
             font-style: italic;
             white-space: pre-wrap;
+            font-family: 'Rajdhani', monospace;
         }
 
+        /* Publicaciones elegantes */
         .posts-container {
             display: grid;
             gap: 25px;
@@ -595,6 +609,7 @@
             margin: 20px 0;
             line-height: 1.8;
             white-space: pre-wrap;
+            font-family: 'Rajdhani', monospace;
             border-left: 4px solid var(--secondary);
         }
 
@@ -607,29 +622,7 @@
             border-top: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .post-actions {
-            display: flex;
-            gap: 20px;
-            margin: 15px 0;
-        }
-        .post-action {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            cursor: pointer;
-            padding: 5px 10px;
-            border-radius: 20px;
-            transition: all 0.3s ease;
-        }
-        .post-action.liked { color: #ff3366; }
-        .post-action.liked i { animation: heartBeat 0.3s ease; }
-        @keyframes heartBeat {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.3); }
-        }
-        .post-action.delete { color: #ff6666; }
-        .post-action.delete:hover { background: rgba(255, 0, 0, 0.2); }
-
+        /* Comentarios */
         .comments-section {
             margin-top: 20px;
             padding-top: 20px;
@@ -665,6 +658,7 @@
         .comment-time { color: #888; }
         .comment-text {
             white-space: pre-wrap;
+            font-family: 'Rajdhani', monospace;
             padding-left: 10px;
             border-left: 2px solid var(--secondary);
         }
@@ -701,6 +695,7 @@
             box-shadow: 0 0 20px var(--primary);
         }
 
+        /* Chat */
         .chat-layout {
             display: grid;
             grid-template-columns: 280px 1fr;
@@ -824,6 +819,7 @@
         .message-time { color: #888; }
         .message-content {
             white-space: pre-wrap;
+            font-family: 'Rajdhani', monospace;
         }
 
         .chat-input-area {
@@ -846,6 +842,7 @@
             border-color: var(--primary);
         }
 
+        /* Formularios elegantes */
         .form-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -906,6 +903,7 @@
         }
         .btn-glow.small { padding: 10px 20px; font-size: 0.9rem; width: auto; }
 
+        /* Estadísticas */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -931,6 +929,7 @@
         .stat-info h3 { font-size: 1rem; color: #888; margin-bottom: 5px; }
         .stat-value { font-size: 2rem; font-weight: 700; color: #fff; }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .menu-toggle { display: block; }
             .nav-menu {
@@ -958,6 +957,7 @@
             .signals-grid { grid-template-columns: 1fr; }
         }
 
+        /* Animaciones */
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
@@ -989,6 +989,7 @@
 <body>
     <div id="particles-js"></div>
 
+    <!-- Modal Autenticación -->
     <div id="authModal" class="auth-modal active">
         <div class="auth-container">
             <div class="auth-tabs">
@@ -1000,7 +1001,7 @@
                 <h2>BIENVENIDO</h2>
                 <div class="auth-input-group">
                     <i class="fas fa-user"></i>
-                    <input type="text" id="loginUsername" placeholder="Usuario o Email">
+                    <input type="text" id="loginUsername" placeholder="Usuario">
                 </div>
                 <div class="auth-input-group">
                     <i class="fas fa-lock"></i>
@@ -1018,15 +1019,15 @@
                 </div>
                 <div class="auth-input-group">
                     <i class="fas fa-envelope"></i>
-                    <input type="email" id="regEmail" placeholder="Email (ejemplo@correo.com)">
+                    <input type="email" id="regEmail" placeholder="Email">
                 </div>
                 <div class="auth-input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="regPassword" placeholder="Contraseña (mínimo 6 caracteres)">
+                    <input type="password" id="regPassword" placeholder="Contraseña">
                 </div>
                 <div class="auth-input-group">
                     <i class="fas fa-lock"></i>
-                    <input type="password" id="regConfirmPassword" placeholder="Confirmar contraseña">
+                    <input type="password" id="regConfirmPassword" placeholder="Confirmar">
                 </div>
                 <button class="auth-btn" onclick="register()">REGISTRARSE</button>
                 <div id="registerMessage" class="auth-message"></div>
@@ -1034,6 +1035,7 @@
         </div>
     </div>
 
+    <!-- Modal Perfil -->
     <div id="profileModal" class="profile-modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeProfileModal()">&times;</span>
@@ -1061,7 +1063,7 @@
             <form class="profile-form" id="profileForm" onsubmit="updateProfile(event)">
                 <input type="text" id="profileNameInput" placeholder="Usuario">
                 <input type="email" id="profileEmailInput" placeholder="Email">
-                <input type="password" id="profilePasswordInput" placeholder="Nueva contraseña (dejar vacío para no cambiar)">
+                <input type="password" id="profilePasswordInput" placeholder="Nueva contraseña">
                 <button type="submit" class="btn-glow">ACTUALIZAR</button>
             </form>
 
@@ -1071,6 +1073,7 @@
         </div>
     </div>
     
+    <!-- Navbar -->
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo" onclick="showSection('inicio')">
@@ -1094,14 +1097,20 @@
         </div>
     </nav>
 
+    <!-- Main Content -->
     <main class="main-content">
+        <!-- INICIO - Feed completo -->
         <section id="inicio" class="section active">
             <div class="section-header">
                 <h2 class="glitch-text" data-text="FEED GLOBAL">FEED GLOBAL</h2>
             </div>
-            <div class="feed-container" id="feedContainer"></div>
+            
+            <div class="feed-container" id="feedContainer">
+                <!-- Aquí se cargarán señales y publicaciones -->
+            </div>
         </section>
 
+        <!-- SEÑALES -->
         <section id="señales" class="section">
             <div class="section-header">
                 <h2 class="glitch-text">SEÑALES PROFESIONALES</h2>
@@ -1164,6 +1173,7 @@
             <div id="signalsList" class="signals-grid"></div>
         </section>
 
+        <!-- CHAT -->
         <section id="chat" class="section">
             <div class="section-header">
                 <h2 class="glitch-text">CHAT EN VIVO</h2>
@@ -1185,6 +1195,7 @@
             </div>
         </section>
 
+        <!-- PUBLICAR -->
         <section id="publicar" class="section">
             <div class="section-header">
                 <h2 class="glitch-text">PUBLICACIONES</h2>
@@ -1208,6 +1219,7 @@
             <div id="postsList" class="posts-container"></div>
         </section>
 
+        <!-- ESTADÍSTICAS -->
         <section id="estadisticas" class="section">
             <div class="section-header">
                 <h2 class="glitch-text">ESTADÍSTICAS</h2>
@@ -1260,11 +1272,13 @@
         </section>
     </main>
 
+    <!-- Firebase -->
     <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-database-compat.js"></script>
 
     <script>
+        // Firebase Config
         const firebaseConfig = {
             apiKey: "AIzaSyCpFnSLx-ZUq6j27T-w_nvsdSvUrNs688g",
             authDomain: "heyding-kayser.firebaseapp.com",
@@ -1278,6 +1292,7 @@
         firebase.initializeApp(firebaseConfig);
         const database = firebase.database();
 
+        // References
         const usersRef = database.ref('users');
         const signalsRef = database.ref('signals');
         const chatRef = database.ref('chat');
@@ -1285,8 +1300,10 @@
         const commentsRef = database.ref('comments');
         const onlineRef = database.ref('online-users');
 
+        // Global
         let currentUser = null;
 
+        // Particles
         particlesJS('particles-js', {
             particles: {
                 number: { value: 80 },
@@ -1299,39 +1316,28 @@
             }
         });
 
+        // Auth Functions
         function switchAuthTab(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
             if (tab === 'login') {
                 document.querySelector('.auth-tab').classList.add('active');
                 document.getElementById('loginForm').classList.add('active');
-                document.getElementById('loginMessage').textContent = '';
             } else {
                 document.querySelectorAll('.auth-tab')[1].classList.add('active');
                 document.getElementById('registerForm').classList.add('active');
-                document.getElementById('registerMessage').textContent = '';
             }
         }
 
         function login() {
-            const loginInput = document.getElementById('loginUsername').value.trim();
+            const username = document.getElementById('loginUsername').value.trim();
             const password = document.getElementById('loginPassword').value.trim();
-            
-            if (!loginInput || !password) {
-                document.getElementById('loginMessage').textContent = '❌ Completa todos los campos';
+            if (!username || !password) {
+                document.getElementById('loginMessage').textContent = 'Completa todos los campos';
                 return;
             }
 
-            const isEmail = loginInput.includes('@') && loginInput.includes('.');
-            
-            let query;
-            if (isEmail) {
-                query = usersRef.orderByChild('email').equalTo(loginInput);
-            } else {
-                query = usersRef.orderByChild('username').equalTo(loginInput);
-            }
-            
-            query.once('value', (snapshot) => {
+            usersRef.orderByChild('username').equalTo(username).once('value', (snapshot) => {
                 const users = snapshot.val();
                 if (users) {
                     const user = Object.values(users)[0];
@@ -1342,14 +1348,11 @@
                         updateOnlineStatus(true);
                         loadAllData();
                         showNotification('✅ Bienvenido ' + currentUser.username, 'success');
-                        document.getElementById('loginMessage').textContent = '';
-                        document.getElementById('loginUsername').value = '';
-                        document.getElementById('loginPassword').value = '';
                     } else {
-                        document.getElementById('loginMessage').textContent = '❌ Contraseña incorrecta';
+                        document.getElementById('loginMessage').textContent = 'Contraseña incorrecta';
                     }
                 } else {
-                    document.getElementById('loginMessage').textContent = '❌ Usuario o email no encontrado';
+                    document.getElementById('loginMessage').textContent = 'Usuario no encontrado';
                 }
             });
         }
@@ -1361,59 +1364,37 @@
             const confirm = document.getElementById('regConfirmPassword').value.trim();
 
             if (!username || !email || !password || !confirm) {
-                document.getElementById('registerMessage').textContent = '❌ Completa todos los campos';
+                document.getElementById('registerMessage').textContent = 'Completa todos los campos';
                 return;
             }
-            
             if (password !== confirm) {
-                document.getElementById('registerMessage').textContent = '❌ Las contraseñas no coinciden';
+                document.getElementById('registerMessage').textContent = 'Las contraseñas no coinciden';
                 return;
             }
-            
             if (password.length < 6) {
-                document.getElementById('registerMessage').textContent = '❌ La contraseña debe tener al menos 6 caracteres';
-                return;
-            }
-            
-            if (!email.includes('@') || !email.includes('.')) {
-                document.getElementById('registerMessage').textContent = '❌ Ingresa un email válido (ejemplo@correo.com)';
+                document.getElementById('registerMessage').textContent = 'Mínimo 6 caracteres';
                 return;
             }
 
             usersRef.orderByChild('username').equalTo(username).once('value', (snapshot) => {
                 if (snapshot.exists()) {
-                    document.getElementById('registerMessage').textContent = '❌ El usuario ya existe';
+                    document.getElementById('registerMessage').textContent = 'El usuario ya existe';
                     return;
                 }
-                
-                usersRef.orderByChild('email').equalTo(email).once('value', (snapshot) => {
-                    if (snapshot.exists()) {
-                        document.getElementById('registerMessage').textContent = '❌ El email ya está registrado';
-                        return;
-                    }
 
-                    const newUser = {
-                        username,
-                        email,
-                        password,
-                        joinDate: new Date().toISOString(),
-                        lastSeen: firebase.database.ServerValue.TIMESTAMP
-                    };
+                const newUser = {
+                    username, email, password,
+                    joinDate: new Date().toISOString(),
+                    lastSeen: firebase.database.ServerValue.TIMESTAMP
+                };
 
-                    usersRef.push(newUser).then((ref) => {
-                        currentUser = { id: ref.key, ...newUser };
-                        document.getElementById('authModal').classList.remove('active');
-                        document.getElementById('navUserName').textContent = currentUser.username;
-                        updateOnlineStatus(true);
-                        loadAllData();
-                        showNotification('✅ Cuenta creada exitosamente', 'success');
-                        
-                        document.getElementById('regUsername').value = '';
-                        document.getElementById('regEmail').value = '';
-                        document.getElementById('regPassword').value = '';
-                        document.getElementById('regConfirmPassword').value = '';
-                        document.getElementById('registerMessage').textContent = '';
-                    });
+                usersRef.push(newUser).then((ref) => {
+                    currentUser = { id: ref.key, ...newUser };
+                    document.getElementById('authModal').classList.remove('active');
+                    document.getElementById('navUserName').textContent = currentUser.username;
+                    updateOnlineStatus(true);
+                    loadAllData();
+                    showNotification('✅ Cuenta creada', 'success');
                 });
             });
         }
@@ -1424,13 +1405,13 @@
             document.getElementById('authModal').classList.add('active');
             document.getElementById('navUserName').textContent = 'Perfil';
             ['feedContainer', 'signalsList', 'chatMessages', 'postsList'].forEach(id => {
-                const el = document.getElementById(id);
-                if (el) el.innerHTML = '';
+                document.getElementById(id).innerHTML = '';
             });
             closeProfileModal();
             showNotification('👋 Sesión cerrada', 'info');
         }
 
+        // Online status
         function updateOnlineStatus(online) {
             if (!currentUser) return;
             if (online) {
@@ -1444,26 +1425,26 @@
             }
         }
 
+        // Online users
         onlineRef.on('value', (snapshot) => {
             const onlineUsers = snapshot.val() || {};
             document.getElementById('onlineCount').textContent = Object.keys(onlineUsers).length;
             const list = document.getElementById('onlineUsers');
-            if (list) {
-                list.innerHTML = '';
-                Object.entries(onlineUsers).forEach(([id, user]) => {
-                    list.innerHTML += `
-                        <div class="online-user" onclick="openProfileModal('${id}')">
-                            <div class="user-avatar"><i class="fas fa-user-astronaut"></i></div>
-                            <div class="user-info">
-                                <div class="user-name">${escapeHtml(user.username)}</div>
-                                <div class="user-status"><i class="fas fa-circle"></i> En línea</div>
-                            </div>
+            list.innerHTML = '';
+            Object.entries(onlineUsers).forEach(([id, user]) => {
+                list.innerHTML += `
+                    <div class="online-user" onclick="openProfileModal('${id}')">
+                        <div class="user-avatar"><i class="fas fa-user-astronaut"></i></div>
+                        <div class="user-info">
+                            <div class="user-name">${user.username}</div>
+                            <div class="user-status"><i class="fas fa-circle"></i> En línea</div>
                         </div>
-                    `;
-                });
-            }
+                    </div>
+                `;
+            });
         });
 
+        // Load all data
         function loadAllData() {
             loadFeed();
             loadSignals();
@@ -1472,6 +1453,7 @@
             updateStats();
         }
 
+        // FEED - Muestra señales y publicaciones combinadas
         function loadFeed() {
             const feedRef = database.ref();
             
@@ -1479,61 +1461,31 @@
                 const data = snapshot.val();
                 const feed = [];
                 
+                // Agregar señales al feed
                 if (data.signals) {
                     Object.entries(data.signals).forEach(([id, item]) => {
                         feed.push({ type: 'signal', id, ...item });
                     });
                 }
                 
+                // Agregar publicaciones al feed
                 if (data.posts) {
                     Object.entries(data.posts).forEach(([id, item]) => {
                         feed.push({ type: 'post', id, ...item });
                     });
                 }
                 
+                // Ordenar por timestamp (más reciente primero)
                 feed.sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
                 
                 const container = document.getElementById('feedContainer');
-                if (container) {
-                    container.innerHTML = feed.map(item => {
-                        if (item.type === 'signal') {
-                            return createFeedSignalHTML(item);
-                        } else {
-                            return createFeedPostHTML(item);
-                        }
-                    }).join('');
-                    
-                    feed.forEach(item => {
-                        if (item.type === 'post') {
-                            loadCommentsForFeed(item.id);
-                        }
-                    });
-                }
-            });
-        }
-
-        function loadCommentsForFeed(postId) {
-            commentsRef.orderByChild('postId').equalTo(postId).on('value', (snapshot) => {
-                const comments = snapshot.val();
-                const list = document.getElementById(`comments-list-${postId}`);
-                if (!list) return;
-                
-                list.innerHTML = '';
-                if (comments) {
-                    Object.entries(comments)
-                        .sort((a, b) => a[1].timestamp - b[1].timestamp)
-                        .forEach(([id, comment]) => {
-                            list.innerHTML += `
-                                <div class="comment-item">
-                                    <div class="comment-header">
-                                        <span class="comment-author" onclick="openProfileModal('${comment.authorId}')">${escapeHtml(comment.author)}</span>
-                                        <span class="comment-time">${new Date(comment.timestamp).toLocaleString()}</span>
-                                    </div>
-                                    <pre class="comment-text">${escapeHtml(comment.text)}</pre>
-                                </div>
-                            `;
-                        });
-                }
+                container.innerHTML = feed.map(item => {
+                    if (item.type === 'signal') {
+                        return createFeedSignalHTML(item);
+                    } else {
+                        return createFeedPostHTML(item);
+                    }
+                }).join('');
             });
         }
 
@@ -1544,13 +1496,13 @@
                     <div class="feed-header">
                         <div class="feed-avatar"><i class="fas fa-chart-line"></i></div>
                         <div class="feed-user-info">
-                            <h4 onclick="openProfileModal('${signal.authorId}')">${escapeHtml(signal.author)}</h4>
+                            <h4 onclick="openProfileModal('${signal.authorId}')">${signal.author}</h4>
                             <p>${date}</p>
                         </div>
                         <div class="feed-badge badge-signal">SEÑAL ${signal.type}</div>
                     </div>
                     <div class="feed-content">
-                        <h3 style="color: var(--primary); font-size: 1.5rem;">${escapeHtml(signal.pair)}</h3>
+                        <h3 style="color: var(--primary); font-size: 1.5rem;">${signal.pair}</h3>
                         <div class="signal-details-elegant">
                             <div class="detail-item">
                                 <div class="detail-label">ENTRADA</div>
@@ -1575,7 +1527,7 @@
                                 <div class="detail-value" style="color: #00ff00">${signal.tp3}</div>
                             </div>` : ''}
                         </div>
-                        ${signal.comment ? `<pre class="signal-comment">💬 ${escapeHtml(signal.comment)}</pre>` : ''}
+                        ${signal.comment ? `<pre class="signal-comment">💬 ${signal.comment}</pre>` : ''}
                     </div>
                 </div>
             `;
@@ -1583,7 +1535,7 @@
 
         function createFeedPostHTML(post) {
             const date = new Date(post.timestamp).toLocaleString();
-            const hasLiked = post.likedBy && currentUser && post.likedBy[currentUser.id];
+            const hasLiked = post.likedBy && post.likedBy[currentUser?.id];
             const likeClass = hasLiked ? 'liked' : '';
             
             return `
@@ -1591,7 +1543,7 @@
                     <div class="feed-header">
                         <div class="feed-avatar"><i class="fas fa-newspaper"></i></div>
                         <div class="feed-user-info">
-                            <h4 onclick="openProfileModal('${post.authorId}')">${escapeHtml(post.author)}</h4>
+                            <h4 onclick="openProfileModal('${post.authorId}')">${post.author}</h4>
                             <p>${date}</p>
                         </div>
                         <div class="feed-badge badge-post">PUBLICACIÓN</div>
@@ -1600,6 +1552,7 @@
                         <h3 style="color: var(--primary); font-size: 1.8rem;">${escapeHtml(post.title)}</h3>
                         <pre class="post-content">${escapeHtml(post.content)}</pre>
                         
+                        <!-- Likes -->
                         <div style="display: flex; gap: 15px; margin: 15px 0;">
                             <div class="post-action ${likeClass}" onclick="likePost('${post.id}')">
                                 <i class="fas fa-heart"></i>
@@ -1607,6 +1560,7 @@
                             </div>
                         </div>
 
+                        <!-- Comentarios -->
                         <div class="comments-section" id="comments-${post.id}">
                             <div class="comments-list" id="comments-list-${post.id}"></div>
                             <div class="comment-input">
@@ -1617,6 +1571,32 @@
                     </div>
                 </div>
             `;
+        }
+
+        // Comments
+        function loadComments(postId) {
+            commentsRef.orderByChild('postId').equalTo(postId).on('value', (snapshot) => {
+                const comments = snapshot.val();
+                const list = document.getElementById(`comments-list-${postId}`);
+                if (!list) return;
+                
+                list.innerHTML = '';
+                if (comments) {
+                    Object.entries(comments)
+                        .sort((a, b) => a[1].timestamp - b[1].timestamp)
+                        .forEach(([id, comment]) => {
+                            list.innerHTML += `
+                                <div class="comment-item">
+                                    <div class="comment-header">
+                                        <span class="comment-author" onclick="openProfileModal('${comment.authorId}')">${comment.author}</span>
+                                        <span class="comment-time">${new Date(comment.timestamp).toLocaleString()}</span>
+                                    </div>
+                                    <pre class="comment-text">${escapeHtml(comment.text)}</pre>
+                                </div>
+                            `;
+                        });
+                }
+            });
         }
 
         function addComment(postId) {
@@ -1643,6 +1623,7 @@
             });
         }
 
+        // Signals
         function publishSignal(e) {
             e.preventDefault();
             if (!currentUser) {
@@ -1669,7 +1650,7 @@
                 e.target.reset();
                 setCurrentDateTime();
                 showNotification('✅ Señal publicada', 'success');
-                loadFeed();
+                loadFeed(); // Actualizar feed
             });
         }
 
@@ -1683,8 +1664,6 @@
 
         function displaySignal(signal) {
             const list = document.getElementById('signalsList');
-            if (!list) return;
-            
             const card = document.createElement('div');
             card.className = 'signal-card';
             
@@ -1693,7 +1672,7 @@
 
             card.innerHTML = `
                 <div class="signal-header">
-                    <span class="signal-pair">${escapeHtml(signal.pair)}</span>
+                    <span class="signal-pair">${signal.pair}</span>
                     <span class="signal-type ${signal.type.toLowerCase()}">${signal.type}</span>
                 </div>
                 <div class="signal-details">
@@ -1702,15 +1681,16 @@
                     <div class="detail-item"><span class="detail-label">TP1</span><span class="detail-value" style="color: #00ff00">${signal.tp1}</span></div>
                     ${tp2Html} ${tp3Html}
                 </div>
-                ${signal.comment ? `<pre class="signal-comment">💬 ${escapeHtml(signal.comment)}</pre>` : ''}
-                <div class="signal-footer" style="margin-top: 15px; display: flex; justify-content: space-between; font-size: 0.8rem; color: #888;">
-                    <span class="post-author" onclick="openProfileModal('${signal.authorId}')" style="cursor: pointer; color: var(--primary);">👤 ${escapeHtml(signal.author)}</span>
+                ${signal.comment ? `<pre class="signal-comment">💬 ${signal.comment}</pre>` : ''}
+                <div class="signal-footer">
+                    <span class="post-author" onclick="openProfileModal('${signal.authorId}')">👤 ${signal.author}</span>
                     <span>📅 ${new Date(signal.timestamp).toLocaleString()}</span>
                 </div>
             `;
             list.insertBefore(card, list.firstChild);
         }
 
+        // Chat
         function sendChatMessage() {
             if (!currentUser) {
                 showNotification('❌ Debes iniciar sesión', 'error');
@@ -1734,23 +1714,21 @@
         function loadMessages() {
             chatRef.limitToLast(100).on('child_added', (snapshot) => {
                 const msg = snapshot.val();
-                const container = document.getElementById('chatMessages');
-                if (!container) return;
-                
                 const div = document.createElement('div');
                 div.className = `chat-message ${currentUser && msg.authorId === currentUser.id ? 'own-message' : ''}`;
                 div.innerHTML = `
                     <div class="message-header">
-                        <span class="message-author" onclick="openProfileModal('${msg.authorId}')">${escapeHtml(msg.author)}</span>
+                        <span class="message-author" onclick="openProfileModal('${msg.authorId}')">${msg.author}</span>
                         <span class="message-time">${new Date(msg.timestamp).toLocaleTimeString()}</span>
                     </div>
                     <pre class="message-content">${escapeHtml(msg.text)}</pre>
                 `;
-                container.appendChild(div);
-                container.scrollTop = container.scrollHeight;
+                document.getElementById('chatMessages').appendChild(div);
+                document.getElementById('chatMessages').scrollTop = document.getElementById('chatMessages').scrollHeight;
             });
         }
 
+        // Posts
         function createPost(e) {
             e.preventDefault();
             if (!currentUser) {
@@ -1771,7 +1749,7 @@
             postsRef.push(post).then(() => {
                 e.target.reset();
                 showNotification('✅ Publicación creada', 'success');
-                loadFeed();
+                loadFeed(); // Actualizar feed
             });
         }
 
@@ -1780,7 +1758,7 @@
                 const post = snapshot.val();
                 post.id = snapshot.key;
                 displayPost(post);
-                loadCommentsForFeed(post.id);
+                loadComments(post.id);
             });
 
             postsRef.on('child_changed', (snapshot) => {
@@ -1792,14 +1770,13 @@
 
         function displayPost(post) {
             const list = document.getElementById('postsList');
-            if (!list) return;
-            if (document.querySelector(`.post-card[data-id="${post.id}"]`)) return;
+            if (document.querySelector(`[data-id="${post.id}"]`)) return;
 
             const div = document.createElement('div');
             div.className = 'post-card';
             div.setAttribute('data-id', post.id);
             
-            const hasLiked = post.likedBy && currentUser && post.likedBy[currentUser.id];
+            const hasLiked = post.likedBy && post.likedBy[currentUser?.id];
             const likeClass = hasLiked ? 'liked' : '';
             const canDelete = currentUser && post.authorId === currentUser.id;
             
@@ -1807,7 +1784,7 @@
                 <h3 class="post-title">${escapeHtml(post.title)}</h3>
                 <pre class="post-content">${escapeHtml(post.content)}</pre>
                 <div class="post-meta">
-                    <span class="post-author" onclick="openProfileModal('${post.authorId}')" style="cursor: pointer; color: var(--primary);">👤 ${escapeHtml(post.author)}</span>
+                    <span class="post-author" onclick="openProfileModal('${post.authorId}')">👤 ${escapeHtml(post.author)}</span>
                     <span>📅 ${new Date(post.timestamp).toLocaleString()}</span>
                 </div>
                 <div class="post-actions">
@@ -1817,83 +1794,24 @@
                     </div>
                     ${canDelete ? `<div class="post-action delete" onclick="deletePost('${post.id}')"><i class="fas fa-trash"></i> Eliminar</div>` : ''}
                 </div>
-                <div class="comments-section" id="comments-section-${post.id}">
-                    <div class="comments-list" id="comments-list-posts-${post.id}"></div>
+                <div class="comments-section" id="comments-${post.id}">
+                    <div class="comments-list" id="comments-list-${post.id}"></div>
                     <div class="comment-input">
-                        <input type="text" id="comment-input-posts-${post.id}" placeholder="Escribe un comentario...">
-                        <button onclick="addCommentToPost('${post.id}')"><i class="fas fa-paper-plane"></i></button>
+                        <input type="text" id="comment-input-${post.id}" placeholder="Escribe un comentario...">
+                        <button onclick="addComment('${post.id}')"><i class="fas fa-paper-plane"></i></button>
                     </div>
                 </div>
             `;
             list.insertBefore(div, list.firstChild);
-            
-            commentsRef.orderByChild('postId').equalTo(post.id).on('value', (snapshot) => {
-                const comments = snapshot.val();
-                const listEl = document.getElementById(`comments-list-posts-${post.id}`);
-                if (!listEl) return;
-                
-                listEl.innerHTML = '';
-                if (comments) {
-                    Object.entries(comments)
-                        .sort((a, b) => a[1].timestamp - b[1].timestamp)
-                        .forEach(([id, comment]) => {
-                            listEl.innerHTML += `
-                                <div class="comment-item">
-                                    <div class="comment-header">
-                                        <span class="comment-author" onclick="openProfileModal('${comment.authorId}')">${escapeHtml(comment.author)}</span>
-                                        <span class="comment-time">${new Date(comment.timestamp).toLocaleString()}</span>
-                                    </div>
-                                    <pre class="comment-text">${escapeHtml(comment.text)}</pre>
-                                </div>
-                            `;
-                        });
-                }
-            });
-        }
-
-        function addCommentToPost(postId) {
-            if (!currentUser) {
-                showNotification('❌ Debes iniciar sesión', 'error');
-                return;
-            }
-
-            const input = document.getElementById(`comment-input-posts-${postId}`);
-            const text = input.value.trim();
-            if (!text) return;
-
-            const comment = {
-                postId,
-                text,
-                author: currentUser.username,
-                authorId: currentUser.id,
-                timestamp: firebase.database.ServerValue.TIMESTAMP
-            };
-
-            commentsRef.push(comment).then(() => {
-                input.value = '';
-                showNotification('💬 Comentario agregado', 'success');
-            });
         }
 
         function updatePostLikes(post) {
-            const postElement = document.querySelector(`.post-card[data-id="${post.id}"]`);
+            const postElement = document.querySelector(`[data-id="${post.id}"]`);
             if (postElement) {
                 const likesSpan = postElement.querySelector('.likes-count');
                 const likeAction = postElement.querySelector('.post-action:first-child');
                 if (likesSpan) likesSpan.textContent = post.likes || 0;
-                if (likeAction && post.likedBy && currentUser && post.likedBy[currentUser.id]) {
-                    likeAction.classList.add('liked');
-                } else if (likeAction) {
-                    likeAction.classList.remove('liked');
-                }
-            }
-            
-            const feedElement = document.querySelector(`.feed-item[data-post-id="${post.id}"]`);
-            if (feedElement) {
-                const likesSpan = feedElement.querySelector('.likes-count');
-                const likeAction = feedElement.querySelector('.post-action:first-child');
-                if (likesSpan) likesSpan.textContent = post.likes || 0;
-                if (likeAction && post.likedBy && currentUser && post.likedBy[currentUser.id]) {
+                if (likeAction && post.likedBy && post.likedBy[currentUser?.id]) {
                     likeAction.classList.add('liked');
                 } else if (likeAction) {
                     likeAction.classList.remove('liked');
@@ -1909,8 +1827,6 @@
 
             postsRef.child(postId).once('value', (snapshot) => {
                 const post = snapshot.val();
-                if (!post) return;
-                
                 if (!post.likedBy) post.likedBy = {};
                 
                 if (post.likedBy[currentUser.id]) {
@@ -1932,13 +1848,14 @@
             if (!currentUser) return;
             if (confirm('¿Eliminar publicación?')) {
                 postsRef.child(postId).remove().then(() => {
-                    document.querySelector(`.post-card[data-id="${postId}"]`)?.remove();
+                    document.querySelector(`[data-id="${postId}"]`).remove();
                     showNotification('✅ Publicación eliminada', 'success');
-                    loadFeed();
+                    loadFeed(); // Actualizar feed
                 });
             }
         }
 
+        // Profile
         function openProfileModal(userId = currentUser?.id) {
             if (!currentUser) {
                 showNotification('❌ Debes iniciar sesión', 'error');
@@ -1957,9 +1874,9 @@
                     if (isOwn) {
                         document.getElementById('profileNameInput').value = user.username;
                         document.getElementById('profileEmailInput').value = user.email || '';
-                        document.getElementById('profilePasswordInput').value = '';
                     }
 
+                    // Stats
                     signalsRef.once('value', (s) => {
                         const signals = s.val();
                         if (signals) {
@@ -1999,11 +1916,6 @@
             const newEmail = document.getElementById('profileEmailInput').value.trim();
             const newPassword = document.getElementById('profilePasswordInput').value.trim();
 
-            if (newEmail && (!newEmail.includes('@') || !newEmail.includes('.'))) {
-                showNotification('❌ Email inválido', 'error');
-                return;
-            }
-
             const updates = {};
             if (newUsername && newUsername !== currentUser.username) updates.username = newUsername;
             if (newEmail && newEmail !== currentUser.email) updates.email = newEmail;
@@ -2021,6 +1933,7 @@
             }
         }
 
+        // Navigation
         function showSection(sectionId) {
             document.querySelectorAll('.nav-menu a').forEach(l => l.classList.remove('active'));
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
@@ -2038,6 +1951,7 @@
             document.getElementById('navMenu').classList.remove('active');
         }
 
+        // Stats
         function updateStats() {
             signalsRef.once('value', (s) => {
                 const signals = s.val();
@@ -2062,8 +1976,8 @@
             });
         }
 
+        // Utils
         function escapeHtml(text) {
-            if (!text) return '';
             const div = document.createElement('div');
             div.textContent = text;
             return div.innerHTML;
@@ -2076,8 +1990,7 @@
             const day = String(now.getDate()).padStart(2, '0');
             const hours = String(now.getHours()).padStart(2, '0');
             const minutes = String(now.getMinutes()).padStart(2, '0');
-            const dateInput = document.getElementById('date');
-            if (dateInput) dateInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
+            document.getElementById('date').value = `${year}-${month}-${day}T${hours}:${minutes}`;
         }
 
         function showNotification(message, type) {
@@ -2093,16 +2006,26 @@
             }, 3000);
         }
 
-        document.getElementById('menuToggle')?.addEventListener('click', () => {
+        // Menu toggle
+        document.getElementById('menuToggle').addEventListener('click', () => {
             document.getElementById('menuToggle').classList.toggle('active');
             document.getElementById('navMenu').classList.toggle('active');
         });
 
+        // ESC close modal
         document.addEventListener('keydown', (e) => {
             if (e.key === 'Escape') closeProfileModal();
         });
 
+        // Initialize
         setCurrentDateTime();
+
+        // Cargar datos si hay sesión activa (para pruebas)
+        // setTimeout(() => {
+        //     document.getElementById('authModal').classList.remove('active');
+        //     currentUser = { id: 'test', username: 'Invitado' };
+        //     loadAllData();
+        // }, 1000);
     </script>
 </body>
 </html>
