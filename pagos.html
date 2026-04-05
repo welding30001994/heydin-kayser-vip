@@ -1,213 +1,260 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEYDIN KAYSER | Trading del Futuro</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>HEYDIN KAYSER | Programas Cuánticos de Trading</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts: fusión futurista élite -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --primary: #00f7ff;
+            --primary-glow: rgba(0, 247, 255, 0.8);
             --secondary: #7b2dff;
+            --secondary-glow: rgba(123, 45, 255, 0.7);
+            --accent: #ff2d7b;
+            --accent-glow: rgba(255, 45, 123, 0.6);
+            --success: #00ff9d;
+            --warning: #ffaa00;
             --dark: #0a0a1a;
             --darker: #050510;
             --light: #e0e0ff;
-            --accent: #ff2d7b;
-            --success: #00ff9d;
-            --warning: #ffaa00;
+            --card-bg: rgba(10, 10, 26, 0.85);
+            --transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
-            background-color: var(--dark);
-            color: var(--light);
-            font-family: 'Roboto', sans-serif;
-            line-height: 1.6;
+            font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
+            background: #03050b;
+            min-height: 100vh;
+            position: relative;
             overflow-x: hidden;
-            background-image: 
-                radial-gradient(circle at 25% 25%, rgba(123, 45, 255, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 75% 75%, rgba(0, 247, 255, 0.15) 0%, transparent 50%);
+            color: #eef5ff;
         }
-        
-        .cyber-glitch {
+
+        /* FONDO PRINCIPAL CON IMAGEN TRANSPARENTE */
+        .bg-image-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0.28;
+            z-index: 0;
             pointer-events: none;
-            z-index: 9999;
-            opacity: 0.03;
-            background: 
-                linear-gradient(0deg, transparent 48%, var(--primary) 49%, var(--primary) 51%, transparent 52%),
-                linear-gradient(90deg, transparent 48%, var(--accent) 49%, var(--accent) 51%, transparent 52%);
-            background-size: 10px 10px;
-            animation: glitch 0.1s infinite;
         }
-        
-        @keyframes glitch {
-            0%, 100% { transform: translate(0); }
-            20% { transform: translate(-2px, 2px); }
-            40% { transform: translate(-2px, -2px); }
-            60% { transform: translate(2px, 2px); }
-            80% { transform: translate(2px, -2px); }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.08) 0px, rgba(0, 255, 255, 0.08) 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.08) 0px, rgba(0, 255, 255, 0.08) 1px, transparent 1px, transparent 40px);
+            z-index: 1;
+            pointer-events: none;
         }
-        
+
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.12), rgba(0, 0, 0, 0.75));
+            z-index: 2;
+            pointer-events: none;
+        }
+
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
-            padding: 2rem;
+            padding: 1.5rem;
             position: relative;
             z-index: 10;
         }
-        
-        header {
+
+        /* LOADER */
+        .loader-container {
+            position: fixed;
+            inset: 0;
+            background: #01010be6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            backdrop-filter: blur(12px);
+        }
+        .loader-container.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(0,255,255,0.2);
+            border-top: 3px solid #0cf;
+            border-right: 3px solid #f0f;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 25px cyan;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+        .loader-text {
+            margin-top: 25px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            background: linear-gradient(45deg, cyan, #ff44e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* HEADER */
+        .glass-header {
+            background: rgba(5, 10, 20, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.5);
+            border-radius: 60px;
+            padding: 0.8rem 2rem;
+            margin-bottom: 2rem;
+        }
+        .nav-container {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 1rem 0;
-            border-bottom: 1px solid rgba(0, 247, 255, 0.3);
-            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            gap: 20px;
         }
-        
-        .logo {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
-            font-weight: 700;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            font-size: 2rem;
+            color: #0cf;
+            filter: drop-shadow(0 0 8px cyan);
+        }
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, #fff, #0cf);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
-            letter-spacing: 2px;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
         }
-        
-        .logo span {
-            font-size: 1rem;
+        .logo-text span {
+            font-size: 0.7rem;
             display: block;
-            background: linear-gradient(90deg, var(--accent), var(--primary));
+            background: linear-gradient(135deg, #ff44e6, #0cf);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
         }
-        
         .nav-links {
             display: flex;
             gap: 2rem;
         }
-        
         .nav-links a {
-            color: var(--light);
+            color: #e0f0ff;
             text-decoration: none;
-            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
             font-size: 0.9rem;
-            letter-spacing: 1px;
-            position: relative;
-            padding: 0.5rem 0;
+            letter-spacing: 2px;
+            transition: 0.2s;
+            text-transform: uppercase;
         }
-        
-        .nav-links a::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 0;
-            height: 2px;
-            background: var(--primary);
-            transition: width 0.3s ease;
+        .nav-links a:hover {
+            color: cyan;
+            text-shadow: 0 0 10px cyan;
         }
-        
-        .nav-links a:hover::after {
-            width: 100%;
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .glass-header { padding: 0.8rem 1.2rem; }
         }
-        
+
+        /* HERO SECTION */
         .hero {
             text-align: center;
-            padding: 5rem 0;
-            position: relative;
+            padding: 3rem 0 4rem;
         }
-        
         .hero h1 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 4rem;
-            margin-bottom: 1.5rem;
-            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 8vw, 4rem);
+            font-weight: 900;
+            background: linear-gradient(90deg, #fff, cyan, #ff44e6);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 30px rgba(0,247,255,0.3);
         }
-        
         .hero p {
             font-size: 1.2rem;
             max-width: 700px;
-            margin: 0 auto 2rem;
-            color: rgba(224, 224, 255, 0.8);
+            margin: 0 auto;
+            color: #cdf0ff;
         }
-        
         .cta-button {
             display: inline-block;
+            margin-top: 2rem;
             padding: 1rem 2.5rem;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            color: var(--darker);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
+            background: linear-gradient(45deg, #7b2dff, #0cf);
+            color: #000;
+            font-weight: 900;
             text-decoration: none;
-            border-radius: 50px;
-            border: none;
+            border-radius: 60px;
             cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            transition: transform 0.3s, box-shadow 0.3s;
-            box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
-            letter-spacing: 1px;
+            transition: 0.3s;
+            box-shadow: 0 0 20px rgba(0,247,255,0.5);
+            font-family: 'Syne', sans-serif;
         }
-        
         .cta-button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 0 25px rgba(0, 247, 255, 0.8);
+            box-shadow: 0 0 35px cyan;
         }
-        
-        .cta-button::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: linear-gradient(
-                to bottom right,
-                rgba(255, 255, 255, 0) 45%,
-                rgba(255, 255, 255, 0.3) 50%,
-                rgba(255, 255, 255, 0) 55%
-            );
-            transform: rotate(30deg);
-            animation: shine 3s infinite;
-        }
-        
-        @keyframes shine {
-            0% { transform: translateX(-100%) rotate(30deg); }
-            100% { transform: translateX(100%) rotate(30deg); }
-        }
-        
+
+        /* COURSES SECTION */
         .courses-section {
-            padding: 4rem 0;
+            padding: 2rem 0 4rem;
         }
-        
         .section-title {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 2.5rem;
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 6vw, 2.5rem);
             text-align: center;
             margin-bottom: 3rem;
+            background: linear-gradient(90deg, cyan, #ff44e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
             position: relative;
             display: inline-block;
             left: 50%;
             transform: translateX(-50%);
         }
-        
         .section-title::after {
             content: '';
             position: absolute;
@@ -215,754 +262,493 @@
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            background: linear-gradient(90deg, transparent, cyan, transparent);
         }
-        
         .courses-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
             gap: 2rem;
         }
-        
+        @media (max-width: 768px) {
+            .courses-grid { grid-template-columns: 1fr; }
+        }
         .course-card {
-            background: rgba(10, 10, 26, 0.7);
-            border-radius: 10px;
+            background: rgba(8, 16, 28, 0.85);
+            backdrop-filter: blur(15px);
+            border-radius: 30px;
             padding: 2rem;
-            border: 1px solid rgba(0, 247, 255, 0.2);
-            transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid rgba(0, 255, 255, 0.3);
+            transition: var(--transition);
             position: relative;
             overflow: hidden;
         }
-        
         .course-card::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(
-                135deg,
-                rgba(0, 247, 255, 0.05) 0%,
-                rgba(123, 45, 255, 0.05) 100%
-            );
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, cyan, #ff44e6, cyan);
+            background-size: 400%;
             z-index: -1;
+            border-radius: 32px;
+            opacity: 0;
+            transition: 0.4s;
         }
-        
+        .course-card:hover::before {
+            opacity: 0.5;
+            animation: borderGlow 3s linear infinite;
+        }
+        @keyframes borderGlow {
+            0% { background-position: 0 0; }
+            100% { background-position: 300% 0; }
+        }
         .course-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 10px 30px rgba(0, 247, 255, 0.2);
-            border-color: var(--primary);
+            transform: translateY(-8px);
+            box-shadow: 0 0 30px rgba(0,255,255,0.3);
+            border-color: transparent;
         }
-        
         .course-card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
+            font-family: 'Syne', sans-serif;
+            font-size: 1.8rem;
             margin-bottom: 1rem;
-            color: var(--primary);
+            color: cyan;
         }
-        
         .course-card .price {
             font-size: 2rem;
-            font-weight: 700;
+            font-weight: 900;
             margin-bottom: 1.5rem;
-            color: var(--light);
-            font-family: 'Orbitron', sans-serif;
+            font-family: 'Orbitron', monospace;
+            color: #fff;
         }
-        
         .course-card .price::before {
             content: '$';
-            color: var(--accent);
+            color: #ff44e6;
         }
-        
         .course-card .price small {
             font-size: 0.9rem;
-            color: var(--warning);
+            color: #ffaa00;
             display: block;
         }
-        
-        .course-card .info-item {
+        .info-item {
             margin-bottom: 0.8rem;
             display: flex;
             align-items: center;
+            gap: 8px;
+            color: #bbf0ff;
         }
-        
-        .course-card .info-item::before {
-            content: '▹';
-            color: var(--primary);
-            margin-right: 0.5rem;
-            font-size: 0.8rem;
+        .info-item i {
+            color: cyan;
+            width: 24px;
         }
-        
-        .course-card .buy-button {
-            display: inline-block;
-            padding: 0.8rem 1.5rem;
+        .buy-button {
+            display: block;
+            width: 100%;
+            padding: 0.9rem;
             background: transparent;
-            color: var(--primary);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
+            color: cyan;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
             text-decoration: none;
-            border-radius: 5px;
-            border: 2px solid var(--primary);
+            border-radius: 60px;
+            border: 2px solid cyan;
             cursor: pointer;
             margin-top: 1.5rem;
-            transition: all 0.3s;
+            transition: 0.3s;
             text-align: center;
-            width: 100%;
         }
-        
-        .course-card .buy-button:hover {
-            background: var(--primary);
-            color: var(--dark);
-            box-shadow: 0 0 15px rgba(0, 247, 255, 0.5);
+        .buy-button:hover {
+            background: cyan;
+            color: #000;
+            box-shadow: 0 0 25px cyan;
         }
-        
-        .payment-modal {
+
+        /* MODALES */
+        .payment-modal, .confirmation-modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 5, 16, 0.95);
+            inset: 0;
+            background: rgba(0,0,0,0.96);
+            backdrop-filter: blur(20px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
-            backdrop-filter: blur(10px);
+            padding: 20px;
         }
-        
-        .payment-content {
-            background: var(--darker);
-            border: 1px solid var(--primary);
-            border-radius: 10px;
-            padding: 2rem;
-            max-width: 700px;
-            width: 90%;
+        .payment-content, .confirmation-content {
+            background: rgba(8, 16, 28, 0.98);
+            border: 2px solid cyan;
+            border-radius: 40px;
+            max-width: 650px;
+            width: 100%;
             max-height: 90vh;
             overflow-y: auto;
+            padding: 2rem;
             position: relative;
-            box-shadow: 0 0 50px rgba(0, 247, 255, 0.3);
+            box-shadow: 0 0 60px rgba(0,255,255,0.4);
         }
-        
-        .payment-content h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
+        .confirmation-content {
             text-align: center;
+            max-width: 500px;
+        }
+        .payment-content h2, .confirmation-content h2 {
+            font-family: 'Syne', sans-serif;
+            color: cyan;
+            margin-bottom: 1rem;
             font-size: 1.8rem;
         }
-        
-        .payment-content .close {
+        .close {
             position: absolute;
             top: 1rem;
-            right: 1rem;
-            color: var(--light);
-            font-size: 1.5rem;
+            right: 1.5rem;
+            font-size: 2rem;
             cursor: pointer;
-            transition: color 0.3s;
+            color: cyan;
+            transition: 0.2s;
         }
-        
-        .payment-content .close:hover {
-            color: var(--accent);
-        }
-        
+        .close:hover { color: #ff44e6; }
         .bank-info {
-            margin-bottom: 2rem;
-            padding: 1rem;
-            border: 1px solid rgba(0, 247, 255, 0.2);
-            border-radius: 5px;
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(0,255,255,0.3);
         }
-        
         .bank-info p {
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.6rem;
             display: flex;
-            border-bottom: 1px solid rgba(0, 247, 255, 0.1);
+            flex-wrap: wrap;
+            gap: 8px;
+            border-bottom: 1px solid rgba(0,255,255,0.1);
             padding-bottom: 0.5rem;
         }
-        
-        .bank-info p strong {
-            min-width: 150px;
-            color: var(--primary);
-        }
-        
-        .bank-info .highlight {
-            color: var(--success);
-            font-weight: bold;
-            text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
-        }
-        
+        .bank-info p strong { min-width: 140px; color: cyan; }
+        .highlight { color: #00ff9d; font-weight: bold; }
         .qr-container {
             text-align: center;
-            margin: 2rem 0;
+            margin: 1.5rem 0;
             padding: 1rem;
-            background: rgba(0, 247, 255, 0.05);
-            border-radius: 5px;
-            border: 1px dashed var(--primary);
+            background: rgba(0,255,255,0.05);
+            border-radius: 20px;
+            border: 1px dashed cyan;
         }
-        
         .qr-container img {
-            max-width: 200px;
+            max-width: 180px;
             margin: 0 auto;
             display: block;
-            filter: hue-rotate(0deg);
-            animation: qrGlow 3s infinite alternate;
+            border-radius: 15px;
+            box-shadow: 0 0 20px cyan;
         }
-        
-        @keyframes qrGlow {
-            0% { filter: hue-rotate(0deg) drop-shadow(0 0 5px rgba(0, 247, 255, 0.5)); }
-            100% { filter: hue-rotate(20deg) drop-shadow(0 0 15px rgba(0, 247, 255, 0.8)); }
-        }
-        
-        .payment-form {
-            margin-top: 2rem;
-        }
-        
         .form-group {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
-        
         .form-group label {
             display: block;
             margin-bottom: 0.5rem;
-            color: var(--primary);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.9rem;
+            color: cyan;
+            font-weight: 700;
         }
-        
-        .form-group input,
-        .form-group textarea {
+        .form-group input, .form-group select {
             width: 100%;
-            padding: 0.8rem;
-            background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(0, 247, 255, 0.3);
-            border-radius: 5px;
-            color: var(--light);
-            font-family: 'Roboto', sans-serif;
-            transition: all 0.3s;
+            padding: 12px 16px;
+            background: rgba(0,0,0,0.4);
+            border: 1px solid rgba(0,255,255,0.4);
+            border-radius: 60px;
+            color: white;
+            font-size: 1rem;
         }
-        
-        .form-group input:focus,
-        .form-group textarea:focus {
+        .form-group input:focus, .form-group select:focus {
             outline: none;
-            border-color: var(--primary);
-            box-shadow: 0 0 10px rgba(0, 247, 255, 0.3);
+            border-color: #ff44e6;
+            box-shadow: 0 0 15px #ff44e6;
         }
-        
-        .form-group input[type="file"] {
-            padding: 0.5rem;
-        }
-        
         .submit-button {
             width: 100%;
-            padding: 1rem;
-            background: linear-gradient(45deg, var(--secondary), var(--primary));
-            color: var(--darker);
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
+            padding: 14px;
+            background: linear-gradient(145deg, #0cf, #0077ff);
             border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            transition: all 0.3s;
+            border-radius: 60px;
+            font-weight: 900;
             font-size: 1.1rem;
-            letter-spacing: 1px;
+            cursor: pointer;
+            transition: 0.2s;
+            color: #000;
+            font-family: 'Syne', sans-serif;
         }
-        
         .submit-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 20px rgba(0, 247, 255, 0.5);
+            background: linear-gradient(145deg, #ff44e6, #a05eff);
+            color: white;
+            box-shadow: 0 0 25px #ff44e6;
         }
-        
         .instructions {
-            font-size: 0.9rem;
-            color: rgba(224, 224, 255, 0.7);
+            font-size: 0.8rem;
+            color: #8892b0;
             text-align: center;
             margin-top: 1.5rem;
-            line-height: 1.6;
         }
-        
-        .confirmation-modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(5, 5, 16, 0.98);
-            z-index: 2000;
-            justify-content: center;
-            align-items: center;
-            backdrop-filter: blur(10px);
-        }
-        
-        .confirmation-content {
-            background: var(--darker);
-            border: 2px solid var(--success);
-            border-radius: 10px;
-            padding: 3rem;
-            max-width: 600px;
-            width: 90%;
-            text-align: center;
-            position: relative;
-            animation: pulseSuccess 2s infinite;
-        }
-        
-        @keyframes pulseSuccess {
-            0% { box-shadow: 0 0 30px rgba(0, 255, 157, 0.3); }
-            50% { box-shadow: 0 0 60px rgba(0, 255, 157, 0.6); }
-            100% { box-shadow: 0 0 30px rgba(0, 255, 157, 0.3); }
-        }
-        
-        .confirmation-content h2 {
-            font-family: 'Orbitron', sans-serif;
-            color: var(--success);
-            font-size: 2.5rem;
+        .success-icon {
+            font-size: 4rem;
+            color: #00ff9d;
             margin-bottom: 1rem;
         }
-        
-        .confirmation-content .success-icon {
-            font-size: 5rem;
-            color: var(--success);
-            margin-bottom: 1rem;
-        }
-        
-        .confirmation-content p {
-            margin-bottom: 1rem;
-            color: var(--light);
-        }
-        
-        .confirmation-content .transaction-id {
-            background: rgba(0, 255, 157, 0.1);
+        .transaction-id {
+            background: rgba(0,255,157,0.1);
             padding: 1rem;
-            border-radius: 5px;
-            font-family: 'Orbitron', sans-serif;
+            border-radius: 15px;
             margin: 1.5rem 0;
-            border: 1px dashed var(--success);
+            border: 1px dashed #00ff9d;
+            font-family: monospace;
         }
-        
         .close-confirmation {
-            padding: 0.8rem 2rem;
+            padding: 12px 28px;
             background: transparent;
-            border: 2px solid var(--success);
-            color: var(--success);
-            font-family: 'Orbitron', sans-serif;
+            border: 2px solid #00ff9d;
+            color: #00ff9d;
+            border-radius: 60px;
+            font-weight: 800;
             cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s;
+            transition: 0.2s;
         }
-        
         .close-confirmation:hover {
-            background: var(--success);
-            color: var(--dark);
+            background: #00ff9d;
+            color: #000;
         }
-        
         footer {
             text-align: center;
-            padding: 2rem 0;
-            margin-top: 4rem;
-            border-top: 1px solid rgba(0, 247, 255, 0.3);
-            font-size: 0.9rem;
-            color: rgba(224, 224, 255, 0.6);
+            padding: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid rgba(0,255,255,0.3);
+            color: #6b88b0;
         }
-        
         .cyber-line {
             height: 1px;
-            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            background: linear-gradient(90deg, transparent, cyan, transparent);
             margin: 1rem 0;
-        }
-        
-        .floating-shapes {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: 1;
-        }
-        
-        .shape {
-            position: absolute;
-            opacity: 0.1;
-            border-radius: 50%;
-            filter: blur(30px);
-        }
-        
-        .shape-1 {
-            width: 300px;
-            height: 300px;
-            background: var(--primary);
-            top: -100px;
-            left: -100px;
-            animation: float 15s infinite ease-in-out;
-        }
-        
-        .shape-2 {
-            width: 400px;
-            height: 400px;
-            background: var(--secondary);
-            bottom: -150px;
-            right: -100px;
-            animation: float 20s infinite ease-in-out reverse;
-        }
-        
-        @keyframes float {
-            0%, 100% { transform: translate(0, 0) rotate(0deg); }
-            25% { transform: translate(50px, 50px) rotate(5deg); }
-            50% { transform: translate(0, 100px) rotate(0deg); }
-            75% { transform: translate(-50px, 50px) rotate(-5deg); }
-        }
-        
-        @media (max-width: 768px) {
-            .hero h1 {
-                font-size: 2.5rem;
-            }
-            
-            .courses-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .nav-links {
-                display: none;
-            }
-            
-            .bank-info p {
-                flex-direction: column;
-            }
-            
-            .bank-info p strong {
-                margin-bottom: 0.3rem;
-            }
         }
     </style>
 </head>
 <body>
-    <div class="cyber-glitch"></div>
-    <div class="floating-shapes">
-        <div class="shape shape-1"></div>
-        <div class="shape shape-2"></div>
-    </div>
-    
-    <div class="container">
-        <header>
-            <div class="logo">HEYDIN KAYSER<span>TRADING SYSTEMS</span></div>
-            <nav class="nav-links">
-                <a href="#courses">Cursos</a>
-                <a href="#about">Nosotros</a>
-                <a href="#testimonials">Testimonios</a>
-                <a href="#contact">Contacto</a>
-            </nav>
-        </header>
-        
-        
-        <section class="courses-section" id="courses">
-            <h2 class="section-title">PROGRAMAS CUÁNTICOS</h2>
-            
-            <div class="courses-grid">
-                <!-- Curso Básico -->
-                <div class="course-card">
-                    <h3>BASIC QUANTUM</h3>
-                    <div class="price">50<small>Inscripción: $20</small></div>
-                    <div class="info-item">12 semanas (3 meses)</div>
-                    <div class="info-item">Capital: $20 - $500</div>
-                    <div class="info-item">Operaciones: 0.01 - 0.05</div>
-                    <div class="info-item">Ganancias: $5-$20 diarios</div>
-                    <div class="info-item">Ganancias mensuales $150-$600</div>
-                    <button class="buy-button" onclick="openPaymentModal('BASIC QUANTUM', 50)">ACCEDER AL PROGRAMA</button>
-                </div>
-                
-                <!-- Curso Medio -->
-                <div class="course-card">
-                    <h3>INTERMEDIATE NEO</h3>
-                    <div class="price">100<small>Inscripción: $20</small></div>
-                    <div class="info-item">24 semanas (6 meses)</div>
-                    <div class="info-item">Capital: $500 - $1000</div>
-                    <div class="info-item">Operaciones: 0.05 - 0.15</div>
-                    <div class="info-item">Ganancias mensuales $900-$1500</div>
-                    <button class="buy-button" onclick="openPaymentModal('INTERMEDIATE NEO', 100)">ACCEDER AL PROGRAMA</button>
-                </div>
-                
-                <!-- Curso Avanzado -->
-                <div class="course-card">
-                    <h3>ADVANCED ALPHA</h3>
-                    <div class="price">170<small>Inscripción: $20</small></div>
-                    <div class="info-item">12 semanas (3 meses)</div>
-                    <div class="info-item">Capital: $1000 - $3000</div>
-                    <div class="info-item">Operaciones: 0.15 - 0.30</div>
-                    <div class="info-item">Ganancias mensuales $1500-$3000</div>
-                    <button class="buy-button" onclick="openPaymentModal('ADVANCED ALPHA', 170)">ACCEDER AL PROGRAMA</button>
-                </div>
-                
-                <!-- Curso Zafiro -->
-                <div class="course-card">
-                    <h3>SAPPHIRE PRO</h3>
-                    <div class="price">270<small>Inscripción: $20</small></div>
-                    <div class="info-item">24 semanas (6 meses)</div>
-                    <div class="info-item">Capital: $3000 - $7000</div>
-                    <div class="info-item">Operaciones: 0.30 - 0.45</div>
-                    <div class="info-item">Ganancias: $100-$300 diarios</div>
-                    <div class="info-item">Ganancias mensuales $3000-$9000</div>
-                    <button class="buy-button" onclick="openPaymentModal('SAPPHIRE PRO', 270)">ACCEDER AL PROGRAMA</button>
-                </div>
-                
-                <!-- Curso Platinum -->
-                <div class="course-card">
-                    <h3>PLATINUM ELITE</h3>
-                    <div class="price">420<small>Inscripción: $20</small></div>
-                    <div class="info-item">12 semanas (3 meses)</div>
-                    <div class="info-item">Capital: $3000 - $7000</div>
-                    <div class="info-item">Operaciones: 0.30 - 0.45</div>
-                    <div class="info-item">Ganancias: $300-$800 diarios</div>
-                    <div class="info-item">Ganancias mensuales $9000-$24000</div>
-                    <button class="buy-button" onclick="openPaymentModal('PLATINUM ELITE', 420)">ACCEDER AL PROGRAMA</button>
-                </div>
-                
-                <!-- Curso Oro -->
-                <div class="course-card">
-                    <h3>GOLD MASTER</h3>
-                    <div class="price">720<small>Inscripción: $20</small></div>
-                    <div class="info-item">12 semanas (3 meses)</div>
-                    <div class="info-item">Capital: $7000 - $13000</div>
-                    <div class="info-item">Operaciones: 0.45 - 0.70</div>
-                    <div class="info-item">Ganancias mensuales $24000-$90000</div>
-                    <button class="buy-button" onclick="openPaymentModal('GOLD MASTER', 720)">ACCEDER AL PROGRAMA</button>
-                </div>
-            </div>
-        </section>
+<div class="bg-image-layer"></div>
+<div class="cyber-grid"></div>
+<div class="glow-overlay"></div>
 
-        <footer>
-            <p>© 2010 HEYDIN KAYSER TRADING SYSTEMS | Todos los derechos reservados</p>
-            <p>El trading implica riesgos. Los resultados pasados no garantizan rendimientos futuros.</p>
-        </footer>
-    </div>
-    
-    <!-- Modal de Pago -->
-    <div class="payment-modal" id="paymentModal">
-        <div class="payment-content">
-            <span class="close" onclick="closePaymentModal()">&times;</span>
-            <h2 id="modalCourseTitle">PROGRAMA</h2>
-            <div class="cyber-line"></div>
-            
-            <div class="bank-info">
-                <p><strong>Banco:</strong> <span class="highlight">Pichincha</span></p>
-                <p><strong>Tipo de Cuenta:</strong> Ahorros</p>
-                <p><strong>Número de Cuenta:</strong> <span class="highlight">2203838240</span></p>
-                <p><strong>Titular:</strong> Miguel Alexander Fonseca Carranza</p>
-                <p><strong>Monto Total:</strong> <span class="highlight" id="modalCoursePrice">$0</span> (Incluye inscripción de $20)</p>
-                <p><strong>USDT (BEP20):</strong> TJujJqGa14F56TKDqWtz3yFvk4EubnxdeD</p>
-            </div>
+<div class="loader-container" id="loader">
+    <div class="loader-ring"></div>
+    <div class="loader-text">HEYDIN KAYSER</div>
+    <div style="margin-top: 20px;">PROGRAMAS CUÁNTICOS</div>
+</div>
 
-            <div class="qr-container">
-                <p>⚡ ESCANEA EL CÓDIGO QR PARA PAGO RÁPIDO ⚡</p>
-                <img src="https://raw.githubusercontent.com/welding30001994/OXOMAX/refs/heads/main/Imagen%20de%20WhatsApp%202025-07-05%20a%20las%2010.51.30_d5c53b73.jpg" alt="Código QR para transferencia">
+<div class="container">
+    <div class="glass-header">
+        <div class="nav-container">
+            <div class="logo-area">
+                <i class="fas fa-crown logo-icon"></i>
+                <div class="logo-text">HEYDIN KAYSER<span>TRADING SYSTEMS</span></div>
             </div>
-
-            <form id="paymentForm" class="payment-form" onsubmit="sendPaymentConfirmation(event)">
-                <div class="form-group">
-                    <label>🔷 NOMBRE COMPLETO</label>
-                    <input type="text" id="fullName" required placeholder="Ingresa tu nombre completo">
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 CORREO ELECTRÓNICO</label>
-                    <input type="email" id="email" required placeholder="tu@email.com">
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 NÚMERO DE WHATSAPP</label>
-                    <input type="tel" id="phone" required placeholder="+593XXXXXXXXX">
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 COMPROBANTE DE PAGO</label>
-                    <input type="file" id="voucher" accept="image/*" required>
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 MÉTODO DE PAGO</label>
-                    <select id="paymentMethod" required style="width: 100%; padding: 0.8rem; background: rgba(0,0,0,0.3); border: 1px solid rgba(0,247,255,0.3); border-radius: 5px; color: var(--light);">
-                        <option value="">SELECCIONA UN MÉTODO</option>
-                        <option value="pichincha">Banco Pichincha</option>
-                        <option value="usdt">USDT (BEP20)</option>
-                    </select>
-                </div>
-                
-                <div class="form-group">
-                    <label>🔷 NÚMERO DE TRANSACCIÓN</label>
-                    <input type="text" id="transactionNumber" required placeholder="Ingresa el número de transacción">
-                </div>
-                
-                <button type="submit" class="submit-button">🚀 CONFIRMAR PAGO 🚀</button>
-            </form>
-            
-            <div class="instructions">
-                <p>📱 Envía el comprobante a nuestro WhatsApp +593980051394</p>
-                <p>⏳ Acceso habilitado dentro de 24 horas</p>
+            <div class="nav-links">
+                <a href="#courses">CURSOS</a>
+                <a href="#about">NOSOTROS</a>
+                <a href="#contact">CONTACTO</a>
             </div>
         </div>
     </div>
-    
-    <!-- Modal de Confirmación -->
-    <div class="confirmation-modal" id="confirmationModal">
-        <div class="confirmation-content">
-            <div class="success-icon">✅</div>
-            <h2>¡PAGO CONFIRMADO!</h2>
-            <p>Tu transacción ha sido procesada exitosamente</p>
-            <div class="transaction-id" id="transactionIdDisplay">
-                ID: HEYDIN-2024-XXXXXX
+
+    <section class="hero">
+        <h1><i class="fas fa-chart-line"></i> HEYDIN KAYSER</h1>
+        <p>Programas Cuánticos de Trading · Señales Láser · Terminal Exclusiva</p>
+        <button class="cta-button" id="scrollToCourses"><i class="fas fa-rocket"></i> EXPLORAR PROGRAMAS</button>
+    </section>
+
+    <section class="courses-section" id="courses">
+        <h2 class="section-title">PROGRAMAS CUÁNTICOS</h2>
+        <div class="courses-grid">
+            <!-- BASIC QUANTUM -->
+            <div class="course-card">
+                <h3><i class="fas fa-atom"></i> BASIC QUANTUM</h3>
+                <div class="price">50<small>Inscripción: $20</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 12 semanas (3 meses)</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital: $20 - $500</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias: $5-$20 diarios</div>
+                <div class="info-item"><i class="fas fa-chart-line"></i> Ganancias mensuales $150-$600</div>
+                <button class="buy-button" onclick="openPaymentModal('BASIC QUANTUM', 50)"><i class="fas fa-crown"></i> ACCEDER</button>
             </div>
-            <p>Hemos enviado los detalles a tu correo electrónico</p>
-            <p class="instruction">Recibirás acceso al programa en máximo 24 horas</p>
-            <button class="close-confirmation" onclick="closeConfirmationModal()">CONTINUAR</button>
+            <!-- INTERMEDIATE NEO -->
+            <div class="course-card">
+                <h3><i class="fas fa-microchip"></i> INTERMEDIATE NEO</h3>
+                <div class="price">100<small>Inscripción: $20</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 24 semanas (6 meses)</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital: $500 - $1000</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $900-$1500</div>
+                <button class="buy-button" onclick="openPaymentModal('INTERMEDIATE NEO', 100)"><i class="fas fa-crown"></i> ACCEDER</button>
+            </div>
+            <!-- ADVANCED ALPHA -->
+            <div class="course-card">
+                <h3><i class="fas fa-brain"></i> ADVANCED ALPHA</h3>
+                <div class="price">170<small>Inscripción: $20</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 12 semanas (3 meses)</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital: $1000 - $3000</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $1500-$3000</div>
+                <button class="buy-button" onclick="openPaymentModal('ADVANCED ALPHA', 170)"><i class="fas fa-crown"></i> ACCEDER</button>
+            </div>
+            <!-- SAPPHIRE PRO -->
+            <div class="course-card">
+                <h3><i class="fas fa-gem"></i> SAPPHIRE PRO</h3>
+                <div class="price">270<small>Inscripción: $20</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 24 semanas (6 meses)</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital: $3000 - $7000</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $3000-$9000</div>
+                <button class="buy-button" onclick="openPaymentModal('SAPPHIRE PRO', 270)"><i class="fas fa-crown"></i> ACCEDER</button>
+            </div>
+            <!-- PLATINUM ELITE -->
+            <div class="course-card">
+                <h3><i class="fas fa-trophy"></i> PLATINUM ELITE</h3>
+                <div class="price">420<small>Inscripción: $20</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 12 semanas (3 meses)</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital: $3000 - $7000</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $9000-$24000</div>
+                <button class="buy-button" onclick="openPaymentModal('PLATINUM ELITE', 420)"><i class="fas fa-crown"></i> ACCEDER</button>
+            </div>
+            <!-- GOLD MASTER -->
+            <div class="course-card">
+                <h3><i class="fas fa-crown"></i> GOLD MASTER</h3>
+                <div class="price">720<small>Inscripción: $20</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 12 semanas (3 meses)</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital: $7000 - $13000</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $24000-$90000</div>
+                <button class="buy-button" onclick="openPaymentModal('GOLD MASTER', 720)"><i class="fas fa-crown"></i> ACCEDER</button>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <p>© 2010 HEYDIN KAYSER TRADING SYSTEMS | Todos los derechos reservados</p>
+        <p>El trading implica riesgos. Los resultados pasados no garantizan rendimientos futuros.</p>
+    </footer>
+</div>
+
+<!-- MODAL PAGO -->
+<div class="payment-modal" id="paymentModal">
+    <div class="payment-content">
+        <span class="close" onclick="closePaymentModal()">&times;</span>
+        <h2 id="modalCourseTitle">PROGRAMA</h2>
+        <div class="cyber-line"></div>
+        <div class="bank-info">
+            <p><strong>Banco:</strong> <span class="highlight">Pichincha</span></p>
+            <p><strong>Tipo de Cuenta:</strong> Ahorros</p>
+            <p><strong>Número de Cuenta:</strong> <span class="highlight">2203838240</span></p>
+            <p><strong>Titular:</strong> Miguel Alexander Fonseca Carranza</p>
+            <p><strong>Monto Total:</strong> <span class="highlight" id="modalCoursePrice">$0</span> (Incluye inscripción $20)</p>
+            <p><strong>USDT (BEP20):</strong> TJujJqGa14F56TKDqWtz3yFvk4EubnxdeD</p>
+        </div>
+        <div class="qr-container">
+            <p><i class="fas fa-qrcode"></i> ESCANEA EL CÓDIGO QR</p>
+            <img src="https://raw.githubusercontent.com/welding30001994/OXOMAX/refs/heads/main/Imagen%20de%20WhatsApp%202025-07-05%20a%20las%2010.51.30_d5c53b73.jpg" alt="QR Pago">
+        </div>
+        <form id="paymentForm" onsubmit="sendPaymentConfirmation(event)">
+            <div class="form-group"><label><i class="fas fa-user"></i> NOMBRE COMPLETO</label><input type="text" id="fullName" required></div>
+            <div class="form-group"><label><i class="fas fa-envelope"></i> CORREO ELECTRÓNICO</label><input type="email" id="email" required></div>
+            <div class="form-group"><label><i class="fab fa-whatsapp"></i> WHATSAPP</label><input type="tel" id="phone" required></div>
+            <div class="form-group"><label><i class="fas fa-image"></i> COMPROBANTE</label><input type="file" id="voucher" accept="image/*" required></div>
+            <div class="form-group"><label><i class="fas fa-credit-card"></i> MÉTODO DE PAGO</label>
+                <select id="paymentMethod" required>
+                    <option value="">SELECCIONAR</option>
+                    <option value="pichincha">Banco Pichincha</option>
+                    <option value="usdt">USDT (BEP20)</option>
+                </select>
+            </div>
+            <div class="form-group"><label><i class="fas fa-hashtag"></i> NÚMERO DE TRANSACCIÓN</label><input type="text" id="transactionNumber" required></div>
+            <button type="submit" class="submit-button"><i class="fas fa-check-circle"></i> CONFIRMAR PAGO</button>
+        </form>
+        <div class="instructions">
+            <p><i class="fab fa-whatsapp"></i> Envía el comprobante a +593980051394</p>
+            <p><i class="fas fa-clock"></i> Acceso habilitado dentro de 24 horas</p>
         </div>
     </div>
-    
-    <script>
-        // Modal de pago
-        function openPaymentModal(courseName, price) {
-            document.getElementById('modalCourseTitle').textContent = courseName + ' - ' + price;
-            document.getElementById('modalCoursePrice').textContent = '$' + price + ' USD';
-            document.getElementById('paymentModal').style.display = 'flex';
-        }
+</div>
+
+<!-- MODAL CONFIRMACIÓN -->
+<div class="confirmation-modal" id="confirmationModal">
+    <div class="confirmation-content">
+        <div class="success-icon"><i class="fas fa-check-circle"></i></div>
+        <h2>¡PAGO CONFIRMADO!</h2>
+        <p>Tu transacción ha sido procesada exitosamente</p>
+        <div class="transaction-id" id="transactionIdDisplay">ID: HEYDIN-2026-XXXXXX</div>
+        <p>Hemos enviado los detalles a tu correo</p>
+        <button class="close-confirmation" onclick="closeConfirmationModal()">CONTINUAR</button>
+    </div>
+</div>
+
+<script>
+    // LOADER
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.style.display = 'none', 800);
+        }, 1500);
+    });
+
+    function openPaymentModal(courseName, price) {
+        document.getElementById('modalCourseTitle').textContent = courseName + ' - $' + price;
+        document.getElementById('modalCoursePrice').textContent = '$' + price + ' USD';
+        document.getElementById('paymentModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+    }
+    function closePaymentModal() {
+        document.getElementById('paymentModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    function closeConfirmationModal() {
+        document.getElementById('confirmationModal').style.display = 'none';
+        document.body.style.overflow = 'auto';
+    }
+    window.onclick = (event) => {
+        if (event.target === document.getElementById('paymentModal')) closePaymentModal();
+        if (event.target === document.getElementById('confirmationModal')) closeConfirmationModal();
+    }
+    document.getElementById('scrollToCourses')?.addEventListener('click', () => {
+        document.getElementById('courses').scrollIntoView({ behavior: 'smooth' });
+    });
+
+    function sendPaymentConfirmation(event) {
+        event.preventDefault();
+        const fullName = document.getElementById('fullName').value;
+        const email = document.getElementById('email').value;
+        const phone = document.getElementById('phone').value;
+        const courseText = document.getElementById('modalCourseTitle').textContent;
+        const price = document.getElementById('modalCoursePrice').textContent;
+        const paymentMethod = document.getElementById('paymentMethod').value;
+        const transactionNumber = document.getElementById('transactionNumber').value;
+        const transactionId = 'HEYDIN-' + new Date().getFullYear() + '-' + Math.random().toString(36).substr(2, 9).toUpperCase();
+
+        const bodyMsg = `NUEVO PAGO CONFIRMADO
+------------------------
+DATOS DEL ESTUDIANTE:
+Nombre: ${fullName}
+Email: ${email}
+WhatsApp: ${phone}
+
+PROGRAMA:
+${courseText}
+Monto: ${price}
+Método: ${paymentMethod === 'pichincha' ? 'Banco Pichincha' : 'USDT BEP20'}
+N° Transacción: ${transactionNumber}
+ID Transacción: ${transactionId}
+Fecha: ${new Date().toLocaleString()}
+
+DATOS BANCARIOS:
+Banco Pichincha Ahorros: 2203838240
+Titular: Miguel Alexander Fonseca Carranza`;
+
+        window.location.href = `mailto:welding30001994@gmail.com?subject=🔷 CONFIRMACIÓN DE PAGO - ${fullName}&body=${encodeURIComponent(bodyMsg)}`;
         
-        function closePaymentModal() {
-            document.getElementById('paymentModal').style.display = 'none';
-        }
-        
-        function closeConfirmationModal() {
-            document.getElementById('confirmationModal').style.display = 'none';
-        }
-        
-        // Cerrar modal al hacer click fuera
-        window.onclick = function(event) {
-            const modal = document.getElementById('paymentModal');
-            if (event.target === modal) {
-                closePaymentModal();
-            }
-        }
-        
-        // Scroll suave
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
-            });
-        });
-        
-        // Botón de cursos
-        document.getElementById('open-courses').addEventListener('click', () => {
-            document.getElementById('courses').scrollIntoView({
-                behavior: 'smooth'
-            });
-        });
-        
-        // Función para enviar confirmación de pago por correo
-        function sendPaymentConfirmation(event) {
-            event.preventDefault();
-            
-            // Obtener datos del formulario
-            const fullName = document.getElementById('fullName').value;
-            const email = document.getElementById('email').value;
-            const phone = document.getElementById('phone').value;
-            const courseName = document.getElementById('modalCourseTitle').textContent;
-            const price = document.getElementById('modalCoursePrice').textContent;
-            const paymentMethod = document.getElementById('paymentMethod').value;
-            const transactionNumber = document.getElementById('transactionNumber').value;
-            
-            // Generar ID de transacción único
-            const transactionId = 'HEYDIN-' + new Date().getFullYear() + '-' + 
-                                 Math.random().toString(36).substr(2, 9).toUpperCase();
-            
-            // Crear el contenido del correo
-            const emailContent = `
-                <h2>🚀 NUEVO PAGO CONFIRMADO - HEYDIN KAYSER</h2>
-                
-                <h3>DETALLES DEL ESTUDIANTE:</h3>
-                <p><strong>Nombre:</strong> ${fullName}</p>
-                <p><strong>Email:</strong> ${email}</p>
-                <p><strong>WhatsApp:</strong> ${phone}</p>
-                
-                <h3>DETALLES DEL PROGRAMA:</h3>
-                <p><strong>Programa:</strong> ${courseName}</p>
-                <p><strong>Monto pagado:</strong> ${price}</p>
-                <p><strong>Método de pago:</strong> ${paymentMethod === 'pichincha' ? 'Banco Pichincha' : 'USDT (BEP20)'}</p>
-                
-                <h3>DETALLES DE TRANSACCIÓN:</h3>
-                <p><strong>ID de transacción:</strong> ${transactionId}</p>
-                <p><strong>Número de transacción:</strong> ${transactionNumber}</p>
-                <p><strong>Fecha y hora:</strong> ${new Date().toLocaleString()}</p>
-                
-                <h3>DATOS BANCARIOS PARA VERIFICACIÓN:</h3>
-                <p><strong>Banco Pichincha - Ahorros:</strong> 2203838240</p>
-                <p><strong>Titular:</strong> Miguel Alexander Fonseca Carranza</p>
-                
-                <h3>PRÓXIMOS PASOS:</h3>
-                <p>✅ El acceso al programa será habilitado dentro de 24 horas</p>
-                <p>📱 Se enviarán las credenciales al WhatsApp: ${phone}</p>
-                <p>📧 Se enviarán instrucciones detalladas a: ${email}</p>
-                
-                <hr>
-                <p><em>Este es un correo automático del sistema HEYDIN KAYSER TRADING SYSTEMS</em></p>
-            `;
-            
-            // Crear un enlace mailto con los datos
-            const mailtoLink = `mailto:welding30001994@gmail.com?subject=🔷 CONFIRMACIÓN DE PAGO - ${courseName} - ${fullName}&body=${encodeURIComponent(
-                'NUEVO PAGO CONFIRMADO\n\n' +
-                'DATOS DEL ESTUDIANTE:\n' +
-                'Nombre: ' + fullName + '\n' +
-                'Email: ' + email + '\n' +
-                'WhatsApp: ' + phone + '\n\n' +
-                'PROGRAMA:\n' +
-                'Curso: ' + courseName + '\n' +
-                'Monto: ' + price + '\n' +
-                'Método: ' + (paymentMethod === 'pichincha' ? 'Banco Pichincha' : 'USDT') + '\n' +
-                'Número de transacción: ' + transactionNumber + '\n' +
-                'ID Transacción: ' + transactionId + '\n\n' +
-                'DATOS BANCARIOS PARA VERIFICACIÓN:\n' +
-                'Banco Pichincha - Ahorros: 2203838240\n' +
-                'Titular: Miguel Alexander Fonseca Carranza\n\n' +
-                'FECHA: ' + new Date().toLocaleString()
-            )}`;
-            
-            // Abrir el cliente de correo
-            window.location.href = mailtoLink;
-            
-            // Cerrar modal de pago
-            closePaymentModal();
-            
-            // Mostrar modal de confirmación
-            document.getElementById('transactionIdDisplay').textContent = 'ID: ' + transactionId;
-            document.getElementById('confirmationModal').style.display = 'flex';
-            
-            // Limpiar formulario
-            document.getElementById('paymentForm').reset();
-            
-            // Simular envío de correo (en un entorno real, esto sería una petición a un backend)
-            console.log('Enviando correo a welding30001994@gmail.com con los siguientes datos:', {
-                to: 'welding30001994@gmail.com',
-                subject: `NUEVO PAGO - ${courseName} - ${fullName}`,
-                content: emailContent
-            });
-        }
-        
-        // Efecto de escritura en el título
-        const heroTitle = document.querySelector('.hero h1');
-        if (heroTitle) {
-            const text = heroTitle.textContent;
-            heroTitle.textContent = '';
-            
-            let i = 0;
-            const typeWriter = () => {
-                if (i < text.length) {
-                    heroTitle.textContent += text.charAt(i);
-                    i++;
-                    setTimeout(typeWriter, 50);
-                }
-            };
-            
-            setTimeout(typeWriter, 1000);
-        }
-    </script>
+        document.getElementById('transactionIdDisplay').textContent = 'ID: ' + transactionId;
+        closePaymentModal();
+        document.getElementById('confirmationModal').style.display = 'flex';
+        document.body.style.overflow = 'hidden';
+        document.getElementById('paymentForm').reset();
+    }
+</script>
 </body>
 </html>
