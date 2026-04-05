@@ -2,8 +2,12 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Heydin Kayser VIP · Descarga la App</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>HEYDIN KAYSER • Descarga la App</title>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -12,335 +16,510 @@
         }
 
         body {
-            background: linear-gradient(145deg, #0b1120 0%, #111827 100%);
-            font-family: 'Segoe UI', 'Poppins', system-ui, -apple-system, 'Inter', 'Roboto', sans-serif;
+            font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
+            background: #03050b;
             min-height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 2rem 1.5rem;
             position: relative;
+            overflow-x: hidden;
+            color: #eef5ff;
         }
 
-        /* fondo sutil con patrones */
-        body::before {
-            content: "";
+        /* FONDO PRINCIPAL CON IMAGEN TRANSPARENTE (HEYDIN.jpg) */
+        .bg-image-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: radial-gradient(circle at 15% 30%, rgba(255, 215, 130, 0.03) 2%, transparent 2.5%),
-                              radial-gradient(circle at 75% 70%, rgba(200, 180, 255, 0.02) 1.8%, transparent 2%);
-            background-size: 48px 48px, 56px 56px;
-            pointer-events: none;
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0.32;
             z-index: 0;
+            pointer-events: none;
         }
 
-        .card {
-            max-width: 620px;
+        /* OVERLAY NEÓN + GRID FUTURISTA */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            background: rgba(18, 25, 45, 0.75);
-            backdrop-filter: blur(12px);
-            border-radius: 64px 48px 64px 48px;
-            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.06);
-            overflow: hidden;
-            transition: transform 0.25s ease, box-shadow 0.3s ease;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.07) 0px, rgba(0, 255, 255, 0.07) 1px, transparent 1px, transparent 45px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.07) 0px, rgba(0, 255, 255, 0.07) 1px, transparent 1px, transparent 45px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.1), rgba(0, 0, 0, 0.75));
             z-index: 2;
+            pointer-events: none;
         }
 
-        .card:hover {
-            transform: scale(1.01);
-            box-shadow: 0 35px 55px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(255, 210, 90, 0.2);
+        /* PARTICULAS */
+        #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
         }
 
-        .hero {
-            background: linear-gradient(135deg, #1a2a3f 0%, #0f1722 100%);
+        /* CONTENIDO PRINCIPAL */
+        .content {
+            position: relative;
+            z-index: 15;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* HEADER GLASS */
+        .glass-header {
+            background: rgba(5, 10, 20, 0.75);
+            backdrop-filter: blur(20px);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.5);
+            padding: 0.8rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .logo-area:active {
+            transform: scale(0.98);
+        }
+        .logo-icon {
+            font-size: 2rem;
+            color: #0cf;
+            filter: drop-shadow(0 0 8px cyan);
+        }
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, #fff, #0cf);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+        .back-link {
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            padding: 8px 20px;
+            border-radius: 40px;
+            color: #0cf;
+            font-weight: 700;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: 0.3s;
+        }
+        .back-link:active {
+            transform: scale(0.96);
+            background: rgba(0, 255, 255, 0.3);
+        }
+        @media (min-width: 1024px) {
+            .back-link:hover {
+                background: rgba(0, 255, 255, 0.2);
+                box-shadow: 0 0 15px cyan;
+            }
+        }
+
+        /* TARJETA PRINCIPAL FUTURISTA */
+        .card-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2rem 1.5rem;
+            flex: 1;
+        }
+        .vip-card {
+            max-width: 700px;
+            width: 100%;
+            background: rgba(12, 20, 32, 0.75);
+            backdrop-filter: blur(20px);
+            border-radius: 64px 48px 64px 48px;
+            border: 2px solid rgba(0, 255, 255, 0.5);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 255, 255, 0.2);
+            overflow: hidden;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        @media (min-width: 1024px) {
+            .vip-card:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 35px 55px rgba(0, 0, 0, 0.6), 0 0 40px rgba(0, 255, 255, 0.4);
+                border-color: #ff44e6;
+            }
+        }
+
+        /* HERO NEÓN */
+        .hero-neon {
+            background: linear-gradient(135deg, rgba(0, 20, 40, 0.9), rgba(10, 5, 25, 0.9));
             padding: 2.5rem 2rem 1.8rem;
             text-align: center;
-            border-bottom: 1px solid rgba(255, 210, 110, 0.3);
+            border-bottom: 2px solid rgba(0, 255, 255, 0.4);
             position: relative;
         }
-
+        .hero-neon::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 10%;
+            width: 80%;
+            height: 2px;
+            background: linear-gradient(90deg, transparent, cyan, #ff44e6, transparent);
+        }
         .logo-badge {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            background: rgba(0, 0, 0, 0.45);
-            backdrop-filter: blur(4px);
-            padding: 0.6rem 1.6rem;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            padding: 0.6rem 1.8rem;
             border-radius: 100px;
             margin-bottom: 1.2rem;
-            border: 1px solid rgba(255, 200, 100, 0.5);
+            border: 1px solid rgba(0, 255, 255, 0.7);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
         }
-
         .logo-badge span:first-child {
             font-size: 2rem;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            filter: drop-shadow(0 0 8px cyan);
         }
-
         .logo-badge span:last-child {
-            font-weight: 700;
-            font-size: 1.3rem;
-            letter-spacing: 1px;
-            background: linear-gradient(120deg, #FFE6B0, #FFC96A);
+            font-weight: 900;
+            font-size: 1.4rem;
+            letter-spacing: 2px;
+            background: linear-gradient(120deg, #fff, cyan, #ff44e6);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
         }
-
         h1 {
             font-size: 2.5rem;
-            font-weight: 800;
-            background: linear-gradient(125deg, #FFFFFF 20%, #FFD98C 70%, #FFB347 100%);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(125deg, #FFFFFF 20%, cyan 70%, #ff44e6 100%);
             background-clip: text;
             -webkit-background-clip: text;
             color: transparent;
             margin-bottom: 0.5rem;
-            letter-spacing: -0.5px;
+            letter-spacing: 2px;
+            text-shadow: 0 0 20px rgba(0,255,255,0.3);
         }
-
         .vip-tag {
             display: inline-block;
-            background: rgba(255, 190, 70, 0.2);
+            background: rgba(0, 255, 255, 0.15);
             backdrop-filter: blur(8px);
-            padding: 0.3rem 1.2rem;
+            padding: 0.3rem 1.4rem;
             border-radius: 40px;
             font-size: 0.85rem;
-            font-weight: 600;
-            color: #FFDA88;
-            border: 1px solid rgba(255, 190, 70, 0.6);
-            margin-top: 0.5rem;
+            font-weight: 700;
+            color: cyan;
+            border: 1px solid cyan;
+            letter-spacing: 1px;
+            margin-top: 0.8rem;
         }
 
-        .content {
-            padding: 2.2rem 2rem 2.5rem;
+        /* CONTENIDO DE LA TARJETA */
+        .card-body {
+            padding: 2rem 2rem 2.5rem;
         }
-
-        .info-app {
-            background: rgba(0, 0, 0, 0.35);
+        .info-futurista {
+            background: rgba(0, 0, 0, 0.45);
             border-radius: 32px;
             padding: 1.5rem;
             margin-bottom: 2rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: all 0.2s;
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            transition: 0.2s;
         }
-
         .filename {
-            background: #0A0F1A;
+            background: rgba(0, 10, 20, 0.8);
             border-radius: 60px;
-            padding: 0.8rem 1.4rem;
+            padding: 0.9rem 1.5rem;
             display: flex;
             align-items: center;
             justify-content: space-between;
             flex-wrap: wrap;
             gap: 12px;
-            font-family: 'SF Mono', 'Fira Code', monospace;
+            font-family: 'Orbitron', monospace;
             font-size: 0.9rem;
-            border-left: 4px solid #FFB347;
+            border-left: 4px solid cyan;
             margin-bottom: 1.5rem;
         }
-
         .filename span:first-child {
-            color: #9CA3AF;
+            color: #9bc0e0;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
         }
-
         .filename strong {
-            color: #FFD966;
-            font-weight: 600;
+            color: cyan;
+            font-weight: 700;
             word-break: break-all;
+            text-shadow: 0 0 5px cyan;
         }
-
         .badge-apk {
-            background: #FF9800;
-            color: #0A0F1A;
-            padding: 0.25rem 0.9rem;
+            background: linear-gradient(135deg, cyan, #00aaff);
+            color: #03050b;
+            padding: 0.3rem 1rem;
             border-radius: 30px;
             font-size: 0.7rem;
-            font-weight: 800;
-            letter-spacing: 0.5px;
+            font-weight: 900;
+            letter-spacing: 1px;
+            box-shadow: 0 0 10px cyan;
         }
-
         .desc-text {
-            color: #D1D5DB;
+            color: #cae9ff;
             line-height: 1.5;
             font-size: 0.95rem;
             margin-top: 0.5rem;
         }
-
         .desc-text p {
-            margin: 0.5rem 0;
+            margin: 0.6rem 0;
+        }
+        .desc-text strong {
+            color: cyan;
         }
 
+        /* BOTÓN DE DESCARGA NEÓN */
         .download-area {
             text-align: center;
             margin: 2rem 0 1rem;
         }
-
         .btn-download {
             display: inline-flex;
             align-items: center;
             justify-content: center;
             gap: 14px;
-            background: linear-gradient(105deg, #F59E0B 0%, #D97706 100%);
+            background: linear-gradient(105deg, #0cf, #0099ff);
             border: none;
             padding: 1rem 2.2rem;
             font-size: 1.3rem;
-            font-weight: 700;
-            color: #0c0f17;
+            font-weight: 800;
+            font-family: 'Rajdhani', 'Orbitron', sans-serif;
+            color: #03050b;
             border-radius: 80px;
             cursor: pointer;
             transition: all 0.25s;
-            box-shadow: 0 15px 25px -8px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 0 20px cyan;
             width: 100%;
-            max-width: 320px;
-            text-decoration: none;
-            font-family: inherit;
-            letter-spacing: 0.5px;
+            max-width: 340px;
+            letter-spacing: 1.5px;
         }
-
-        .btn-download:hover {
-            background: linear-gradient(105deg, #FFB82E 0%, #F59E0B 100%);
-            transform: translateY(-3px);
-            box-shadow: 0 22px 28px -12px rgba(245, 158, 11, 0.4);
-        }
-
         .btn-download:active {
-            transform: translateY(2px);
+            transform: scale(0.96);
+            box-shadow: 0 0 35px cyan;
         }
-
+        @media (min-width: 1024px) {
+            .btn-download:hover {
+                background: linear-gradient(105deg, #2ef, #0cf);
+                transform: translateY(-3px);
+                box-shadow: 0 0 35px cyan;
+            }
+        }
         .status-message {
-            margin-top: 1rem;
+            margin-top: 1.2rem;
             font-size: 0.85rem;
-            color: #9CA3AF;
-            background: rgba(0,0,0,0.4);
+            background: rgba(0, 0, 0, 0.6);
             display: inline-block;
-            padding: 0.3rem 1rem;
-            border-radius: 30px;
+            padding: 0.4rem 1.5rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+            border: 1px solid rgba(0, 255, 255, 0.3);
+            font-weight: 500;
         }
 
+        /* FEATURES FUTURISTAS */
         .features {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             gap: 1rem;
             margin-top: 2rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.3);
         }
-
         .feature-item {
-            background: rgba(30, 40, 60, 0.6);
-            border-radius: 28px;
-            padding: 0.5rem 1rem;
+            background: rgba(0, 20, 40, 0.7);
+            border-radius: 40px;
+            padding: 0.6rem 1.2rem;
             display: flex;
             align-items: center;
-            gap: 8px;
-            font-size: 0.8rem;
-            color: #E5E7EB;
+            gap: 10px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #d4f1ff;
+            border: 1px solid rgba(0, 255, 255, 0.4);
         }
-
         .feature-item span:first-child {
             font-size: 1.2rem;
+            filter: drop-shadow(0 0 4px cyan);
         }
 
+        /* FOOTER */
         footer {
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(3, 5, 12, 0.9);
+            backdrop-filter: blur(20px);
+            border-top: 2px solid rgba(0, 255, 255, 0.4);
             text-align: center;
-            padding: 1.2rem;
-            font-size: 0.7rem;
-            color: #6B7280;
-            letter-spacing: 0.3px;
+            padding: 1.5rem 1rem;
+            font-size: 0.75rem;
+            color: #7aa9c4;
+            letter-spacing: 0.5px;
         }
 
-        @media (max-width: 500px) {
-            .card {
-                border-radius: 40px 32px 40px 32px;
-            }
-            .hero {
+        @media (max-width: 550px) {
+            .hero-neon {
                 padding: 1.8rem 1rem;
             }
             h1 {
                 font-size: 1.9rem;
             }
-            .content {
+            .card-body {
                 padding: 1.5rem;
             }
             .btn-download {
                 font-size: 1.1rem;
-                padding: 0.8rem 1.6rem;
+                padding: 0.8rem 1.5rem;
             }
             .filename {
                 flex-direction: column;
                 align-items: flex-start;
             }
+            .logo-text {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
+<div class="bg-image-layer"></div>
+<div class="cyber-grid"></div>
+<div class="glow-overlay"></div>
+<div id="particles-js"></div>
 
-<div class="card">
-    <div class="hero">
-        <div class="logo-badge">
-            <span>⚡</span>
-            <span>HEYDIN KAYSER</span>
-        </div>
-        <h1>VIP Experience</h1>
-        <div class="vip-tag">✦ ACCESO PRIVADO ✦</div>
-        <div style="margin-top: 1rem; font-size: 0.85rem; color: #FFD966;">versión oficial · sistema seguro</div>
-    </div>
-
-    <div class="content">
-        <div class="info-app">
-            <div class="filename">
-                <span>📦 <strong>heydin-kayser-vip.apk</strong></span>
-                <span class="badge-apk">APK · 2025</span>
+<div class="content">
+    <header class="glass-header">
+        <div class="nav-container">
+            <div class="logo-area" onclick="window.location.href='index.html'">
+                <i class="fas fa-crown logo-icon"></i>
+                <span class="logo-text">HEYDIN KAYSER</span>
             </div>
-            <div class="desc-text">
-                <p>✅ Aplicación móvil desarrollada por <strong>Heydin Kayser</strong> para usuarios VIP.<br>
-                ✅ Interfaz premium, funciones exclusivas y alto rendimiento.<br>
-                ✅ Compatible con Android 7.0+ · Instalación rápida y segura.</p>
-                <p style="font-size:0.85rem; color:#B9C3D4;">📁 El archivo <strong>heydin-kayser-vip.apk</strong> debe estar ubicado en la MISMA carpeta que este archivo index.html para que la descarga funcione automáticamente.</p>
+            <a href="index.html" class="back-link">
+                <i class="fas fa-arrow-left"></i>
+                <span>VOLVER AL PORTAL</span>
+            </a>
+        </div>
+    </header>
+
+    <div class="card-container">
+        <div class="vip-card">
+            <div class="hero-neon">
+                <div class="logo-badge">
+                    <span>⚡</span>
+                    <span>HEYDIN KAYSER</span>
+                </div>
+                <h1>VIP Experience</h1>
+                <div class="vip-tag">✦ ACCESO PRIVADO ✦</div>
+                <div style="margin-top: 0.8rem; font-size: 0.8rem; color: cyan; opacity: 0.9;">versión oficial · sistema cuántico</div>
             </div>
-        </div>
 
-        <div class="download-area">
-            <button id="downloadBtn" class="btn-download">
-                ⬇️ DESCARGAR APK
-                <span style="font-size:1.3rem;">📱</span>
-            </button>
-            <div id="statusMsg" class="status-message">⚡ Verificando disponibilidad del archivo...</div>
-        </div>
+            <div class="card-body">
+                <div class="info-futurista">
+                    <div class="filename">
+                        <span><i class="fas fa-mobile-alt"></i> <strong>heydin-kayser-vip.apk</strong></span>
+                        <span class="badge-apk">APK · 2025</span>
+                    </div>
+                    <div class="desc-text">
+                        <p><i class="fas fa-check-circle" style="color: cyan;"></i> Aplicación móvil desarrollada por <strong>Heydin Kayser</strong> para usuarios VIP.<br>
+                        <i class="fas fa-gem" style="color: #ff44e6;"></i> Interfaz premium, funciones exclusivas y alto rendimiento.<br>
+                        <i class="fas fa-android" style="color: #0cf;"></i> Compatible con Android 7.0+ · Instalación rápida y segura.</p>
+                        <p style="font-size:0.8rem; color: #aaffdd;"><i class="fas fa-info-circle"></i> El archivo <strong>heydin-kayser-vip.apk</strong> debe estar ubicado en la MISMA carpeta que este archivo para que la descarga funcione automáticamente.</p>
+                    </div>
+                </div>
 
-        <div class="features">
-            <div class="feature-item"><span>🔐</span><span>Seguridad mejorada</span></div>
-            <div class="feature-item"><span>🚀</span><span>Rendimiento VIP</span></div>
-            <div class="feature-item"><span>🎨</span><span>Diseño exclusivo</span></div>
-            <div class="feature-item"><span>📲</span><span>Instalación 1 clic</span></div>
+                <div class="download-area">
+                    <button id="downloadBtn" class="btn-download">
+                        <i class="fas fa-download"></i> DESCARGAR APK
+                        <i class="fas fa-mobile-screen-button"></i>
+                    </button>
+                    <div id="statusMsg" class="status-message"><i class="fas fa-sync-alt fa-fw"></i> Verificando disponibilidad del archivo...</div>
+                </div>
+
+                <div class="features">
+                    <div class="feature-item"><span>🔐</span><span>Seguridad mejorada</span></div>
+                    <div class="feature-item"><span>🚀</span><span>Rendimiento VIP</span></div>
+                    <div class="feature-item"><span>🎨</span><span>Diseño exclusivo</span></div>
+                    <div class="feature-item"><span>📲</span><span>Instalación 1 clic</span></div>
+                </div>
+            </div>
+            <footer>
+                <i class="fas fa-crown"></i> HEYDIN KAYSER · Todos los derechos reservados · App privada para miembros <br>
+                Si la descarga no inicia, verifica que el archivo "heydin-kayser-vip.apk" esté en la misma carpeta.
+            </footer>
         </div>
     </div>
-    <footer>
-        Heydin Kayser · Todos los derechos reservados · App privada para miembros <br>
-        Si la descarga no inicia, verifica que el archivo "heydin-kayser-vip.apk" esté en la misma carpeta.
-    </footer>
 </div>
 
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
+    // PARTICULAS EFECTO FUTURISTA
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 70, density: { enable: true, value_area: 800 } },
+            color: { value: "#00ffff" },
+            shape: { type: "circle" },
+            opacity: { value: 0.4, random: true },
+            size: { value: 2.5, random: true },
+            line_linked: { enable: true, distance: 140, color: "#00ffff", opacity: 0.2, width: 1 },
+            move: { enable: true, speed: 0.9, direction: "none", random: true, out_mode: "out" }
+        },
+        interactivity: {
+            events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+        },
+        retina_detect: true
+    });
+
+    // LOGICA DE DESCARGA APK (MISMA QUE EN EL SEGUNDO CODIGO)
     (function() {
         // NOMBRE EXACTO del archivo APK (debe coincidir con el archivo real)
         const APK_FILENAME = "heydin-kayser-vip.apk";
         const statusDiv = document.getElementById("statusMsg");
         const downloadBtn = document.getElementById("downloadBtn");
 
-        // Función para comprobar si el archivo existe (mediante fetch con método HEAD o simple petición)
-        // Esto evita descargas rotas y da feedback al usuario.
+        // Función para comprobar si el archivo existe (mediante fetch con método HEAD)
         function checkFileAvailability() {
             return new Promise((resolve) => {
-                // Usamos fetch con método HEAD para no descargar el contenido, solo verificar disponibilidad
                 fetch(APK_FILENAME, { method: 'HEAD', cache: 'no-store' })
                     .then(response => {
                         if (response.ok) {
@@ -359,16 +538,18 @@
         // Mostrar estado visual según disponibilidad
         function updateStatusUI(available) {
             if (available) {
-                statusDiv.innerHTML = "✅ Archivo listo · haz clic en DESCARGAR";
-                statusDiv.style.color = "#C6F7B0";
-                statusDiv.style.background = "rgba(50, 80, 30, 0.5)";
+                statusDiv.innerHTML = "<i class='fas fa-check-circle'></i> Archivo listo · haz clic en DESCARGAR";
+                statusDiv.style.color = "#b0ffd0";
+                statusDiv.style.background = "rgba(0, 50, 40, 0.7)";
+                statusDiv.style.borderColor = "cyan";
                 downloadBtn.disabled = false;
                 downloadBtn.style.opacity = "1";
                 downloadBtn.style.cursor = "pointer";
             } else {
-                statusDiv.innerHTML = "⚠️ No se encontró el archivo 'heydin-kayser-vip.apk' en la carpeta actual. Colócalo junto al index.html e intenta de nuevo.";
+                statusDiv.innerHTML = "<i class='fas fa-exclamation-triangle'></i> No se encontró el archivo 'heydin-kayser-vip.apk' en la carpeta actual. Colócalo junto al index.html e intenta de nuevo.";
                 statusDiv.style.color = "#FFB4A2";
                 statusDiv.style.background = "rgba(80, 30, 30, 0.6)";
+                statusDiv.style.borderColor = "#ff6666";
                 downloadBtn.disabled = true;
                 downloadBtn.style.opacity = "0.65";
                 downloadBtn.style.cursor = "not-allowed";
@@ -377,53 +558,47 @@
 
         // Iniciar descarga forzada mediante creación de enlace temporal
         function triggerDownload() {
-            // Crear un elemento <a> invisible para forzar la descarga
             const link = document.createElement('a');
             link.href = APK_FILENAME;
-            // El atributo download fuerza la descarga en lugar de navegar al archivo (para la mayoría de navegadores)
             link.download = APK_FILENAME;
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
             // feedback adicional
-            statusDiv.innerHTML = "📲 Descarga iniciada · revisa tus descargas";
+            statusDiv.innerHTML = "<i class='fas fa-spinner fa-pulse'></i> Descarga iniciada · revisa tus descargas";
+            statusDiv.style.color = "#C6F7B0";
             setTimeout(() => {
-                // después de 2.5 segundos, si sigue todo bien, re-verificamos pero no reseteamos el estado excesivamente
                 checkFileAvailability().then(available => {
                     if (available) {
-                        statusDiv.innerHTML = "✅ Archivo listo · descarga completada o en progreso";
+                        statusDiv.innerHTML = "<i class='fas fa-check-circle'></i> Archivo listo · descarga completada o en progreso";
                         statusDiv.style.color = "#C6F7B0";
                     } else {
-                        // solo si milagrosamente desaparece, pero raro
                         updateStatusUI(false);
                     }
                 });
-            }, 1500);
+            }, 2000);
         }
 
-        // Evento principal del botón: antes de descargar verificar existencia otra vez (por si acaso)
+        // Evento principal del botón
         async function onDownloadClick() {
-            // Mostrar feedback de carga
-            statusDiv.innerHTML = "🔍 Verificando archivo nuevamente...";
+            statusDiv.innerHTML = "<i class='fas fa-sync-alt fa-pulse'></i> Verificando archivo nuevamente...";
             statusDiv.style.color = "#FFD966";
             const available = await checkFileAvailability();
             if (available) {
                 triggerDownload();
             } else {
                 updateStatusUI(false);
-                // Opcional: sonido o vibración? solo mensaje claro
-                statusDiv.innerHTML = "❌ Error: archivo APK no encontrado. Asegúrate de que 'heydin-kayser-vip.apk' esté en la misma carpeta que este HTML.";
+                statusDiv.innerHTML = "<i class='fas fa-times-circle'></i> Error: archivo APK no encontrado. Asegúrate de que 'heydin-kayser-vip.apk' esté en la misma carpeta que este HTML.";
                 statusDiv.style.color = "#FF9F8F";
             }
         }
 
         // Comprobación inicial al cargar la página
         async function init() {
-            // Deshabilitamos el botón momentáneamente mientras verificamos
             downloadBtn.disabled = true;
             downloadBtn.style.opacity = "0.7";
-            statusDiv.innerHTML = "🔎 Buscando heydin-kayser-vip.apk ...";
+            statusDiv.innerHTML = "<i class='fas fa-search fa-fw'></i> Buscando heydin-kayser-vip.apk ...";
             const fileExists = await checkFileAvailability();
             updateStatusUI(fileExists);
             if (fileExists) {
@@ -440,7 +615,7 @@
             if (!downloadBtn.disabled) {
                 onDownloadClick();
             } else {
-                statusDiv.innerHTML = "⛔ No se puede descargar: archivo APK no disponible en la carpeta.";
+                statusDiv.innerHTML = "<i class='fas fa-ban'></i> No se puede descargar: archivo APK no disponible en la carpeta.";
                 statusDiv.style.color = "#FFA07A";
             }
         });
