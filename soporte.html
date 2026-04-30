@@ -2,10 +2,9 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>HEYDIN KAYSER TRADING - Documentos VIP</title>
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>NEXUS PERCENT · Calculadora Futurista</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -14,686 +13,482 @@
         }
 
         body {
-            font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
-            background: #03050b;
-            color: #eef5ff;
-            line-height: 1.6;
             min-height: 100vh;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* FONDO PRINCIPAL CON IMAGEN HEYDIN.jpg TRANSPARENTE */
-        .bg-image-layer {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
-            background-size: cover;
-            background-position: center center;
-            background-repeat: no-repeat;
-            opacity: 0.32;
-            z-index: 0;
-            pointer-events: none;
-        }
-
-        /* OVERLAY NEÓN + GRID FUTURISTA */
-        .cyber-grid {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: 
-                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.07) 0px, rgba(0, 255, 255, 0.07) 1px, transparent 1px, transparent 45px),
-                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.07) 0px, rgba(0, 255, 255, 0.07) 1px, transparent 1px, transparent 45px);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .glow-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.08), rgba(0, 0, 0, 0.8));
-            z-index: 2;
-            pointer-events: none;
-        }
-
-        /* CONTENIDO PRINCIPAL */
-        .content {
-            position: relative;
-            z-index: 15;
-            width: 100%;
-            min-height: 100vh;
+            background: radial-gradient(circle at 20% 30%, #0a0f1f, #03060c);
             display: flex;
-            flex-direction: column;
-        }
-
-        /* LOADER FUTURISTA */
-        .loader-container {
-            position: fixed;
-            inset: 0;
-            background: #01010b;
-            display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            z-index: 10000;
-            transition: opacity 0.8s ease, visibility 0.8s;
-            backdrop-filter: blur(12px);
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            padding: 1.5rem;
         }
-        .loader-container.fade-out {
-            opacity: 0;
-            visibility: hidden;
+
+        /* contenedor principal tipo "glassmorphism + neón" */
+        .glass-orb {
+            max-width: 720px;
+            width: 100%;
+            background: rgba(12, 18, 28, 0.65);
+            backdrop-filter: blur(14px);
+            border-radius: 3rem;
+            border: 1px solid rgba(0, 255, 255, 0.25);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 255, 255, 0.1), 0 0 20px rgba(0, 210, 255, 0.2);
+            transition: all 0.3s ease;
+            padding: 2rem 2rem 2.5rem;
         }
-        .loader-ring {
-            width: 80px;
-            height: 80px;
-            border: 3px solid rgba(0,255,255,0.2);
-            border-top: 3px solid #0cf;
-            border-right: 3px solid #f0f;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            box-shadow: 0 0 25px cyan;
+
+        /* header futurista */
+        .neo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            border-bottom: 1px dashed rgba(0, 255, 255, 0.4);
+            padding-bottom: 0.75rem;
         }
-        @keyframes spin {
-            0% { transform: rotate(0deg);}
-            100% { transform: rotate(360deg);}
-        }
-        .loader-text {
-            margin-top: 25px;
-            font-size: 1.4rem;
+
+        .title {
             font-weight: 700;
-            letter-spacing: 4px;
-            background: linear-gradient(45deg, cyan, #ff44e6);
-            -webkit-background-clip: text;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #FFFFFF, #88f7ff, #2ad4ff);
             background-clip: text;
+            -webkit-background-clip: text;
             color: transparent;
+            letter-spacing: -0.3px;
+            text-shadow: 0 0 8px rgba(0,210,255,0.3);
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-            position: relative;
-            z-index: 10;
+        .badge {
+            font-size: 0.75rem;
+            font-weight: 500;
+            background: rgba(0, 230, 250, 0.15);
+            padding: 0.25rem 0.9rem;
+            border-radius: 40px;
+            border: 1px solid rgba(0, 230, 250, 0.5);
+            color: #9effff;
+            letter-spacing: 0.5px;
         }
 
-        /* HEADER GLASS */
-        .glass-header {
-            background: rgba(5, 10, 20, 0.75);
-            backdrop-filter: blur(20px);
-            border-bottom: 2px solid rgba(0, 255, 255, 0.5);
-            padding: 0.8rem 1.5rem;
-            position: sticky;
-            top: 0;
-            z-index: 200;
+        /* input group estilo cyber */
+        .input-group {
+            margin-bottom: 2rem;
         }
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
+
+        .cyber-label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: #9bc7ff;
+            margin-bottom: 0.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .glow-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            border: 1.5px solid #2c4f6e;
+            border-radius: 2rem;
+            padding: 1rem 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #eef5ff;
+            font-family: 'Inter', monospace;
+            transition: all 0.2s;
+            outline: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .glow-input:focus {
+            border-color: #0ff;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        /* cards de resultados estilo "datos cuánticos" */
+        .result-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin: 2rem 0 1.8rem;
+        }
+
+        .quantum-card {
+            background: rgba(5, 10, 20, 0.7);
+            border-radius: 1.8rem;
+            padding: 1rem 1.5rem;
+            border-left: 5px solid;
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.3);
+        }
+
+        .quantum-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-icon {
+            font-size: 1.6rem;
+            filter: drop-shadow(0 0 3px cyan);
+        }
+
+        .card-title {
+            font-weight: 600;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            color: #b8e2ff;
+        }
+
+        .card-value {
+            font-size: 2.3rem;
+            font-weight: 800;
+            font-family: 'Inter', monospace;
+            letter-spacing: -0.5px;
+            word-break: break-word;
+            line-height: 1.2;
+            color: white;
+            text-shadow: 0 0 2px rgba(0,255,255,0.5);
+        }
+
+        .card-sub {
+            font-size: 0.75rem;
+            color: #7f9fcf;
+            margin-top: 6px;
+            border-top: 1px dashed rgba(100, 200, 255, 0.3);
+            padding-top: 6px;
+            display: inline-block;
+        }
+
+        /* operaciones simplificadas (tooltips) */
+        .formula-hint {
+            font-size: 0.7rem;
+            color: #6d8fc6;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.2rem 0.6rem;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-family: monospace;
+        }
+
+        /* barra decorativa */
+        .divider-light {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0ff, #0aa, transparent);
+            margin: 1rem 0 1.2rem;
+            width: 100%;
+        }
+
+        /* factor extra y reset */
+        .flex-buttons {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 1rem;
             flex-wrap: wrap;
-            gap: 15px;
-        }
-        .logo-area {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            cursor: pointer;
-        }
-        .logo-icon {
-            font-size: 2rem;
-            color: #0cf;
-            filter: drop-shadow(0 0 8px cyan);
-        }
-        .logo-text {
-            font-size: 1.4rem;
-            font-weight: 900;
-            font-family: 'Syne', sans-serif;
-            background: linear-gradient(135deg, #fff, #0cf);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            letter-spacing: 1px;
-        }
-        .back-home {
-            background: rgba(0, 255, 255, 0.1);
-            border: 1.5px solid #0cf;
-            border-radius: 40px;
-            padding: 8px 20px;
-            color: #0cf;
-            font-weight: 700;
-            cursor: pointer;
-            transition: 0.3s;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .back-home:hover {
-            background: #0cf;
-            color: #000;
-            box-shadow: 0 0 20px cyan;
         }
 
-        /* TÍTULO PRINCIPAL */
-        .hero-section {
-            text-align: center;
-            padding: 3rem 1rem 2rem;
-        }
-        .hero-title {
-            font-size: clamp(2rem, 8vw, 4rem);
-            font-weight: 900;
-            font-family: 'Syne', sans-serif;
-            background: linear-gradient(45deg, #fff, cyan, #ff44e6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            text-shadow: 0 0 30px rgba(0,255,255,0.5);
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-        }
-        .hero-subtitle {
-            font-size: clamp(1rem, 4vw, 1.3rem);
-            color: #b3e4ff;
-            text-shadow: 0 0 10px rgba(0,255,255,0.3);
-            max-width: 700px;
-            margin: 0 auto;
+        .btn-neon {
+            background: rgba(0, 20, 40, 0.7);
+            border: 1px solid #2ad4ff;
+            color: #c2f0ff;
+            padding: 0.6rem 1.3rem;
+            border-radius: 3rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
         }
 
-        /* BARRA DE BÚSQUEDA FUTURISTA */
-        .search-container {
-            max-width: 600px;
-            margin: 0 auto 40px;
-            position: relative;
-        }
-        .search-box {
-            width: 100%;
-            padding: 16px 25px;
-            background: rgba(12, 20, 32, 0.7);
-            border: 1.5px solid rgba(0, 255, 255, 0.4);
-            border-radius: 60px;
-            color: #fff;
-            font-size: 1rem;
-            outline: none;
-            backdrop-filter: blur(10px);
-            font-family: 'Rajdhani', sans-serif;
-            font-weight: 500;
-            transition: all 0.3s;
-        }
-        .search-box:focus {
+        .btn-neon:hover {
+            background: #0ff20a;
             border-color: cyan;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.4);
-        }
-        .search-icon {
-            position: absolute;
-            right: 22px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: cyan;
-            font-size: 1.2rem;
-            pointer-events: none;
+            color: #010b14;
+            box-shadow: 0 0 10px cyan;
+            background: rgba(0, 255, 255, 0.2);
+            color: white;
         }
 
-        /* GRID DE DOCUMENTOS (CARPETAS) */
-        .grid-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
-            gap: 25px;
-            padding: 20px 0 40px;
-        }
-        @media (max-width: 640px) {
-            .grid-container {
-                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-                gap: 18px;
-            }
-        }
-        @media (max-width: 480px) {
-            .grid-container {
-                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
-                gap: 15px;
-            }
-        }
-
-        .folder {
-            background: rgba(12, 20, 32, 0.7);
-            backdrop-filter: blur(15px);
-            border-radius: 24px;
-            padding: 1.8rem 1rem;
+        .valor-inicial {
+            font-size: 0.9rem;
+            background: #07111e;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
             text-align: center;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-        }
-        .folder:active {
-            transform: scale(0.97);
-            border-color: cyan;
-            box-shadow: 0 0 25px cyan;
-        }
-        @media (min-width: 1024px) {
-            .folder:hover {
-                transform: translateY(-8px);
-                border-color: #ff44e6;
-                box-shadow: 0 15px 35px rgba(255, 68, 230, 0.3);
-            }
-        }
-        .folder-icon {
-            font-size: 3rem;
-            margin-bottom: 12px;
-            color: cyan;
-            text-shadow: 0 0 15px cyan;
-        }
-        .folder-name {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.1rem;
-            font-weight: 700;
-            background: linear-gradient(135deg, #fff, #0cf);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 5px;
-        }
-        .folder-number {
-            font-size: 0.8rem;
-            color: #9bbce0;
-            letter-spacing: 1px;
-        }
-        @media (max-width: 480px) {
-            .folder-icon { font-size: 2.2rem; }
-            .folder-name { font-size: 0.95rem; }
-            .folder { padding: 1.2rem 0.8rem; }
+            color: #9efff0;
+            border: 1px dashed #2ad4ff60;
         }
 
-        /* FOOTER */
+        @media (max-width: 500px) {
+            .glass-orb {
+                padding: 1.5rem;
+            }
+            .card-value {
+                font-size: 1.8rem;
+            }
+            .glow-input {
+                font-size: 1.2rem;
+                padding: 0.7rem 1.2rem;
+            }
+        }
+
         footer {
-            background: rgba(3, 5, 12, 0.9);
-            backdrop-filter: blur(20px);
-            border-top: 2px solid rgba(0, 255, 255, 0.4);
-            padding: 2.5rem 1rem 1.8rem;
-            margin-top: 2rem;
-        }
-        .footer-logo {
+            font-size: 0.7rem;
             text-align: center;
-            font-size: 1.4rem;
-            font-weight: 900;
-            font-family: 'Syne', sans-serif;
-            color: white;
-            text-shadow: 0 0 20px cyan;
-            margin-bottom: 1.5rem;
-        }
-        .social-icons {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 18px;
-            margin: 20px 0;
-        }
-        .social-icons a {
-            width: 50px;
-            height: 50px;
-            background: rgba(0, 255, 255, 0.08);
-            border: 1.5px solid rgba(0, 255, 255, 0.5);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            color: white;
-            transition: 0.25s;
-            text-decoration: none;
-        }
-        .social-icons a:active {
-            background: cyan;
-            color: black;
-            transform: scale(0.92);
-        }
-        @media (min-width: 1024px) {
-            .social-icons a:hover {
-                background: cyan;
-                color: black;
-                box-shadow: 0 0 30px cyan;
-                transform: translateY(-5px);
-            }
-        }
-        .copyright {
-            text-align: center;
-            font-size: 0.8rem;
-            color: #9bc0e0;
-            margin-top: 1.5rem;
-        }
-
-        /* MODAL BUY/SELL FUTURISTA */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(12px);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-        .modal-overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-        .modal-content {
-            background: rgba(8, 16, 28, 0.98);
-            border: 2px solid cyan;
-            border-radius: 40px;
-            padding: 2rem;
-            width: 90%;
-            max-width: 480px;
-            text-align: center;
-            box-shadow: 0 0 60px rgba(0, 255, 255, 0.4);
-            transform: scale(0.9);
-            transition: transform 0.3s ease;
-            position: relative;
-        }
-        .modal-overlay.active .modal-content {
-            transform: scale(1);
-        }
-        .modal-header {
-            margin-bottom: 1.5rem;
-        }
-        .modal-header h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            background: linear-gradient(45deg, cyan, #ff44e6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.5rem;
-        }
-        .modal-header p {
-            color: #aad0ff;
-            font-size: 1rem;
-        }
-        .action-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-            margin-top: 25px;
-            flex-wrap: wrap;
-        }
-        .action-btn {
-            flex: 1;
-            min-width: 120px;
-            padding: 14px 20px;
-            border: none;
-            border-radius: 60px;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.25s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .buy-btn {
-            background: linear-gradient(135deg, #00cc44, #00ff88);
-            color: #000;
-            box-shadow: 0 0 20px rgba(0, 255, 100, 0.5);
-        }
-        .sell-btn {
-            background: linear-gradient(135deg, #cc0044, #ff3366);
-            color: #fff;
-            box-shadow: 0 0 20px rgba(255, 51, 102, 0.5);
-        }
-        .action-btn:active {
-            transform: scale(0.96);
-        }
-        @media (min-width: 1024px) {
-            .action-btn:hover {
-                transform: translateY(-3px);
-                filter: brightness(1.05);
-            }
-        }
-        .close-modal-btn {
-            position: absolute;
-            top: 15px;
-            right: 20px;
-            background: none;
-            border: none;
-            color: cyan;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .close-modal-btn:hover {
-            color: #ff44e6;
-            transform: rotate(90deg);
-        }
-        @media (max-width: 550px) {
-            .action-buttons { flex-direction: column; gap: 12px; }
-            .action-btn { width: 100%; }
-            .modal-content { padding: 1.5rem; }
+            margin-top: 1.8rem;
+            color: #4f6f8f;
         }
     </style>
 </head>
 <body>
-<div class="bg-image-layer"></div>
-<div class="cyber-grid"></div>
-<div class="glow-overlay"></div>
-
-<div class="content">
-    <!-- LOADER -->
-    <div class="loader-container" id="loader">
-        <div class="loader-ring"></div>
-        <div class="loader-text">HEYDIN KAYSER DOCS</div>
-        <div style="margin-top: 20px; font-size:0.9rem; letter-spacing:2px;">CARGANDO DOCUMENTOS VIP</div>
+<div class="glass-orb">
+    <div class="neo-header">
+        <span class="title">⟡ PERCENT·NEXUS ⟡</span>
+        <span class="badge">V: GIRL ༄ CYBER</span>
     </div>
 
-    <header class="glass-header">
-        <div class="nav-container">
-            <div class="logo-area" onclick="window.location.href='home.html'">
-                <i class="fas fa-chart-line logo-icon"></i>
-                <span class="logo-text">HEYDIN KAYSER</span>
+    <div class="input-group">
+        <label class="cyber-label">⚡ CAPITAL INICIAL [BASE]</label>
+        <input type="number" id="capitalInput" class="glow-input" value="50" step="any" placeholder="Ingresa cualquier cantidad">
+        <div class="formula-hint" style="margin-top: 10px; display: inline-flex;">
+            <span>🔁</span> La magia comienza aquí
+        </div>
+    </div>
+
+    <!-- TARJETAS DINÁMICAS -->
+    <div class="result-stack" id="resultStack">
+        <!-- card CAPITAL (65%) -->
+        <div class="quantum-card" style="border-left-color: #2affb6;">
+            <div class="card-header">
+                <div class="card-icon">💎</div>
+                <div class="card-title">CAPITAL · 65%</div>
+                <div class="formula-hint">( base × 65 ) / 100</div>
             </div>
-            <div class="back-home" onclick="window.location.href='home.html'">
-                <i class="fas fa-arrow-left"></i>
-                <span>VOLVER AL PORTAL</span>
+            <div class="card-value" id="capitalResult">$0.00</div>
+            <div class="card-sub">primer escalón · valor intermedio</div>
+        </div>
+
+        <!-- card INTERÉS (164%) -->
+        <div class="quantum-card" style="border-left-color: #5f9eff;">
+            <div class="card-header">
+                <div class="card-icon">📈</div>
+                <div class="card-title">INTERÉS · 164%</div>
+                <div class="formula-hint">( capital_65% × 164 ) / 100</div>
             </div>
-        </div>
-    </header>
-
-    <div class="container">
-        <div class="hero-section">
-            <h1 class="hero-title">DOCUMENTOS DE TRADING</h1>
-            <p class="hero-subtitle">Accede a análisis, estrategias y señales cuánticas de élite</p>
+            <div class="card-value" id="interesResult">$0.00</div>
+            <div class="card-sub">segunda transformación financiera</div>
         </div>
 
-        <div class="search-container">
-            <input type="text" class="search-box" id="searchInput" placeholder="Buscar documento (XAUSUSD, número...)" autocomplete="off">
-            <i class="fas fa-search search-icon"></i>
+        <!-- card ORDENACIÓN / GANANCIA (5.15% sobre interés) -->
+        <div class="quantum-card" style="border-left-color: #ff86dc;">
+            <div class="card-header">
+                <div class="card-icon">✨</div>
+                <div class="card-title">ORDENACIÓN · GANANCIA 5.15%</div>
+                <div class="formula-hint">( interés × 5.15 ) / 100</div>
+            </div>
+            <div class="card-value" id="gananciaResult">$0.00</div>
+            <div class="card-sub">plusvalía · rendimiento final</div>
         </div>
+    </div>
 
-        <div class="grid-container" id="folders-container"></div>
+    <div class="divider-light"></div>
+    
+    <!-- panel informativo con desglose preciso -->
+    <div class="flex-buttons">
+        <button id="resetBtn" class="btn-neon">⟳ REINICIAR (50)</button>
+        <div class="valor-inicial" id="previewBase">BASE: $50.00</div>
     </div>
 
     <footer>
-        <div class="footer-logo">
-            <i class="fas fa-crown"></i> HEYDIN KAYSER TRADING
-        </div>
-        <div class="social-icons">
-            <a href="https://heydin-kayser-vip.blogspot.com/" target="_blank"><i class="fab fa-blogger-b"></i></a>
-            <a href="https://www.youtube.com/@heydinkayser2026" target="_blank"><i class="fab fa-youtube"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61576490987991&locale=es_LA" target="_blank"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.tiktok.com/@heydin.kayser2026" target="_blank"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.mql5.com/en/channels/heydin-kayser-2026" target="_blank"><i class="fas fa-chart-simple"></i></a>
-        </div>
-        <div class="copyright">
-            © 2025 HEYDIN KAYSER TRADING • TERMINAL CUÁNTICA • DOCUMENTOS VIP
-        </div>
+        ✦ flujo cálculos: Capital (65%) → Interés (164% del capital) → Ordenación (5.15% sobre interés) ✦
     </footer>
 </div>
 
-<!-- MODAL BUY/SELL -->
-<div class="modal-overlay" id="actionModal">
-    <div class="modal-content">
-        <button class="close-modal-btn" id="closeModalBtn"><i class="fas fa-times"></i></button>
-        <div class="modal-header">
-            <h2 id="modalTitle">XAUSUSD 1</h2>
-            <p>Selecciona la acción para este documento</p>
-        </div>
-        <div class="action-buttons">
-            <button class="action-btn buy-btn" id="buyBtn">BUY</button>
-            <button class="action-btn sell-btn" id="sellBtn">SELL</button>
-        </div>
-    </div>
-</div>
-
 <script>
-    // LOADER
-    window.addEventListener('load', () => {
-        setTimeout(() => {
-            const loader = document.getElementById('loader');
-            loader.classList.add('fade-out');
-            setTimeout(() => loader.style.display = 'none', 800);
-        }, 1800);
-    });
+    (function() {
+        // elementos del DOM
+        const inputCapital = document.getElementById('capitalInput');
+        const capitalResultSpan = document.getElementById('capitalResult');
+        const interesResultSpan = document.getElementById('interesResult');
+        const gananciaResultSpan = document.getElementById('gananciaResult');
+        const previewBaseSpan = document.getElementById('previewBase');
+        const resetBtn = document.getElementById('resetBtn');
 
-    // GENERAR 50 DOCUMENTOS (XAUSUSD 1 al 50)
-    function generateDocuments() {
-        const container = document.getElementById('folders-container');
-        container.innerHTML = '';
+        // --- CONSTANTES porcentuales según el enunciado: ---
+        // 1) Capital se obtiene: base * 65% => (base * 65) / 100
+        // 2) Interés: (resultadoCapital * 164%) => (capitalPrev * 164) / 100
+        // 3) Ordenación / ganancia: (resultadoInteres * 5.15%) => (interes * 5.15) / 100
+        // NOTA: en el prompt original se menciona "58.50 100" pero en la tabla del archivo muestra 5,15% => 311,18% 
+        // se lee textual: 5,15% => 311,18% de ganancia. El cálculo correcto según el ejemplo: 
+        // si invertimos 32.50 * 164% = 53.30, luego 53.30 * 5.15% = 2.74495?? Pero en el enunciado se indica "que vamos a tener una ganancia de 31.18"
+        // Revisando el texto original: "agarramos esos 53.30 lo vamos a multiplicar por 58.50 100 qué vamos a tener una ganancia de 31.18" 
+        // Probablemente fue un error de tipeo, pero según la tabla de imagen: Capital 50 -> 65% => 3250 (interpretación 32.50), Interés 3250 * 164% => 5330 (53.30)
+        // Ordenación: 5330 * 5,15% => según cálculo real: 5330 * 0.0515 = 274.495?? pero da 311,18% como extraño. No obstante en el ejemplo numérico de habla: 53.30 * 58.50%?? 
+        // Después de analizar: "58.50 100 qué vamos a tener una ganancia de 31.18" => 53.30 * (58.50/100) = 53.30 * 0.585 = 31.1805 => correcto!! Entonces el tercer porcentaje realmente es 58.5% en lugar de 5.15%? 
+        // Pero en la tabla del archivo JPEG dice textual "5,15% => 311,18%" pero tal vez es un error OCR. Lo que pide el usuario: "53.30 lo vamos a multiplicar por 58.50/100 = 31.18"
+        // Por coherencia con la solicitud final (ganancia 31.18 partiendo de base 50) aplicamos tercer paso con 58.5% (o 58.50%).
+        // Sin embargo, en la explicación oral: "los multiplicamos por 58.50 100" --> porcentaje 58.5% sobre el interés.
+        // Para honorar el "5,15%" original pero a la vez obtener el resultado deseado de 31.18, usamos 58.5% como solicitó en la explicación final.
+        // Pero veamos: 50-> 65% = 32.5; 32.5 * 164% = 53.3; 53.3 * 58.5% = 31.1805 (~31.18). Perfecto.
         
-        for (let i = 1; i <= 50; i++) {
-            const folder = document.createElement('div');
-            folder.classList.add('folder');
-            folder.dataset.id = i;
-            folder.dataset.search = `xaususd ${i} documento ${i}`;
+        // Por tanto los porcentajes correctos requeridos por el usuario (lo que él necesita visualmente son esos valores)
+        // Incluso en el código pondré ambos parámetros claros, pero cumpliendo el ejemplo exacto: 65%, 164% y 58.5%
+        // Dejaremos que el usuario pueda cambiar el input y siempre se aplicarán esos tres porcentajes fijos, tal como describió.
+        // === PARÁMETROS DEFINITIVOS (basados en la explicación de voz y ejemplo práctico) ===
+        const PCT_CAPITAL = 65;      // 65% -> capa1
+        const PCT_INTERES = 164;     // 164% -> sobre capital anterior
+        const PCT_GANANCIA = 58.5;   // 58.5% (58.50%) sobre el interés para obtener la ganancia final (31.18 con base 50)
+        
+        // Función principal que actualiza todos los valores
+        function actualizarTodo() {
+            // obtener valor base, permitir decimales y vacío seguro
+            let rawValue = inputCapital.value.trim();
+            let base = parseFloat(rawValue);
+            if (isNaN(base)) {
+                base = 0;
+                inputCapital.value = 0;
+            }
+            // mostramos preview base
+            previewBaseSpan.innerText = `BASE: $${base.toFixed(2)}`;
             
-            // Iconos variados para estilo
-            const icons = ['fa-folder', 'fa-file-alt', 'fa-chart-line', 'fa-coins', 'fa-chart-simple', 'fa-candlestick-chart'];
-            const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+            // 1. Capital intermedio => (base * PCT_CAPITAL) / 100
+            let capitalIntermedio = (base * PCT_CAPITAL) / 100;
+            // 2. Interés => (capitalIntermedio * PCT_INTERES) / 100
+            let interesValor = (capitalIntermedio * PCT_INTERES) / 100;
+            // 3. Ganancia / Ordenación => (interesValor * PCT_GANANCIA) / 100
+            let gananciaValor = (interesValor * PCT_GANANCIA) / 100;
             
-            folder.innerHTML = `
-                <i class="fas ${randomIcon} folder-icon"></i>
-                <div class="folder-name">XAUSUSD ${i}</div>
-                <div class="folder-number">Documento VIP ${i}</div>
-            `;
+            // Formateo con 2 decimales (pero mostramos elegante)
+            capitalResultSpan.innerText = `$${capitalIntermedio.toFixed(2)}`;
+            interesResultSpan.innerText = `$${interesValor.toFixed(2)}`;
+            gananciaResultSpan.innerText = `$${gananciaValor.toFixed(2)}`;
             
-            folder.addEventListener('click', (e) => {
-                e.stopPropagation();
-                openActionModal(i);
-            });
-            
-            container.appendChild(folder);
+            // Atributos adicionales: si quieres mostrar la operación en tooltips, queda implícito.
+            // Actualizamos también los títulos con pequeños detalles extra
+            // Adicionalmente, si hay valores muy pequeños no pasa nada.
         }
-    }
-    
-    // MODAL
-    const modal = document.getElementById('actionModal');
-    const modalTitle = document.getElementById('modalTitle');
-    let currentDocId = null;
-    
-    function openActionModal(docId) {
-        currentDocId = docId;
-        modalTitle.textContent = `XAUSUSD ${docId}`;
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-    }
-    
-    function closeModal() {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-    }
-    
-    // Configurar eventos de los botones Buy/Sell (se regeneran dinámicamente)
-    function setupModalButtons() {
-        const buyBtn = document.getElementById('buyBtn');
-        const sellBtn = document.getElementById('sellBtn');
-        
-        // Remover listeners antiguos clonando (evita duplicados)
-        const newBuy = buyBtn.cloneNode(true);
-        const newSell = sellBtn.cloneNode(true);
-        buyBtn.parentNode.replaceChild(newBuy, buyBtn);
-        sellBtn.parentNode.replaceChild(newSell, sellBtn);
-        
-        const finalBuy = document.getElementById('buyBtn');
-        const finalSell = document.getElementById('sellBtn');
-        
-        finalBuy.addEventListener('click', () => {
-            if (currentDocId) {
-                window.location.href = `buy/index${currentDocId}.html`;
-            }
+
+        // Eventos: al cambiar input, actualizar
+        inputCapital.addEventListener('input', function(e) {
+            let v = e.target.value;
+            if (v === '') v = '0';
+            actualizarTodo();
         });
         
-        finalSell.addEventListener('click', () => {
-            if (currentDocId) {
-                window.location.href = `sell/index${currentDocId}.html`;
-            }
+        // Botón reset: poner valor por defecto 50 y actualizar input y resultados
+        resetBtn.addEventListener('click', function() {
+            inputCapital.value = '50';
+            actualizarTodo();
+            // pequeño destello visual en el botón (opcional)
+            resetBtn.style.transform = 'scale(0.98)';
+            setTimeout(() => { resetBtn.style.transform = ''; }, 150);
         });
-    }
-    
-    // FUNCIÓN DE BÚSQUEDA
-    function setupSearch() {
-        const searchInput = document.getElementById('searchInput');
-        searchInput.addEventListener('input', function() {
-            const term = this.value.toLowerCase().trim();
-            const folders = document.querySelectorAll('.folder');
-            
-            folders.forEach(folder => {
-                const folderName = folder.querySelector('.folder-name').textContent.toLowerCase();
-                const folderNumber = folder.querySelector('.folder-number').textContent.toLowerCase();
-                const id = folder.dataset.id;
-                
-                if (folderName.includes(term) || folderNumber.includes(term) || `xaususd ${id}`.includes(term)) {
-                    folder.style.display = 'flex';
-                } else {
-                    folder.style.display = 'none';
+        
+        // también soporte para cambios por flechas
+        inputCapital.addEventListener('change', actualizarTodo);
+        
+        // ejecutar inicial para base 50 (mostrar 32.50, 53.30 y 31.18)
+        actualizarTodo();
+
+        // Añadimos pequeños detalles visuales con los porcentajes para mayor claridad
+        // modificamos los textos de subtítulos con los porcentajes exactos
+        const cards = document.querySelectorAll('.quantum-card');
+        if (cards.length >= 3) {
+            // personalizar los subtítulos dinámicamente para que se vea los % aplicados (sin perder estilo)
+            const capSub = cards[0].querySelector('.card-sub');
+            const intSub = cards[1].querySelector('.card-sub');
+            const ganSub = cards[2].querySelector('.card-sub');
+            if (capSub) capSub.innerHTML = `🔹 ${PCT_CAPITAL}% del capital base · valor intermedio`;
+            if (intSub) intSub.innerHTML = `🔸 ${PCT_INTERES}% del capital anterior → interés devengado`;
+            if (ganSub) ganSub.innerHTML = `✨ ${PCT_GANANCIA}% sobre el interés → ganancia / ordenación final (${PCT_GANANCIA}%) ✨`;
+        }
+        
+        // Adicionalmente, si el usuario quiere más elegancia, destacamos los porcentajes en los encabezados
+        const capitalHeader = document.querySelector('.quantum-card:first-child .card-title');
+        const interesHeader = document.querySelector('.quantum-card:nth-child(2) .card-title');
+        const gananciaHeader = document.querySelector('.quantum-card:nth-child(3) .card-title');
+        if(capitalHeader) capitalHeader.innerHTML = `CAPITAL · ${PCT_CAPITAL}%`;
+        if(interesHeader) interesHeader.innerHTML = `INTERÉS · ${PCT_INTERES}%`;
+        if(gananciaHeader) gananciaHeader.innerHTML = `ORDENACIÓN · ${PCT_GANANCIA}%`;
+        
+        // Refrescar tooltips de formula hints con los valores reales
+        const hints = document.querySelectorAll('.formula-hint');
+        if(hints.length >= 3) {
+            hints[0].innerHTML = `( base × ${PCT_CAPITAL} ) / 100`;
+            hints[1].innerHTML = `( capital_${PCT_CAPITAL}% × ${PCT_INTERES} ) / 100`;
+            hints[2].innerHTML = `( interés × ${PCT_GANANCIA} ) / 100  → ganancia neta`;
+        }
+        
+        // Efecto hover a las tarjetas ya tiene css, pero adicional actualizar cualquier cambio dinámico
+        // También podemos mostrar un pequeño resumen si se desea de los valores completos.
+        // Simulamos protección contra entradas no numéricas en el campo.
+        inputCapital.addEventListener('keydown', (e) => {
+            // permitir solo números, punto y teclas de control
+            const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Escape', 'Enter', '.', ',', '-'];
+            if (!allowedKeys.includes(e.key) && !/^[0-9]$/.test(e.key) && e.key !== '.' && e.key !== ',') {
+                if (e.key !== 'Meta' && e.key !== 'Control') {
+                    e.preventDefault();
                 }
-            });
-        });
-    }
-    
-    // Cerrar modal con botón, click fuera y Escape
-    document.getElementById('closeModalBtn').addEventListener('click', closeModal);
-    modal.addEventListener('click', (e) => {
-        if (e.target === modal) closeModal();
-    });
-    document.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && modal.classList.contains('active')) closeModal();
-    });
-    
-    // Inicializar todo
-    document.addEventListener('DOMContentLoaded', () => {
-        generateDocuments();
-        setupSearch();
-        setupModalButtons();
-        // Reconfigurar botones cada vez que se abre modal (por si acaso)
-        modal.addEventListener('click', (e) => {
-            if (e.target.classList.contains('action-btn')) {
-                // ya se maneja, pero aseguramos
+            }
+            // reemplazar coma por punto para evitar errores de parsing
+            if (e.key === ',') {
+                e.preventDefault();
+                const current = inputCapital.value;
+                const start = inputCapital.selectionStart;
+                const end = inputCapital.selectionEnd;
+                inputCapital.value = current.slice(0, start) + '.' + current.slice(end);
+                inputCapital.setSelectionRange(start + 1, start + 1);
+                actualizarTodo();
             }
         });
-    });
-    
-    // Al abrir el modal, refrescar eventos de los botones (por si se reasignan)
-    const observer = new MutationObserver(() => {
-        if (modal.classList.contains('active')) {
-            setupModalButtons();
+        
+        // si el usuario pega contenido raro, sanitizamos
+        inputCapital.addEventListener('paste', (e) => {
+            e.preventDefault();
+            let pasteData = (e.clipboardData || window.clipboardData).getData('text');
+            pasteData = pasteData.replace(/,/g, '.').replace(/[^0-9.-]/g, '');
+            let num = parseFloat(pasteData);
+            if (!isNaN(num)) {
+                inputCapital.value = num;
+                actualizarTodo();
+            } else {
+                inputCapital.value = '0';
+                actualizarTodo();
+            }
+        });
+        
+        // Añadimos efecto "girl vibes" con un pequeño gradiente animado en el borde sutil
+        const orb = document.querySelector('.glass-orb');
+        if(orb) {
+            setInterval(() => {
+                const hue = (Date.now() / 80) % 360;
+                orb.style.borderColor = `hsla(${hue}, 80%, 65%, 0.35)`;
+            }, 200);
         }
-    });
-    observer.observe(modal, { attributes: true, attributeFilter: ['class'] });
-    
-    // También aseguramos al hacer click en el modal por si los botones cambian
-    window.setupModalButtons = setupModalButtons;
+        
+        // detalle: añadir tooltips finales en tarjetas
+        const makeTooltip = (elem, text) => {
+            elem.setAttribute('title', text);
+        };
+        const cValue = document.getElementById('capitalResult');
+        const iValue = document.getElementById('interesResult');
+        const gValue = document.getElementById('gananciaResult');
+        if(cValue) makeTooltip(cValue.parentElement, `Valor intermedio tras aplicar ${PCT_CAPITAL}% al capital base.`);
+        if(iValue) makeTooltip(iValue.parentElement, `Interés bruto = Capital intermedio × ${PCT_INTERES}%`);
+        if(gValue) makeTooltip(gValue.parentElement, `Ganancia final = Interés × ${PCT_GANANCIA}% (según ejemplo: 53.30 × 58.5% = 31.18)`);
+        
+        console.log('✨ Nexus Percent activo — flujo: 65% → 164% → 58.5% ✨');
+    })();
 </script>
 </body>
 </html>
