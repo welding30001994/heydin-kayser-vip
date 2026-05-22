@@ -126,7 +126,7 @@
             background: rgba(5, 10, 20, 0.6);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 255, 255, 0.4);
-            padding: 0.8rem 1.5rem;
+            padding: 0.8rem 1rem;
             position: sticky;
             top: 0;
             z-index: 200;
@@ -138,15 +138,15 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 10px;
         }
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 8px;
         }
         .logo-icon {
-            font-size: 2rem;
+            font-size: 1.5rem;
             color: #0cf;
             filter: drop-shadow(0 0 8px cyan);
             animation: pulse 2s infinite;
@@ -156,7 +156,7 @@
             50% { opacity: 0.8; text-shadow: 0 0 20px cyan; }
         }
         .logo-text {
-            font-size: 1.3rem;
+            font-size: 1rem;
             font-weight: 900;
             font-family: 'Syne', sans-serif;
             background: linear-gradient(135deg, #fff, #0cf);
@@ -167,13 +167,13 @@
         }
         .auth-buttons {
             display: flex;
-            gap: 12px;
+            gap: 8px;
         }
         .btn-neon {
-            padding: 10px 20px;
+            padding: 6px 12px;
             border-radius: 40px;
             font-weight: 800;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             border: none;
@@ -210,69 +210,68 @@
             position: relative;
         }
 
-        /* BARRA LATERAL IZQUIERDA - VERTICAL SOCIAL */
+        /* BARRA LATERAL IZQUIERDA - VERTICAL SOCIAL (Desktop) */
         .sidebar-left {
-            width: 100px;
+            width: 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 25px;
+            gap: 20px;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             border-right: 1px solid rgba(0, 255, 255, 0.3);
             position: fixed;
             left: 0;
-            top: 80px;
+            top: 70px;
             bottom: 0;
             z-index: 50;
         }
 
         .social-vertical-item {
-            width: 55px;
-            height: 55px;
+            width: 50px;
+            height: 50px;
             background: rgba(0, 200, 255, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 24px;
             color: #0cf;
             transition: 0.3s;
             border: 1.5px solid #0cf;
             text-decoration: none;
             cursor: pointer;
-            position: relative;
         }
 
         .social-vertical-item:hover {
             background: cyan;
             color: black;
-            transform: scale(1.15);
-            box-shadow: 0 0 25px cyan;
+            transform: scale(1.1);
+            box-shadow: 0 0 20px cyan;
         }
 
         .social-vertical-item.whatsapp:hover {
             background: #25D366;
             border-color: #25D366;
             color: white;
-            box-shadow: 0 0 25px #25D366;
+            box-shadow: 0 0 20px #25D366;
         }
 
-        /* BARRA LATERAL DERECHA - VERTICAL FINANCIERO */
+        /* BARRA LATERAL DERECHA - VERTICAL FINANCIERO (Desktop) */
         .sidebar-right {
-            width: 100px;
+            width: 80px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 25px;
+            gap: 20px;
             background: rgba(0, 0, 0, 0.3);
             backdrop-filter: blur(10px);
             border-left: 1px solid rgba(0, 255, 255, 0.3);
             position: fixed;
             right: 0;
-            top: 80px;
+            top: 70px;
             bottom: 0;
             z-index: 50;
         }
@@ -283,23 +282,23 @@
         }
 
         .financial-item i {
-            font-size: 32px;
+            font-size: 28px;
             color: #ff44e6;
             filter: drop-shadow(0 0 8px #ff44e6);
         }
 
         .financial-item span {
             display: block;
-            font-size: 0.7rem;
-            margin-top: 8px;
+            font-size: 0.6rem;
+            margin-top: 5px;
             color: #ff44e6;
             font-weight: bold;
             letter-spacing: 1px;
         }
 
         @keyframes floatGlow {
-            0%, 100% { transform: translateY(0px); text-shadow: 0 0 5px #ff44e6; }
-            50% { transform: translateY(-5px); text-shadow: 0 0 20px #ff44e6; }
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
         }
 
         /* HERO CENTRAL */
@@ -309,19 +308,19 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
-            margin-left: 100px;
-            margin-right: 100px;
-            min-height: calc(100vh - 80px);
+            padding: 1.5rem;
+            margin-left: 80px;
+            margin-right: 80px;
+            min-height: calc(100vh - 70px);
         }
 
         .hero-card {
             background: rgba(8, 15, 28, 0.7);
             backdrop-filter: blur(18px);
-            border-radius: 60px;
+            border-radius: 40px;
             border: 1px solid rgba(0, 255, 255, 0.6);
-            padding: 3rem 2.5rem;
-            max-width: 750px;
+            padding: 2rem 1.5rem;
+            max-width: 700px;
             width: 100%;
             margin: 0 auto;
             box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 40px rgba(0,255,255,0.3);
@@ -340,7 +339,7 @@
         }
 
         .hero-card h1 {
-            font-size: clamp(2rem, 7vw, 3.8rem);
+            font-size: clamp(1.6rem, 6vw, 3rem);
             font-weight: 900;
             font-family: 'Syne', sans-serif;
             background: linear-gradient(45deg, cyan, #ff44e6, #ffffff);
@@ -348,43 +347,44 @@
             background-clip: text;
             color: transparent;
             margin-bottom: 1rem;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
 
         .hero-tagline {
-            font-size: 1.2rem;
+            font-size: clamp(0.9rem, 4vw, 1.1rem);
             color: #cef0ff;
             margin-bottom: 1.5rem;
-            letter-spacing: 2px;
-            word-break: keep-all;
+            letter-spacing: 1px;
         }
 
         .hero-tagline i {
-            margin: 0 8px;
+            margin: 0 5px;
             color: #ff44e6;
         }
 
         .stats-glowing {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
+            gap: 1rem;
+            margin: 1.5rem 0;
             flex-wrap: wrap;
         }
 
         .stat {
             text-align: center;
+            flex: 1;
+            min-width: 80px;
         }
 
         .stat-number {
-            font-size: 2rem;
+            font-size: clamp(1.2rem, 5vw, 1.8rem);
             font-weight: 900;
             color: cyan;
             text-shadow: 0 0 10px cyan;
         }
 
         .stat-label {
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             letter-spacing: 1px;
             color: #aaf0ff;
         }
@@ -392,41 +392,38 @@
         .btn-cta {
             background: linear-gradient(145deg, #00ccff, #0077ff);
             border: none;
-            padding: 16px 42px;
-            font-size: 1.3rem;
+            padding: 12px 24px;
+            font-size: clamp(1rem, 4vw, 1.2rem);
             font-weight: 900;
             border-radius: 60px;
             color: #010101;
             cursor: pointer;
             transition: 0.3s;
             width: 100%;
-            max-width: 320px;
+            max-width: 280px;
             box-shadow: 0 0 25px cyan;
             margin-top: 1rem;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
 
-        .btn-cta:hover {
-            transform: scale(1.03);
-            background: linear-gradient(145deg, #ff44e6, #a05eff);
-            color: white;
-            box-shadow: 0 0 40px #ff44e6;
+        .btn-cta:active {
+            transform: scale(0.98);
         }
 
         /* FEATURES SECTION */
         .features-section {
-            padding: 3rem 1.5rem;
+            padding: 2rem 1rem;
             max-width: 1200px;
             margin: 0 auto;
             width: 100%;
         }
         .section-title {
             text-align: center;
-            margin-bottom: 3rem;
+            margin-bottom: 2rem;
         }
         .section-title h2 {
-            font-size: clamp(1.8rem, 6vw, 2.8rem);
+            font-size: clamp(1.5rem, 5vw, 2.5rem);
             background: linear-gradient(135deg, cyan, #f0f);
             -webkit-background-clip: text;
             background-clip: text;
@@ -435,39 +432,113 @@
         }
         .features-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-            gap: 2rem;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
         }
         .feature-item {
             background: rgba(12, 20, 32, 0.7);
             backdrop-filter: blur(12px);
-            border-radius: 30px;
-            padding: 2rem 1.5rem;
+            border-radius: 25px;
+            padding: 1.5rem;
             text-align: center;
             border: 1px solid rgba(0, 255, 255, 0.3);
             transition: 0.3s;
         }
-        .feature-item:hover {
-            border-color: cyan;
-            box-shadow: 0 0 30px rgba(0,255,255,0.4);
-            transform: translateY(-5px);
+        .feature-item:active {
+            transform: scale(0.98);
         }
         .feature-item i {
-            font-size: 3rem;
+            font-size: 2.5rem;
             color: cyan;
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
         }
         .feature-item h3 {
-            font-size: 1.6rem;
-            margin-bottom: 0.7rem;
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+        .feature-item p {
+            font-size: 0.85rem;
+        }
+
+        /* BOTONES FLOTANTES MÓVIL */
+        .mobile-social-buttons {
+            display: none;
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 12px;
+            justify-content: center;
+            gap: 15px;
+            z-index: 100;
+            border-top: 1px solid cyan;
+            border-bottom: 1px solid cyan;
+        }
+
+        .mobile-social-icon {
+            width: 45px;
+            height: 45px;
+            background: rgba(0, 200, 255, 0.15);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 22px;
+            color: #0cf;
+            text-decoration: none;
+            border: 1px solid cyan;
+            transition: 0.2s;
+        }
+
+        .mobile-social-icon:active {
+            background: cyan;
+            color: black;
+            transform: scale(0.95);
+        }
+
+        .mobile-financial-bar {
+            display: none;
+            position: fixed;
+            top: 70px;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(15px);
+            padding: 10px;
+            border-radius: 0 0 0 20px;
+            border-left: 1px solid #ff44e6;
+            border-bottom: 1px solid #ff44e6;
+            z-index: 100;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .mobile-financial-item {
+            text-align: center;
+            padding: 5px;
+        }
+
+        .mobile-financial-item i {
+            font-size: 20px;
+            color: #ff44e6;
+        }
+
+        .mobile-financial-item span {
+            display: block;
+            font-size: 0.55rem;
+            color: #ff44e6;
         }
 
         /* FOOTER */
         .footer-futuristic {
-            padding: 2rem;
+            padding: 1.5rem;
             text-align: center;
             background: rgba(3, 5, 12, 0.9);
             border-top: 1px solid rgba(0,255,255,0.3);
+        }
+        .footer-futuristic p {
+            font-size: 0.8rem;
         }
 
         /* MODALES */
@@ -485,10 +556,10 @@
         .modal-box {
             background: rgba(8, 16, 28, 0.98);
             border: 2px solid cyan;
-            border-radius: 40px;
+            border-radius: 30px;
             width: 100%;
-            max-width: 480px;
-            padding: 2rem;
+            max-width: 400px;
+            padding: 1.5rem;
             box-shadow: 0 0 60px rgba(0,255,255,0.4);
             animation: modalPop 0.25s ease;
         }
@@ -500,17 +571,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         .modal-header h2 {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             background: linear-gradient(45deg, cyan, #ff66e6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         .close-modal {
-            font-size: 2rem;
+            font-size: 1.8rem;
             cursor: pointer;
             color: cyan;
             background: none;
@@ -518,13 +589,13 @@
         }
         .input-glow {
             width: 100%;
-            padding: 14px 18px;
-            margin: 12px 0;
+            padding: 12px 16px;
+            margin: 10px 0;
             background: rgba(0, 255, 255, 0.05);
             border: 1px solid rgba(0,255,255,0.5);
             border-radius: 60px;
             color: white;
-            font-size: 1rem;
+            font-size: 0.9rem;
         }
         .input-glow:focus {
             outline: none;
@@ -534,9 +605,10 @@
         .terms-check {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin: 20px 0;
+            gap: 10px;
+            margin: 15px 0;
             color: #b9f0ff;
+            font-size: 0.85rem;
         }
         .terms-link {
             color: cyan;
@@ -546,23 +618,22 @@
         .btn-submit {
             background: linear-gradient(145deg, #0cf, #3f6eff);
             width: 100%;
-            padding: 14px;
+            padding: 12px;
             border: none;
             border-radius: 60px;
             font-weight: 900;
-            font-size: 1.1rem;
+            font-size: 1rem;
             cursor: pointer;
             transition: 0.2s;
         }
-        .btn-submit:hover {
-            background: linear-gradient(145deg, #ff44e6, #a05eff);
-            color: white;
-            box-shadow: 0 0 20px #ff44e6;
+        .btn-submit:active {
+            transform: scale(0.98);
         }
         .toggle-auth {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 15px;
             color: #ccf4ff;
+            font-size: 0.85rem;
         }
         .toggle-auth span {
             color: cyan;
@@ -571,47 +642,98 @@
         }
         .error-msg {
             color: #ff7b9c;
-            font-size: 0.85rem;
-            margin: 8px 0;
+            font-size: 0.8rem;
+            margin: 5px 0;
             text-align: center;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 900px) {
-            .sidebar-left, .sidebar-right {
-                width: 70px;
-            }
-            .hero-center {
-                margin-left: 70px;
-                margin-right: 70px;
-            }
-            .social-vertical-item {
-                width: 45px;
-                height: 45px;
-                font-size: 22px;
-            }
-            .financial-item i {
-                font-size: 24px;
-            }
-            .financial-item span {
-                font-size: 0.6rem;
-            }
-        }
-
-        @media (max-width: 700px) {
+        /* ========== RESPONSIVE PARA MÓVIL ========== */
+        @media (max-width: 768px) {
             .sidebar-left, .sidebar-right {
                 display: none;
             }
+            
             .hero-center {
                 margin-left: 0;
                 margin-right: 0;
+                padding: 1rem;
             }
+            
             .hero-card {
-                padding: 2rem 1.5rem;
+                padding: 1.5rem;
+                border-radius: 30px;
             }
+            
+            .stats-glowing {
+                gap: 0.8rem;
+            }
+            
+            .mobile-social-buttons {
+                display: flex;
+            }
+            
+            .mobile-financial-bar {
+                display: flex;
+            }
+            
             .btn-cta {
+                max-width: 100%;
+                padding: 12px 20px;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            
+            .glass-header {
+                padding: 0.6rem 0.8rem;
+            }
+            
+            .logo-icon {
+                font-size: 1.3rem;
+            }
+            
+            .logo-text {
+                font-size: 0.85rem;
+            }
+            
+            .btn-neon {
+                padding: 5px 10px;
+                font-size: 0.65rem;
+            }
+        }
+
+        /* Pantallas muy pequeñas */
+        @media (max-width: 480px) {
+            .hero-card {
+                padding: 1.2rem;
+            }
+            
+            .stat-number {
                 font-size: 1rem;
-                padding: 12px 24px;
+            }
+            
+            .stat-label {
+                font-size: 0.6rem;
+            }
+            
+            .hero-tagline {
+                font-size: 0.8rem;
+            }
+            
+            .mobile-social-icon {
+                width: 40px;
+                height: 40px;
+                font-size: 18px;
+            }
+            
+            .mobile-financial-item i {
+                font-size: 16px;
+            }
+            
+            .mobile-financial-item span {
+                font-size: 0.5rem;
             }
         }
     </style>
@@ -637,14 +759,14 @@
             </div>
             <div class="auth-buttons">
                 <button class="btn-neon btn-login" id="openLoginModalBtn"><i class="fas fa-key"></i> INICIAR</button>
-                <button class="btn-neon btn-register" id="openRegisterModalBtn"><i class="fas fa-crown"></i> REGISTRO VIP</button>
+                <button class="btn-neon btn-register" id="openRegisterModalBtn"><i class="fas fa-crown"></i> REGISTRO</button>
             </div>
         </div>
     </header>
 
     <!-- MAIN LAYOUT CON TRES COLUMNAS -->
     <div class="main-layout">
-        <!-- BARRA IZQUIERDA - WHATSAPP Y REDES VERTICAL -->
+        <!-- BARRA IZQUIERDA - WHATSAPP Y REDES VERTICAL (Desktop) -->
         <div class="sidebar-left">
             <a href="https://wa.me/593994975350" target="_blank" class="social-vertical-item whatsapp">
                 <i class="fab fa-whatsapp"></i>
@@ -682,7 +804,7 @@
                     </div>
                     <div class="stat">
                         <div class="stat-number">24/7</div>
-                        <div class="stat-label">SOPORTE VIP</div>
+                        <div class="stat-label">SOPORTE</div>
                     </div>
                 </div>
                 <button class="btn-cta" id="heroCtaBtn">
@@ -691,7 +813,7 @@
             </div>
         </div>
 
-        <!-- BARRA DERECHA - FUTURO FINANCIERO VERTICAL -->
+        <!-- BARRA DERECHA - FUTURO FINANCIERO VERTICAL (Desktop) -->
         <div class="sidebar-right">
             <div class="financial-item">
                 <i class="fas fa-chart-line"></i>
@@ -712,6 +834,45 @@
         </div>
     </div>
 
+    <!-- BOTONES SOCIALES FLOTANTES PARA MÓVIL -->
+    <div class="mobile-social-buttons">
+        <a href="https://wa.me/593994975350" target="_blank" class="mobile-social-icon" style="border-color: #25D366;">
+            <i class="fab fa-whatsapp"></i>
+        </a>
+        <a href="https://www.instagram.com/heydin_kayser2026/" target="_blank" class="mobile-social-icon">
+            <i class="fab fa-instagram"></i>
+        </a>
+        <a href="https://www.tiktok.com/@heydin.kayser2026" target="_blank" class="mobile-social-icon">
+            <i class="fab fa-tiktok"></i>
+        </a>
+        <a href="https://www.facebook.com/profile.php?id=61576490987991&locale=es_LA" target="_blank" class="mobile-social-icon">
+            <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="https://www.youtube.com/@heydinkayser2026" target="_blank" class="mobile-social-icon">
+            <i class="fab fa-youtube"></i>
+        </a>
+    </div>
+
+    <!-- BARRA FINANCIERA FLOTANTE PARA MÓVIL -->
+    <div class="mobile-financial-bar">
+        <div class="mobile-financial-item">
+            <i class="fas fa-chart-line"></i>
+            <span>FUTURO</span>
+        </div>
+        <div class="mobile-financial-item">
+            <i class="fas fa-bitcoin"></i>
+            <span>CRIPTO</span>
+        </div>
+        <div class="mobile-financial-item">
+            <i class="fas fa-robot"></i>
+            <span>AI</span>
+        </div>
+        <div class="mobile-financial-item">
+            <i class="fas fa-shield-alt"></i>
+            <span>SEG</span>
+        </div>
+    </div>
+
     <div class="features-section">
         <div class="section-title">
             <h2>TECNOLOGÍA DE VANGUARDIA</h2>
@@ -725,29 +886,29 @@
 
     <footer class="footer-futuristic">
         <p>© 2026 YESLY ADELAY TRADING - Alta Frecuencia & Futuro Digital</p>
-        <p style="font-size:0.75rem; margin-top:10px;">Terminal de inversión algorítmica · Potenciada por IA Cuántica</p>
+        <p style="font-size:0.7rem; margin-top:8px;">Terminal de inversión algorítmica · Potenciada por IA Cuántica</p>
     </footer>
 </div>
 
-<!-- MODALES (igual que antes) -->
+<!-- MODALES -->
 <div id="loginModal" class="modal-overlay">
     <div class="modal-box">
         <div class="modal-header">
-            <h2><i class="fas fa-key"></i> INICIAR SESIÓN</h2>
+            <h2><i class="fas fa-key"></i> INICIAR</h2>
             <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
         </div>
         <div id="loginError" class="error-msg"></div>
         <input type="email" id="loginEmail" class="input-glow" placeholder="Correo electrónico" autocomplete="email">
         <input type="password" id="loginPassword" class="input-glow" placeholder="Contraseña">
         <button class="btn-submit" id="doLoginBtn">ACCEDER</button>
-        <div class="toggle-auth">¿NO eres VIP? <span id="switchToRegisterFromLogin">Registrar cuenta</span></div>
+        <div class="toggle-auth">¿NO eres VIP? <span id="switchToRegisterFromLogin">Registrar</span></div>
     </div>
 </div>
 
 <div id="registerModal" class="modal-overlay">
     <div class="modal-box">
         <div class="modal-header">
-            <h2><i class="fas fa-crown"></i> REGISTRO VIP</h2>
+            <h2><i class="fas fa-crown"></i> REGISTRO</h2>
             <button class="close-modal" onclick="closeModal('registerModal')">&times;</button>
         </div>
         <div id="registerError" class="error-msg"></div>
@@ -756,30 +917,29 @@
         <input type="password" id="regPassword" class="input-glow" placeholder="Contraseña (mínimo 6)">
         <div class="terms-check">
             <input type="checkbox" id="termsCheckbox">
-            <label>Acepto los <span class="terms-link" id="showTermsBtn">Términos y Condiciones</span></label>
+            <label>Acepto los <span class="terms-link" id="showTermsBtn">Términos</span></label>
         </div>
-        <button class="btn-submit" id="doRegisterBtn">ACTIVAR CUENTA</button>
+        <button class="btn-submit" id="doRegisterBtn">ACTIVAR</button>
         <div class="toggle-auth">¿Ya eres VIP? <span id="switchToLoginFromRegister">Inicia sesión</span></div>
     </div>
 </div>
 
 <div id="termsModal" class="modal-overlay">
-    <div class="modal-box" style="max-width:550px; max-height:80vh; overflow-y:auto;">
+    <div class="modal-box" style="max-width:500px; max-height:70vh; overflow-y:auto;">
         <div class="modal-header">
-            <h2>📜 TÉRMINOS Y CONDICIONES</h2>
+            <h2>📜 TÉRMINOS</h2>
             <button class="close-modal" onclick="closeModal('termsModal')">&times;</button>
         </div>
-        <div style="color:#ccf; font-size:0.9rem; text-align:left;">
+        <div style="color:#ccf; font-size:0.85rem; text-align:left;">
             <p><strong>YESLY ADELAY TRADING</strong> - Plataforma de análisis algorítmico.</p>
             <p>1. Los datos y señales son de carácter informativo, no garantizan rentabilidad.</p>
             <p>2. El trading implica riesgos significativos; el usuario asume toda responsabilidad.</p>
             <p>3. La empresa protege tus datos conforme a políticas de privacidad avanzadas.</p>
-            <p>4. Queda prohibido el uso indebido de la plataforma, y nos reservamos el derecho de suspender cuentas ante violaciones.</p>
-            <p>5. Al registrarse, declaras ser mayor de 18 años y aceptas todos los términos.</p>
-            <p>6. YESLY ADELAY puede actualizar estos términos; el uso continuo implica aceptación.</p>
-            <p style="margin-top:20px;">✅ Al marcar "Acepto" durante el registro, confirmas la lectura y comprensión completa.</p>
+            <p>4. Queda prohibido el uso indebido de la plataforma.</p>
+            <p>5. Al registrarse, declaras ser mayor de 18 años.</p>
+            <p style="margin-top:15px;">✅ Al marcar "Acepto" confirmas la lectura completa.</p>
         </div>
-        <button class="btn-submit" style="margin-top:20px;" onclick="closeModal('termsModal')">CERRAR</button>
+        <button class="btn-submit" style="margin-top:15px;" onclick="closeModal('termsModal')">CERRAR</button>
     </div>
 </div>
 
@@ -843,7 +1003,7 @@
         showLoaderMsg('VERIFICANDO ACCESO');
         auth.signInWithEmailAndPassword(email, password)
             .then(() => {
-                document.querySelector('.loader-text').innerText = 'REDIRIGIENDO A HOME';
+                document.querySelector('.loader-text').innerText = 'REDIRIGIENDO';
                 setTimeout(() => { window.location.href = 'home.html'; }, 1200);
             })
             .catch(err => { hideLoader(); document.getElementById('loginError').innerText = 'Error: ' + err.message; });
@@ -856,9 +1016,9 @@
         const pass = document.getElementById('regPassword').value;
         const termsAccepted = document.getElementById('termsCheckbox').checked;
         if (!name || !email || !pass) { document.getElementById('registerError').innerText = 'Todos los campos son obligatorios'; return; }
-        if (!termsAccepted) { document.getElementById('registerError').innerText = 'Debes aceptar los Términos y Condiciones'; return; }
-        if (pass.length < 6) { document.getElementById('registerError').innerText = 'La contraseña debe tener mínimo 6 caracteres'; return; }
-        showLoaderMsg('CREANDO CUENTA VIP');
+        if (!termsAccepted) { document.getElementById('registerError').innerText = 'Debes aceptar los Términos'; return; }
+        if (pass.length < 6) { document.getElementById('registerError').innerText = 'Contraseña mínimo 6 caracteres'; return; }
+        showLoaderMsg('CREANDO CUENTA');
         auth.createUserWithEmailAndPassword(email, pass)
             .then((userCred) => {
                 const uid = userCred.user.uid;
