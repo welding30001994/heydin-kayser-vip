@@ -38,7 +38,7 @@
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0.3;
+            opacity: 0.25;
             z-index: 0;
             pointer-events: none;
         }
@@ -50,8 +50,8 @@
             width: 100%;
             height: 100%;
             background-image: 
-                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.06) 0px, rgba(0, 255, 255, 0.06) 1px, transparent 1px, transparent 40px),
-                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.06) 0px, rgba(0, 255, 255, 0.06) 1px, transparent 1px, transparent 40px);
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.04) 0px, rgba(0, 255, 255, 0.04) 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.04) 0px, rgba(0, 255, 255, 0.04) 1px, transparent 1px, transparent 40px);
             z-index: 1;
             pointer-events: none;
         }
@@ -62,7 +62,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.08), rgba(0, 0, 0, 0.85));
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.05), rgba(0, 0, 0, 0.88));
             z-index: 2;
             pointer-events: none;
         }
@@ -94,8 +94,8 @@
             visibility: hidden;
         }
         .loader-ring {
-            width: 80px;
-            height: 80px;
+            width: 70px;
+            height: 70px;
             border: 3px solid rgba(0,255,255,0.2);
             border-top: 3px solid #0cf;
             border-right: 3px solid #f0f;
@@ -108,10 +108,10 @@
             100% { transform: rotate(360deg);}
         }
         .loader-text {
-            margin-top: 25px;
-            font-size: 1.4rem;
+            margin-top: 20px;
+            font-size: 1.2rem;
             font-weight: 700;
-            letter-spacing: 4px;
+            letter-spacing: 3px;
             background: linear-gradient(45deg, cyan, #ff44e6);
             -webkit-background-clip: text;
             background-clip: text;
@@ -120,10 +120,10 @@
 
         /* HEADER */
         .glass-header {
-            background: rgba(5, 10, 20, 0.6);
+            background: rgba(5, 10, 20, 0.75);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid rgba(0, 255, 255, 0.4);
-            padding: 0.8rem 1rem;
+            padding: 0.6rem 1rem;
             position: sticky;
             top: 0;
             z-index: 200;
@@ -135,25 +135,25 @@
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 8px;
         }
         .logo-area {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 6px;
         }
         .logo-icon {
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             color: #0cf;
-            filter: drop-shadow(0 0 8px cyan);
+            filter: drop-shadow(0 0 6px cyan);
             animation: pulse 2s infinite;
         }
         @keyframes pulse {
-            0%, 100% { opacity: 1; text-shadow: 0 0 5px cyan; }
-            50% { opacity: 0.8; text-shadow: 0 0 20px cyan; }
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
         }
         .logo-text {
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: 900;
             font-family: 'Syne', sans-serif;
             background: linear-gradient(135deg, #fff, #0cf);
@@ -164,18 +164,18 @@
         }
         .auth-buttons {
             display: flex;
-            gap: 10px;
+            gap: 8px;
         }
         .btn-neon {
-            padding: 8px 18px;
+            padding: 6px 12px;
             border-radius: 40px;
             font-weight: 800;
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             text-transform: uppercase;
             letter-spacing: 1px;
             border: none;
             cursor: pointer;
-            transition: 0.25s;
+            transition: 0.2s;
             background: transparent;
         }
         .btn-login {
@@ -183,119 +183,99 @@
             color: #0cf;
             background: rgba(0, 255, 255, 0.05);
         }
-        .btn-login:hover {
+        .btn-login:active {
             background: #0cf;
             color: #000;
-            box-shadow: 0 0 20px cyan;
         }
         .btn-register {
             background: linear-gradient(95deg, #0cf, #a05eff);
             color: #000;
             font-weight: 900;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.5);
         }
-        .btn-register:hover {
-            transform: scale(1.02);
-            box-shadow: 0 0 28px cyan;
+        .btn-register:active {
+            transform: scale(0.98);
         }
 
-        /* LAYOUT PRINCIPAL - TRES COLUMNAS */
+        /* LAYOUT PRINCIPAL */
         .main-layout {
             flex: 1;
             display: flex;
-            min-height: calc(100vh - 80px);
             position: relative;
         }
 
         /* BARRA LATERAL IZQUIERDA */
         .sidebar-left {
-            width: 90px;
+            width: 70px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 25px;
-            background: rgba(0, 0, 0, 0.4);
+            gap: 18px;
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             border-right: 1px solid rgba(0, 255, 255, 0.3);
             position: fixed;
             left: 0;
-            top: 70px;
+            top: 60px;
             bottom: 0;
             z-index: 50;
         }
 
         .social-vertical-item {
-            width: 55px;
-            height: 55px;
+            width: 45px;
+            height: 45px;
             background: rgba(0, 200, 255, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 26px;
+            font-size: 22px;
             color: #0cf;
-            transition: 0.3s;
+            transition: 0.2s;
             border: 1.5px solid #0cf;
             text-decoration: none;
             cursor: pointer;
         }
-
-        .social-vertical-item:hover {
+        .social-vertical-item:active {
             background: cyan;
             color: black;
-            transform: scale(1.1);
-            box-shadow: 0 0 20px cyan;
-        }
-
-        .social-vertical-item.whatsapp:hover {
-            background: #25D366;
-            border-color: #25D366;
-            color: white;
-            box-shadow: 0 0 20px #25D366;
+            transform: scale(0.95);
         }
 
         /* BARRA LATERAL DERECHA */
         .sidebar-right {
-            width: 90px;
+            width: 70px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 25px;
-            background: rgba(0, 0, 0, 0.4);
+            gap: 18px;
+            background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(10px);
             border-left: 1px solid rgba(0, 255, 255, 0.3);
             position: fixed;
             right: 0;
-            top: 70px;
+            top: 60px;
             bottom: 0;
             z-index: 50;
         }
 
         .financial-item {
             text-align: center;
-            animation: floatGlow 3s ease-in-out infinite;
         }
-
         .financial-item i {
-            font-size: 32px;
+            font-size: 24px;
             color: #ff44e6;
-            filter: drop-shadow(0 0 8px #ff44e6);
+            filter: drop-shadow(0 0 6px #ff44e6);
         }
-
         .financial-item span {
             display: block;
-            font-size: 0.7rem;
-            margin-top: 8px;
+            font-size: 0.55rem;
+            margin-top: 5px;
             color: #ff44e6;
             font-weight: bold;
-            letter-spacing: 1px;
-        }
-
-        @keyframes floatGlow {
-            0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-5px); }
+            letter-spacing: 0.5px;
         }
 
         /* HERO CENTRAL */
@@ -306,75 +286,62 @@
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 2rem;
-            margin-left: 90px;
-            margin-right: 90px;
-            min-height: calc(100vh - 70px);
+            padding: 1rem;
+            margin-left: 70px;
+            margin-right: 70px;
+            min-height: calc(100vh - 60px);
         }
 
         .hero-card {
-            background: rgba(8, 15, 28, 0.7);
+            background: rgba(8, 15, 28, 0.75);
             backdrop-filter: blur(18px);
-            border-radius: 50px;
-            border: 1px solid rgba(0, 255, 255, 0.6);
-            padding: 2.5rem 2rem;
-            max-width: 700px;
+            border-radius: 35px;
+            border: 1px solid rgba(0, 255, 255, 0.5);
+            padding: 1.5rem 1.2rem;
+            max-width: 600px;
             width: 100%;
-            margin: 0 auto 1.5rem auto;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), 0 0 40px rgba(0,255,255,0.3);
-            animation: fadeInUp 0.8s ease;
-        }
-
-        @keyframes fadeInUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin: 0 auto 1rem auto;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4), 0 0 30px rgba(0,255,255,0.2);
         }
 
         .hero-card h1 {
-            font-size: clamp(1.8rem, 5vw, 3.5rem);
+            font-size: 1.5rem;
             font-weight: 900;
             font-family: 'Syne', sans-serif;
             background: linear-gradient(45deg, cyan, #ff44e6, #ffffff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 1rem;
-            letter-spacing: 2px;
-        }
-
-        .hero-tagline {
-            font-size: 1.1rem;
-            color: #cef0ff;
-            margin-bottom: 1.5rem;
+            margin-bottom: 0.8rem;
             letter-spacing: 1px;
         }
 
+        .hero-tagline {
+            font-size: 0.8rem;
+            color: #cef0ff;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
         .hero-tagline i {
-            margin: 0 8px;
+            margin: 0 4px;
             color: #ff44e6;
         }
 
         .stats-glowing {
             display: flex;
             justify-content: center;
-            gap: 2rem;
-            margin: 2rem 0;
+            gap: 1.2rem;
+            margin: 1.2rem 0;
             flex-wrap: wrap;
         }
-
-        .stat {
-            text-align: center;
-        }
-
         .stat-number {
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             font-weight: 900;
             color: cyan;
-            text-shadow: 0 0 10px cyan;
+            text-shadow: 0 0 8px cyan;
         }
-
         .stat-label {
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             letter-spacing: 1px;
             color: #aaf0ff;
         }
@@ -382,136 +349,115 @@
         .btn-cta {
             background: linear-gradient(145deg, #00ccff, #0077ff);
             border: none;
-            padding: 14px 35px;
-            font-size: 1.2rem;
+            padding: 10px 20px;
+            font-size: 0.9rem;
             font-weight: 900;
             border-radius: 60px;
             color: #010101;
             cursor: pointer;
-            transition: 0.3s;
+            transition: 0.2s;
             width: 100%;
-            max-width: 300px;
-            box-shadow: 0 0 25px cyan;
-            margin-top: 1rem;
+            max-width: 240px;
+            box-shadow: 0 0 20px cyan;
+            margin-top: 0.8rem;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
+        }
+        .btn-cta:active {
+            transform: scale(0.98);
         }
 
-        .btn-cta:hover {
-            transform: scale(1.03);
-            background: linear-gradient(145deg, #ff44e6, #a05eff);
-            color: white;
-            box-shadow: 0 0 40px #ff44e6;
-        }
-
-        /* ========== CARRUSEL GENÉRICO ========== */
+        /* CARRUSEL SECCIÓN */
         .carousel-section {
             width: 100%;
-            max-width: 900px;
-            margin: 1rem auto;
-            padding: 0 1rem;
-        }
-
-        .carousel-title {
-            text-align: center;
-            margin-bottom: 1.2rem;
+            max-width: 600px;
+            margin: 0.8rem auto;
+            padding: 0 0.5rem;
         }
         .carousel-title h3 {
-            font-size: 1.6rem;
+            font-size: 1.2rem;
             background: linear-gradient(135deg, #ff44e6, cyan);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 2px;
+            letter-spacing: 1px;
         }
-
         .carousel-container {
             position: relative;
             overflow: hidden;
-            border-radius: 30px;
-            background: rgba(0, 0, 0, 0.5);
+            border-radius: 25px;
+            background: rgba(0, 0, 0, 0.55);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(0, 255, 255, 0.4);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
         }
-
         .carousel-track {
             display: flex;
             transition: transform 0.4s ease-out;
             cursor: grab;
         }
-
         .carousel-track:active {
             cursor: grabbing;
         }
-
         .carousel-slide {
             min-width: 100%;
-            padding: 2rem;
+            padding: 1.2rem;
             text-align: center;
         }
-
         .carousel-icon {
-            font-size: 3rem;
+            font-size: 2.2rem;
             color: cyan;
-            margin-bottom: 1rem;
-            text-shadow: 0 0 15px cyan;
+            margin-bottom: 0.6rem;
+            text-shadow: 0 0 10px cyan;
         }
-
         .carousel-slide-title {
-            font-size: 1.8rem;
+            font-size: 1.3rem;
             font-weight: 900;
             font-family: 'Orbitron', monospace;
             background: linear-gradient(45deg, cyan, #ff44e6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 1rem;
-            letter-spacing: 2px;
+            margin-bottom: 0.6rem;
+            letter-spacing: 1px;
         }
-
         .carousel-description {
-            font-size: 1rem;
+            font-size: 0.8rem;
             color: #cceeff;
-            line-height: 1.5;
-            max-width: 80%;
+            line-height: 1.4;
+            max-width: 90%;
             margin: 0 auto;
         }
-
         .carousel-badge {
             display: inline-block;
-            margin-top: 1rem;
-            padding: 0.4rem 1.2rem;
-            background: rgba(0, 255, 255, 0.15);
+            margin-top: 0.8rem;
+            padding: 0.3rem 1rem;
+            background: rgba(0, 255, 255, 0.12);
             border: 1px solid cyan;
             border-radius: 30px;
-            font-size: 0.8rem;
+            font-size: 0.65rem;
             color: cyan;
         }
-
         .carousel-indicators {
             display: flex;
             justify-content: center;
-            gap: 12px;
-            padding: 1rem;
+            gap: 8px;
+            padding: 0.6rem;
         }
-
         .indicator {
-            width: 10px;
-            height: 10px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
             background: rgba(0, 255, 255, 0.3);
             border: 1px solid cyan;
             cursor: pointer;
             transition: 0.2s;
         }
-
         .indicator.active {
             background: cyan;
-            box-shadow: 0 0 10px cyan;
+            box-shadow: 0 0 8px cyan;
             transform: scale(1.2);
         }
-
         .carousel-arrow {
             position: absolute;
             top: 50%;
@@ -519,36 +465,33 @@
             background: rgba(0, 255, 255, 0.2);
             border: 1px solid cyan;
             border-radius: 50%;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             color: cyan;
-            font-size: 1.2rem;
+            font-size: 0.9rem;
             transition: 0.2s;
             z-index: 20;
         }
-
-        .carousel-arrow:hover {
+        .carousel-arrow:active {
             background: cyan;
             color: black;
-            box-shadow: 0 0 15px cyan;
         }
-
-        .arrow-left { left: 15px; }
-        .arrow-right { right: 15px; }
+        .arrow-left { left: 8px; }
+        .arrow-right { right: 8px; }
 
         /* FOOTER */
         .footer-futuristic {
-            padding: 2rem;
+            padding: 1.2rem;
             text-align: center;
             background: rgba(3, 5, 12, 0.9);
             border-top: 1px solid rgba(0,255,255,0.3);
         }
         .footer-futuristic p {
-            font-size: 0.85rem;
+            font-size: 0.7rem;
         }
 
         /* MODALES */
@@ -566,32 +509,27 @@
         .modal-box {
             background: rgba(8, 16, 28, 0.98);
             border: 2px solid cyan;
-            border-radius: 40px;
+            border-radius: 30px;
             width: 100%;
-            max-width: 450px;
-            padding: 2rem;
-            box-shadow: 0 0 60px rgba(0,255,255,0.4);
-            animation: modalPop 0.25s ease;
-        }
-        @keyframes modalPop {
-            from { transform: scale(0.9); opacity: 0;}
-            to { transform: scale(1); opacity: 1;}
+            max-width: 380px;
+            padding: 1.5rem;
+            box-shadow: 0 0 50px rgba(0,255,255,0.3);
         }
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
         }
         .modal-header h2 {
-            font-size: 1.6rem;
+            font-size: 1.3rem;
             background: linear-gradient(45deg, cyan, #ff66e6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
         .close-modal {
-            font-size: 2rem;
+            font-size: 1.6rem;
             cursor: pointer;
             color: cyan;
             background: none;
@@ -599,25 +537,26 @@
         }
         .input-glow {
             width: 100%;
-            padding: 12px 16px;
-            margin: 10px 0;
+            padding: 10px 14px;
+            margin: 8px 0;
             background: rgba(0, 255, 255, 0.05);
             border: 1px solid rgba(0,255,255,0.5);
             border-radius: 60px;
             color: white;
-            font-size: 0.95rem;
+            font-size: 0.85rem;
         }
         .input-glow:focus {
             outline: none;
             border-color: #ff44e6;
-            box-shadow: 0 0 18px #ff44e6;
+            box-shadow: 0 0 12px #ff44e6;
         }
         .terms-check {
             display: flex;
             align-items: center;
-            gap: 12px;
-            margin: 20px 0;
+            gap: 8px;
+            margin: 12px 0;
             color: #b9f0ff;
+            font-size: 0.75rem;
         }
         .terms-link {
             color: cyan;
@@ -627,23 +566,21 @@
         .btn-submit {
             background: linear-gradient(145deg, #0cf, #3f6eff);
             width: 100%;
-            padding: 12px;
+            padding: 10px;
             border: none;
             border-radius: 60px;
             font-weight: 900;
-            font-size: 1rem;
+            font-size: 0.9rem;
             cursor: pointer;
-            transition: 0.2s;
         }
-        .btn-submit:hover {
-            background: linear-gradient(145deg, #ff44e6, #a05eff);
-            color: white;
-            box-shadow: 0 0 20px #ff44e6;
+        .btn-submit:active {
+            transform: scale(0.98);
         }
         .toggle-auth {
             text-align: center;
-            margin-top: 20px;
+            margin-top: 12px;
             color: #ccf4ff;
+            font-size: 0.75rem;
         }
         .toggle-auth span {
             color: cyan;
@@ -652,40 +589,40 @@
         }
         .error-msg {
             color: #ff7b9c;
-            font-size: 0.85rem;
-            margin: 8px 0;
+            font-size: 0.7rem;
+            margin: 5px 0;
             text-align: center;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 768px) {
-            .sidebar-left { width: 65px; gap: 15px; }
-            .sidebar-right { width: 65px; gap: 15px; }
-            .social-vertical-item { width: 45px; height: 45px; font-size: 22px; }
-            .financial-item i { font-size: 24px; }
-            .financial-item span { font-size: 0.55rem; margin-top: 5px; }
-            .hero-center { margin-left: 65px; margin-right: 65px; padding: 1rem; }
-            .hero-card { padding: 1.5rem; }
-            .hero-card h1 { font-size: 1.5rem; }
-            .hero-tagline { font-size: 0.85rem; }
-            .stats-glowing { gap: 1rem; }
-            .stat-number { font-size: 1.2rem; }
-            .btn-cta { padding: 10px 20px; font-size: 0.9rem; }
-            .carousel-slide-title { font-size: 1.4rem; }
-            .carousel-description { font-size: 0.85rem; width: 90%; }
-            .carousel-arrow { width: 30px; height: 30px; font-size: 0.9rem; }
-            .carousel-title h3 { font-size: 1.3rem; }
+        /* RESPONSIVE EXTRA - PANTALLAS MUY PEQUEÑAS */
+        @media (max-width: 600px) {
+            .sidebar-left { width: 55px; gap: 12px; top: 55px; }
+            .sidebar-right { width: 55px; gap: 12px; top: 55px; }
+            .social-vertical-item { width: 38px; height: 38px; font-size: 18px; }
+            .financial-item i { font-size: 18px; }
+            .financial-item span { font-size: 0.45rem; }
+            .hero-center { margin-left: 55px; margin-right: 55px; padding: 0.8rem; }
+            .hero-card { padding: 1rem; border-radius: 25px; }
+            .hero-card h1 { font-size: 1.2rem; }
+            .hero-tagline { font-size: 0.7rem; }
+            .stat-number { font-size: 1rem; }
+            .stat-label { font-size: 0.55rem; }
+            .btn-cta { padding: 8px 16px; font-size: 0.75rem; max-width: 200px; }
+            .carousel-section { max-width: 100%; padding: 0 0.3rem; }
+            .carousel-title h3 { font-size: 1rem; }
+            .carousel-slide-title { font-size: 1.1rem; }
+            .carousel-description { font-size: 0.7rem; }
+            .carousel-icon { font-size: 1.8rem; }
+            .carousel-arrow { width: 25px; height: 25px; font-size: 0.7rem; }
         }
 
-        @media (max-width: 480px) {
-            .sidebar-left { width: 55px; gap: 12px; }
-            .sidebar-right { width: 55px; gap: 12px; }
-            .social-vertical-item { width: 38px; height: 38px; font-size: 18px; }
-            .financial-item i { font-size: 20px; }
-            .hero-center { margin-left: 55px; margin-right: 55px; }
-            .hero-card h1 { font-size: 1.2rem; }
-            .carousel-slide-title { font-size: 1.2rem; }
-            .carousel-icon { font-size: 2.2rem; }
+        /* Para tablets pequeñas */
+        @media (min-width: 601px) and (max-width: 900px) {
+            .sidebar-left { width: 65px; }
+            .sidebar-right { width: 65px; }
+            .hero-center { margin-left: 65px; margin-right: 65px; }
+            .hero-card h1 { font-size: 1.8rem; }
+            .carousel-section { max-width: 550px; }
         }
     </style>
 </head>
@@ -698,7 +635,7 @@
     <div class="loader-container" id="loader">
         <div class="loader-ring"></div>
         <div class="loader-text">YESLY ADELAY VIP</div>
-        <div style="margin-top: 20px; font-size:0.9rem; letter-spacing:2px;">CARGANDO TERMINAL</div>
+        <div style="margin-top: 12px; font-size:0.7rem; letter-spacing:2px;">CARGANDO TERMINAL</div>
     </div>
 
     <header class="glass-header">
@@ -709,7 +646,7 @@
             </div>
             <div class="auth-buttons">
                 <button class="btn-neon btn-login" id="openLoginModalBtn"><i class="fas fa-key"></i> INICIAR</button>
-                <button class="btn-neon btn-register" id="openRegisterModalBtn"><i class="fas fa-crown"></i> REGISTRO VIP</button>
+                <button class="btn-neon btn-register" id="openRegisterModalBtn"><i class="fas fa-crown"></i> REGISTRO</button>
             </div>
         </div>
     </header>
@@ -733,7 +670,7 @@
                 <div class="stats-glowing">
                     <div class="stat"><div class="stat-number">+98%</div><div class="stat-label">PRECISIÓN</div></div>
                     <div class="stat"><div class="stat-number">0.2s</div><div class="stat-label">EJECUCIÓN</div></div>
-                    <div class="stat"><div class="stat-number">24/7</div><div class="stat-label">SOPORTE VIP</div></div>
+                    <div class="stat"><div class="stat-number">24/7</div><div class="stat-label">SOPORTE</div></div>
                 </div>
                 <button class="btn-cta" id="heroCtaBtn"><i class="fas fa-unlock-alt"></i> ACTIVAR MODO VIP</button>
             </div>
@@ -746,11 +683,11 @@
                 <div class="carousel-container">
                     <div class="carousel-arrow arrow-left" onclick="prevSlide(1)"><i class="fas fa-chevron-left"></i></div>
                     <div class="carousel-track" id="track1">
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-broom"></i></div><div class="carousel-slide-title">SWEEP</div><div class="carousel-description">Barrido de liquidez. Cuando el precio caza stops y quiebra un mínimo/máximo clave, barriendo órdenes antes de revertir.</div><div class="carousel-badge">#Liquidez #SmartMoney</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-cubes"></i></div><div class="carousel-slide-title">ORDER BLOCK</div><div class="carousel-description">Bloque de órdenes institucionales. Zona donde grandes bancos acumulan posiciones, ideal para entradas precisas.</div><div class="carousel-badge">#ICT #OB</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-chart-gap"></i></div><div class="carousel-slide-title">FAIR VALUE GAP</div><div class="carousel-description">Hueco de valor justo. Desbalance entre velas, zona que el precio suele rellenar antes de continuar.</div><div class="carousel-badge">#FVG #ICT</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-shield-haltered"></i></div><div class="carousel-slide-title">BREAKER BLOCK</div><div class="carousel-description">Order block fallido que cambia de rol. Soporte se vuelve resistencia o viceversa.</div><div class="carousel-badge">#Breaker #MMXM</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-hand-holding-heart"></i></div><div class="carousel-slide-title">MITIGATION</div><div class="carousel-description">Mitigación. Cuando el precio regresa a una zona de interés para validarla antes de seguir.</div><div class="carousel-badge">#Mitigación #Confirmación</div></div>
+                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-broom"></i></div><div class="carousel-slide-title">SWEEP</div><div class="carousel-description">Barrido de liquidez. El precio caza stops y barre mínimos/máximos antes de revertir.</div><div class="carousel-badge">#Liquidez #SmartMoney</div></div>
+                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-cubes"></i></div><div class="carousel-slide-title">ORDER BLOCK</div><div class="carousel-description">Bloque de órdenes institucionales. Zona donde grandes bancos acumulan posiciones.</div><div class="carousel-badge">#ICT #OB</div></div>
+                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-chart-gap"></i></div><div class="carousel-slide-title">FAIR VALUE GAP</div><div class="carousel-description">Hueco de valor justo. Desbalance entre velas que el precio suele rellenar.</div><div class="carousel-badge">#FVG #ICT</div></div>
+                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-shield-haltered"></i></div><div class="carousel-slide-title">BREAKER BLOCK</div><div class="carousel-description">Order block fallido que cambia de rol. Soporte se vuelve resistencia.</div><div class="carousel-badge">#Breaker #MMXM</div></div>
+                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-hand-holding-heart"></i></div><div class="carousel-slide-title">MITIGATION</div><div class="carousel-description">Mitigación. El precio regresa a zona de interés para validarla.</div><div class="carousel-badge">#Mitigación</div></div>
                     </div>
                     <div class="carousel-arrow arrow-right" onclick="nextSlide(1)"><i class="fas fa-chevron-right"></i></div>
                 </div>
@@ -785,48 +722,48 @@
 
     <footer class="footer-futuristic">
         <p>© 2026 YESLY ADELAY TRADING - Alta Frecuencia & Futuro Digital</p>
-        <p style="font-size:0.7rem; margin-top:8px;">Terminal de inversión algorítmica · Potenciada por IA Cuántica</p>
+        <p style="font-size:0.6rem; margin-top:5px;">Terminal de inversión algorítmica · Potenciada por IA Cuántica</p>
     </footer>
 </div>
 
 <!-- MODALES -->
 <div id="loginModal" class="modal-overlay">
     <div class="modal-box">
-        <div class="modal-header"><h2><i class="fas fa-key"></i> INICIAR SESIÓN</h2><button class="close-modal" onclick="closeModal('loginModal')">&times;</button></div>
+        <div class="modal-header"><h2><i class="fas fa-key"></i> INICIAR</h2><button class="close-modal" onclick="closeModal('loginModal')">&times;</button></div>
         <div id="loginError" class="error-msg"></div>
         <input type="email" id="loginEmail" class="input-glow" placeholder="Correo electrónico">
         <input type="password" id="loginPassword" class="input-glow" placeholder="Contraseña">
         <button class="btn-submit" id="doLoginBtn">ACCEDER</button>
-        <div class="toggle-auth">¿NO eres VIP? <span id="switchToRegisterFromLogin">Registrar cuenta</span></div>
+        <div class="toggle-auth">¿NO eres VIP? <span id="switchToRegisterFromLogin">Registrar</span></div>
     </div>
 </div>
 
 <div id="registerModal" class="modal-overlay">
     <div class="modal-box">
-        <div class="modal-header"><h2><i class="fas fa-crown"></i> REGISTRO VIP</h2><button class="close-modal" onclick="closeModal('registerModal')">&times;</button></div>
+        <div class="modal-header"><h2><i class="fas fa-crown"></i> REGISTRO</h2><button class="close-modal" onclick="closeModal('registerModal')">&times;</button></div>
         <div id="registerError" class="error-msg"></div>
         <input type="text" id="regName" class="input-glow" placeholder="Nombre completo">
         <input type="email" id="regEmail" class="input-glow" placeholder="Correo electrónico">
         <input type="password" id="regPassword" class="input-glow" placeholder="Contraseña (mínimo 6)">
-        <div class="terms-check"><input type="checkbox" id="termsCheckbox"><label>Acepto los <span class="terms-link" id="showTermsBtn">Términos y Condiciones</span></label></div>
-        <button class="btn-submit" id="doRegisterBtn">ACTIVAR CUENTA</button>
-        <div class="toggle-auth">¿Ya eres VIP? <span id="switchToLoginFromRegister">Inicia sesión</span></div>
+        <div class="terms-check"><input type="checkbox" id="termsCheckbox"><label>Acepto los <span class="terms-link" id="showTermsBtn">Términos</span></label></div>
+        <button class="btn-submit" id="doRegisterBtn">ACTIVAR</button>
+        <div class="toggle-auth">¿Ya eres VIP? <span id="switchToLoginFromRegister">Iniciar</span></div>
     </div>
 </div>
 
 <div id="termsModal" class="modal-overlay">
-    <div class="modal-box" style="max-width:500px; max-height:70vh; overflow-y:auto;">
-        <div class="modal-header"><h2>📜 TÉRMINOS Y CONDICIONES</h2><button class="close-modal" onclick="closeModal('termsModal')">&times;</button></div>
-        <div style="color:#ccf; font-size:0.85rem; text-align:left;">
+    <div class="modal-box" style="max-width:450px; max-height:60vh; overflow-y:auto;">
+        <div class="modal-header"><h2>📜 TÉRMINOS</h2><button class="close-modal" onclick="closeModal('termsModal')">&times;</button></div>
+        <div style="color:#ccf; font-size:0.75rem; text-align:left;">
             <p><strong>YESLY ADELAY TRADING</strong> - Plataforma de análisis algorítmico.</p>
             <p>1. Los datos y señales son de carácter informativo, no garantizan rentabilidad.</p>
-            <p>2. El trading implica riesgos significativos; el usuario asume toda responsabilidad.</p>
-            <p>3. La empresa protege tus datos conforme a políticas de privacidad avanzadas.</p>
-            <p>4. Queda prohibido el uso indebido de la plataforma.</p>
-            <p>5. Al registrarse, declaras ser mayor de 18 años.</p>
-            <p style="margin-top:15px;">✅ Al marcar "Acepto" confirmas la lectura completa.</p>
+            <p>2. El trading implica riesgos significativos.</p>
+            <p>3. Tus datos están protegidos.</p>
+            <p>4. Prohibido uso indebido de la plataforma.</p>
+            <p>5. Al registrarte, declaras ser mayor de 18 años.</p>
+            <p style="margin-top:10px;">✅ Al marcar "Acepto" confirmas la lectura.</p>
         </div>
-        <button class="btn-submit" style="margin-top:15px;" onclick="closeModal('termsModal')">CERRAR</button>
+        <button class="btn-submit" style="margin-top:12px;" onclick="closeModal('termsModal')">CERRAR</button>
     </div>
 </div>
 
@@ -850,7 +787,7 @@
             const loader = document.getElementById('loader');
             loader.classList.add('fade-out');
             setTimeout(() => loader.style.display = 'none', 800);
-        }, 1800);
+        }, 1500);
     });
 
     function showLoaderMsg(msg) {
@@ -926,7 +863,6 @@
         }
 
         addEventListeners() {
-            // Touch events
             this.track.addEventListener('touchstart', (e) => {
                 this.startX = e.touches[0].clientX;
                 this.isDragging = true;
@@ -951,7 +887,7 @@
                 this.track.style.transition = 'transform 0.4s ease-out';
                 const endX = e.changedTouches[0].clientX;
                 const diff = endX - this.startX;
-                if (Math.abs(diff) > 50) {
+                if (Math.abs(diff) > 40) {
                     if (diff > 0 && this.currentIndex > 0) this.prevSlide();
                     else if (diff < 0 && this.currentIndex < this.slides.length - 1) this.nextSlide();
                     else this.goToSlide(this.currentIndex);
@@ -960,7 +896,6 @@
                 }
             });
 
-            // Mouse events
             this.track.addEventListener('mousedown', (e) => {
                 this.startX = e.clientX;
                 this.isDragging = true;
@@ -970,7 +905,7 @@
             });
 
             window.addEventListener('mousemove', (e) => {
-                if (!this.isDragging || this.id !== 1 && this.id !== 2) return;
+                if (!this.isDragging || (this.id !== 1 && this.id !== 2)) return;
                 const currentX = e.clientX;
                 const diff = currentX - this.startX;
                 const movePercent = (diff / this.track.offsetWidth) * 100;
@@ -985,7 +920,7 @@
                 this.isDragging = false;
                 this.track.style.transition = 'transform 0.4s ease-out';
                 const diff = e.clientX - this.startX;
-                if (Math.abs(diff) > 50) {
+                if (Math.abs(diff) > 40) {
                     if (diff > 0 && this.currentIndex > 0) this.prevSlide();
                     else if (diff < 0 && this.currentIndex < this.slides.length - 1) this.nextSlide();
                     else this.goToSlide(this.currentIndex);
@@ -996,28 +931,22 @@
         }
     }
 
-    // Inicializar carruseles
     const carousel1 = new Carousel(1);
     const carousel2 = new Carousel(2);
 
     window.prevSlide = (id) => { if (id === 1) carousel1.prevSlide(); else if (id === 2) carousel2.prevSlide(); };
     window.nextSlide = (id) => { if (id === 1) carousel1.nextSlide(); else if (id === 2) carousel2.nextSlide(); };
 
-    // Funciones modales
     function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
     function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
 
     document.getElementById('openLoginModalBtn').onclick = () => openModal('loginModal');
     document.getElementById('openRegisterModalBtn').onclick = () => openModal('registerModal');
     document.getElementById('heroCtaBtn').onclick = () => openModal('loginModal');
-
     document.getElementById('switchToRegisterFromLogin').onclick = () => { closeModal('loginModal'); openModal('registerModal'); };
     document.getElementById('switchToLoginFromRegister').onclick = () => { closeModal('registerModal'); openModal('loginModal'); };
     document.getElementById('showTermsBtn').onclick = (e) => { e.preventDefault(); openModal('termsModal'); };
-
-    window.onclick = (e) => {
-        if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none';
-    };
+    window.onclick = (e) => { if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none'; };
 
     document.getElementById('doLoginBtn').onclick = () => {
         const email = document.getElementById('loginEmail').value.trim();
@@ -1025,7 +954,7 @@
         if (!email || !password) { document.getElementById('loginError').innerText = 'Completa todos los campos'; return; }
         showLoaderMsg('VERIFICANDO ACCESO');
         auth.signInWithEmailAndPassword(email, password)
-            .then(() => { document.querySelector('.loader-text').innerText = 'REDIRIGIENDO A HOME'; setTimeout(() => { window.location.href = 'home.html'; }, 1200); })
+            .then(() => { document.querySelector('.loader-text').innerText = 'REDIRIGIENDO'; setTimeout(() => { window.location.href = 'home.html'; }, 1200); })
             .catch(err => { hideLoader(); document.getElementById('loginError').innerText = 'Error: ' + err.message; });
     };
 
@@ -1035,9 +964,9 @@
         const pass = document.getElementById('regPassword').value;
         const termsAccepted = document.getElementById('termsCheckbox').checked;
         if (!name || !email || !pass) { document.getElementById('registerError').innerText = 'Todos los campos son obligatorios'; return; }
-        if (!termsAccepted) { document.getElementById('registerError').innerText = 'Debes aceptar los Términos y Condiciones'; return; }
-        if (pass.length < 6) { document.getElementById('registerError').innerText = 'La contraseña debe tener mínimo 6 caracteres'; return; }
-        showLoaderMsg('CREANDO CUENTA VIP');
+        if (!termsAccepted) { document.getElementById('registerError').innerText = 'Debes aceptar los Términos'; return; }
+        if (pass.length < 6) { document.getElementById('registerError').innerText = 'Contraseña mínimo 6 caracteres'; return; }
+        showLoaderMsg('CREANDO CUENTA');
         auth.createUserWithEmailAndPassword(email, pass)
             .then((userCred) => {
                 const uid = userCred.user.uid;
