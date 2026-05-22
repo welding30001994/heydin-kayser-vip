@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>HEYDIN KAYSER TRADING - Comunidad Elite</title>
+    <title>YESLY ADELAY TRADING - Comunidad Elite</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -1074,7 +1074,7 @@
     <nav class="navbar">
         <div class="nav-container">
             <div class="logo" onclick="showSection('inicio')">
-                <i class="fas fa-chart-line"></i> HEYDIN <span class="glow">KAYSER</span>
+                <i class="fas fa-chart-line"></i> YESLY <span class="glow">ADELAY</span>
             </div>
             
             <div class="menu-toggle" id="menuToggle">
@@ -1575,7 +1575,7 @@
                                 <div class="detail-value" style="color: #00ff00">${signal.tp3}</div>
                             </div>` : ''}
                         </div>
-                        ${signal.comment ? `<pre class="signal-comment">💬 ${escapeHtml(signal.comment)}</pre>` : ''}
+                        ${signal.comment ? `<pre class="signal-comment">${escapeHtml(signal.comment)}</pre>` : ''}
                     </div>
                 </div>
             `;
@@ -1650,16 +1650,44 @@
                 return;
             }
 
+            // Obtener valores del formulario
+            const pair = document.getElementById('pair').value;
+            const type = document.getElementById('type').value;
+            const entry = document.getElementById('entry').value;
+            const sl = document.getElementById('sl').value;
+            const tp1 = document.getElementById('tp1').value;
+            const tp2 = document.getElementById('tp2').value;
+            const tp3 = document.getElementById('tp3').value;
+            
+            // Construir el análisis formateado automáticamente con el estilo profesional
+            let formattedComment = `💬 💬 💬  💬 💬 💬 📆  ${new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' }).toUpperCase()}\n\n`;
+            formattedComment += `🟢 ${type}- ${pair}\n\n`;
+            formattedComment += `👉 ENTRADA   :   ${entry}\n`;
+            formattedComment += `⚠️  SL             :   ${sl}\n\n`;
+            formattedComment += `🎯 TARGETS\n`;
+            formattedComment += `✅ TP1  :   ${tp1}\n`;
+            if (tp2) formattedComment += `✅ TP2 :   ${tp2}\n`;
+            if (tp3) formattedComment += `✅ TP3 :   ${tp3}\n\n`;
+            
+            // Obtener texto adicional del usuario si escribió algo
+            const userComment = document.getElementById('comment').value.trim();
+            formattedComment += `📌 Nota: Gestiona riesgo — arriesga 5% por cada $1,000.\n`;
+            formattedComment += `🔗 yesly-adelay: https://yesly-adelay.vercel.app/`;
+            
+            if (userComment) {
+                formattedComment += `\n\n📝 ${userComment}`;
+            }
+
             const signal = {
-                pair: document.getElementById('pair').value,
-                entry: parseFloat(document.getElementById('entry').value),
-                sl: parseFloat(document.getElementById('sl').value),
-                tp1: parseFloat(document.getElementById('tp1').value),
-                tp2: document.getElementById('tp2').value ? parseFloat(document.getElementById('tp2').value) : null,
-                tp3: document.getElementById('tp3').value ? parseFloat(document.getElementById('tp3').value) : null,
-                type: document.getElementById('type').value,
+                pair: pair,
+                entry: parseFloat(entry),
+                sl: parseFloat(sl),
+                tp1: parseFloat(tp1),
+                tp2: tp2 ? parseFloat(tp2) : null,
+                tp3: tp3 ? parseFloat(tp3) : null,
+                type: type,
                 date: document.getElementById('date').value,
-                comment: document.getElementById('comment').value,
+                comment: formattedComment,  // Aquí se guarda el análisis formateado
                 author: currentUser.username,
                 authorId: currentUser.id,
                 timestamp: firebase.database.ServerValue.TIMESTAMP
@@ -1668,6 +1696,7 @@
             signalsRef.push(signal).then(() => {
                 e.target.reset();
                 setCurrentDateTime();
+                fillDefaultSignal(); // Vuelve a llenar los valores por defecto después de resetear
                 showNotification('✅ Señal publicada', 'success');
                 loadFeed();
             });
@@ -1702,7 +1731,7 @@
                     <div class="detail-item"><span class="detail-label">TP1</span><span class="detail-value" style="color: #00ff00">${signal.tp1}</span></div>
                     ${tp2Html} ${tp3Html}
                 </div>
-                ${signal.comment ? `<pre class="signal-comment">💬 ${escapeHtml(signal.comment)}</pre>` : ''}
+                ${signal.comment ? `<pre class="signal-comment">${escapeHtml(signal.comment)}</pre>` : ''}
                 <div class="signal-footer" style="margin-top: 15px; display: flex; justify-content: space-between; font-size: 0.8rem; color: #888;">
                     <span class="post-author" onclick="openProfileModal('${signal.authorId}')" style="cursor: pointer; color: var(--primary);">👤 ${escapeHtml(signal.author)}</span>
                     <span>📅 ${new Date(signal.timestamp).toLocaleString()}</span>
@@ -2080,6 +2109,19 @@
             if (dateInput) dateInput.value = `${year}-${month}-${day}T${hours}:${minutes}`;
         }
 
+        function fillDefaultSignal() {
+            // Establecer valores por defecto según el ejemplo proporcionado (SELL XAUUSD)
+            document.getElementById('pair').value = 'XAUUSD';
+            document.getElementById('entry').value = 0;
+            document.getElementById('sl').value = 0;
+            document.getElementById('tp1').value = 0;
+            document.getElementById('tp2').value = 0;
+            document.getElementById('tp3').value = 0;
+            document.getElementById('type').value = 'SELL';
+            document.getElementById('comment').value = ''; // Limpiamos el análisis manual porque se generará automático
+            setCurrentDateTime();
+        }
+
         function showNotification(message, type) {
             const notif = document.createElement('div');
             notif.className = 'notification';
@@ -2102,7 +2144,8 @@
             if (e.key === 'Escape') closeProfileModal();
         });
 
-        setCurrentDateTime();
+        // Inicializar con los valores predeterminados
+        fillDefaultSignal();
     </script>
 </body>
 </html>
