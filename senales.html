@@ -1663,7 +1663,7 @@
             let formattedComment = `💬 💬 💬  💬 💬 💬 📆  ${new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' }).toUpperCase()}\n\n`;
             formattedComment += `🟢 ${type}- ${pair}\n\n`;
             formattedComment += `👉 ENTRADA   :   ${entry}\n`;
-            formattedComment += `⚠️  SL             :   ${sl}\n\n`;
+            formattedComment += `⚠️  SL       :   ${sl}\n\n`;
             formattedComment += `🎯 TARGETS\n`;
             formattedComment += `✅ TP1  :   ${tp1}\n`;
             if (tp2) formattedComment += `✅ TP2 :   ${tp2}\n`;
@@ -1673,6 +1673,10 @@
             const userComment = document.getElementById('comment').value.trim();
             formattedComment += `📌 Nota: Gestiona riesgo — arriesga 5% por cada $1,000.\n`;
             formattedComment += `🔗 yesly-adelay: https://yesly-adelay.vercel.app/`;
+            formattedComment += `🔗 telegram: https://t.me/yesly_adelay`;
+            formattedComment += `🔗 https://www.youtube.com/@heydinkayser2026/shorts`;
+
+
             
             if (userComment) {
                 formattedComment += `\n\n📝 ${userComment}`;
