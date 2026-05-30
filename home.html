@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>HEYDIN KAYSER • Portal VIP Futurista</title>
+    <title>YESLY ADELAY TRADING • Portal VIP Futurista</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
@@ -28,18 +28,18 @@
             color: #eef5ff;
         }
 
-        /* FONDO PRINCIPAL CON IMAGEN TRANSPARENTE (HEYDIN.jpg) */
+        /* FONDO PRINCIPAL CON IMAGEN YESLY.jpg (exactamente la URL) */
         .bg-image-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0.32;
+            opacity: 0.35;
             z-index: 0;
             pointer-events: none;
         }
@@ -64,7 +64,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.1), rgba(0, 0, 0, 0.75));
+            background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.12), rgba(0, 0, 0, 0.75));
             z-index: 2;
             pointer-events: none;
         }
@@ -495,7 +495,7 @@
     <!-- LOADER -->
     <div class="loader-container" id="loader">
         <div class="loader-ring"></div>
-        <div class="loader-text">PORTAL VIP ACTIVADO</div>
+        <div class="loader-text">YESLY ADELAY VIP</div>
         <div style="margin-top: 20px; font-size:0.9rem; letter-spacing:2px;">CARGANDO TERMINAL CUÁNTICA</div>
     </div>
 
@@ -503,7 +503,7 @@
         <div class="nav-container">
             <div class="logo-area">
                 <i class="fas fa-crown logo-icon"></i>
-                <span class="logo-text">HEYDIN KAYSER</span>
+                <span class="logo-text">YESLY ADELAY</span>
             </div>
             <div class="user-profile" id="userProfile">
                 <span class="user-name" id="displayName">
@@ -521,10 +521,10 @@
     <main>
         <div class="welcome-section">
             <h1 class="welcome-title" id="welcomeMessage">BIENVENIDO, TRADER</h1>
-            <p class="welcome-subtitle">APRENDE TRADING DESDE CERO </p>
+            <p class="welcome-subtitle">APRENDE TRADING DESDE CERO · SEÑALES ÉLITE</p>
         </div>
 
-        <!-- RELOJ NEÓN (agregado) -->
+        <!-- RELOJ NEÓN -->
         <div class="time-container">
             <div class="neon-clock">
                 <i class="fas fa-clock"></i>
@@ -535,140 +535,117 @@
         </div>
 
         <h2 class="portal-title">
-            <i class="fas fa-cube"></i> PORTAL DE ACCESOS <i class="fas fa-cube"></i>
+            <i class="fas fa-cube"></i> PORTAL DE ACCESOS VIP <i class="fas fa-cube"></i>
         </h2>
 
         <div class="modules-grid">
-            <!-- Módulo 1 - Módulos: icono corregido a fa-cubes (más representativo) -->
+            <!-- Módulos Principales de YESLY ADELAY -->
             <div class="module-card" onclick="window.location.href='modulos.html'">
                 <div class="module-icon"><i class="fas fa-cubes"></i></div>
                 <h3>Módulos</h3>
                 <p>Componentes</p>
             </div>
             
-            <!-- Módulo 2 - Gestión: icono corregido a fa-chart-line (gestión/control) -->
             <div class="module-card" onclick="window.location.href='gestion.html'">
                 <div class="module-icon"><i class="fas fa-chart-line"></i></div>
                 <h3>Gestión</h3>
                 <p>Control total</p>
             </div>
 
-            <!-- Módulo 3 - Inversión: icono corregido a fa-coins (ganancias/inversión) -->
             <div class="module-card" onclick="window.location.href='invest.html'">
                 <div class="module-icon"><i class="fas fa-coins"></i></div>
                 <h3>Inversión</h3>
                 <p>Ganancias</p>
             </div>
 
-
-            <!-- Módulo 4 - Fibonacci: icono corregido a fa-chart-simple (más preciso para trading) -->
             <div class="module-card" onclick="window.location.href='fibonacci.html'">
                 <div class="module-icon"><i class="fas fa-chart-pie"></i></div>
                 <h3>Fibonacci</h3>
                 <p>Herramientas</p>
             </div>
 
-            <!-- Módulo 5 - Chats online: icono corregido a fa-message (chat moderno) -->
             <div class="module-card" onclick="window.location.href='chats.html'">
                 <div class="module-icon"><i class="fas fa-message"></i></div>
                 <h3>Chats online</h3>
                 <p>Soporte real</p>
             </div>
 
-            <!-- Módulo 6 - Pagos: icono corregido a fa-hand-holding-dollar (pagos/suscripciones) -->
             <div class="module-card" onclick="window.location.href='pagos.html'">
                 <div class="module-icon"><i class="fas fa-hand-holding-dollar"></i></div>
                 <h3>Pagos</h3>
                 <p>Suscripciones</p>
             </div>
 
-            <!-- Módulo 7 - Hora: icono corregido a fa-earth-americas (mercados globales) -->
             <div class="module-card" onclick="window.location.href='hora.html'">
                 <div class="module-icon"><i class="fas fa-earth-americas"></i></div>
                 <h3>Hora</h3>
                 <p>Mercados</p>
             </div>
 
-            <!-- Módulo 8 - Contenido: icono corregido a fa-newspaper (noticias) -->
             <div class="module-card" onclick="window.location.href='contenido.html'">
                 <div class="module-icon"><i class="fas fa-newspaper"></i></div>
                 <h3>Contenido</h3>
                 <p>Noticias</p>
             </div>
 
-            <!-- Módulo 9 - Soporte: icono corregido a fa-headset (soporte preferencial) -->
             <div class="module-card" onclick="window.location.href='soporte.html'">
                 <div class="module-icon"><i class="fas fa-dollar-sign"></i></div>
                 <h3>Operaciones</h3>
-                <p>buy and sell </p>
+                <p>buy and sell</p>
             </div>
 
-            <!-- Módulo 10 - Señales: icono corregido a fa-broadcast-tower (alertas IA) -->
             <div class="module-card" onclick="window.location.href='senales.html'">
                 <div class="module-icon"><i class="fas fa-broadcast-tower"></i></div>
                 <h3>Señales</h3>
                 <p>Alertas IA</p>
             </div>
 
-            <!-- Módulo 11 - Videos: icono corregido a fa-video (tutoriales) -->
             <div class="module-card" onclick="window.location.href='https://subtle-eclair-8499ec.netlify.app/'">
                 <div class="module-icon"><i class="fas fa-video"></i></div>
                 <h3>Videos</h3>
                 <p>Tutoriales</p>
             </div>
 
-            <!-- Módulo 12 - PDF: icono corregido a fa-file-pdf (ebooks) -->
             <div class="module-card" onclick="window.location.href='pdf.html'">
                 <div class="module-icon"><i class="fas fa-file-pdf"></i></div>
                 <h3>PDF</h3>
                 <p>Ebooks</p>
             </div>
 
-            <!-- Módulo 13 - App Descarga: icono corregido a fa-download (descarga app móvil) -->
             <div class="module-card" onclick="window.location.href='app-descarga.html'">
                 <div class="module-icon"><i class="fas fa-user-tie"></i></div>
                 <h3>Broker</h3>
                 <p>Móvil</p>
             </div>
 
-          <!-- Módulo 13 - App Descarga: icono corregido a fa-download (descarga app móvil) -->
             <div class="module-card" onclick="window.location.href='app.html'">
                 <div class="module-icon"><i class="fas fa-cloud-arrow-down"></i></div>
-                <h3>App </h3>
+                <h3>App</h3>
                 <p>Móvil</p>
             </div>
 
-
-
-          <!-- Módulo 13 - App Descarga: icono corregido a fa-download (descarga app móvil) -->
             <div class="module-card" onclick="window.location.href='sociales.html'">
                 <div class="module-icon"><i class="fas fa-network-wired"></i></div>
                 <h3>Redes</h3>
                 <p>Sociales</p>
             </div>
 
-
-          <!-- Módulo 13 - App Descarga: icono corregido a fa-download (descarga app móvil) -->
             <div class="module-card" onclick="window.location.href='brokerfbs.html'">
                 <div class="module-icon"><i class="fas fa-key"></i></div>
                 <h3>Broker</h3>
                 <p>Regulados</p>
             </div>
 
-          <!-- Módulo 13 - App Descarga: icono corregido a fa-download (descarga app móvil) -->
             <div class="module-card" onclick="window.location.href='fondeo.html'">
                 <div class="module-icon"><i class="fas fa-landmark"></i></div>
                 <h3>Cuentas</h3>
                 <p>Fondeo</p>
             </div>
-
-
-
         </div>
 
         <div class="download-section">
             <div class="download-info">
-                <h2><i class="fas fa-bolt"></i> HEYDIN KAYSER APP</h2>
+                <h2><i class="fas fa-bolt"></i> YESLY ADELAY APP</h2>
                 <p>Lleva el poder cuántico en tu bolsillo</p>
             </div>
             <button class="download-btn" onclick="window.location.href='app.html'">
@@ -679,7 +656,7 @@
 
     <footer>
         <div class="footer-logo">
-            <i class="fas fa-crown"></i> HEYDIN KAYSER TRADING
+            <i class="fas fa-crown"></i> YESLY ADELAY TRADING VIP
         </div>
         <div class="social-icons">
             <a href="https://www.facebook.com/profile.php?id=61576490987991&locale=es_LA" target="_blank"><i class="fab fa-facebook-f"></i></a>
@@ -691,14 +668,14 @@
             <a href="https://www.mql5.com/en/channels/heydin-kayser-2026" target="_blank"><i class="fas fa-chart-line"></i></a>
         </div>
         <div class="copyright">
-            © 2025 HEYDIN KAYSER • ÉLITE TRADING • TERMINAL CUÁNTICA
+            © 2025 YESLY ADELAY TRADING • TERMINAL CUÁNTICA • ALTA FRECUENCIA
         </div>
     </footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    // ========== FIREBASE CONFIG (original de tu proyecto) ==========
+    // ========== FIREBASE CONFIG (original del proyecto) ==========
     const firebaseConfig = {
         apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
         authDomain: "beaver-trading.firebaseapp.com",
@@ -734,7 +711,7 @@
         setTimeout(() => loader.style.display = 'none', 600);
     }
 
-    // PARTICULAS
+    // PARTICULAS (estilo futurista)
     particlesJS('particles-js', {
         particles: {
             number: { value: 70, density: { enable: true, value_area: 800 } },
@@ -751,7 +728,7 @@
         retina_detect: true
     });
 
-    // RELOJ DINÁMICO
+    // RELOJ DINÁMICO (fecha/hora)
     function updateClock() {
         const now = new Date();
         document.getElementById('current-time').textContent = now.toLocaleTimeString('es-ES', { hour12: false });
@@ -760,7 +737,7 @@
     updateClock();
     setInterval(updateClock, 1000);
 
-    // VERIFICAR AUTENTICACIÓN Y MOSTRAR NOMBRE
+    // VERIFICAR AUTENTICACIÓN Y MOSTRAR NOMBRE DESDE FIREBASE
     auth.onAuthStateChanged((user) => {
         if (!user) {
             window.location.href = 'index.html';
@@ -769,7 +746,9 @@
             database.ref('users/' + userId).once('value').then((snapshot) => {
                 const userData = snapshot.val();
                 let displayName = 'Trader';
-                if (userData && userData.name) {
+                if (userData && userData.fullName) {
+                    displayName = userData.fullName.split(' ')[0];
+                } else if (userData && userData.name) {
                     displayName = userData.name.split(' ')[0];
                 } else if (user.email) {
                     displayName = user.email.split('@')[0];
