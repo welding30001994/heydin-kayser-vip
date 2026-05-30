@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>HEYDIN KAYSER INVEST - Sistema Cuántico de Gestión</title>
+    <title>YESLY ADELAY INVEST - Sistema Cuántico de Gestión</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Syne:wght@400;500;600;700;800&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -23,18 +23,18 @@
             overflow-x: hidden;
         }
 
-        /* FONDO PRINCIPAL CON IMAGEN HEYDIN.jpg TRANSPARENTE */
+        /* FONDO PRINCIPAL CON IMAGEN YESLY.jpg */
         .bg-image-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0.28;
+            opacity: 0.32;
             z-index: 0;
             pointer-events: none;
         }
@@ -301,7 +301,7 @@
             box-shadow: 0 0 20px rgba(0,255,255,0.3);
         }
 
-        /* RANGO DE PORCENTAJES */
+        /* RANGO DE PORCENTAJES - SOLO 1%, 1.5%, 2% */
         .percentage-range {
             background: rgba(0, 255, 255, 0.05);
             border-radius: 20px;
@@ -315,17 +315,19 @@
             text-transform: uppercase;
         }
         .range-buttons {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(70px, auto));
-            gap: 8px;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
         }
         .small-btn {
-            padding: 8px 12px;
+            padding: 12px 24px;
             background: rgba(0, 0, 0, 0.4);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 30px;
+            border: 1.5px solid rgba(0, 255, 255, 0.3);
+            border-radius: 40px;
             color: #aaffff;
-            font-size: 0.85rem;
+            font-size: 1.1rem;
+            font-weight: 700;
             cursor: pointer;
             transition: 0.2s;
             text-align: center;
@@ -334,6 +336,7 @@
             background: rgba(0, 255, 255, 0.2);
             border-color: cyan;
             color: cyan;
+            transform: scale(1.02);
         }
 
         /* BOTONES DE ACCIÓN */
@@ -541,7 +544,7 @@
 <div class="content">
     <div class="loader-container" id="loader">
         <div class="loader-ring"></div>
-        <div class="loader-text">HEYDIN KAYSER INVEST</div>
+        <div class="loader-text">YESLY ADELAY INVEST</div>
         <div style="margin-top: 20px; font-size:0.9rem;">SISTEMA CUÁNTICO DE GESTIÓN</div>
     </div>
 
@@ -549,7 +552,7 @@
         <div class="nav-container">
             <div class="logo-area" onclick="window.location.href='home.html'">
                 <i class="fas fa-chart-line logo-icon"></i>
-                <span class="logo-text">HEYDIN KAYSER</span>
+                <span class="logo-text">YESLY ADELAY</span>
             </div>
             <div class="back-home" onclick="window.location.href='home.html'">
                 <i class="fas fa-arrow-left"></i>
@@ -560,8 +563,8 @@
 
     <div class="container">
         <div class="hero-section">
-            <h1 class="hero-title">⚡ HEYDIN KAYSER INVEST ⚡</h1>
-            <p class="hero-subtitle">Sistema Cuántico de Gestión • Rendimientos Precisos</p>
+            <h1 class="hero-title">⚡ YESLY ADELAY INVEST ⚡</h1>
+            <p class="hero-subtitle">Sistema Cuántico de Gestión • Rendimientos 1% / 1.5% / 2%</p>
         </div>
 
         <div class="nav-bar">
@@ -591,12 +594,16 @@
                 <div class="card">
                     <h2 class="card-title"><i class="fas fa-chart-line"></i> RENDIMIENTO DIARIO</h2>
                     <div class="percentage-range">
-                        <div class="range-title">PORCENTAJES PRECISOS 0.01% - 15%</div>
-                        <div class="range-buttons" id="percentButtons"></div>
+                        <div class="range-title">SELECCIONE EL PORCENTAJE</div>
+                        <div class="range-buttons">
+                            <button class="small-btn" onclick="setPercentage(1)">1%</button>
+                            <button class="small-btn" onclick="setPercentage(1.5)">1.5%</button>
+                            <button class="small-btn" onclick="setPercentage(2)">2%</button>
+                        </div>
                     </div>
                     <div class="input-group">
-                        <label>O INGRESE % PERSONALIZADO</label>
-                        <input type="number" id="porcentaje" class="futuristic-input" placeholder="0.01 - 15.00" min="0.01" max="15" step="0.01">
+                        <label>PORCENTAJE SELECCIONADO</label>
+                        <input type="number" id="porcentaje" class="futuristic-input" placeholder="1" min="1" max="2" step="0.5" value="1">
                     </div>
                     <div class="input-group">
                         <label>FECHA DE INICIO</label>
@@ -634,17 +641,19 @@
 
     <footer>
         <div class="footer-logo">
-            <i class="fas fa-crown"></i> HEYDIN KAYSER TRADING
+            <i class="fas fa-chart-line"></i> YESLY ADELAY TRADING VIP
         </div>
         <div class="social-icons">
-            <a href="https://heydin-kayser-vip.blogspot.com/" target="_blank"><i class="fab fa-blogger-b"></i></a>
-            <a href="https://www.youtube.com/@heydinkayser2026" target="_blank"><i class="fab fa-youtube"></i></a>
             <a href="https://www.facebook.com/profile.php?id=61576490987991&locale=es_LA" target="_blank"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.tiktok.com/@heydin.kayser2026" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://www.youtube.com/@heydinkayser2026" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://heydin-kayser-vip.blogspot.com/" target="_blank"><i class="fab fa-blogger-b"></i></a>
+            <a href="https://www.instagram.com/heydin_kayser2026/" target="_blank"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/593994975350" target="_blank"><i class="fab fa-whatsapp"></i></a>
             <a href="https://www.mql5.com/en/channels/heydin-kayser-2026" target="_blank"><i class="fas fa-chart-simple"></i></a>
         </div>
         <div class="copyright">
-            © 2025 HEYDIN KAYSER TRADING • SISTEMA CUÁNTICO DE GESTIÓN
+            © 2025 YESLY ADELAY TRADING • SISTEMA CUÁNTICO DE GESTIÓN
         </div>
     </footer>
 </div>
@@ -662,17 +671,6 @@
 
     let inversionesGuardadas = [];
     let porcentajeActual = 1;
-
-    // Generar botones de porcentaje
-    const percentages = [0.01, 0.05, 0.10, 0.25, 0.50, 0.75, 1, 1.5, 2, 2.5, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15];
-    const percentContainer = document.getElementById('percentButtons');
-    percentages.forEach(p => {
-        const btn = document.createElement('button');
-        btn.className = 'small-btn';
-        btn.textContent = p + '%';
-        btn.onclick = () => setPercentage(p);
-        percentContainer.appendChild(btn);
-    });
 
     function setPercentage(percent) {
         porcentajeActual = percent;
@@ -720,8 +718,8 @@
             alert('⚡ ERROR: Complete todos los campos');
             return;
         }
-        if (porcentaje < 0.01 || porcentaje > 15) {
-            alert('⚡ ERROR: El porcentaje debe estar entre 0.01% y 15%');
+        if (porcentaje !== 1 && porcentaje !== 1.5 && porcentaje !== 2) {
+            alert('⚡ ERROR: El porcentaje debe ser 1%, 1.5% o 2%');
             return;
         }
         
@@ -743,7 +741,7 @@
         document.getElementById('nombre').value = '';
         document.getElementById('apellido').value = '';
         document.getElementById('inversion').value = '';
-        document.getElementById('porcentaje').value = '';
+        document.getElementById('porcentaje').value = '1';
         document.getElementById('fechaInicio').value = new Date().toISOString().split('T')[0];
         alert('✅ INVERSIÓN GUARDADA CON ÉXITO');
     }
@@ -824,7 +822,7 @@
         inv.resultados.forEach(r => {
             filas += `<tr><td>#${r.dia}</td><td>${r.fechaCompleta}</td><td>${r.diaSemana}</td><td>$${r.capitalInicial.toFixed(2)}</td><td style="color:#00ff9d;">+$${r.rendimiento.toFixed(2)}</td><td style="color:#ffd700;">$${r.capitalFinal.toFixed(2)}</td></tr>`;
         });
-        return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>HEYDIN KAYSER - ${inv.nombre} ${inv.apellido}</title><style>
+        return `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>YESLY ADELAY - ${inv.nombre} ${inv.apellido}</title><style>
             body{font-family:'Rajdhani',sans-serif;background:#0a0a0f;color:#e0e0ff;padding:30px;}
             .container{max-width:1400px;margin:0 auto;background:rgba(20,20,30,0.95);border:3px solid #ffd700;border-radius:30px;padding:30px;}
             h1{font-family:'Orbitron';background:linear-gradient(45deg,#ffd700,#00f3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
@@ -834,7 +832,7 @@
             td{padding:10px;text-align:center;border-bottom:1px solid rgba(255,215,0,0.2);}
             .total-box{background:linear-gradient(45deg,rgba(255,215,0,0.2),rgba(0,255,255,0.2));border-radius:20px;padding:20px;text-align:center;}
         </style></head><body>
-        <div class="container"><h1 style="text-align:center;">⚡ HEYDIN KAYSER INVEST ⚡</h1>
+        <div class="container"><h1 style="text-align:center;">⚡ YESLY ADELAY INVEST ⚡</h1>
         <h2 style="text-align:center;color:#ffd700;">REPORTE DE INVERSIÓN</h2>
         <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:20px;margin:30px 0;">
             <div style="background:rgba(255,215,0,0.1);padding:15px;border-radius:15px;"><div>INVERSIONISTA</div><div class="gold">${inv.nombre} ${inv.apellido}</div></div>
@@ -846,7 +844,7 @@
         <div style="overflow-x:auto;">${filas}</div>
         <div class="total-box"><h3>CAPITAL FINAL</h3><div style="font-size:2.5rem;font-weight:bold;background:linear-gradient(45deg,#ffd700,#00f3ff);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">$${inv.resultados[inv.resultados.length-1].capitalFinal.toFixed(2)}</div>
         <p>ROI: ${((beneficio/inv.inversion)*100).toFixed(2)}% | Período: ${inv.fechaInicio} al ${inv.fechaFinal}</p></div>
-        <div style="text-align:center;margin-top:30px;color:#a0a0ff;">HEYDIN KAYSER TRADING - Sistema Cuántico</div></div></body></html>`;
+        <div style="text-align:center;margin-top:30px;color:#a0a0ff;">YESLY ADELAY TRADING - Sistema Cuántico</div></div></body></html>`;
     }
 
     function descargarHTML() {
@@ -856,13 +854,14 @@
         const porcentaje = parseFloat(document.getElementById('porcentaje').value) || porcentajeActual;
         const fechaInicio = document.getElementById('fechaInicio').value;
         if (!nombre || !apellido || !inversion || !porcentaje || !fechaInicio) { alert('Complete los datos primero'); return; }
+        if (porcentaje !== 1 && porcentaje !== 1.5 && porcentaje !== 2) { alert('El porcentaje debe ser 1%, 1.5% o 2%'); return; }
         const resultados = calcularRendimientos(inversion, porcentaje, fechaInicio);
         const invTemp = { nombre, apellido, inversion, porcentaje, fechaInicio, fechaFinal: new Date(resultados[resultados.length-1].fechaObj).toISOString().split('T')[0], resultados };
         const html = generarReporteCompleto(invTemp);
         const blob = new Blob([html], { type: 'text/html' });
         const a = document.createElement('a');
         a.href = URL.createObjectURL(blob);
-        a.download = `HEYDIN_KAYSER_${nombre}_${apellido}.html`;
+        a.download = `YESLY_ADELAY_${nombre}_${apellido}.html`;
         a.click();
     }
 
@@ -873,13 +872,14 @@
         const porcentaje = parseFloat(document.getElementById('porcentaje').value) || porcentajeActual;
         const fechaInicio = document.getElementById('fechaInicio').value;
         if (!nombre || !apellido || !inversion || !porcentaje || !fechaInicio) { alert('Complete los datos primero'); return; }
+        if (porcentaje !== 1 && porcentaje !== 1.5 && porcentaje !== 2) { alert('El porcentaje debe ser 1%, 1.5% o 2%'); return; }
         const resultados = calcularRendimientos(inversion, porcentaje, fechaInicio);
         const invTemp = { nombre, apellido, inversion, porcentaje, fechaInicio, fechaFinal: new Date(resultados[resultados.length-1].fechaObj).toISOString().split('T')[0], resultados };
         const html = generarReporteCompleto(invTemp);
         const element = document.createElement('div');
         element.innerHTML = html;
         document.body.appendChild(element);
-        html2pdf().set({ margin: 0.5, filename: `HEYDIN_KAYSER_${nombre}_${apellido}.pdf`, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' } }).from(element).save().then(() => document.body.removeChild(element));
+        html2pdf().set({ margin: 0.5, filename: `YESLY_ADELAY_${nombre}_${apellido}.pdf`, html2canvas: { scale: 2 }, jsPDF: { unit: 'in', format: 'a4', orientation: 'landscape' } }).from(element).save().then(() => document.body.removeChild(element));
     }
 
     function showSection(section) {
@@ -904,6 +904,8 @@
         const saved = localStorage.getItem('inversiones');
         if (saved) inversionesGuardadas = JSON.parse(saved);
         document.getElementById('fechaInicio').value = new Date().toISOString().split('T')[0];
+        document.getElementById('porcentaje').value = '1';
+        porcentajeActual = 1;
     };
 </script>
 </body>
