@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>HEYDIN KAYSER | Calculadora Cuántica de Trading</title>
+    <title>YESLY ADELAY | Calculadora Cuántica VIP</title>
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
@@ -28,18 +28,18 @@
             color: #eef5ff;
         }
 
-        /* FONDO PRINCIPAL CON IMAGEN TRANSPARENTE (estilo HEYDIN) */
+        /* FONDO PRINCIPAL CON IMAGEN YESLY.jpg */
         .bg-image-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0.28;
+            opacity: 0.32;
             z-index: 0;
             pointer-events: none;
         }
@@ -601,15 +601,15 @@
 <div class="content">
     <div class="loader-container" id="loader">
         <div class="loader-ring"></div>
-        <div class="loader-text">HEYDIN KAYSER CALC</div>
+        <div class="loader-text">YESLY ADELAY VIP</div>
         <div style="margin-top: 20px; font-size:0.9rem; letter-spacing:2px;">INICIANDO MÓDULO CUÁNTICO</div>
     </div>
 
     <header class="glass-header">
         <div class="nav-container">
             <div class="logo-area">
-                <i class="fas fa-crown logo-icon"></i>
-                <span class="logo-text">HEYDIN KAYSER</span>
+                <i class="fas fa-chart-line logo-icon"></i>
+                <span class="logo-text">YESLY ADELAY</span>
             </div>
             <div class="nav-links">
                 <a href="index.html">INICIO</a>
@@ -687,8 +687,8 @@
     </div>
 
     <footer class="footer-futuristic">
-        <div style="font-size: 1.4rem; font-weight: 900; margin-bottom: 0.5rem;"><i class="fas fa-crown"></i> HEYDIN KAYSER TRADING</div>
-        <p>© 2026 HEYDIN KAYSER TRADING - Calculadora Cuántica · Alta Frecuencia</p>
+        <div style="font-size: 1.4rem; font-weight: 900; margin-bottom: 0.5rem;"><i class="fas fa-chart-line"></i> YESLY ADELAY TRADING</div>
+        <p>© 2026 YESLY ADELAY TRADING - Calculadora Cuántica · Alta Frecuencia</p>
         <p style="font-size:0.75rem; margin-top:10px;">Herramienta de gestión de capital y riesgo</p>
     </footer>
 </div>
@@ -736,7 +736,7 @@
             <button class="close-modal" onclick="closeModal('termsModal')">&times;</button>
         </div>
         <div style="color:#ccf; font-size:0.9rem; text-align:left;">
-            <p><strong>HEYDIN KAYSER TRADING</strong> - Herramienta de análisis y gestión.</p>
+            <p><strong>YESLY ADELAY TRADING</strong> - Herramienta de análisis y gestión.</p>
             <p>1. Los cálculos son estimativos, no garantizan rentabilidad.</p>
             <p>2. El trading implica riesgos; el usuario asume toda responsabilidad.</p>
             <p>3. Tus datos están protegidos conforme a políticas de privacidad.</p>
@@ -873,9 +873,7 @@
     document.getElementById('calculate').addEventListener('click', calculateRiskAndProfit);
 
     auth.onAuthStateChanged((user) => {
-        if (user && (window.location.pathname === '/' || window.location.pathname.includes('calculadora.html') === false)) {
-            // optional redirection logic
-        }
+        // Redirección opcional si se desea proteger la calculadora
     });
 </script>
 </body>
