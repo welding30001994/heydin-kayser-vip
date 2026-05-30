@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>YESLY ADELAY TRADING | Terminal Futurista</title>
-    <!-- Firebase SDKs compat -->
+    <title>YESLY ADELAY | Terminal Cuántica VIP</title>
+    <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800&family=Rajdhani:wght@300;500;700&display=swap" rel="stylesheet">
+    <!-- Google Fonts: Futurista y Elegante -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,64 +20,67 @@
         }
 
         body {
-            font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
+            font-family: 'Plus Jakarta Sans', 'Space Grotesk', sans-serif;
             background: #03050b;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            color: #eef5ff;
+            color: #f0f4ff;
         }
 
-        .bg-image-layer {
+        /* CAPA DE FONDO PRINCIPAL CON TU IMAGEN */
+        .bg-background-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0.25;
             z-index: 0;
+            pointer-events: none;
+            filter: brightness(0.55) contrast(1.1) saturate(1.2);
+            transition: filter 0.3s ease;
+        }
+
+        /* OVERLAY GRADIENTE PARA LEGIBILIDAD Y FUTURISMO */
+        .gradient-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 20%, rgba(0, 20, 50, 0.45), rgba(0, 0, 0, 0.85));
+            z-index: 1;
             pointer-events: none;
         }
 
-        .cyber-grid {
+        /* REJILLA DIGITAL SUTIL */
+        .digital-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-image: 
-                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.04) 0px, rgba(0, 255, 255, 0.04) 1px, transparent 1px, transparent 35px),
-                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.04) 0px, rgba(0, 255, 255, 0.04) 1px, transparent 1px, transparent 35px);
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .glow-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.06), rgba(0, 0, 0, 0.9));
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.03) 0px, rgba(0, 255, 255, 0.03) 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.03) 0px, rgba(0, 255, 255, 0.03) 1px, transparent 1px, transparent 40px);
             z-index: 2;
             pointer-events: none;
         }
 
         .content {
             position: relative;
-            z-index: 10;
-            width: 100%;
-            min-height: 100vh;
+            z-index: 15;
             display: flex;
             flex-direction: column;
+            min-height: 100vh;
         }
 
-        /* LOADER */
-        .loader-container {
+        /* LOADER ÉPICO */
+        .loader-modern {
             position: fixed;
             inset: 0;
             background: #01010b;
@@ -86,676 +89,472 @@
             justify-content: center;
             align-items: center;
             z-index: 10000;
-            transition: opacity 0.8s ease, visibility 0.8s;
-            backdrop-filter: blur(12px);
+            transition: opacity 0.6s ease, visibility 0.6s;
+            backdrop-filter: blur(15px);
         }
-        .loader-container.fade-out {
+        .loader-modern.fade-out {
             opacity: 0;
             visibility: hidden;
         }
-        .loader-ring {
-            width: 60px;
-            height: 60px;
-            border: 3px solid rgba(0,255,255,0.2);
-            border-top: 3px solid #0cf;
-            border-right: 3px solid #f0f;
+        .loader-ring-glow {
+            width: 55px;
+            height: 55px;
+            border: 2px solid rgba(0, 255, 255, 0.2);
+            border-top: 2px solid #0cf;
+            border-right: 2px solid #f25eff;
             border-radius: 50%;
-            animation: spin 1s linear infinite;
-            box-shadow: 0 0 20px cyan;
+            animation: spinRev 0.9s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+            box-shadow: 0 0 20px rgba(0, 200, 255, 0.5);
         }
-        @keyframes spin {
+        @keyframes spinRev {
             0% { transform: rotate(0deg);}
             100% { transform: rotate(360deg);}
         }
-        .loader-text {
-            margin-top: 15px;
-            font-size: 1rem;
+        .loader-text-glow {
+            margin-top: 20px;
             font-weight: 700;
             letter-spacing: 3px;
-            background: linear-gradient(45deg, cyan, #ff44e6);
+            background: linear-gradient(135deg, #aaffff, #ff8cff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            font-size: 0.9rem;
         }
 
-        /* HEADER */
-        .glass-header {
-            background: rgba(5, 10, 20, 0.85);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 255, 255, 0.4);
-            padding: 0.5rem 0.8rem;
+        /* HEADER TRANSPARENTE CON EFECTO GLASS */
+        .glass-royal {
+            background: rgba(5, 12, 25, 0.7);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(0, 230, 255, 0.35);
+            padding: 0.7rem 1rem;
             position: sticky;
             top: 0;
             z-index: 200;
         }
-        .nav-container {
+        .nav-futuristic {
             max-width: 1400px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 8px;
         }
-        .logo-area {
+        .logo-ultra {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 8px;
         }
         .logo-icon {
-            font-size: 1.3rem;
+            font-size: 1.5rem;
             color: #0cf;
-            filter: drop-shadow(0 0 5px cyan);
+            filter: drop-shadow(0 0 6px cyan);
         }
         .logo-text {
-            font-size: 0.85rem;
-            font-weight: 900;
-            font-family: 'Syne', sans-serif;
-            background: linear-gradient(135deg, #fff, #0cf);
+            font-size: 1rem;
+            font-weight: 800;
+            font-family: 'Space Grotesk', monospace;
+            background: linear-gradient(125deg, #fff, #4ef0ff);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 0.5px;
+            letter-spacing: -0.3px;
         }
-        .auth-buttons {
+        .badge-vip {
+            font-size: 0.55rem;
+            background: rgba(0, 255, 255, 0.2);
+            border: 0.5px solid cyan;
+            border-radius: 30px;
+            padding: 2px 8px;
+            font-weight: 700;
+        }
+        .auth-buttons-neon {
             display: flex;
-            gap: 6px;
+            gap: 9px;
         }
-        .btn-neon {
-            padding: 5px 10px;
-            border-radius: 40px;
-            font-weight: 800;
-            font-size: 0.6rem;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            border: none;
-            cursor: pointer;
-            transition: 0.2s;
+        .btn-neon-slim {
             background: transparent;
-        }
-        .btn-login {
-            border: 1.5px solid #0cf;
+            border: 1px solid #0cf;
             color: #0cf;
-            background: rgba(0, 255, 255, 0.05);
-        }
-        .btn-login:active {
-            background: #0cf;
-            color: #000;
-        }
-        .btn-register {
-            background: linear-gradient(95deg, #0cf, #a05eff);
-            color: #000;
-            font-weight: 900;
-            box-shadow: 0 0 8px rgba(0, 255, 255, 0.5);
-        }
-        .btn-register:active {
-            transform: scale(0.97);
-        }
-
-        /* BARRAS LATERALES - VERSIÓN MÓVIL OPTIMIZADA */
-        .sidebar-left {
-            width: 55px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            border-right: 1px solid rgba(0, 255, 255, 0.3);
-            position: fixed;
-            left: 0;
-            top: 52px;
-            bottom: 0;
-            z-index: 50;
-        }
-
-        .social-vertical-item {
-            width: 38px;
-            height: 38px;
-            background: rgba(0, 200, 255, 0.12);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 18px;
-            color: #0cf;
+            font-size: 0.7rem;
+            padding: 5px 12px;
+            border-radius: 40px;
+            font-weight: 600;
             transition: 0.2s;
-            border: 1.5px solid #0cf;
-            text-decoration: none;
             cursor: pointer;
         }
-        .social-vertical-item:active {
-            background: cyan;
-            color: black;
-            transform: scale(0.92);
+        .btn-neon-filled {
+            background: linear-gradient(95deg, #0cf, #a155ff);
+            border: none;
+            color: #000;
+            font-weight: 800;
+            box-shadow: 0 0 8px rgba(0, 255, 255, 0.6);
         }
 
-        .sidebar-right {
-            width: 55px;
+        /* BARRA LATERAL DE REDES SOCIALES - GENIAL Y MODERNA */
+        .social-rail {
+            position: fixed;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
             display: flex;
             flex-direction: column;
+            gap: 18px;
+            z-index: 60;
+            background: rgba(0, 10, 20, 0.55);
+            backdrop-filter: blur(12px);
+            padding: 12px 8px;
+            border-radius: 60px;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+        }
+        .social-icon-fut {
+            width: 42px;
+            height: 42px;
+            display: flex;
             align-items: center;
             justify-content: center;
-            gap: 12px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            border-left: 1px solid rgba(0, 255, 255, 0.3);
-            position: fixed;
-            right: 0;
-            top: 52px;
-            bottom: 0;
-            z-index: 50;
+            background: rgba(0, 200, 255, 0.1);
+            border-radius: 50%;
+            font-size: 1.3rem;
+            color: #ddf4ff;
+            transition: all 0.2s ease;
+            text-decoration: none;
+            border: 1px solid rgba(0, 230, 255, 0.6);
+        }
+        .social-icon-fut:hover, .social-icon-fut:active {
+            background: cyan;
+            color: #010101;
+            transform: scale(1.05);
+            border-color: white;
+            box-shadow: 0 0 12px cyan;
+        }
+        /* Ajuste para móvil: la barra se vuelve horizontal abajo? pero mantenerla vertical queda genial en móvil con margen */
+        @media (max-width: 640px) {
+            .social-rail {
+                left: 8px;
+                gap: 10px;
+                padding: 8px 5px;
+            }
+            .social-icon-fut {
+                width: 36px;
+                height: 36px;
+                font-size: 1rem;
+            }
         }
 
-        .financial-item {
-            text-align: center;
-        }
-        .financial-item i {
-            font-size: 18px;
-            color: #ff44e6;
-            filter: drop-shadow(0 0 4px #ff44e6);
-        }
-        .financial-item span {
-            display: block;
-            font-size: 0.45rem;
-            margin-top: 3px;
-            color: #ff44e6;
-            font-weight: bold;
-            letter-spacing: 0.3px;
-        }
-
-        /* HERO CENTRAL - MÓVIL OPTIMIZADO */
-        .hero-center {
+        /* SECCIÓN PRINCIPAL - CENTRO ELEGANTE */
+        .hero-vortex {
             flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            text-align: center;
-            padding: 0.8rem;
-            margin-left: 55px;
-            margin-right: 55px;
-            min-height: calc(100vh - 52px);
-        }
-
-        .hero-card {
-            background: rgba(8, 15, 28, 0.8);
-            backdrop-filter: blur(18px);
-            border-radius: 28px;
-            border: 1px solid rgba(0, 255, 255, 0.5);
-            padding: 1.2rem 1rem;
-            max-width: 100%;
+            padding: 2rem 1.2rem 2rem 4rem;
+            max-width: 1300px;
+            margin: 0 auto;
             width: 100%;
-            margin: 0 auto 0.8rem auto;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.4), 0 0 25px rgba(0,255,255,0.15);
+        }
+        @media (max-width: 640px) {
+            .hero-vortex {
+                padding: 1.5rem 1rem 1.5rem 3.5rem;
+            }
         }
 
-        .hero-card h1 {
-            font-size: 1.2rem;
-            font-weight: 900;
-            font-family: 'Syne', sans-serif;
-            background: linear-gradient(45deg, cyan, #ff44e6, #ffffff);
+        .glass-panel {
+            background: rgba(8, 18, 32, 0.65);
+            backdrop-filter: blur(18px);
+            border-radius: 48px;
+            border: 1px solid rgba(0, 230, 255, 0.35);
+            padding: 2rem 1.6rem;
+            text-align: center;
+            width: 100%;
+            margin-bottom: 2rem;
+            transition: 0.2s;
+            box-shadow: 0 25px 40px -15px black;
+        }
+        .title-cyber {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(125deg, #fff, #0cf, #ff79f5);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-bottom: 0.6rem;
-            letter-spacing: 1px;
+            letter-spacing: -0.5px;
         }
-
-        .hero-tagline {
-            font-size: 0.7rem;
-            color: #cef0ff;
-            margin-bottom: 0.8rem;
+        .sub-lead {
+            margin-top: 8px;
+            font-size: 0.75rem;
+            color: #bbe4ff;
             letter-spacing: 0.5px;
-            line-height: 1.3;
         }
-        .hero-tagline i {
-            margin: 0 3px;
-            color: #ff44e6;
-        }
-
-        .stats-glowing {
+        .stats-flex {
             display: flex;
             justify-content: center;
-            gap: 1rem;
-            margin: 1rem 0;
-            flex-wrap: wrap;
+            gap: 2rem;
+            margin: 1.6rem 0;
         }
-        .stat-number {
-            font-size: 1rem;
-            font-weight: 900;
-            color: cyan;
-            text-shadow: 0 0 6px cyan;
-        }
-        .stat-label {
-            font-size: 0.55rem;
-            letter-spacing: 0.5px;
-            color: #aaf0ff;
-        }
-
-        .btn-cta {
-            background: linear-gradient(145deg, #00ccff, #0077ff);
-            border: none;
-            padding: 8px 16px;
-            font-size: 0.75rem;
-            font-weight: 900;
-            border-radius: 60px;
-            color: #010101;
-            cursor: pointer;
-            transition: 0.2s;
-            width: 100%;
-            max-width: 200px;
-            box-shadow: 0 0 15px cyan;
-            margin-top: 0.5rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .btn-cta:active {
-            transform: scale(0.97);
-        }
-
-        /* CARRUSEL SECCIÓN - MÓVIL OPTIMIZADO */
-        .carousel-section {
-            width: 100%;
-            max-width: 100%;
-            margin: 0.5rem auto;
-            padding: 0;
-        }
-        .carousel-title h3 {
-            font-size: 1rem;
-            background: linear-gradient(135deg, #ff44e6, cyan);
+        .stats-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            background: linear-gradient(125deg, cyan, #ff8cf0);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            letter-spacing: 1px;
-            margin-bottom: 0.3rem;
+        }
+        .stats-label {
+            font-size: 0.6rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        .btn-prime {
+            background: linear-gradient(95deg, #00ddff, #814eff);
+            border: none;
+            padding: 10px 20px;
+            font-weight: 800;
+            border-radius: 60px;
+            color: #010101;
+            margin-top: 12px;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.75rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 14px rgba(0, 200, 255, 0.5);
+        }
+
+        /* CARRUSEL ELEGANTE */
+        .carousel-lux {
+            width: 100%;
+            margin: 0.8rem 0;
+        }
+        .carousel-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, #caf0ff, #df9eff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-block;
         }
         .carousel-container {
             position: relative;
             overflow: hidden;
-            border-radius: 22px;
-            background: rgba(0, 0, 0, 0.6);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(0, 255, 255, 0.4);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+            border-radius: 32px;
+            background: rgba(0, 10, 20, 0.6);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(0, 255, 255, 0.35);
         }
         .carousel-track {
             display: flex;
-            transition: transform 0.4s ease-out;
+            transition: transform 0.45s cubic-bezier(0.2, 0.9, 0.4, 1.1);
             cursor: grab;
-        }
-        .carousel-track:active {
-            cursor: grabbing;
         }
         .carousel-slide {
             min-width: 100%;
-            padding: 1rem;
+            padding: 1.3rem;
             text-align: center;
         }
-        .carousel-icon {
-            font-size: 1.8rem;
-            color: cyan;
-            margin-bottom: 0.4rem;
-            text-shadow: 0 0 8px cyan;
+        .slide-icon-lg {
+            font-size: 2rem;
+            color: #0cf;
+            margin-bottom: 8px;
         }
-        .carousel-slide-title {
+        .slide-head {
             font-size: 1rem;
-            font-weight: 900;
-            font-family: 'Orbitron', monospace;
-            background: linear-gradient(45deg, cyan, #ff44e6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            margin-bottom: 0.4rem;
-            letter-spacing: 0.5px;
+            font-weight: 700;
         }
-        .carousel-description {
+        .slide-desc {
             font-size: 0.7rem;
-            color: #cceeff;
-            line-height: 1.35;
-            max-width: 95%;
-            margin: 0 auto;
-        }
-        .carousel-badge {
-            display: inline-block;
-            margin-top: 0.6rem;
-            padding: 0.2rem 0.8rem;
-            background: rgba(0, 255, 255, 0.1);
-            border: 1px solid cyan;
-            border-radius: 30px;
-            font-size: 0.55rem;
-            color: cyan;
-        }
-        .carousel-indicators {
-            display: flex;
-            justify-content: center;
-            gap: 6px;
-            padding: 0.5rem;
-        }
-        .indicator {
-            width: 7px;
-            height: 7px;
-            border-radius: 50%;
-            background: rgba(0, 255, 255, 0.3);
-            border: 1px solid cyan;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .indicator.active {
-            background: cyan;
-            box-shadow: 0 0 6px cyan;
-            transform: scale(1.2);
+            opacity: 0.85;
+            margin-top: 6px;
         }
         .carousel-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(0, 255, 255, 0.2);
-            border: 1px solid cyan;
+            background: rgba(0, 0, 0, 0.6);
             border-radius: 50%;
-            width: 28px;
-            height: 28px;
+            width: 30px;
+            height: 30px;
             display: flex;
             align-items: center;
             justify-content: center;
-            cursor: pointer;
             color: cyan;
-            font-size: 0.8rem;
-            transition: 0.2s;
-            z-index: 20;
+            cursor: pointer;
+            border: 1px solid cyan;
+            backdrop-filter: blur(5px);
         }
-        .carousel-arrow:active {
+        .arrow-left { left: 8px; }
+        .arrow-right { right: 8px; }
+        .carousel-dots {
+            display: flex;
+            justify-content: center;
+            gap: 6px;
+            margin: 12px 0;
+        }
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: rgba(0, 255, 255, 0.3);
+            border: 1px solid cyan;
+            cursor: pointer;
+        }
+        .dot.active {
             background: cyan;
-            color: black;
-            transform: translateY(-50%) scale(0.95);
+            box-shadow: 0 0 6px cyan;
         }
-        .arrow-left { left: 6px; }
-        .arrow-right { right: 6px; }
 
-        /* FOOTER */
-        .footer-futuristic {
-            padding: 1rem;
+        .footer-cosmic {
             text-align: center;
-            background: rgba(3, 5, 12, 0.95);
-            border-top: 1px solid rgba(0,255,255,0.3);
-        }
-        .footer-futuristic p {
+            padding: 1rem;
             font-size: 0.6rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            background: rgba(2, 6, 15, 0.9);
         }
 
-        /* MODALES MÓVIL */
+        /* MODALES MEJORADOS */
         .modal-overlay {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0,0,0,0.96);
+            background: rgba(0, 0, 0, 0.95);
             backdrop-filter: blur(20px);
-            z-index: 1000;
+            z-index: 3000;
             align-items: center;
             justify-content: center;
-            padding: 16px;
+            padding: 1rem;
         }
-        .modal-box {
-            background: rgba(8, 16, 28, 0.98);
-            border: 2px solid cyan;
-            border-radius: 25px;
+        .modal-glass {
+            background: rgba(10, 20, 35, 0.98);
+            border-radius: 40px;
+            border: 1.5px solid cyan;
+            max-width: 360px;
             width: 100%;
-            max-width: 340px;
-            padding: 1.2rem;
-            box-shadow: 0 0 40px rgba(0,255,255,0.3);
+            padding: 1.5rem;
         }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.8rem;
-        }
-        .modal-header h2 {
-            font-size: 1.2rem;
-            background: linear-gradient(45deg, cyan, #ff66e6);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-        }
-        .close-modal {
-            font-size: 1.5rem;
-            cursor: pointer;
-            color: cyan;
-            background: none;
-            border: none;
-        }
-        .input-glow {
+        .input-cyber {
             width: 100%;
-            padding: 8px 12px;
-            margin: 6px 0;
-            background: rgba(0, 255, 255, 0.05);
-            border: 1px solid rgba(0,255,255,0.5);
+            padding: 10px 15px;
+            background: rgba(0, 30, 50, 0.6);
+            border: 1px solid #0cf;
             border-radius: 60px;
             color: white;
-            font-size: 0.8rem;
+            margin: 8px 0;
         }
-        .input-glow:focus {
-            outline: none;
-            border-color: #ff44e6;
-            box-shadow: 0 0 10px #ff44e6;
-        }
-        .terms-check {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            margin: 10px 0;
-            color: #b9f0ff;
-            font-size: 0.7rem;
-        }
-        .terms-link {
-            color: cyan;
-            cursor: pointer;
-            text-decoration: underline;
-        }
-        .btn-submit {
-            background: linear-gradient(145deg, #0cf, #3f6eff);
+        .btn-modal-glow {
+            background: linear-gradient(95deg, #0cf, #8952ff);
             width: 100%;
-            padding: 8px;
             border: none;
             border-radius: 60px;
-            font-weight: 900;
-            font-size: 0.85rem;
-            cursor: pointer;
-        }
-        .btn-submit:active {
-            transform: scale(0.98);
-        }
-        .toggle-auth {
-            text-align: center;
-            margin-top: 10px;
-            color: #ccf4ff;
-            font-size: 0.7rem;
-        }
-        .toggle-auth span {
-            color: cyan;
+            padding: 8px;
             font-weight: bold;
-            cursor: pointer;
+            margin-top: 12px;
         }
-        .error-msg {
-            color: #ff7b9c;
-            font-size: 0.65rem;
-            margin: 4px 0;
-            text-align: center;
+        .terms-check {
+            font-size: 0.7rem;
+            display: flex;
+            gap: 6px;
+            margin: 10px 0;
         }
-
-        /* TABLET Y ESCRITORIO - MEJORAS */
         @media (min-width: 768px) {
-            .sidebar-left { width: 70px; gap: 18px; top: 65px; }
-            .sidebar-right { width: 70px; gap: 18px; top: 65px; }
-            .social-vertical-item { width: 48px; height: 48px; font-size: 24px; }
-            .financial-item i { font-size: 24px; }
-            .financial-item span { font-size: 0.6rem; }
-            .hero-center { margin-left: 70px; margin-right: 70px; padding: 1rem; }
-            .hero-card { max-width: 550px; padding: 1.5rem; }
-            .hero-card h1 { font-size: 1.6rem; }
-            .hero-tagline { font-size: 0.85rem; }
-            .stat-number { font-size: 1.3rem; }
-            .btn-cta { padding: 10px 20px; font-size: 0.85rem; max-width: 240px; }
-            .carousel-section { max-width: 550px; }
-            .carousel-title h3 { font-size: 1.2rem; }
-            .carousel-slide-title { font-size: 1.2rem; }
-            .carousel-description { font-size: 0.8rem; }
-            .logo-icon { font-size: 1.6rem; }
-            .logo-text { font-size: 1rem; }
-            .btn-neon { padding: 6px 14px; font-size: 0.7rem; }
-        }
-
-        @media (min-width: 1024px) {
-            .sidebar-left { width: 85px; }
-            .sidebar-right { width: 85px; }
-            .hero-center { margin-left: 85px; margin-right: 85px; }
-            .hero-card { max-width: 650px; }
-            .carousel-section { max-width: 650px; }
-            .social-vertical-item { width: 55px; height: 55px; font-size: 28px; }
-            .financial-item i { font-size: 28px; }
-            .hero-card h1 { font-size: 2rem; }
+            .title-cyber { font-size: 2rem; }
+            .stats-number { font-size: 2rem; }
+            .social-icon-fut { width: 50px; height: 50px; font-size: 1.6rem; }
         }
     </style>
 </head>
 <body>
-<div class="bg-image-layer"></div>
-<div class="cyber-grid"></div>
-<div class="glow-overlay"></div>
+<div class="bg-background-layer"></div>
+<div class="gradient-overlay"></div>
+<div class="digital-grid"></div>
 
 <div class="content">
-    <div class="loader-container" id="loader">
-        <div class="loader-ring"></div>
-        <div class="loader-text">YESLY ADELAY VIP</div>
-        <div style="margin-top: 8px; font-size:0.6rem; letter-spacing:2px;">CARGANDO TERMINAL</div>
+    <div class="loader-modern" id="loaderVip">
+        <div class="loader-ring-glow"></div>
+        <div class="loader-text-glow">YESLY ADELAY VIP</div>
+        <div style="font-size:0.55rem; margin-top:8px;">CARGANDO TERMINAL CUÁNTICA</div>
     </div>
 
-    <header class="glass-header">
-        <div class="nav-container">
-            <div class="logo-area">
+    <header class="glass-royal">
+        <div class="nav-futuristic">
+            <div class="logo-ultra">
                 <i class="fas fa-chart-line logo-icon"></i>
                 <span class="logo-text">YESLY ADELAY</span>
+                <span class="badge-vip">TRADING VIP</span>
             </div>
-            <div class="auth-buttons">
-                <button class="btn-neon btn-login" id="openLoginModalBtn"><i class="fas fa-key"></i> INICIAR</button>
-                <button class="btn-neon btn-register" id="openRegisterModalBtn"><i class="fas fa-crown"></i> REGISTRO</button>
+            <div class="auth-buttons-neon">
+                <button class="btn-neon-slim" id="openLoginBtn"><i class="fas fa-key"></i> Acceder</button>
+                <button class="btn-neon-slim btn-neon-filled" id="openRegBtn"><i class="fas fa-crown"></i> Registro</button>
             </div>
         </div>
     </header>
 
-    <div class="main-layout">
-        <div class="sidebar-left">
-            <a href="https://wa.me/593994975350" target="_blank" class="social-vertical-item"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.instagram.com/heydin_kayser2026/" target="_blank" class="social-vertical-item"><i class="fab fa-instagram"></i></a>
-            <a href="https://www.tiktok.com/@heydin.kayser2026" target="_blank" class="social-vertical-item"><i class="fab fa-tiktok"></i></a>
-            <a href="https://www.facebook.com/profile.php?id=61576490987991&locale=es_LA" target="_blank" class="social-vertical-item"><i class="fab fa-facebook-f"></i></a>
-            <a href="https://www.youtube.com/@heydinkayser2026" target="_blank" class="social-vertical-item"><i class="fab fa-youtube"></i></a>
-        </div>
-
-        <div class="hero-center">
-            <div class="hero-card">
-                <h1>YESLY ADELAY TRADING</h1>
-                <div class="hero-tagline">
-                    <i class="fas fa-bolt"></i> INTELIGENCIA CUÁNTICA <i class="fas fa-bolt"></i><br>
-                    SEÑALES LÁSER · TERMINAL EXCLUSIVA
-                </div>
-                <div class="stats-glowing">
-                    <div class="stat"><div class="stat-number">+98%</div><div class="stat-label">PRECISIÓN</div></div>
-                    <div class="stat"><div class="stat-number">0.2s</div><div class="stat-label">EJECUCIÓN</div></div>
-                    <div class="stat"><div class="stat-number">24/7</div><div class="stat-label">SOPORTE</div></div>
-                </div>
-                <button class="btn-cta" id="heroCtaBtn"><i class="fas fa-unlock-alt"></i> ACTIVAR MODO VIP</button>
-            </div>
-
-            <!-- CARRUSEL 1: CONCEPTOS PRO TRADING -->
-            <div class="carousel-section" id="carousel1">
-                <div class="carousel-title">
-                    <h3><i class="fas fa-chart-simple"></i> CONCEPTOS PRO TRADING <i class="fas fa-brain"></i></h3>
-                </div>
-                <div class="carousel-container">
-                    <div class="carousel-arrow arrow-left" onclick="prevSlide(1)"><i class="fas fa-chevron-left"></i></div>
-                    <div class="carousel-track" id="track1">
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-broom"></i></div><div class="carousel-slide-title">SWEEP</div><div class="carousel-description">Barrido de liquidez. El precio caza stops y barre mínimos/máximos antes de revertir.</div><div class="carousel-badge">#Liquidez #SmartMoney</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-cubes"></i></div><div class="carousel-slide-title">ORDER BLOCK</div><div class="carousel-description">Bloque de órdenes institucionales. Zona donde grandes bancos acumulan posiciones.</div><div class="carousel-badge">#ICT #OB</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-chart-gap"></i></div><div class="carousel-slide-title">FAIR VALUE GAP</div><div class="carousel-description">Hueco de valor justo. Desbalance entre velas que el precio suele rellenar.</div><div class="carousel-badge">#FVG #ICT</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-shield-haltered"></i></div><div class="carousel-slide-title">BREAKER BLOCK</div><div class="carousel-description">Order block fallido que cambia de rol. Soporte se vuelve resistencia.</div><div class="carousel-badge">#Breaker #MMXM</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-hand-holding-heart"></i></div><div class="carousel-slide-title">MITIGATION</div><div class="carousel-description">Mitigación. El precio regresa a zona de interés para validarla.</div><div class="carousel-badge">#Mitigación</div></div>
-                    </div>
-                    <div class="carousel-arrow arrow-right" onclick="nextSlide(1)"><i class="fas fa-chevron-right"></i></div>
-                </div>
-                <div class="carousel-indicators" id="indicators1"></div>
-            </div>
-
-            <!-- CARRUSEL 2: TECNOLOGÍA DE VANGUARDIA -->
-            <div class="carousel-section" id="carousel2">
-                <div class="carousel-title">
-                    <h3><i class="fas fa-microchip"></i> TECNOLOGÍA DE VANGUARDIA <i class="fas fa-rocket"></i></h3>
-                </div>
-                <div class="carousel-container">
-                    <div class="carousel-arrow arrow-left" onclick="prevSlide(2)"><i class="fas fa-chevron-left"></i></div>
-                    <div class="carousel-track" id="track2">
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-microchip"></i></div><div class="carousel-slide-title">AI ESTRATÉGICA</div><div class="carousel-description">Algoritmos predictivos, señales en tiempo real con 98% de efectividad.</div><div class="carousel-badge">#InteligenciaArtificial</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-charging-station"></i></div><div class="carousel-slide-title">VELOCIDAD NEÓN</div><div class="carousel-description">Ejecución ultrarrápida en mercados globales, latencia 0.2 segundos.</div><div class="carousel-badge">#AltaFrecuencia</div></div>
-                        <div class="carousel-slide"><div class="carousel-icon"><i class="fas fa-shield-alt"></i></div><div class="carousel-slide-title">RESPALDO VIP</div><div class="carousel-description">Soporte 24/7, asesores dedicados y sala de trading exclusiva.</div><div class="carousel-badge">#SoportePremium</div></div>
-                    </div>
-                    <div class="carousel-arrow arrow-right" onclick="nextSlide(2)"><i class="fas fa-chevron-right"></i></div>
-                </div>
-                <div class="carousel-indicators" id="indicators2"></div>
-            </div>
-        </div>
-
-        <div class="sidebar-right">
-            <div class="financial-item"><i class="fas fa-chart-line"></i><span>FUTURO<br>FINANCIERO</span></div>
-            <div class="financial-item"><i class="fas fa-bitcoin"></i><span>CRIPTO<br>LÁSER</span></div>
-            <div class="financial-item"><i class="fas fa-robot"></i><span>AI<br>PREDICTIVA</span></div>
-            <div class="financial-item"><i class="fas fa-shield-alt"></i><span>SEGURIDAD<br>CUÁNTICA</span></div>
-        </div>
+    <!-- BARRA LATERAL DE REDES SOCIALES : WHATSAPP, TELEGRAM, YOUTUBE, TIKTOK, INSTAGRAM -->
+    <div class="social-rail">
+        <a href="https://wa.me/593994975350" target="_blank" class="social-icon-fut"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://t.me/+tu_enlace" target="_blank" class="social-icon-fut"><i class="fab fa-telegram-plane"></i></a>
+        <a href="https://www.youtube.com/@heydinkayser2026" target="_blank" class="social-icon-fut"><i class="fab fa-youtube"></i></a>
+        <a href="https://www.tiktok.com/@heydin.kayser2026" target="_blank" class="social-icon-fut"><i class="fab fa-tiktok"></i></a>
+        <a href="https://www.instagram.com/heydin_kayser2026/" target="_blank" class="social-icon-fut"><i class="fab fa-instagram"></i></a>
     </div>
 
-    <footer class="footer-futuristic">
-        <p>© 2026 YESLY ADELAY TRADING - Alta Frecuencia & Futuro Digital</p>
-        <p style="font-size:0.55rem; margin-top:4px;">Terminal de inversión algorítmica · Potenciada por IA Cuántica</p>
+    <div class="hero-vortex">
+        <div class="glass-panel">
+            <h1 class="title-cyber"><i class="fas fa-bolt"></i> YESLY ADELAY TRADING <i class="fas fa-microchip"></i></h1>
+            <div class="sub-lead">SEÑALES LÁSER · ALGORITMOS PREDICTIVOS · INTELIGENCIA DE MERCADO</div>
+            <div class="stats-flex">
+                <div><div class="stats-number">+98%</div><div class="stats-label">PRECISIÓN</div></div>
+                <div><div class="stats-number">0.2s</div><div class="stats-label">EJECUCIÓN</div></div>
+                <div><div class="stats-number">24/7</div><div class="stats-label">SOPORTE ÉLITE</div></div>
+            </div>
+            <button class="btn-prime" id="heroCta"><i class="fas fa-unlock-alt"></i> ACTIVAR MODO VIP</button>
+        </div>
+
+        <!-- Carrusel minimalista con conceptos pro trading -->
+        <div class="carousel-lux">
+            <div class="carousel-title"><i class="fas fa-brain"></i> SMART MONEY CONCEPTS</div>
+            <div class="carousel-container" id="carouselContainer">
+                <div class="carousel-arrow arrow-left" id="prevSlideBtn"><i class="fas fa-chevron-left"></i></div>
+                <div class="carousel-track" id="carouselTrack">
+                    <div class="carousel-slide"><div class="slide-icon-lg"><i class="fas fa-broom"></i></div><div class="slide-head">SWEEP</div><div class="slide-desc">Barrido de liquidez institucional, caza de stops.</div></div>
+                    <div class="carousel-slide"><div class="slide-icon-lg"><i class="fas fa-cubes"></i></div><div class="slide-head">ORDER BLOCK</div><div class="slide-desc">Zona clave donde los bancos acumulan órdenes.</div></div>
+                    <div class="carousel-slide"><div class="slide-icon-lg"><i class="fas fa-chart-gap"></i></div><div class="slide-head">FAIR VALUE GAP</div><div class="slide-desc">Desbalance que el precio busca rellenar.</div></div>
+                    <div class="carousel-slide"><div class="slide-icon-lg"><i class="fas fa-shield-virus"></i></div><div class="slide-head">BREAKER BLOCK</div><div class="slide-desc">Order block fallido que invierte su rol.</div></div>
+                    <div class="carousel-slide"><div class="slide-icon-lg"><i class="fas fa-hand-holding-heart"></i></div><div class="slide-head">MITIGATION</div><div class="slide-desc">Regreso a zona de interés para validar.</div></div>
+                </div>
+                <div class="carousel-arrow arrow-right" id="nextSlideBtn"><i class="fas fa-chevron-right"></i></div>
+            </div>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+        <div style="font-size:0.6rem; text-align:center; margin-top:4px;"><i class="fas fa-chart-simple"></i> Tecnología de vanguardia · Cuant trading</div>
+    </div>
+
+    <footer class="footer-cosmic">
+        <p>© 2026 YESLY ADELAY TRADING · Terminal Cuántica · Datos en tiempo real</p>
+        <p style="font-size:0.55rem;">El trading involucra riesgos. Invierte con responsabilidad.</p>
     </footer>
 </div>
 
-<!-- MODALES -->
+<!-- Modales -->
 <div id="loginModal" class="modal-overlay">
-    <div class="modal-box">
-        <div class="modal-header"><h2><i class="fas fa-key"></i> INICIAR</h2><button class="close-modal" onclick="closeModal('loginModal')">&times;</button></div>
-        <div id="loginError" class="error-msg"></div>
-        <input type="email" id="loginEmail" class="input-glow" placeholder="Correo electrónico">
-        <input type="password" id="loginPassword" class="input-glow" placeholder="Contraseña">
-        <button class="btn-submit" id="doLoginBtn">ACCEDER</button>
-        <div class="toggle-auth">¿NO eres VIP? <span id="switchToRegisterFromLogin">Registrar</span></div>
-    </div>
+    <div class="modal-glass"><div style="display:flex; justify-content:space-between;"><h3 style="color:cyan;">ACCESO VIP</h3><button onclick="closeModal('loginModal')" style="background:none; border:none; color:white; font-size:1.2rem;">&times;</button></div>
+    <div id="loginError" style="color:#ff7b89; font-size:0.7rem;"></div>
+    <input type="email" id="loginEmail" class="input-cyber" placeholder="Correo electrónico"><input type="password" id="loginPassword" class="input-cyber" placeholder="Contraseña">
+    <button class="btn-modal-glow" id="doLoginBtn">INGRESAR</button><div style="text-align:center; margin-top:12px; font-size:0.7rem;">¿Sin cuenta? <span id="switchToReg" style="color:cyan; cursor:pointer;">Regístrate</span></div></div>
 </div>
-
 <div id="registerModal" class="modal-overlay">
-    <div class="modal-box">
-        <div class="modal-header"><h2><i class="fas fa-crown"></i> REGISTRO</h2><button class="close-modal" onclick="closeModal('registerModal')">&times;</button></div>
-        <div id="registerError" class="error-msg"></div>
-        <input type="text" id="regName" class="input-glow" placeholder="Nombre completo">
-        <input type="email" id="regEmail" class="input-glow" placeholder="Correo electrónico">
-        <input type="password" id="regPassword" class="input-glow" placeholder="Contraseña (mínimo 6)">
-        <div class="terms-check"><input type="checkbox" id="termsCheckbox"><label>Acepto los <span class="terms-link" id="showTermsBtn">Términos</span></label></div>
-        <button class="btn-submit" id="doRegisterBtn">ACTIVAR</button>
-        <div class="toggle-auth">¿Ya eres VIP? <span id="switchToLoginFromRegister">Iniciar</span></div>
-    </div>
+    <div class="modal-glass"><div style="display:flex; justify-content:space-between;"><h3 style="color:cyan;">REGISTRO PREMIUM</h3><button onclick="closeModal('registerModal')" style="background:none; border:none; color:white; font-size:1.2rem;">&times;</button></div>
+    <div id="registerError" style="color:#ff7b89; font-size:0.7rem;"></div>
+    <input type="text" id="regName" class="input-cyber" placeholder="Nombre completo"><input type="email" id="regEmail" class="input-cyber" placeholder="Correo electrónico"><input type="password" id="regPassword" class="input-cyber" placeholder="Contraseña (mínimo 6)">
+    <div class="terms-check"><input type="checkbox" id="termsCheckbox"><label>Acepto <span id="showTermsBtn" style="color:cyan; cursor:pointer;">Términos y condiciones</span></label></div>
+    <button class="btn-modal-glow" id="doRegisterBtn">ACTIVAR CUENTA</button><div style="text-align:center; margin-top:12px; font-size:0.7rem;">¿Ya eres VIP? <span id="switchToLogin" style="color:cyan; cursor:pointer;">Iniciar sesión</span></div></div>
 </div>
-
 <div id="termsModal" class="modal-overlay">
-    <div class="modal-box" style="max-width:380px; max-height:55vh; overflow-y:auto;">
-        <div class="modal-header"><h2>📜 TÉRMINOS</h2><button class="close-modal" onclick="closeModal('termsModal')">&times;</button></div>
-        <div style="color:#ccf; font-size:0.7rem; text-align:left;">
-            <p><strong>YESLY ADELAY TRADING</strong> - Plataforma de análisis algorítmico.</p>
-            <p>1. Los datos y señales son de carácter informativo, no garantizan rentabilidad.</p>
-            <p>2. El trading implica riesgos significativos.</p>
-            <p>3. Tus datos están protegidos.</p>
-            <p>4. Prohibido uso indebido de la plataforma.</p>
-            <p>5. Al registrarte, declaras ser mayor de 18 años.</p>
-            <p style="margin-top:8px;">✅ Al marcar "Acepto" confirmas la lectura.</p>
-        </div>
-        <button class="btn-submit" style="margin-top:10px;" onclick="closeModal('termsModal')">CERRAR</button>
-    </div>
+    <div class="modal-glass"><div style="display:flex; justify-content:space-between;"><h3 style="color:cyan;">TÉRMINOS</h3><button onclick="closeModal('termsModal')" style="background:none; border:none; color:white;">&times;</button></div>
+    <div style="font-size:0.7rem; margin:12px 0;">Al registrarse en YESLY ADELAY, acepta que las señales son informativas, el trading implica riesgo financiero, y declara ser mayor de edad. La plataforma usa IA predictiva, pero no garantiza resultados.</div>
+    <button class="btn-modal-glow" onclick="closeModal('termsModal')">CERRAR</button></div>
 </div>
 
 <script>
@@ -766,8 +565,7 @@
         projectId: "beaver-trading",
         storageBucket: "beaver-trading.firebasestorage.app",
         messagingSenderId: "926610131904",
-        appId: "1:926610131904:web:c147bd337bd12b4d085625",
-        measurementId: "G-1K51WWF2ZJ"
+        appId: "1:926610131904:web:c147bd337bd12b4d085625"
     };
     firebase.initializeApp(firebaseConfig);
     const auth = firebase.auth();
@@ -775,203 +573,95 @@
 
     window.addEventListener('load', () => {
         setTimeout(() => {
-            const loader = document.getElementById('loader');
+            const loader = document.getElementById('loaderVip');
             loader.classList.add('fade-out');
-            setTimeout(() => loader.style.display = 'none', 800);
-        }, 1500);
+            setTimeout(() => loader.style.display = 'none', 700);
+        }, 1200);
     });
 
     function showLoaderMsg(msg) {
-        let loader = document.getElementById('loader');
-        if(loader.style.display === 'none') loader.style.display = 'flex';
-        loader.classList.remove('fade-out');
-        document.querySelector('.loader-text').innerText = msg || 'PROCESANDO...';
+        let l = document.getElementById('loaderVip');
+        if (l.style.display === 'none') l.style.display = 'flex';
+        l.classList.remove('fade-out');
+        document.querySelector('.loader-text-glow').innerText = msg || 'PROCESANDO';
     }
     function hideLoader() {
-        const loader = document.getElementById('loader');
-        loader.classList.add('fade-out');
-        setTimeout(() => loader.style.display = 'none', 600);
+        let l = document.getElementById('loaderVip');
+        l.classList.add('fade-out');
+        setTimeout(() => l.style.display = 'none', 500);
     }
 
-    // Sistema de carruseles
-    class Carousel {
-        constructor(id) {
-            this.id = id;
-            this.track = document.getElementById(`track${id}`);
-            this.slides = this.track ? this.track.querySelectorAll('.carousel-slide') : [];
-            this.currentIndex = 0;
-            this.startX = 0;
-            this.isDragging = false;
-            this.startTransform = 0;
-            
-            if (this.slides.length > 0) {
-                this.createIndicators();
-                this.goToSlide(0);
-                this.addEventListeners();
-            }
-        }
-
-        createIndicators() {
-            const container = document.getElementById(`indicators${this.id}`);
-            if (!container) return;
-            container.innerHTML = '';
-            this.slides.forEach((_, i) => {
-                const indicator = document.createElement('div');
-                indicator.classList.add('indicator');
-                if (i === this.currentIndex) indicator.classList.add('active');
-                indicator.addEventListener('click', () => this.goToSlide(i));
-                container.appendChild(indicator);
-            });
-        }
-
-        updateIndicators() {
-            const container = document.getElementById(`indicators${this.id}`);
-            if (!container) return;
-            const indicators = container.querySelectorAll('.indicator');
-            indicators.forEach((ind, i) => {
-                if (i === this.currentIndex) ind.classList.add('active');
-                else ind.classList.remove('active');
-            });
-        }
-
-        goToSlide(index) {
-            if (index < 0) index = 0;
-            if (index >= this.slides.length) index = this.slides.length - 1;
-            this.currentIndex = index;
-            const translateX = -this.currentIndex * 100;
-            this.track.style.transform = `translateX(${translateX}%)`;
-            this.updateIndicators();
-        }
-
-        nextSlide() {
-            if (this.currentIndex < this.slides.length - 1) this.goToSlide(this.currentIndex + 1);
-            else this.goToSlide(0);
-        }
-
-        prevSlide() {
-            if (this.currentIndex > 0) this.goToSlide(this.currentIndex - 1);
-            else this.goToSlide(this.slides.length - 1);
-        }
-
-        addEventListeners() {
-            this.track.addEventListener('touchstart', (e) => {
-                this.startX = e.touches[0].clientX;
-                this.isDragging = true;
-                this.startTransform = this.currentIndex;
-                this.track.style.transition = 'none';
-            });
-
-            this.track.addEventListener('touchmove', (e) => {
-                if (!this.isDragging) return;
-                const currentX = e.touches[0].clientX;
-                const diff = currentX - this.startX;
-                const movePercent = (diff / this.track.offsetWidth) * 100;
-                let newTransform = this.startTransform * -100 + movePercent;
-                if (newTransform > 0) newTransform = 0;
-                if (newTransform < -(this.slides.length - 1) * 100) newTransform = -(this.slides.length - 1) * 100;
-                this.track.style.transform = `translateX(${newTransform}%)`;
-            });
-
-            this.track.addEventListener('touchend', (e) => {
-                if (!this.isDragging) return;
-                this.isDragging = false;
-                this.track.style.transition = 'transform 0.4s ease-out';
-                const endX = e.changedTouches[0].clientX;
-                const diff = endX - this.startX;
-                if (Math.abs(diff) > 35) {
-                    if (diff > 0 && this.currentIndex > 0) this.prevSlide();
-                    else if (diff < 0 && this.currentIndex < this.slides.length - 1) this.nextSlide();
-                    else this.goToSlide(this.currentIndex);
-                } else {
-                    this.goToSlide(this.currentIndex);
-                }
-            });
-
-            this.track.addEventListener('mousedown', (e) => {
-                this.startX = e.clientX;
-                this.isDragging = true;
-                this.startTransform = this.currentIndex;
-                this.track.style.transition = 'none';
-                e.preventDefault();
-            });
-
-            window.addEventListener('mousemove', (e) => {
-                if (!this.isDragging || (this.id !== 1 && this.id !== 2)) return;
-                const currentX = e.clientX;
-                const diff = currentX - this.startX;
-                const movePercent = (diff / this.track.offsetWidth) * 100;
-                let newTransform = this.startTransform * -100 + movePercent;
-                if (newTransform > 0) newTransform = 0;
-                if (newTransform < -(this.slides.length - 1) * 100) newTransform = -(this.slides.length - 1) * 100;
-                this.track.style.transform = `translateX(${newTransform}%)`;
-            });
-
-            window.addEventListener('mouseup', (e) => {
-                if (!this.isDragging) return;
-                this.isDragging = false;
-                this.track.style.transition = 'transform 0.4s ease-out';
-                const diff = e.clientX - this.startX;
-                if (Math.abs(diff) > 35) {
-                    if (diff > 0 && this.currentIndex > 0) this.prevSlide();
-                    else if (diff < 0 && this.currentIndex < this.slides.length - 1) this.nextSlide();
-                    else this.goToSlide(this.currentIndex);
-                } else {
-                    this.goToSlide(this.currentIndex);
-                }
-            });
-        }
+    // Carrusel interactivo + táctil
+    const track = document.getElementById('carouselTrack');
+    const slides = Array.from(track.children);
+    let currentIdx = 0;
+    let startX = 0, isDragging = false, startTranslate = 0;
+    function updateCarousel() {
+        const percent = -currentIdx * 100;
+        track.style.transform = `translateX(${percent}%)`;
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, i) => {
+            if (i === currentIdx) dot.classList.add('active');
+            else dot.classList.remove('active');
+        });
     }
+    function nextSlide() { if (currentIdx < slides.length-1) currentIdx++; else currentIdx = 0; updateCarousel(); }
+    function prevSlide() { if (currentIdx > 0) currentIdx--; else currentIdx = slides.length-1; updateCarousel(); }
+    function initDots() {
+        const container = document.getElementById('carouselDots');
+        container.innerHTML = '';
+        slides.forEach((_, idx) => {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (idx === currentIdx) dot.classList.add('active');
+            dot.addEventListener('click', () => { currentIdx = idx; updateCarousel(); });
+            container.appendChild(dot);
+        });
+    }
+    initDots();
+    updateCarousel();
+    document.getElementById('prevSlideBtn').addEventListener('click', prevSlide);
+    document.getElementById('nextSlideBtn').addEventListener('click', nextSlide);
 
-    const carousel1 = new Carousel(1);
-    const carousel2 = new Carousel(2);
+    // Eventos táctiles y mouse
+    track.addEventListener('touchstart', (e) => { startX = e.touches[0].clientX; isDragging = true; startTranslate = currentIdx; track.style.transition = 'none'; });
+    track.addEventListener('touchmove', (e) => { if(!isDragging) return; const diff = e.touches[0].clientX - startX; const movePercent = (diff / track.offsetWidth) * 100; let newIdx = startTranslate + (movePercent/100); if (newIdx < 0) newIdx = 0; if (newIdx > slides.length-1) newIdx = slides.length-1; track.style.transform = `translateX(${-newIdx*100}%)`; });
+    track.addEventListener('touchend', (e) => { if(!isDragging) return; isDragging = false; track.style.transition = 'transform 0.3s cubic-bezier(0.2,0.9,0.4,1.1)'; const diff = e.changedTouches[0].clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) prevSlide(); else nextSlide(); } else updateCarousel(); });
+    track.addEventListener('mousedown', (e) => { startX = e.clientX; isDragging = true; startTranslate = currentIdx; track.style.transition = 'none'; e.preventDefault(); });
+    window.addEventListener('mousemove', (e) => { if(!isDragging) return; const diff = e.clientX - startX; const movePercent = (diff / track.offsetWidth) * 100; let newIdx = startTranslate + (movePercent/100); if(newIdx<0) newIdx=0; if(newIdx>slides.length-1) newIdx=slides.length-1; track.style.transform = `translateX(${-newIdx*100}%)`; });
+    window.addEventListener('mouseup', (e) => { if(!isDragging) return; isDragging = false; track.style.transition = 'transform 0.3s cubic-bezier(0.2,0.9,0.4,1.1)'; const diff = e.clientX - startX; if (Math.abs(diff) > 30) { if (diff > 0) prevSlide(); else nextSlide(); } else updateCarousel(); });
 
-    window.prevSlide = (id) => { if (id === 1) carousel1.prevSlide(); else if (id === 2) carousel2.prevSlide(); };
-    window.nextSlide = (id) => { if (id === 1) carousel1.nextSlide(); else if (id === 2) carousel2.nextSlide(); };
-
-    function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
-    function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
-
-    document.getElementById('openLoginModalBtn').onclick = () => openModal('loginModal');
-    document.getElementById('openRegisterModalBtn').onclick = () => openModal('registerModal');
-    document.getElementById('heroCtaBtn').onclick = () => openModal('loginModal');
-    document.getElementById('switchToRegisterFromLogin').onclick = () => { closeModal('loginModal'); openModal('registerModal'); };
-    document.getElementById('switchToLoginFromRegister').onclick = () => { closeModal('registerModal'); openModal('loginModal'); };
-    document.getElementById('showTermsBtn').onclick = (e) => { e.preventDefault(); openModal('termsModal'); };
-    window.onclick = (e) => { if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none'; };
+    function openModal(id) { document.getElementById(id).style.display = 'flex'; }
+    function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+    window.closeModal = closeModal;
+    document.getElementById('openLoginBtn').onclick = () => openModal('loginModal');
+    document.getElementById('openRegBtn').onclick = () => openModal('registerModal');
+    document.getElementById('heroCta').onclick = () => openModal('loginModal');
+    document.getElementById('switchToReg').onclick = () => { closeModal('loginModal'); openModal('registerModal'); };
+    document.getElementById('switchToLogin').onclick = () => { closeModal('registerModal'); openModal('loginModal'); };
+    document.getElementById('showTermsBtn').onclick = () => openModal('termsModal');
 
     document.getElementById('doLoginBtn').onclick = () => {
         const email = document.getElementById('loginEmail').value.trim();
-        const password = document.getElementById('loginPassword').value;
-        if (!email || !password) { document.getElementById('loginError').innerText = 'Completa todos los campos'; return; }
-        showLoaderMsg('VERIFICANDO ACCESO');
-        auth.signInWithEmailAndPassword(email, password)
-            .then(() => { document.querySelector('.loader-text').innerText = 'REDIRIGIENDO'; setTimeout(() => { window.location.href = 'home.html'; }, 1200); })
-            .catch(err => { hideLoader(); document.getElementById('loginError').innerText = 'Error: ' + err.message; });
+        const pwd = document.getElementById('loginPassword').value;
+        if (!email || !pwd) { document.getElementById('loginError').innerText = 'Completa todos los campos'; return; }
+        showLoaderMsg('VERIFICANDO CREDENCIALES');
+        auth.signInWithEmailAndPassword(email, pwd).then(() => { document.querySelector('.loader-text-glow').innerText = 'REDIRIGIENDO'; setTimeout(() => window.location.href = 'home.html', 1300); }).catch(err => { hideLoader(); document.getElementById('loginError').innerText = err.message; });
     };
-
     document.getElementById('doRegisterBtn').onclick = () => {
         const name = document.getElementById('regName').value.trim();
         const email = document.getElementById('regEmail').value.trim();
         const pass = document.getElementById('regPassword').value;
-        const termsAccepted = document.getElementById('termsCheckbox').checked;
-        if (!name || !email || !pass) { document.getElementById('registerError').innerText = 'Todos los campos son obligatorios'; return; }
-        if (!termsAccepted) { document.getElementById('registerError').innerText = 'Debes aceptar los Términos'; return; }
-        if (pass.length < 6) { document.getElementById('registerError').innerText = 'Contraseña mínimo 6 caracteres'; return; }
-        showLoaderMsg('CREANDO CUENTA');
-        auth.createUserWithEmailAndPassword(email, pass)
-            .then((userCred) => {
-                const uid = userCred.user.uid;
-                db.ref('users/' + uid).set({ fullName: name, email: email, createdAt: firebase.database.ServerValue.TIMESTAMP, termsAccepted: true })
-                    .then(() => { document.querySelector('.loader-text').innerText = 'REGISTRO EXITOSO'; setTimeout(() => { window.location.href = 'home.html'; }, 1500); });
-            })
-            .catch(err => { hideLoader(); document.getElementById('registerError').innerText = 'Error: ' + err.message; });
+        const terms = document.getElementById('termsCheckbox').checked;
+        if (!name || !email || !pass) { document.getElementById('registerError').innerText = 'Completa los campos'; return; }
+        if (!terms) { document.getElementById('registerError').innerText = 'Debes aceptar los términos'; return; }
+        if (pass.length < 6) { document.getElementById('registerError').innerText = 'Mínimo 6 caracteres'; return; }
+        showLoaderMsg('CREANDO PERFIL VIP');
+        auth.createUserWithEmailAndPassword(email, pass).then((uc) => {
+            db.ref('users/' + uc.user.uid).set({ fullName: name, email, createdAt: firebase.database.ServerValue.TIMESTAMP, termsAccepted: true }).then(() => { document.querySelector('.loader-text-glow').innerText = 'REGISTRO EXITOSO'; setTimeout(() => window.location.href = 'home.html', 1400); });
+        }).catch(err => { hideLoader(); document.getElementById('registerError').innerText = err.message; });
     };
-
-    auth.onAuthStateChanged((user) => {
-        if (user && (window.location.pathname === '/' || window.location.pathname.includes('index.html') || window.location.pathname.endsWith('/'))) {
-            window.location.href = 'home.html';
-        }
-    });
+    auth.onAuthStateChanged((user) => { if (user && (window.location.pathname === '/' || window.location.pathname.includes('index.html'))) window.location.href = 'home.html'; });
 </script>
 </body>
 </html>
