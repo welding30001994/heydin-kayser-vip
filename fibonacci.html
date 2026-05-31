@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Fibonacci Grid Pro | HEYDIN KAYSER · Sistema Cuántico</title>
+  <title>Fibonacci Grid Pro | YESLY ADELAY · Sistema Cuántico</title>
   <!-- Font Awesome 6 -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <!-- Google Fonts: fusión futurista -->
@@ -35,7 +35,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/heydinkayser/HEYDIN.jpg');
+      background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
       background-size: cover;
       background-position: center center;
       background-repeat: no-repeat;
@@ -151,6 +151,19 @@
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
+    }
+    .social-mini {
+      display: flex;
+      gap: 12px;
+    }
+    .social-mini a {
+      color: #0cf;
+      font-size: 1.2rem;
+      transition: 0.2s;
+    }
+    .social-mini a:hover {
+      color: #ff44e6;
+      transform: translateY(-2px);
     }
 
     /* MAIN CARD */
@@ -399,6 +412,50 @@
       padding: 0.5rem;
     }
 
+    /* SOCIAL ZONE */
+    .social-zone {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      text-align: center;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      border-top: 1px solid cyan;
+      border-bottom: 1px solid cyan;
+      border-radius: 2rem;
+    }
+    .social-title {
+      font-size: 1rem;
+      letter-spacing: 3px;
+      margin-bottom: 1rem;
+      color: #9effff;
+    }
+    .social-icons-flex {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+    }
+    .social-icon-fut {
+      width: 50px;
+      height: 50px;
+      background: rgba(0, 200, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: #0cf;
+      transition: 0.25s;
+      border: 1.5px solid #0cf;
+      text-decoration: none;
+    }
+    .social-icon-fut:hover {
+      background: cyan;
+      color: black;
+      transform: scale(1.1);
+      box-shadow: 0 0 25px cyan;
+    }
+
     footer {
       margin-top: 2rem;
       text-align: center;
@@ -424,7 +481,12 @@
     <div class="nav-container">
       <div class="logo-area">
         <i class="fas fa-chart-line logo-icon"></i>
-        <span class="logo-text">HEYDIN KAYSER | FIBONACCI GRID</span>
+        <span class="logo-text">YESLY ADELAY | FIBONACCI GRID</span>
+      </div>
+      <div class="social-mini">
+        <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank"><i class="fab fa-blogger"></i></a>
+        <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank"><i class="fab fa-youtube"></i></a>
+        <a href="https://t.me/yesly_adelay" target="_blank"><i class="fab fa-telegram"></i></a>
       </div>
     </div>
   </div>
@@ -492,8 +554,23 @@
       <div id="historyList" class="history-list"></div>
     </div>
   </div>
+
+  <!-- REDES SOCIALES COMPLETAS -->
+  <div class="social-zone">
+    <div class="social-title"><i class="fas fa-globe"></i> CONECTA CON LA ÉLITE <i class="fas fa-globe"></i></div>
+    <div class="social-icons-flex">
+      <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank" class="social-icon-fut"><i class="fab fa-blogger"></i></a>
+      <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank" class="social-icon-fut"><i class="fab fa-youtube"></i></a>
+      <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank" class="social-icon-fut"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank" class="social-icon-fut"><i class="fab fa-tiktok"></i></a>
+      <a href="https://t.me/yesly_adelay" target="_blank" class="social-icon-fut"><i class="fab fa-telegram-plane"></i></a>
+      <a href="https://wa.me/593991987552" target="_blank" class="social-icon-fut"><i class="fab fa-whatsapp"></i></a>
+      <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank" class="social-icon-fut"><i class="fas fa-chart-line"></i></a>
+    </div>
+  </div>
+
   <footer>
-    <i class="fas fa-crown"></i> HEYDIN KAYSER TRADING · Fibonacci Grid Cuántico
+    <i class="fas fa-crown"></i> YESLY ADELAY TRADING · Fibonacci Grid Cuántico
   </footer>
 </div>
 
