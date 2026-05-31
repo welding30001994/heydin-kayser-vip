@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Beaver Trading</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>YESLY ADELAY TRADING | Plataforma Élite</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * {
@@ -57,6 +56,8 @@
             align-items: center;
             justify-content: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
         
         .logo-icon {
@@ -80,6 +81,37 @@
             font-size: 1.2rem;
             color: #a0a0c0;
             margin-bottom: 30px;
+        }
+        
+        /* SOCIAL LINKS HEADER */
+        .social-header {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .social-header a {
+            color: #ff9d00;
+            font-size: 1.5rem;
+            transition: all 0.3s;
+            width: 45px;
+            height: 45px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            background: rgba(255, 157, 0, 0.1);
+            border: 1px solid rgba(255, 157, 0, 0.3);
+            text-decoration: none;
+        }
+        
+        .social-header a:hover {
+            background: #ff9d00;
+            color: #000;
+            transform: translateY(-3px);
+            box-shadow: 0 0 20px rgba(255, 157, 0, 0.5);
         }
         
         .categories {
@@ -226,6 +258,54 @@
             line-height: 1.4;
         }
         
+        /* SOCIAL ZONE - SECCIÓN REDES SOCIALES */
+        .social-zone {
+            margin: 40px 0 20px;
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid #ff9d00;
+            border-bottom: 1px solid #ff9d00;
+            border-radius: 2rem;
+        }
+        
+        .social-title {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            color: #ff9d00;
+        }
+        
+        .social-icons-flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 18px;
+        }
+        
+        .social-icon-fut {
+            width: 60px;
+            height: 60px;
+            background: rgba(255, 157, 0, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #ff9d00;
+            transition: 0.25s;
+            border: 1.5px solid #ff9d00;
+            text-decoration: none;
+        }
+        
+        .social-icon-fut:hover {
+            background: #ff9d00;
+            color: black;
+            transform: scale(1.1);
+            box-shadow: 0 0 25px #ff9d00;
+        }
+        
         footer {
             text-align: center;
             margin-top: 40px;
@@ -284,6 +364,12 @@
             .link-title {
                 font-size: 1.2rem;
             }
+            
+            .social-icon-fut {
+                width: 50px;
+                height: 50px;
+                font-size: 24px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -337,12 +423,21 @@
     <div class="container">
         <header>
             <div class="logo">
-                <div class="logo-icon">
-                  
-                </div>
-                <h1>HEYDING KAYSER TRADING </h1>
+                <i class="fas fa-chart-line logo-icon"></i>
+                <h1>YESLY ADELAY TRADING</h1>
             </div>
             <p class="subtitle">Construye tu futuro financiero con nuestras herramientas</p>
+            
+            <!-- Social Links Header -->
+            <div class="social-header">
+                <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank"><i class="fab fa-blogger"></i></a>
+                <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank"><i class="fab fa-tiktok"></i></a>
+                <a href="https://t.me/yesly_adelay" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://wa.me/593991987552" target="_blank"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank"><i class="fas fa-chart-line"></i></a>
+            </div>
         </header>
         
         <div class="categories">
@@ -453,8 +548,22 @@
             </div>
         </div>
         
+        <!-- SECCIÓN DE REDES SOCIALES - YESLY ADELAY -->
+        <div class="social-zone">
+            <div class="social-title"><i class="fas fa-globe"></i> CONECTA CON LA ÉLITE <i class="fas fa-globe"></i></div>
+            <div class="social-icons-flex">
+                <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank" class="social-icon-fut"><i class="fab fa-blogger"></i></a>
+                <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank" class="social-icon-fut"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank" class="social-icon-fut"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank" class="social-icon-fut"><i class="fab fa-tiktok"></i></a>
+                <a href="https://t.me/yesly_adelay" target="_blank" class="social-icon-fut"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://wa.me/593991987552" target="_blank" class="social-icon-fut"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank" class="social-icon-fut"><i class="fas fa-chart-line"></i></a>
+            </div>
+        </div>
+        
         <footer>
-            <p>© 2023 Beaver Trading - Haz clic en los iconos para acceder</p>
+            <p>© 2026 YESLY ADELAY TRADING - Haz clic en los iconos para acceder</p>
         </footer>
     </div>
 </body>
