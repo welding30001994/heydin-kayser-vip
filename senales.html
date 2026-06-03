@@ -1660,12 +1660,12 @@
             const tp3 = document.getElementById('tp3').value;
             
             // Construir el análisis formateado automáticamente con el estilo profesional
-            let formattedComment = `💬 💬 💬  💬 💬 💬 📆  ${new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' }).toUpperCase()}\n\n`;
+            let formattedComment = `💬  📆  ${new Date().toLocaleDateString('es-ES', { day: 'numeric', month: 'long', year: 'numeric', weekday: 'long' }).toUpperCase()}\n\n`;
             formattedComment += `🟢 ${type}- ${pair}\n\n`;
             formattedComment += `👉 ENTRADA   :   ${entry}\n`;
             formattedComment += `⚠️  SL       :   ${sl}\n\n`;
             formattedComment += `🎯 TARGETS\n`;
-            formattedComment += `✅ TP1  :   ${tp1}\n`;
+            formattedComment += `✅ TP1          :   ${tp1}\n`;
             if (tp2) formattedComment += `✅ TP2 :   ${tp2}\n`;
             if (tp3) formattedComment += `✅ TP3 :   ${tp3}\n\n`;
             
@@ -1673,10 +1673,9 @@
             const userComment = document.getElementById('comment').value.trim();
             formattedComment += `📌 Nota: Gestiona riesgo — arriesga 5% por cada $1,000.\n`;
             formattedComment += ` 🔗https://yesly-adelay-trading.blogspot.com/  `;
-            formattedComment += `🔗https://www.youtube.com/@yeslyadelay2026 `;
-            formattedComment += `🔗https://www.facebook.com/profile.php?id=61590192674936`;
- 	    formattedComment += `  `;
-	    formattedComment += `🔗https://www.tiktok.com/@yeslyadelaytrading2026  `;
+            formattedComment += ` 🔗https://www.youtube.com/@yeslyadelay2026 `;
+            formattedComment += ` 🔗https://www.facebook.com/profile.php?id=61590192674936`; 	
+	    formattedComment += ` 🔗https://www.tiktok.com/@yeslyadelaytrading2026  `;
  	    formattedComment += ` 🔗https://t.me/yesly_adelay `;
  	    formattedComment += ` 🔗https://wa.me/593991987552  `;
  	    formattedComment += ` 🔗https://www.mql5.com/en/channels/yesly_adelay_trading_2026 `;
