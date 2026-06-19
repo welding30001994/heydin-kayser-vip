@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>YESLY ADELAY | Calculadora Cuántica de Precisión</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            background: #03050b;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+            padding: 1.5rem;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* FONDO PRINCIPAL CON IMAGEN YESLY.jpg */
+        .bg-image-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0.28;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.06) 0px, rgba(0, 255, 255, 0.06) 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.06) 0px, rgba(0, 255, 255, 0.06) 1px, transparent 1px, transparent 40px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.08), rgba(0, 0, 0, 0.75));
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* contenedor principal tipo "glassmorphism + neón" */
+        .glass-orb {
+            position: relative;
+            z-index: 15;
+            max-width: 720px;
+            width: 100%;
+            background: rgba(12, 18, 28, 0.75);
+            backdrop-filter: blur(18px);
+            border-radius: 3rem;
+            border: 1px solid rgba(0, 255, 255, 0.35);
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(0, 255, 255, 0.1), 0 0 30px rgba(0, 210, 255, 0.25);
+            transition: all 0.3s ease;
+            padding: 2rem 2rem 2.5rem;
+        }
+
+        /* header futurista */
+        .neo-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            border-bottom: 1px dashed rgba(0, 255, 255, 0.4);
+            padding-bottom: 0.75rem;
+        }
+
+        .title {
+            font-weight: 800;
+            font-size: 1.8rem;
+            background: linear-gradient(135deg, #FFFFFF, #88f7ff, #2ad4ff);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.3px;
+            text-shadow: 0 0 8px rgba(0,210,255,0.3);
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: rgba(0, 230, 250, 0.15);
+            padding: 0.25rem 0.9rem;
+            border-radius: 40px;
+            border: 1px solid rgba(0, 230, 250, 0.5);
+            color: #9effff;
+            letter-spacing: 0.5px;
+        }
+
+        /* input group estilo cyber */
+        .input-group {
+            margin-bottom: 2rem;
+        }
+
+        .cyber-label {
+            display: block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            color: #9bc7ff;
+            margin-bottom: 0.5rem;
+            margin-left: 0.5rem;
+        }
+
+        .cyber-label i {
+            color: cyan;
+            margin-right: 6px;
+        }
+
+        .glow-input {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.55);
+            border: 1.5px solid #2c4f6e;
+            border-radius: 2rem;
+            padding: 1rem 1.5rem;
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #eef5ff;
+            font-family: 'Inter', monospace;
+            transition: all 0.2s;
+            outline: none;
+            backdrop-filter: blur(4px);
+        }
+
+        .glow-input:focus {
+            border-color: #0ff;
+            box-shadow: 0 0 12px rgba(0, 255, 255, 0.5);
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        /* cards de resultados estilo "datos cuánticos" */
+        .result-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            margin: 2rem 0 1.8rem;
+        }
+
+        .quantum-card {
+            background: rgba(5, 10, 20, 0.7);
+            border-radius: 1.8rem;
+            padding: 1rem 1.5rem;
+            border-left: 5px solid;
+            transition: transform 0.2s ease, box-shadow 0.2s;
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.3);
+        }
+
+        .quantum-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 22px rgba(0,0,0,0.4);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-icon {
+            font-size: 1.6rem;
+            filter: drop-shadow(0 0 3px cyan);
+        }
+
+        .card-title {
+            font-weight: 700;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            color: #b8e2ff;
+        }
+
+        .card-value {
+            font-size: 2.3rem;
+            font-weight: 800;
+            font-family: 'Inter', monospace;
+            letter-spacing: -0.5px;
+            word-break: break-word;
+            line-height: 1.2;
+            color: white;
+            text-shadow: 0 0 2px rgba(0,255,255,0.5);
+        }
+
+        .card-sub {
+            font-size: 0.7rem;
+            color: #7f9fcf;
+            margin-top: 6px;
+            border-top: 1px dashed rgba(100, 200, 255, 0.3);
+            padding-top: 6px;
+            display: inline-block;
+        }
+
+        /* formula hints */
+        .formula-hint {
+            font-size: 0.65rem;
+            color: #6d8fc6;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.2rem 0.6rem;
+            border-radius: 40px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-family: monospace;
+        }
+
+        /* barra decorativa */
+        .divider-light {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #0ff, #0aa, transparent);
+            margin: 1rem 0 1.2rem;
+            width: 100%;
+        }
+
+        /* factor extra y reset */
+        .flex-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-neon {
+            background: rgba(0, 20, 40, 0.7);
+            border: 1px solid #2ad4ff;
+            color: #c2f0ff;
+            padding: 0.6rem 1.3rem;
+            border-radius: 3rem;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            backdrop-filter: blur(5px);
+        }
+
+        .btn-neon:hover {
+            background: rgba(0, 255, 255, 0.2);
+            border-color: cyan;
+            color: white;
+            box-shadow: 0 0 10px cyan;
+        }
+
+        .valor-inicial {
+            font-size: 0.9rem;
+            background: #07111e;
+            padding: 0.5rem 1rem;
+            border-radius: 2rem;
+            text-align: center;
+            color: #9efff0;
+            border: 1px dashed #2ad4ff60;
+        }
+
+        /* SOCIAL ZONE - SECCIÓN REDES SOCIALES */
+        .social-zone {
+            margin-top: 2rem;
+            padding: 1.5rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid cyan;
+            border-bottom: 1px solid cyan;
+            border-radius: 2rem;
+        }
+
+        .social-title {
+            font-size: 1rem;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+            color: #9effff;
+        }
+
+        .social-icons-flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .social-icon-fut {
+            width: 50px;
+            height: 50px;
+            background: rgba(0, 200, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: #0cf;
+            transition: 0.25s;
+            border: 1.5px solid #0cf;
+            text-decoration: none;
+        }
+
+        .social-icon-fut:hover {
+            background: cyan;
+            color: black;
+            transform: scale(1.1);
+            box-shadow: 0 0 25px cyan;
+        }
+
+        @media (max-width: 500px) {
+            .glass-orb {
+                padding: 1.5rem;
+            }
+            .card-value {
+                font-size: 1.8rem;
+            }
+            .glow-input {
+                font-size: 1.2rem;
+                padding: 0.7rem 1.2rem;
+            }
+            .social-icon-fut {
+                width: 45px;
+                height: 45px;
+                font-size: 20px;
+            }
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 1.8rem;
+            color: #4f6f8f;
+        }
+    </style>
+</head>
+<body>
+<div class="bg-image-layer"></div>
+<div class="cyber-grid"></div>
+<div class="glow-overlay"></div>
+
+<div class="glass-orb">
+    <div class="neo-header">
+        <span class="title">⟡ YESLY ADELAY · CALCULATOR ⟡</span>
+        <span class="badge"><i class="fas fa-chart-line"></i> PRECISIÓN CUÁNTICA</span>
+    </div>
+
+    <div class="input-group">
+        <label class="cyber-label"><i class="fas fa-coins"></i> CAPITAL INICIAL [BASE]</label>
+        <input type="number" id="capitalInput" class="glow-input" value="50" step="any" placeholder="Ingresa cualquier cantidad">
+        <div class="formula-hint" style="margin-top: 10px; display: inline-flex;">
+            <i class="fas fa-bolt"></i> <span>La transformación cuántica comienza aquí</span>
+        </div>
+    </div>
+
+    <!-- TARJETAS DINÁMICAS -->
+    <div class="result-stack" id="resultStack">
+        <!-- card CAPITAL (65%) -->
+        <div class="quantum-card" style="border-left-color: #2affb6;">
+            <div class="card-header">
+                <div class="card-icon"><i class="fas fa-gem"></i></div>
+                <div class="card-title">CAPITAL · 65%</div>
+                <div class="formula-hint">( base × 65 ) / 100</div>
+            </div>
+            <div class="card-value" id="capitalResult">$0.00</div>
+            <div class="card-sub">primer escalón · valor intermedio</div>
+        </div>
+
+        <!-- card INTERÉS (164%) -->
+        <div class="quantum-card" style="border-left-color: #5f9eff;">
+            <div class="card-header">
+                <div class="card-icon"><i class="fas fa-chart-line"></i></div>
+                <div class="card-title">INTERÉS · 164%</div>
+                <div class="formula-hint">( capital_65% × 164 ) / 100</div>
+            </div>
+            <div class="card-value" id="interesResult">$0.00</div>
+            <div class="card-sub">segunda transformación financiera</div>
+        </div>
+
+        <!-- card ORDENACIÓN / GANANCIA (58.5% sobre interés) -->
+        <div class="quantum-card" style="border-left-color: #ff86dc;">
+            <div class="card-header">
+                <div class="card-icon"><i class="fas fa-star"></i></div>
+                <div class="card-title">ORDENACIÓN · 58.5%</div>
+                <div class="formula-hint">( interés × 58.5 ) / 100</div>
+            </div>
+            <div class="card-value" id="gananciaResult">$0.00</div>
+            <div class="card-sub">plusvalía · rendimiento final VIP</div>
+        </div>
+    </div>
+
+    <div class="divider-light"></div>
+    
+    <!-- panel informativo con desglose preciso -->
+    <div class="flex-buttons">
+        <button id="resetBtn" class="btn-neon"><i class="fas fa-sync-alt"></i> REINICIAR (50)</button>
+        <div class="valor-inicial" id="previewBase"><i class="fas fa-chart-simple"></i> BASE: $50.00</div>
+    </div>
+
+    <!-- SECCIÓN DE REDES SOCIALES - YESLY ADELAY -->
+    <div class="social-zone">
+        <div class="social-title"><i class="fas fa-globe"></i> CONECTA CON LA ÉLITE <i class="fas fa-globe"></i></div>
+        <div class="social-icons-flex">
+            <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank" class="social-icon-fut"><i class="fab fa-blogger"></i></a>
+            <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank" class="social-icon-fut"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank" class="social-icon-fut"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank" class="social-icon-fut"><i class="fab fa-tiktok"></i></a>
+            <a href="https://t.me/yesly_adelay" target="_blank" class="social-icon-fut"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://wa.me/593991987552" target="_blank" class="social-icon-fut"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank" class="social-icon-fut"><i class="fas fa-chart-line"></i></a>
+        </div>
+    </div>
+
+    <footer>
+        <i class="fas fa-calculator"></i> flujo cálculos: Capital (65%) → Interés (164% del capital) → Ordenación (58.5% sobre interés)
+        <br><span style="font-size: 0.6rem;">✨ YESLY ADELAY TRADING · Precisión cuántica ✨</span>
+    </footer>
+</div>
+
+<script>
+    (function() {
+        // elementos del DOM
+        const inputCapital = document.getElementById('capitalInput');
+        const capitalResultSpan = document.getElementById('capitalResult');
+        const interesResultSpan = document.getElementById('interesResult');
+        const gananciaResultSpan = document.getElementById('gananciaResult');
+        const previewBaseSpan = document.getElementById('previewBase');
+        const resetBtn = document.getElementById('resetBtn');
+
+        // === PARÁMETROS DEFINITIVOS (basados en la explicación de voz y ejemplo práctico) ===
+        const PCT_CAPITAL = 65;      // 65% -> capa1
+        const PCT_INTERES = 164;     // 164% -> sobre capital anterior
+        const PCT_GANANCIA = 58.5;   // 58.5% (58.50%) sobre el interés para obtener la ganancia final (31.18 con base 50)
+        
+        // Función principal que actualiza todos los valores
+        function actualizarTodo() {
+            // obtener valor base, permitir decimales y vacío seguro
+            let rawValue = inputCapital.value.trim();
+            let base = parseFloat(rawValue);
+            if (isNaN(base)) {
+                base = 0;
+                inputCapital.value = 0;
+            }
+            // mostramos preview base
+            previewBaseSpan.innerHTML = `<i class="fas fa-chart-simple"></i> BASE: $${base.toFixed(2)}`;
+            
+            // 1. Capital intermedio => (base * PCT_CAPITAL) / 100
+            let capitalIntermedio = (base * PCT_CAPITAL) / 100;
+            // 2. Interés => (capitalIntermedio * PCT_INTERES) / 100
+            let interesValor = (capitalIntermedio * PCT_INTERES) / 100;
+            // 3. Ganancia / Ordenación => (interesValor * PCT_GANANCIA) / 100
+            let gananciaValor = (interesValor * PCT_GANANCIA) / 100;
+            
+            // Formateo con 2 decimales
+            capitalResultSpan.innerText = `$${capitalIntermedio.toFixed(2)}`;
+            interesResultSpan.innerText = `$${interesValor.toFixed(2)}`;
+            gananciaResultSpan.innerText = `$${gananciaValor.toFixed(2)}`;
+        }
+
+        // Eventos: al cambiar input, actualizar
+        inputCapital.addEventListener('input', function(e) {
+            let v = e.target.value;
+            if (v === '') v = '0';
+            actualizarTodo();
+        });
+        
+        // Botón reset: poner valor por defecto 50 y actualizar input y resultados
+        resetBtn.addEventListener('click', function() {
+            inputCapital.value = '50';
+            actualizarTodo();
+            resetBtn.style.transform = 'scale(0.98)';
+            setTimeout(() => { resetBtn.style.transform = ''; }, 150);
+        });
+        
+        inputCapital.addEventListener('change', actualizarTodo);
+        
+        // ejecutar inicial para base 50 (mostrar 32.50, 53.30 y 31.18)
+        actualizarTodo();
+
+        // personalizar los subtítulos con los porcentajes exactos
+        const cards = document.querySelectorAll('.quantum-card');
+        if (cards.length >= 3) {
+            const capSub = cards[0].querySelector('.card-sub');
+            const intSub = cards[1].querySelector('.card-sub');
+            const ganSub = cards[2].querySelector('.card-sub');
+            if (capSub) capSub.innerHTML = `🔹 ${PCT_CAPITAL}% del capital base · valor intermedio`;
+            if (intSub) intSub.innerHTML = `🔸 ${PCT_INTERES}% del capital anterior → interés devengado`;
+            if (ganSub) ganSub.innerHTML = `✨ ${PCT_GANANCIA}% sobre el interés → ganancia final (ej: 53.30 × 58.5% = 31.18) ✨`;
+        }
+        
+        // actualizar los encabezados con los porcentajes
+        const capitalHeader = document.querySelector('.quantum-card:first-child .card-title');
+        const interesHeader = document.querySelector('.quantum-card:nth-child(2) .card-title');
+        const gananciaHeader = document.querySelector('.quantum-card:nth-child(3) .card-title');
+        if(capitalHeader) capitalHeader.innerHTML = `CAPITAL · ${PCT_CAPITAL}%`;
+        if(interesHeader) interesHeader.innerHTML = `INTERÉS · ${PCT_INTERES}%`;
+        if(gananciaHeader) gananciaHeader.innerHTML = `ORDENACIÓN · ${PCT_GANANCIA}%`;
+        
+        // Refrescar tooltips de formula hints con los valores reales
+        const hints = document.querySelectorAll('.formula-hint');
+        if(hints.length >= 3) {
+            hints[0].innerHTML = `<i class="fas fa-chart-simple"></i> ( base × ${PCT_CAPITAL} ) / 100`;
+            hints[1].innerHTML = `<i class="fas fa-chart-line"></i> ( capital_${PCT_CAPITAL}% × ${PCT_INTERES} ) / 100`;
+            hints[2].innerHTML = `<i class="fas fa-star"></i> ( interés × ${PCT_GANANCIA} ) / 100 → ganancia neta`;
+        }
+        
+        // Sanitizar entrada: reemplazar coma por punto
+        inputCapital.addEventListener('keydown', (e) => {
+            const allowedKeys = ['Backspace', 'Delete', 'ArrowLeft', 'ArrowRight', 'Tab', 'Escape', 'Enter', '.', '-'];
+            if (!allowedKeys.includes(e.key) && !/^[0-9]$/.test(e.key) && e.key !== '.') {
+                if (e.key !== 'Meta' && e.key !== 'Control') {
+                    e.preventDefault();
+                }
+            }
+            if (e.key === ',') {
+                e.preventDefault();
+                const current = inputCapital.value;
+                const start = inputCapital.selectionStart;
+                const end = inputCapital.selectionEnd;
+                inputCapital.value = current.slice(0, start) + '.' + current.slice(end);
+                inputCapital.setSelectionRange(start + 1, start + 1);
+                actualizarTodo();
+            }
+        });
+        
+        // si el usuario pega contenido, sanitizamos
+        inputCapital.addEventListener('paste', (e) => {
+            e.preventDefault();
+            let pasteData = (e.clipboardData || window.clipboardData).getData('text');
+            pasteData = pasteData.replace(/,/g, '.').replace(/[^0-9.-]/g, '');
+            let num = parseFloat(pasteData);
+            if (!isNaN(num)) {
+                inputCapital.value = num;
+                actualizarTodo();
+            } else {
+                inputCapital.value = '0';
+                actualizarTodo();
+            }
+        });
+        
+        // efecto de borde animado sutil
+        const orb = document.querySelector('.glass-orb');
+        if(orb) {
+            setInterval(() => {
+                const hue = (Date.now() / 80) % 360;
+                orb.style.borderColor = `hsla(${hue}, 80%, 65%, 0.35)`;
+            }, 200);
+        }
+        
+        // tooltips informativos
+        const makeTooltip = (elem, text) => {
+            elem.setAttribute('title', text);
+        };
+        const cValue = document.getElementById('capitalResult');
+        const iValue = document.getElementById('interesResult');
+        const gValue = document.getElementById('gananciaResult');
+        if(cValue) makeTooltip(cValue.parentElement, `Valor intermedio tras aplicar ${PCT_CAPITAL}% al capital base.`);
+        if(iValue) makeTooltip(iValue.parentElement, `Interés bruto = Capital intermedio × ${PCT_INTERES}%`);
+        if(gValue) makeTooltip(gValue.parentElement, `Ganancia final = Interés × ${PCT_GANANCIA}% (ejemplo: 53.30 × 58.5% = 31.18)`);
+        
+        console.log('✨ YESLY ADELAY CALCULATOR activa — flujo: 65% → 164% → 58.5% ✨');
+    })();
+</script>
+</body>
+</html>

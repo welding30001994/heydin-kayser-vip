@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Heydin Kayser | 100 Brokers Elite & Futurista</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,500;14..32,600;14..32,700&family=Space+Grotesk:wght@400;500;600&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: radial-gradient(circle at 10% 20%, #050e1a 0%, #000000 100%);
+            font-family: 'Inter', 'Space Grotesk', sans-serif;
+            color: #f0f3ff;
+            line-height: 1.4;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.03'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 999;
+            opacity: 0.2;
+        }
+
+        .container {
+            max-width: 1600px;
+            margin: 0 auto;
+            padding: 2rem 2rem 4rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 600;
+            background: linear-gradient(135deg, #FFFFFF 0%, #B3C7FF 40%, #6A8CFF 100%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 20px rgba(106, 140, 255, 0.3);
+            margin-bottom: 0.5rem;
+        }
+
+        .hero .sub {
+            font-size: 1.2rem;
+            font-weight: 300;
+            color: #a0b3e0;
+            border-bottom: 1px dashed rgba(106, 140, 255, 0.4);
+            display: inline-block;
+            padding-bottom: 0.6rem;
+        }
+
+        .badge-futurista {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(20, 30, 55, 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 60px;
+            padding: 0.5rem 1.5rem;
+            margin-top: 1.5rem;
+            border: 1px solid rgba(106, 140, 255, 0.5);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .stats-info {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0 1rem;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .stats-info span {
+            background: rgba(106,140,255,0.15);
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+
+        /* Grid responsivo - más denso para 100 brokers */
+        .broker-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .broker-card {
+            background: rgba(12, 18, 34, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 1.8rem;
+            border: 1px solid rgba(106, 140, 255, 0.25);
+            padding: 1.5rem 1rem;
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 15px 30px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .broker-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, #6a8cff, #b37eff, transparent);
+            transition: left 0.5s ease;
+        }
+
+        .broker-card:hover::before {
+            left: 100%;
+        }
+
+        .broker-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(106, 140, 255, 0.7);
+            background: rgba(18, 26, 48, 0.85);
+            box-shadow: 0 25px 35px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        .broker-icon {
+            width: 75px;
+            height: 75px;
+            background: linear-gradient(145deg, rgba(30, 40, 70, 0.8), rgba(15, 22, 45, 0.9));
+            border-radius: 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(106, 140, 255, 0.5);
+            transition: all 0.2s;
+        }
+
+        .broker-card:hover .broker-icon {
+            border-color: #8aa9ff;
+            box-shadow: 0 0 15px rgba(106, 140, 255, 0.3);
+        }
+
+        .broker-icon i {
+            font-size: 2.5rem;
+            color: #eef4ff;
+            transition: transform 0.2s;
+        }
+
+        .broker-card:hover .broker-icon i {
+            transform: scale(1.05);
+        }
+
+        .broker-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            background: linear-gradient(120deg, #FFF, #c7d6ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+        }
+
+        .broker-type {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            font-weight: 400;
+            letter-spacing: 1px;
+            color: #8d9fdf;
+            background: rgba(106, 140, 255, 0.12);
+            padding: 0.2rem 0.8rem;
+            border-radius: 30px;
+            margin-bottom: 0.7rem;
+        }
+
+        .signature {
+            margin-top: 0.7rem;
+            font-size: 0.65rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 0.2rem 0.7rem;
+            border-radius: 40px;
+        }
+
+        .footer-futuristic {
+            margin-top: 4rem;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-top: 1px solid rgba(106, 140, 255, 0.2);
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .container { padding: 1rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .broker-grid { gap: 1rem; }
+            .broker-name { font-size: 1.1rem; }
+            .broker-icon { width: 60px; height: 60px; }
+            .broker-icon i { font-size: 2rem; }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .broker-card { animation: fadeUp 0.4s ease backwards; }
+        /* generar delay escalonado con JS opcional pero dejamos estilo base */
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="hero">
+        <h1>HEYDIN KAYSER</h1>
+        <div class="sub">100 Brokers Elite • Trading Cuántico</div>
+        <div class="badge-futurista">
+            <i class="fas fa-chart-line"></i>
+            <span>100+ MERCADOS GLOBALES • ICONOS ELEGANTES</span>
+            <i class="fas fa-microchip"></i>
+        </div>
+        <div class="stats-info">
+            <span><i class="fas fa-chart-simple"></i> Forex & CFD</span>
+            <span><i class="fab fa-bitcoin"></i> Cripto Exchanges</span>
+            <span><i class="fas fa-building-columns"></i> Brokers Regulados</span>
+            <span><i class="fas fa-rocket"></i> Prop Firms</span>
+        </div>
+    </div>
+
+    <div class="broker-grid" id="brokerGrid"></div>
+
+    <div class="footer-futuristic">
+        <div style="display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-bottom: 1rem;">
+            <i class="fas fa-charging-station glow-text"></i> <span>Ejecución instantánea</span>
+            <i class="fas fa-shield-haltered"></i> <span>Seguridad institucional</span>
+            <i class="fas fa-infinity"></i> <span>Liquidez infinita</span>
+        </div>
+        <p>© 2025 HEYDIN KAYSER — Cada broker te lleva a su sitio oficial (login directo para FBS).<br>Diseño futurista con 100 brokers operados por el maestro del trading.</p>
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // LISTA DE 100 BROKERS ÚNICOS + URL OFICIAL (FBS => login directo)
+    // Cada broker tiene nombre, tipo y enlace web (target="_blank")
+    // Se incluye FBS con enlace a FBS Login (área de clientes)
+    // --------------------------------------------------------------
+    const brokersList = [
+        { name: "FBS", type: "FOREX & CFD", url: "https://fbs.com/login", icon: "fas fa-user-lock" },
+        { name: "Binance", type: "CRYPTO EXCHANGE", url: "https://www.binance.com", icon: "fab fa-bitcoin" },
+        { name: "Coinbase", type: "CRYPTO", url: "https://www.coinbase.com", icon: "fab fa-bitcoin" },
+        { name: "Kraken", type: "EXCHANGE", url: "https://www.kraken.com", icon: "fab fa-ethereum" },
+        { name: "Bybit", type: "DERIVADOS", url: "https://www.bybit.com", icon: "fab fa-ethereum" },
+        { name: "OKX", type: "CRYPTO", url: "https://www.okx.com", icon: "fas fa-chart-line" },
+        { name: "KuCoin", type: "EXCHANGE", url: "https://www.kucoin.com", icon: "fas fa-coins" },
+        { name: "Huobi", type: "GLOBAL", url: "https://www.huobi.com", icon: "fas fa-fire" },
+        { name: "Gate.io", type: "CRYPTO", url: "https://www.gate.io", icon: "fas fa-gate" },
+        { name: "Bitfinex", type: "PRO", url: "https://www.bitfinex.com", icon: "fas fa-chart-simple" },
+        { name: "Phemex", type: "DERIVADOS", url: "https://phemex.com", icon: "fas fa-rocket" },
+        { name: "Deribit", type: "OPCIONES", url: "https://www.deribit.com", icon: "fas fa-chart-scatter" },
+        { name: "WhiteBIT", type: "EUROPA", url: "https://whitebit.com", icon: "fas fa-database" },
+        { name: "Bitstamp", type: "LONG HISTORY", url: "https://www.bitstamp.net", icon: "fas fa-clock" },
+        { name: "Crypto.com", type: "APP", url: "https://crypto.com", icon: "fab fa-bitcoin" },
+        { name: "Gemini", type: "REGULADO", url: "https://www.gemini.com", icon: "fas fa-gem" },
+        { name: "MetaTrader 4", type: "PLATAFORMA", url: "https://www.metatrader4.com", icon: "fas fa-chart-line" },
+        { name: "MetaTrader 5", type: "MULTI-ASSET", url: "https://www.metatrader5.com", icon: "fas fa-chart-simple" },
+        { name: "cTrader", type: "ECN", url: "https://ctrader.com", icon: "fas fa-waveform" },
+        { name: "IQ Option", type: "OPCIONES", url: "https://iqoption.com", icon: "fas fa-chart-line" },
+        { name: "Olymp Trade", type: "ACTIVOS", url: "https://olymptrade.com", icon: "fas fa-chart-column" },
+        { name: "eToro", type: "SOCIAL", url: "https://www.etoro.com", icon: "fas fa-users" },
+        { name: "FTMO", type: "PROP FIRM", url: "https://ftmo.com", icon: "fas fa-trophy" },
+        { name: "Interactive Brokers", type: "GLOBAL", url: "https://www.interactivebrokers.com", icon: "fas fa-globe" },
+        { name: "Exness", type: "FOREX", url: "https://www.exness.com", icon: "fas fa-chart-pie" },
+        { name: "Pepperstone", type: "ECN", url: "https://pepperstone.com", icon: "fas fa-bolt" },
+        { name: "OANDA", type: "FOREX", url: "https://www.oanda.com", icon: "fas fa-chart-gantt" },
+        { name: "XM Group", type: "INVERSIÓN", url: "https://www.xm.com", icon: "fas fa-coins" },
+        { name: "IC Markets", type: "ECN RAW", url: "https://www.icmarkets.com", icon: "fas fa-charging-station" },
+        { name: "Forex.com", type: "CFD", url: "https://www.forex.com", icon: "fas fa-dollar-sign" },
+        { name: "FXTM", type: "FOREX", url: "https://www.forextime.com", icon: "fas fa-chart-line" },
+        { name: "Admiral Markets", type: "MULTI", url: "https://admiralmarkets.com", icon: "fas fa-ship" },
+        { name: "AvaTrade", type: "CFD", url: "https://www.avatrade.com", icon: "fas fa-chart-simple" },
+        { name: "ThinkMarkets", type: "GLOBAL", url: "https://www.thinkmarkets.com", icon: "fas fa-brain" },
+        { name: "Tickmill", type: "LOW SPREAD", url: "https://www.tickmill.com", icon: "fas fa-tick" },
+        { name: "RoboForex", type: "FOREX", url: "https://roboforex.com", icon: "fas fa-robot" },
+        { name: "HotForex", type: "CFD", url: "https://www.hotforex.com", icon: "fas fa-temperature-high" },
+        { name: "OctaFX", type: "CRYPTO/FOREX", url: "https://www.octafx.com", icon: "fas fa-chart-line" },
+        { name: "JustMarkets", type: "GLOBAL", url: "https://justmarkets.com", icon: "fas fa-check-circle" },
+        { name: "InstaForex", type: "FOREX", url: "https://www.instaforex.com", icon: "fas fa-instagram" },
+        { name: "Alpari", type: "INTERNATIONAL", url: "https://alpari.com", icon: "fas fa-chart-line" },
+        { name: "Capital.com", type: "CFD", url: "https://capital.com", icon: "fas fa-building" },
+        { name: "Plus500", type: "CFD", url: "https://www.plus500.com", icon: "fas fa-plus-circle" },
+        { name: "eToroX", type: "CRYPTO", url: "https://www.etorox.com", icon: "fas fa-exchange-alt" },
+        { name: "BitMEX", type: "DERIVADOS", url: "https://www.bitmex.com", icon: "fab fa-bitcoin" },
+        { name: "CEX.IO", type: "CRYPTO", url: "https://cex.io", icon: "fas fa-chart-line" },
+        { name: "Luno", type: "WALLET/EXCHANGE", url: "https://www.luno.com", icon: "fas fa-moon" },
+        { name: "Bithumb", type: "COREANO", url: "https://www.bithumb.com", icon: "fas fa-chart-simple" },
+        { name: "Upbit", type: "ASIA", url: "https://upbit.com", icon: "fas fa-chart-line" },
+        { name: "WazirX", type: "INDIA", url: "https://wazirx.com", icon: "fas fa-rupee-sign" },
+        { name: "Bitso", type: "LATAM", url: "https://bitso.com", icon: "fas fa-chart-line" },
+        { name: "Mercado Bitcoin", type: "BRASIL", url: "https://www.mercadobitcoin.com.br", icon: "fas fa-chart-line" },
+        { name: "BingX", type: "SOCIAL", url: "https://bingx.com", icon: "fas fa-chart-line" },
+        { name: "Deepcoin", type: "DERIVADOS", url: "https://deepcoin.com", icon: "fas fa-chart-line" },
+        { name: "PrimeXBT", type: "MULTI", url: "https://primexbt.com", icon: "fas fa-chart-line" },
+        { name: "StormGain", type: "CRYPTO", url: "https://stormgain.com", icon: "fas fa-bolt" },
+        { name: "Nadex", type: "OPCIONES", url: "https://www.nadex.com", icon: "fas fa-chart-line" },
+        { name: "Saxo Bank", type: "BANCA", url: "https://www.home.saxo", icon: "fas fa-bank" },
+        { name: "CMC Markets", type: "CFD", url: "https://www.cmcmarkets.com", icon: "fas fa-chart-line" },
+        { name: "City Index", type: "FOREX", url: "https://www.cityindex.com", icon: "fas fa-city" },
+        { name: "HYCM", type: "GLOBAL", url: "https://www.hycm.com", icon: "fas fa-chart-line" },
+        { name: "ActivTrades", type: "CFD", url: "https://www.activtrades.com", icon: "fas fa-chart-line" },
+        { name: "Swissquote", type: "BANCA", url: "https://www.swissquote.com", icon: "fas fa-chart-line" },
+        { name: "Dukascopy", type: "SWISS", url: "https://www.dukascopy.com", icon: "fas fa-chart-line" },
+        { name: "FXOpen", type: "ECN", url: "https://www.fxopen.com", icon: "fas fa-chart-line" },
+        { name: "FXChoice", type: "FOREX", url: "https://fxchoice.com", icon: "fas fa-chart-line" },
+        { name: "EagleFX", type: "CRYPTO", url: "https://eaglefx.com", icon: "fas fa-eagle" },
+        { name: "Vantage Markets", type: "CFD", url: "https://www.vantagemarkets.com", icon: "fas fa-chart-line" },
+        { name: "Axi", type: "FOREX", url: "https://www.axi.com", icon: "fas fa-chart-line" },
+        { name: "GO Markets", type: "AUS", url: "https://www.gomarkets.com", icon: "fas fa-chart-line" },
+        { name: "FP Markets", type: "GLOBAL", url: "https://www.fpmarkets.com", icon: "fas fa-chart-line" },
+        { name: "Eightcap", type: "CRYPTO", url: "https://eightcap.com", icon: "fas fa-chart-line" },
+        { name: "ACY Securities", type: "CFD", url: "https://acy.com", icon: "fas fa-chart-line" },
+        { name: "MultiBank Group", type: "FOREX", url: "https://multibankfx.com", icon: "fas fa-chart-line" },
+        { name: "BDSwiss", type: "CFD", url: "https://www.bdswiss.com", icon: "fas fa-chart-line" },
+        { name: "Trade.com", type: "INVERSIÓN", url: "https://trade.com", icon: "fas fa-chart-line" },
+        { name: "ZuluTrade", type: "SOCIAL", url: "https://www.zulutrade.com", icon: "fas fa-chart-line" },
+        { name: "Darwinex", type: "INVEST", url: "https://www.darwinex.com", icon: "fas fa-chart-line" },
+        { name: "MyFxBook", type: "AUTOTRADE", url: "https://www.myfxbook.com", icon: "fas fa-book" },
+        { name: "eToro Money", type: "WALLET", url: "https://www.etoro.com", icon: "fas fa-wallet" },
+        { name: "Bitpanda", type: "EUROPE", url: "https://www.bitpanda.com", icon: "fas fa-panda" },
+        { name: "Uphold", type: "CRYPTO", url: "https://uphold.com", icon: "fas fa-chart-line" },
+        { name: "Changelly", type: "SWAP", url: "https://changelly.com", icon: "fas fa-exchange-alt" },
+        { name: "SimpleFX", type: "FOREX", url: "https://simplefx.com", icon: "fas fa-chart-line" },
+        { name: "NordFX", type: "FOREX", url: "https://nordfx.com", icon: "fas fa-chart-line" },
+        { name: "FPMarkets", type: "CFD", url: "https://www.fpmarkets.com", icon: "fas fa-chart-line" },
+        { name: "ATFX", type: "GLOBAL", url: "https://www.atfx.com", icon: "fas fa-chart-line" },
+        { name: "LegacyFX", type: "CFD", url: "https://legacyfx.com", icon: "fas fa-chart-line" },
+        { name: "TradeStation", type: "BROKERAGE", url: "https://www.tradestation.com", icon: "fas fa-chart-line" },
+        { name: "TD Ameritrade", type: "STOCKS", url: "https://www.tdameritrade.com", icon: "fas fa-chart-line" },
+        { name: "Charles Schwab", type: "INVEST", url: "https://www.schwab.com", icon: "fas fa-chart-line" },
+        { name: "Fidelity", type: "INVESTMENT", url: "https://www.fidelity.com", icon: "fas fa-chart-line" },
+        { name: "Robinhood", type: "COMMISSION FREE", url: "https://robinhood.com", icon: "fas fa-chart-line" },
+        { name: "Webull", type: "STOCKS", url: "https://www.webull.com", icon: "fas fa-chart-line" },
+        { name: "Public.com", type: "SOCIAL", url: "https://public.com", icon: "fas fa-chart-line" },
+        { name: "M1 Finance", type: "AUTO", url: "https://m1.com", icon: "fas fa-chart-line" },
+        { name: "SoFi Invest", type: "ROBO", url: "https://www.sofi.com", icon: "fas fa-chart-line" },
+        { name: "Revolut", type: "TRADING", url: "https://www.revolut.com", icon: "fas fa-chart-line" }
+    ];
+
+    // Asegurar 100 brokers exactos (la lista ya supera 100, pero mostramos todos)
+    const finalBrokers = brokersList.slice(0, 100); 
+
+    const gridContainer = document.getElementById("brokerGrid");
+    
+    function getRandomIconOrDefault(broker) {
+        // si el objeto tiene icon personalizado lo usamos, si no asignamos uno elegante por defecto
+        if (broker.icon) return broker.icon;
+        const defaultIcons = ["fas fa-chart-line", "fas fa-coins", "fas fa-chart-simple", "fas fa-chart-pie", "fas fa-globe", "fas fa-building-columns"];
+        return defaultIcons[Math.floor(Math.random() * defaultIcons.length)];
+    }
+
+    function buildCards() {
+        gridContainer.innerHTML = "";
+        finalBrokers.forEach((broker, idx) => {
+            const card = document.createElement("div");
+            card.className = "broker-card";
+            // Al hacer click abrir en nueva pestaña la URL del broker
+            card.addEventListener("click", (e) => {
+                e.stopPropagation();
+                if (broker.url) {
+                    window.open(broker.url, "_blank", "noopener,noreferrer");
+                } else {
+                    console.warn("Broker sin URL", broker.name);
+                }
+            });
+            const iconClass = getRandomIconOrDefault(broker);
+            // para FBS y otros aseguramos que se vea icono especial
+            let finalIcon = iconClass;
+            if (broker.name === "FBS") finalIcon = "fas fa-sign-in-alt";
+            if (broker.name === "Binance") finalIcon = "fab fa-bitcoin";
+            if (broker.name === "Bybit") finalIcon = "fab fa-ethereum";
+            
+            card.innerHTML = `
+                <div class="broker-icon">
+                    <i class="${finalIcon}"></i>
+                </div>
+                <div class="broker-name">${broker.name}</div>
+                <div class="broker-type">${broker.type}</div>
+                <div class="signature"><i class="fas fa-crown"></i> Heydin Kayser</div>
+            `;
+            // delay escalonado sutil
+            card.style.animationDelay = `${(idx % 20) * 0.02}s`;
+            gridContainer.appendChild(card);
+        });
+    }
+
+    buildCards();
+</script>
+</body>
+</html>

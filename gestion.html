@@ -1,0 +1,880 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
+    <title>YESLY ADELAY | Calculadora Cuántica VIP</title>
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <!-- Google Fonts: fusión neón élite -->
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
+            background: #03050b;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+            color: #eef5ff;
+        }
+
+        /* FONDO PRINCIPAL CON IMAGEN YESLY.jpg */
+        .bg-image-layer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            opacity: 0.32;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* OVERLAY NEÓN + GRID */
+        .cyber-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.08) 0px, rgba(0, 255, 255, 0.08) 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.08) 0px, rgba(0, 255, 255, 0.08) 1px, transparent 1px, transparent 40px);
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .glow-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.12), rgba(0, 0, 0, 0.75));
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* CONTENIDO PRINCIPAL */
+        .content {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* LOADER FUTURISTA ÉLITE */
+        .loader-container {
+            position: fixed;
+            inset: 0;
+            background: #01010be6;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.8s ease, visibility 0.8s;
+            backdrop-filter: blur(12px);
+        }
+        .loader-container.fade-out {
+            opacity: 0;
+            visibility: hidden;
+        }
+        .loader-ring {
+            width: 80px;
+            height: 80px;
+            border: 3px solid rgba(0,255,255,0.2);
+            border-top: 3px solid #0cf;
+            border-right: 3px solid #f0f;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 25px cyan;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
+        }
+        .loader-text {
+            margin-top: 25px;
+            font-size: 1.4rem;
+            font-weight: 800;
+            letter-spacing: 4px;
+            background: linear-gradient(45deg, cyan, #ff44e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        /* HEADER GLASS */
+        .glass-header {
+            background: rgba(5, 10, 20, 0.7);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.5);
+            padding: 0.8rem 1.5rem;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        .nav-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-icon {
+            font-size: 2rem;
+            color: #0cf;
+            filter: drop-shadow(0 0 8px cyan);
+        }
+        .logo-text {
+            font-size: 1.4rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, #fff, #0cf);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 1px;
+        }
+        .nav-links {
+            display: none;
+        }
+        @media (min-width: 768px) {
+            .nav-links {
+                display: flex;
+                gap: 30px;
+                margin-left: auto;
+                margin-right: 20px;
+            }
+            .nav-links a {
+                color: #e0f0ff;
+                text-decoration: none;
+                font-weight: 700;
+                font-size: 0.95rem;
+                letter-spacing: 2px;
+                padding: 8px 0;
+                position: relative;
+                transition: 0.2s;
+                text-transform: uppercase;
+            }
+            .nav-links a::after {
+                content: '';
+                position: absolute;
+                bottom: 0;
+                left: 0;
+                width: 0%;
+                height: 2px;
+                background: linear-gradient(90deg, cyan, #ff44e6);
+                transition: 0.4s;
+            }
+            .nav-links a:hover {
+                color: cyan;
+                text-shadow: 0 0 10px cyan;
+            }
+            .nav-links a:hover::after {
+                width: 100%;
+            }
+        }
+        .auth-buttons {
+            display: flex;
+            gap: 12px;
+        }
+        .btn-neon {
+            padding: 10px 20px;
+            border-radius: 40px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border: none;
+            cursor: pointer;
+            transition: 0.25s;
+            background: transparent;
+        }
+        .btn-login {
+            border: 1.5px solid #0cf;
+            color: #0cf;
+            background: rgba(0, 255, 255, 0.05);
+        }
+        .btn-login:hover {
+            background: #0cf;
+            color: #000;
+            box-shadow: 0 0 20px cyan;
+        }
+        .btn-register {
+            background: linear-gradient(95deg, #0cf, #a05eff);
+            color: #000;
+            font-weight: 900;
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.6);
+        }
+        .btn-register:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 28px cyan;
+        }
+
+        /* CALCULADORA - ESTILO PREMIUM */
+        .calculator-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 2.5rem 1.5rem;
+        }
+        .calculator-container {
+            background: rgba(8, 16, 28, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 50px;
+            border: 2px solid cyan;
+            box-shadow: 0 0 60px rgba(0, 255, 255, 0.3);
+            width: 100%;
+            max-width: 650px;
+            padding: 2rem 1.8rem;
+            position: relative;
+            overflow: hidden;
+            transition: 0.3s;
+        }
+        @media (min-width: 480px) {
+            .calculator-container { padding: 2.5rem; }
+        }
+        @media (min-width: 768px) {
+            .calculator-container { padding: 3rem; }
+        }
+        .calculator-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0, 255, 255, 0.08), transparent);
+            transform: rotate(45deg);
+            animation: shineCalc 8s infinite;
+            pointer-events: none;
+        }
+        @keyframes shineCalc {
+            0% { transform: rotate(45deg) translateX(-100%); }
+            100% { transform: rotate(45deg) translateX(100%); }
+        }
+        .calculator-title {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+        .calculator-title h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.8rem, 7vw, 2.8rem);
+            font-weight: 900;
+            background: linear-gradient(45deg, #fff, cyan, #ff44e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+        }
+        .calculator-title p {
+            color: #cdf0ff;
+            font-size: clamp(0.9rem, 4vw, 1.1rem);
+            opacity: 0.9;
+        }
+        .input-group {
+            margin-bottom: 1.8rem;
+        }
+        label {
+            display: block;
+            margin-bottom: 0.6rem;
+            font-weight: 700;
+            color: #eef5ff;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        label i {
+            color: cyan;
+            margin-right: 8px;
+            text-shadow: 0 0 8px cyan;
+        }
+        input[type="number"] {
+            width: 100%;
+            padding: 14px 18px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1.5px solid rgba(0, 255, 255, 0.4);
+            border-radius: 30px;
+            color: #eef5ff;
+            font-size: 1rem;
+            font-weight: 500;
+            transition: 0.3s;
+            font-family: 'Rajdhani', monospace;
+        }
+        input[type="number"]:focus {
+            outline: none;
+            border-color: #ff44e6;
+            background: rgba(0, 0, 0, 0.5);
+            box-shadow: 0 0 25px rgba(255, 68, 230, 0.5);
+        }
+        .slider-container {
+            margin-top: 0.8rem;
+        }
+        .slider {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 8px;
+            border-radius: 10px;
+            background: rgba(0, 255, 255, 0.15);
+            outline: none;
+            border: 1px solid rgba(0, 255, 255, 0.4);
+        }
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: radial-gradient(circle, cyan, #ff44e6);
+            cursor: pointer;
+            box-shadow: 0 0 20px cyan;
+            border: 1px solid white;
+        }
+        .percentage-value {
+            text-align: center;
+            margin-top: 0.6rem;
+            font-weight: 800;
+            color: cyan;
+            font-size: 1.2rem;
+            text-shadow: 0 0 12px cyan;
+        }
+        .calculate-btn {
+            width: 100%;
+            padding: 16px 20px;
+            background: linear-gradient(145deg, #0cf, #0077ff);
+            border: none;
+            border-radius: 60px;
+            color: black;
+            font-weight: 900;
+            font-size: 1.2rem;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin: 1.5rem 0 1.5rem;
+            font-family: 'Syne', sans-serif;
+            box-shadow: 0 0 30px cyan;
+        }
+        .calculate-btn:hover {
+            background: linear-gradient(145deg, #ff44e6, #a05eff);
+            color: white;
+            box-shadow: 0 0 50px #ff44e6;
+            transform: translateY(-4px);
+        }
+        .calculate-btn:active {
+            transform: translateY(0);
+        }
+        .results {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.2rem;
+            margin-bottom: 1rem;
+        }
+        @media (min-width: 480px) {
+            .results { grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+        }
+        .result-box {
+            background: rgba(0, 255, 255, 0.05);
+            border-radius: 30px;
+            padding: 1.5rem 1rem;
+            text-align: center;
+            border: 2px solid;
+            backdrop-filter: blur(10px);
+            transition: 0.3s;
+        }
+        .result-box.risk { border-color: #ffbd44; box-shadow: 0 0 20px rgba(255, 189, 68, 0.2); }
+        .result-box.profit { border-color: #00ff8c; box-shadow: 0 0 20px rgba(0, 255, 140, 0.2); }
+        .result-title {
+            color: #cdf0ff;
+            margin-bottom: 0.8rem;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        .result-value {
+            font-size: clamp(1.6rem, 6vw, 2.2rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+        }
+        .risk-value { color: #ffbd44; text-shadow: 0 0 15px #ffbd44; }
+        .profit-value { color: #00ff8c; text-shadow: 0 0 15px #00ff8c; }
+        .glow {
+            animation: numberGlow 0.6s ease-out;
+        }
+        @keyframes numberGlow {
+            0%, 100% { text-shadow: 0 0 5px currentColor; }
+            50% { text-shadow: 0 0 25px currentColor, 0 0 45px currentColor; }
+        }
+        .info {
+            margin-top: 1.5rem;
+            font-size: 0.8rem;
+            color: #8892b0;
+            text-align: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+        }
+
+        /* SOCIAL ZONE */
+        .social-zone {
+            padding: 2rem 1.5rem;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(8px);
+            border-top: 1px solid cyan;
+            border-bottom: 1px solid cyan;
+            margin-top: 2rem;
+        }
+        .social-title {
+            font-size: 1.2rem;
+            letter-spacing: 3px;
+            margin-bottom: 1.5rem;
+            color: #9effff;
+        }
+        .social-icons-flex {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 18px;
+        }
+        .social-icon-fut {
+            width: 60px;
+            height: 60px;
+            background: rgba(0, 200, 255, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            color: #0cf;
+            transition: 0.25s;
+            border: 1.5px solid #0cf;
+            text-decoration: none;
+        }
+        .social-icon-fut:hover {
+            background: cyan;
+            color: black;
+            transform: scale(1.1);
+            box-shadow: 0 0 25px cyan;
+        }
+
+        /* FOOTER */
+        .footer-futuristic {
+            padding: 2rem;
+            text-align: center;
+            background: rgba(3, 5, 12, 0.95);
+            border-top: 1px solid rgba(0,255,255,0.3);
+            margin-top: 2rem;
+        }
+
+        /* MODALES */
+        .modal-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.95);
+            backdrop-filter: blur(20px);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-box {
+            background: rgba(8, 16, 28, 0.98);
+            border: 2px solid cyan;
+            border-radius: 40px;
+            width: 100%;
+            max-width: 480px;
+            padding: 2rem;
+            box-shadow: 0 0 60px rgba(0,255,255,0.4);
+            animation: modalPop 0.25s ease;
+        }
+        @keyframes modalPop {
+            from { transform: scale(0.9); opacity: 0;}
+            to { transform: scale(1); opacity: 1;}
+        }
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        .modal-header h2 {
+            font-size: 1.8rem;
+            background: linear-gradient(45deg, cyan, #ff44e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        .close-modal {
+            font-size: 2rem;
+            cursor: pointer;
+            color: cyan;
+            background: none;
+            border: none;
+        }
+        .input-glow {
+            width: 100%;
+            padding: 14px 18px;
+            margin: 12px 0;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0,255,255,0.5);
+            border-radius: 60px;
+            color: white;
+            font-size: 1rem;
+        }
+        .terms-check {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 20px 0;
+            color: #b9f0ff;
+        }
+        .btn-submit {
+            background: linear-gradient(145deg, #0cf, #3f6eff);
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 60px;
+            font-weight: 900;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-submit:hover {
+            background: linear-gradient(145deg, #ff44e6, #a05eff);
+            color: white;
+            box-shadow: 0 0 20px #ff44e6;
+        }
+        .toggle-auth {
+            text-align: center;
+            margin-top: 20px;
+            color: #ccf4ff;
+        }
+        .toggle-auth span {
+            color: cyan;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .error-msg {
+            color: #ff7b9c;
+            font-size: 0.85rem;
+            margin: 8px 0;
+            text-align: center;
+        }
+
+        @media (max-width: 600px) {
+            .social-icon-fut { width: 50px; height: 50px; font-size: 24px; }
+            .btn-neon { padding: 6px 14px; font-size: 0.7rem;}
+        }
+    </style>
+</head>
+<body>
+<div class="bg-image-layer"></div>
+<div class="cyber-grid"></div>
+<div class="glow-overlay"></div>
+
+<div class="content">
+    <div class="loader-container" id="loader">
+        <div class="loader-ring"></div>
+        <div class="loader-text">YESLY ADELAY VIP</div>
+        <div style="margin-top: 20px; font-size:0.9rem; letter-spacing:2px;">INICIANDO MÓDULO CUÁNTICO</div>
+    </div>
+
+    <header class="glass-header">
+        <div class="nav-container">
+            <div class="logo-area">
+                <i class="fas fa-chart-line logo-icon"></i>
+                <span class="logo-text">YESLY ADELAY</span>
+            </div>
+            <div class="nav-links">
+                <a href="index.html">INICIO</a>
+                <a href="portal-modulos.html">MÓDULOS</a>
+                <a href="calculadora.html" style="color: cyan; text-shadow:0 0 8px cyan;">CALCULADORA</a>
+            </div>
+            <div class="auth-buttons">
+                <button class="btn-neon btn-login" id="openLoginModalBtn"><i class="fas fa-key"></i> INICIAR</button>
+                <button class="btn-neon btn-register" id="openRegisterModalBtn"><i class="fas fa-crown"></i> REGISTRO VIP</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="calculator-wrapper">
+        <div class="calculator-container">
+            <div class="calculator-title">
+                <h1><i class="fas fa-calculator"></i> CALCULADORA VIP</h1>
+                <p>Gestión de riesgo y ganancias · Precisión algorítmica</p>
+            </div>
+            
+            <div class="input-group">
+                <label for="capital"><i class="fas fa-coins"></i> Capital de Inversión ($)</label>
+                <input type="number" id="capital" step="0.01" min="0" value="1000" placeholder="Ej: 1000">
+            </div>
+            
+            <div class="input-group">
+                <label for="riskPercentage"><i class="fas fa-chart-line"></i> Porcentaje de Riesgo (%)</label>
+                <input type="range" id="riskPercentage" class="slider" min="0.5" max="5" step="0.5" value="2">
+                <div class="percentage-value"><span id="riskValue">2</span>%</div>
+            </div>
+            
+            <div class="input-group">
+                <label for="lotSize"><i class="fas fa-weight-scale"></i> Tamaño del Lote</label>
+                <input type="number" id="lotSize" step="0.01" min="0.01" value="0.01" placeholder="Ej: 0.01">
+            </div>
+            
+            <div class="input-group">
+                <label for="pips"><i class="fas fa-arrows-up-down"></i> Movimiento en Pips</label>
+                <input type="number" id="pips" step="1" min="1" value="100" placeholder="Ej: 100">
+            </div>
+            
+            <button id="calculate" class="calculate-btn">
+                <i class="fas fa-bolt"></i> CALCULAR RIESGO
+            </button>
+            
+            <div class="results">
+                <div class="result-box risk">
+                    <div class="result-title">MONTO A RIESGO</div>
+                    <div id="riskAmount" class="result-value risk-value">$20.00</div>
+                </div>
+                <div class="result-box profit">
+                    <div class="result-title">GANANCIA POTENCIAL</div>
+                    <div id="profitAmount" class="result-value profit-value">$10.00</div>
+                </div>
+            </div>
+            
+            <div class="info">
+                <p><i class="fas fa-info-circle"></i> Cálculo basado en valor estándar de pip: 1 lote = $10 por pip. El riesgo es % del capital total.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- REDES SOCIALES ACTUALIZADAS YESLY ADELAY -->
+    <div class="social-zone">
+        <div class="social-title"><i class="fas fa-globe"></i> CONECTA CON LA ÉLITE <i class="fas fa-globe"></i></div>
+        <div class="social-icons-flex">
+            <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank" class="social-icon-fut"><i class="fab fa-blogger"></i></a>
+            <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank" class="social-icon-fut"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank" class="social-icon-fut"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank" class="social-icon-fut"><i class="fab fa-tiktok"></i></a>
+            <a href="https://t.me/yesly_adelay" target="_blank" class="social-icon-fut"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://wa.me/593991987552" target="_blank" class="social-icon-fut"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank" class="social-icon-fut"><i class="fas fa-chart-line"></i></a>
+        </div>
+    </div>
+
+    <footer class="footer-futuristic">
+        <div style="font-size: 1.4rem; font-weight: 900; margin-bottom: 0.5rem;"><i class="fas fa-chart-line"></i> YESLY ADELAY TRADING</div>
+        <p>© 2026 YESLY ADELAY TRADING - Calculadora Cuántica · Alta Frecuencia</p>
+        <p style="font-size:0.75rem; margin-top:10px;">Herramienta de gestión de capital y riesgo</p>
+    </footer>
+</div>
+
+<!-- MODAL LOGIN -->
+<div id="loginModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2><i class="fas fa-key"></i> INICIAR SESIÓN</h2>
+            <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+        </div>
+        <div id="loginError" class="error-msg"></div>
+        <input type="email" id="loginEmail" class="input-glow" placeholder="Correo electrónico">
+        <input type="password" id="loginPassword" class="input-glow" placeholder="Contraseña">
+        <button class="btn-submit" id="doLoginBtn">ACCEDER</button>
+        <div class="toggle-auth">¿NO eres VIP? <span id="switchToRegisterFromLogin">Registrar cuenta</span></div>
+    </div>
+</div>
+
+<!-- MODAL REGISTRO -->
+<div id="registerModal" class="modal-overlay">
+    <div class="modal-box">
+        <div class="modal-header">
+            <h2><i class="fas fa-crown"></i> REGISTRO VIP</h2>
+            <button class="close-modal" onclick="closeModal('registerModal')">&times;</button>
+        </div>
+        <div id="registerError" class="error-msg"></div>
+        <input type="text" id="regName" class="input-glow" placeholder="Nombre completo">
+        <input type="email" id="regEmail" class="input-glow" placeholder="Correo electrónico">
+        <input type="password" id="regPassword" class="input-glow" placeholder="Contraseña (mínimo 6)">
+        <div class="terms-check">
+            <input type="checkbox" id="termsCheckbox">
+            <label>Acepto los <span class="terms-link" id="showTermsBtn">Términos y Condiciones</span></label>
+        </div>
+        <button class="btn-submit" id="doRegisterBtn">ACTIVAR CUENTA</button>
+        <div class="toggle-auth">¿Ya eres VIP? <span id="switchToLoginFromRegister">Inicia sesión</span></div>
+    </div>
+</div>
+
+<!-- MODAL TÉRMINOS -->
+<div id="termsModal" class="modal-overlay">
+    <div class="modal-box" style="max-width:550px; max-height:80vh; overflow-y:auto;">
+        <div class="modal-header">
+            <h2>📜 TÉRMINOS Y CONDICIONES</h2>
+            <button class="close-modal" onclick="closeModal('termsModal')">&times;</button>
+        </div>
+        <div style="color:#ccf; font-size:0.9rem; text-align:left;">
+            <p><strong>YESLY ADELAY TRADING</strong> - Herramienta de análisis y gestión.</p>
+            <p>1. Los cálculos son estimativos, no garantizan rentabilidad.</p>
+            <p>2. El trading implica riesgos; el usuario asume toda responsabilidad.</p>
+            <p>3. Tus datos están protegidos conforme a políticas de privacidad.</p>
+            <p>4. Queda prohibido el uso indebido de la plataforma.</p>
+            <p>5. Al registrarte declaras ser mayor de 18 años y aceptas los términos.</p>
+        </div>
+        <button class="btn-submit" style="margin-top:20px;" onclick="closeModal('termsModal')">CERRAR</button>
+    </div>
+</div>
+
+<script>
+    // FIREBASE CONFIG
+    const firebaseConfig = {
+        apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+        authDomain: "beaver-trading.firebaseapp.com",
+        databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+        projectId: "beaver-trading",
+        storageBucket: "beaver-trading.firebasestorage.app",
+        messagingSenderId: "926610131904",
+        appId: "1:926610131904:web:c147bd337bd12b4d085625",
+        measurementId: "G-1K51WWF2ZJ"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.database();
+
+    // LOADER
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.style.display = 'none', 800);
+        }, 1700);
+        calculateRiskAndProfit();
+    });
+
+    function showLoaderMsg(msg) {
+        let loader = document.getElementById('loader');
+        if(loader.style.display === 'none') loader.style.display = 'flex';
+        loader.classList.remove('fade-out');
+        document.querySelector('.loader-text').innerText = msg || 'PROCESANDO...';
+    }
+    function hideLoader() {
+        const loader = document.getElementById('loader');
+        loader.classList.add('fade-out');
+        setTimeout(() => loader.style.display = 'none', 600);
+    }
+
+    function openModal(modalId) { document.getElementById(modalId).style.display = 'flex'; }
+    function closeModal(modalId) { document.getElementById(modalId).style.display = 'none'; }
+
+    document.getElementById('openLoginModalBtn').onclick = () => openModal('loginModal');
+    document.getElementById('openRegisterModalBtn').onclick = () => openModal('registerModal');
+    document.getElementById('switchToRegisterFromLogin').onclick = () => { closeModal('loginModal'); openModal('registerModal'); };
+    document.getElementById('switchToLoginFromRegister').onclick = () => { closeModal('registerModal'); openModal('loginModal'); };
+    document.getElementById('showTermsBtn').onclick = (e) => { e.preventDefault(); openModal('termsModal'); };
+    window.onclick = (e) => { if (e.target.classList.contains('modal-overlay')) e.target.style.display = 'none'; };
+
+    // LOGIN
+    document.getElementById('doLoginBtn').onclick = () => {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        if (!email || !password) { document.getElementById('loginError').innerText = 'Completa todos los campos'; return; }
+        showLoaderMsg('VERIFICANDO ACCESO');
+        auth.signInWithEmailAndPassword(email, password)
+            .then(() => {
+                document.querySelector('.loader-text').innerText = 'REDIRIGIENDO A HOME';
+                setTimeout(() => { window.location.href = 'home.html'; }, 1200);
+            })
+            .catch(err => { hideLoader(); document.getElementById('loginError').innerText = 'Error: ' + err.message; });
+    };
+
+    // REGISTRO
+    document.getElementById('doRegisterBtn').onclick = () => {
+        const name = document.getElementById('regName').value.trim();
+        const email = document.getElementById('regEmail').value.trim();
+        const pass = document.getElementById('regPassword').value;
+        const termsAccepted = document.getElementById('termsCheckbox').checked;
+        if (!name || !email || !pass) { document.getElementById('registerError').innerText = 'Todos los campos obligatorios'; return; }
+        if (!termsAccepted) { document.getElementById('registerError').innerText = 'Acepta los Términos y Condiciones'; return; }
+        if (pass.length < 6) { document.getElementById('registerError').innerText = 'Mínimo 6 caracteres'; return; }
+        showLoaderMsg('CREANDO CUENTA VIP');
+        auth.createUserWithEmailAndPassword(email, pass)
+            .then((userCred) => {
+                const uid = userCred.user.uid;
+                db.ref('users/' + uid).set({
+                    fullName: name,
+                    email: email,
+                    createdAt: firebase.database.ServerValue.TIMESTAMP,
+                    termsAccepted: true
+                }).then(() => {
+                    document.querySelector('.loader-text').innerText = 'REGISTRO EXITOSO';
+                    setTimeout(() => { window.location.href = 'home.html'; }, 1500);
+                });
+            })
+            .catch(err => { hideLoader(); document.getElementById('registerError').innerText = 'Error: ' + err.message; });
+    };
+
+    // CALCULADORA
+    const capitalInput = document.getElementById('capital');
+    const riskSlider = document.getElementById('riskPercentage');
+    const riskValueSpan = document.getElementById('riskValue');
+    const lotSizeInput = document.getElementById('lotSize');
+    const pipsInput = document.getElementById('pips');
+    const riskAmountSpan = document.getElementById('riskAmount');
+    const profitAmountSpan = document.getElementById('profitAmount');
+
+    function calculateRiskAndProfit() {
+        const capital = parseFloat(capitalInput.value) || 0;
+        const riskPercent = parseFloat(riskSlider.value) || 0;
+        const lotSize = parseFloat(lotSizeInput.value) || 0;
+        const pips = parseFloat(pipsInput.value) || 0;
+        
+        const riskAmount = capital * (riskPercent / 100);
+        const profitAmount = lotSize * pips * 10;
+        
+        riskAmountSpan.textContent = `$${riskAmount.toFixed(2)}`;
+        profitAmountSpan.textContent = `$${profitAmount.toFixed(2)}`;
+        
+        riskAmountSpan.classList.remove('glow');
+        profitAmountSpan.classList.remove('glow');
+        void riskAmountSpan.offsetWidth;
+        riskAmountSpan.classList.add('glow');
+        profitAmountSpan.classList.add('glow');
+    }
+
+    riskSlider.addEventListener('input', () => {
+        riskValueSpan.textContent = riskSlider.value;
+        calculateRiskAndProfit();
+    });
+    capitalInput.addEventListener('input', calculateRiskAndProfit);
+    lotSizeInput.addEventListener('input', calculateRiskAndProfit);
+    pipsInput.addEventListener('input', calculateRiskAndProfit);
+    document.getElementById('calculate').addEventListener('click', calculateRiskAndProfit);
+
+    auth.onAuthStateChanged((user) => {
+        // Redirección opcional si se desea proteger la calculadora
+    });
+</script>
+</body>
+</html>
