@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yesly Adelay · Febrero 2026</title>
+    <title>Yesly Adelay · Junio 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
@@ -445,7 +445,7 @@
             <h1>YESLY ADELAY</h1>
             <div class="subtitle">⚡ TRADING FUTURISTA ⚡</div>
             <p>Accede a nuestros documentos de análisis y estrategias de vanguardia</p>
-            <div class="month-badge">📅 FEBRERO 2026</div>
+            <div class="month-badge">📅 JUNIO 2026</div>
         </div>
 
         <div class="search-container">
@@ -454,11 +454,11 @@
         </div>
 
         <div class="grid-container" id="folders-container">
-            <!-- generado por JS: días 1 al 28 -->
+            <!-- generado por JS: días 1 al 30 -->
         </div>
 
         <div class="footer">
-            <p>© 2026 · Yesly Adelay Trading · Sistema Cuántico de Documentos · Febrero</p>
+            <p>© 2026 · Yesly Adelay Trading · Sistema Cuántico de Documentos · Junio</p>
         </div>
     </div>
 
@@ -507,10 +507,10 @@
                 }
             }
 
-            // ---------- GENERAR CARPETAS (días 1-28, FEBRERO) ----------
-            function generateFebruaryFolders() {
+            // ---------- GENERAR CARPETAS (días 1-30, JUNIO) ----------
+            function generateJuneFolders() {
                 const container = document.getElementById('folders-container');
-                const days = 28;
+                const days = 30;
                 const icons = ['fa-folder', 'fa-folder-open', 'fa-file-alt', 'fa-chart-line', 'fa-coins', 'fa-cube', 'fa-brain'];
 
                 for (let d = 1; d <= days; d++) {
@@ -523,7 +523,7 @@
                     // Mostrar el día con formato "Día 1", "Día 2", ...
                     folder.innerHTML = `
                         <i class="fas ${randomIcon} folder-icon"></i>
-                        <div class="folder-name">FEBRERO ${d}</div>
+                        <div class="folder-name">JUNIO ${d}</div>
                         <div class="folder-day">Día ${d}</div>
                     `;
 
@@ -541,7 +541,7 @@
             function openActionModal(day) {
                 const modal = document.getElementById('action-modal');
                 const modalTitle = document.getElementById('modal-title');
-                modalTitle.textContent = `FEBRERO · Día ${day}`;
+                modalTitle.textContent = `JUNIO · Día ${day}`;
                 modal.classList.add('active');
 
                 // Reemplazar botones para evitar acumular listeners
@@ -586,7 +586,7 @@
             // ---------- INICIO ----------
             document.addEventListener('DOMContentLoaded', function() {
                 createParticles();
-                generateFebruaryFolders();
+                generateJuneFolders();
                 setupSearch();
 
                 // Cerrar modal

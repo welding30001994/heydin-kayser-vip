@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yesly Adelay · Julio 2026</title>
+    <title>Yesly Adelay · Septiembre 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
+        /* ===== Estilos base ===== */
         * {
             margin: 0;
             padding: 0;
@@ -53,8 +54,8 @@
             font-size: 3.8rem;
             font-weight: 700;
             margin-bottom: 6px;
-            text-shadow: 0 0 30px rgba(0, 255, 255, 0.7);
-            background: linear-gradient(135deg, #00ffff, #ff00ff, #00ffff);
+            text-shadow: 0 0 30px rgba(255, 180, 50, 0.7);
+            background: linear-gradient(135deg, #ffbb44, #ff8800, #ffbb44);
             background-size: 200% 200%;
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
@@ -63,20 +64,16 @@
         }
 
         @keyframes gradientMove {
-            0% {
-                background-position: 0% 50%;
-            }
-            100% {
-                background-position: 100% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
         .header .subtitle {
             font-size: 1.5rem;
             font-weight: 300;
             letter-spacing: 4px;
-            color: #b0f0ff;
-            text-shadow: 0 0 15px rgba(0, 255, 255, 0.4);
+            color: #ffcc77;
+            text-shadow: 0 0 15px rgba(255, 180, 50, 0.4);
             margin-top: 5px;
         }
 
@@ -85,25 +82,25 @@
             opacity: 0.85;
             max-width: 600px;
             margin: 12px auto 0;
-            color: #d0eaff;
+            color: #ffdd99;
         }
 
-        /* mes destacado */
         .month-badge {
             display: inline-block;
             margin: 20px auto 15px;
             padding: 8px 32px;
-            background: rgba(0, 255, 255, 0.08);
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            background: rgba(255, 180, 50, 0.08);
+            border: 1px solid rgba(255, 180, 50, 0.3);
             border-radius: 60px;
             font-family: 'Orbitron', sans-serif;
             font-size: 2rem;
             font-weight: 700;
             letter-spacing: 4px;
-            color: #00ffff;
-            text-shadow: 0 0 25px rgba(0, 255, 255, 0.5);
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.15);
+            color: #ffbb44;
+            text-shadow: 0 0 25px rgba(255, 180, 50, 0.5);
+            box-shadow: 0 0 30px rgba(255, 180, 50, 0.15);
             backdrop-filter: blur(4px);
+            border-color: rgba(255, 180, 50, 0.3);
         }
 
         .grid-container {
@@ -122,7 +119,7 @@
             transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
-            border: 1px solid rgba(0, 255, 255, 0.2);
+            border: 1px solid rgba(255, 180, 50, 0.2);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(8px);
             -webkit-backdrop-filter: blur(8px);
@@ -135,7 +132,7 @@
             left: -100%;
             width: 100%;
             height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.08), transparent);
+            background: linear-gradient(90deg, transparent, rgba(255, 180, 50, 0.08), transparent);
             transition: left 0.6s;
         }
 
@@ -145,21 +142,20 @@
 
         .folder:hover {
             transform: translateY(-10px) scale(1.02);
-            box-shadow: 0 15px 40px rgba(0, 255, 255, 0.25);
-            border-color: rgba(0, 255, 255, 0.7);
+            box-shadow: 0 15px 40px rgba(255, 180, 50, 0.25);
+            border-color: rgba(255, 180, 50, 0.7);
             background: rgba(20, 25, 50, 0.85);
         }
 
         .folder-icon {
             font-size: 2.8rem;
             margin-bottom: 10px;
-            color: #00ffff;
-            text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
+            text-shadow: 0 0 20px rgba(255, 180, 50, 0.6);
             transition: transform 0.3s;
         }
 
         .folder:hover .folder-icon {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(3deg);
         }
 
         .folder-name {
@@ -175,12 +171,12 @@
             font-size: 0.8rem;
             color: #aac;
             opacity: 0.85;
-            background: rgba(0, 255, 255, 0.08);
+            background: rgba(255, 180, 50, 0.08);
             padding: 2px 12px;
             border-radius: 20px;
             display: inline-block;
             margin-top: 4px;
-            border: 1px solid rgba(0, 255, 255, 0.1);
+            border: 1px solid rgba(255, 180, 50, 0.1);
         }
 
         .search-container {
@@ -193,7 +189,7 @@
             width: 100%;
             padding: 15px 25px;
             background: rgba(12, 15, 30, 0.75);
-            border: 1px solid rgba(0, 255, 255, 0.25);
+            border: 1px solid rgba(255, 180, 50, 0.25);
             border-radius: 50px;
             color: #fff;
             font-size: 1rem;
@@ -205,8 +201,8 @@
         }
 
         .search-box:focus {
-            border-color: #00ffff;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.2), inset 0 0 15px rgba(0, 255, 255, 0.05);
+            border-color: #ffbb44;
+            box-shadow: 0 0 30px rgba(255, 180, 50, 0.2), inset 0 0 15px rgba(255, 180, 50, 0.05);
         }
 
         .search-box::placeholder {
@@ -218,7 +214,7 @@
             right: 22px;
             top: 50%;
             transform: translateY(-50%);
-            color: #00ffff;
+            color: #ffbb44;
             font-size: 1.2rem;
             opacity: 0.7;
         }
@@ -229,11 +225,11 @@
             margin-top: 40px;
             font-size: 0.9rem;
             color: #99b0dd;
-            border-top: 1px solid rgba(0, 255, 255, 0.15);
+            border-top: 1px solid rgba(255, 180, 50, 0.15);
             letter-spacing: 1px;
         }
 
-        /* partículas */
+        /* Partículas */
         .particles {
             position: absolute;
             top: 0;
@@ -246,30 +242,20 @@
 
         .particle {
             position: absolute;
-            background: rgba(0, 255, 255, 0.4);
+            background: rgba(255, 180, 50, 0.4);
             border-radius: 50%;
             animation: floatUp 18s infinite linear;
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(255, 180, 50, 0.2);
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) rotate(0deg) scale(0.8);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100px) rotate(720deg) scale(1.2);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100px) rotate(720deg) scale(1.2); opacity: 0; }
         }
 
-        /* modal */
+        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -300,7 +286,7 @@
             max-width: 480px;
             text-align: center;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.8);
-            border: 1px solid rgba(0, 255, 255, 0.3);
+            border: 1px solid rgba(255, 180, 50, 0.3);
             transform: scale(0.9) translateY(20px);
             transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             position: relative;
@@ -310,16 +296,12 @@
             transform: scale(1) translateY(0);
         }
 
-        .modal-header {
-            margin-bottom: 25px;
-        }
-
         .modal-header h2 {
             font-family: 'Orbitron', sans-serif;
             font-size: 2rem;
             margin-bottom: 8px;
-            color: #00ffff;
-            text-shadow: 0 0 25px rgba(0, 255, 255, 0.4);
+            color: #ffbb44;
+            text-shadow: 0 0 25px rgba(255, 180, 50, 0.4);
         }
 
         .modal-header p {
@@ -364,13 +346,8 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .buy-btn:hover {
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
-        }
-
-        .sell-btn:hover {
-            box-shadow: 0 0 30px rgba(255, 51, 102, 0.4);
-        }
+        .buy-btn:hover { box-shadow: 0 0 30px rgba(0, 255, 136, 0.4); }
+        .sell-btn:hover { box-shadow: 0 0 30px rgba(255, 51, 102, 0.4); }
 
         .close-btn {
             position: absolute;
@@ -390,50 +367,21 @@
         }
 
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            .header .subtitle {
-                font-size: 1.1rem;
-            }
-            .grid-container {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 15px;
-                padding: 10px;
-            }
-            .folder {
-                padding: 15px 8px;
-            }
-            .folder-icon {
-                font-size: 2.4rem;
-            }
-            .action-buttons {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .modal-content {
-                padding: 25px 18px;
-            }
-            .month-badge {
-                font-size: 1.6rem;
-                padding: 6px 24px;
-            }
+            .header h1 { font-size: 2.5rem; }
+            .header .subtitle { font-size: 1.1rem; }
+            .grid-container { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; padding: 10px; }
+            .folder { padding: 15px 8px; }
+            .folder-icon { font-size: 2.4rem; }
+            .action-buttons { flex-direction: column; gap: 12px; }
+            .modal-content { padding: 25px 18px; }
+            .month-badge { font-size: 1.6rem; padding: 6px 24px; }
         }
 
         @media (max-width: 480px) {
-            .grid-container {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            .header h1 {
-                font-size: 2rem;
-            }
-            .modal-header h2 {
-                font-size: 1.6rem;
-            }
-            .month-badge {
-                font-size: 1.3rem;
-                padding: 4px 18px;
-            }
+            .grid-container { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+            .header h1 { font-size: 2rem; }
+            .modal-header h2 { font-size: 1.6rem; }
+            .month-badge { font-size: 1.3rem; padding: 4px 18px; }
         }
     </style>
 </head>
@@ -445,7 +393,7 @@
             <h1>YESLY ADELAY</h1>
             <div class="subtitle">⚡ TRADING FUTURISTA ⚡</div>
             <p>Accede a nuestros documentos de análisis y estrategias de vanguardia</p>
-            <div class="month-badge">📅 JULIO 2026</div>
+            <div class="month-badge">🌾 SEPTIEMBRE 2026</div>
         </div>
 
         <div class="search-container">
@@ -454,11 +402,11 @@
         </div>
 
         <div class="grid-container" id="folders-container">
-            <!-- generado por JS: días 1 al 31 -->
+            <!-- generado por JS: días 1 al 30 de septiembre -->
         </div>
 
         <div class="footer">
-            <p>© 2026 · Yesly Adelay Trading · Sistema Cuántico de Documentos · Julio</p>
+            <p>© 2026 · Yesly Adelay Trading · Sistema Cuántico de Documentos · Septiembre</p>
         </div>
     </div>
 
@@ -493,10 +441,10 @@
                     particle.style.height = size + 'px';
                     particle.style.left = Math.random() * 100 + '%';
                     const colors = [
-                        'rgba(0, 255, 255, 0.6)',
-                        'rgba(200, 0, 255, 0.5)',
-                        'rgba(0, 200, 255, 0.7)',
-                        'rgba(100, 200, 255, 0.5)'
+                        'rgba(255, 180, 50, 0.6)',
+                        'rgba(200, 130, 30, 0.5)',
+                        'rgba(255, 200, 80, 0.7)',
+                        'rgba(180, 120, 20, 0.5)'
                     ];
                     particle.style.background = colors[Math.floor(Math.random() * colors.length)];
                     const duration = Math.random() * 22 + 12;
@@ -507,23 +455,42 @@
                 }
             }
 
-            // ---------- GENERAR CARPETAS (días 1-31, JULIO) ----------
-            function generateJulyFolders() {
+            // ---------- GENERAR CARPETAS (SEPTIEMBRE: 30 días) ----------
+            function generateSeptemberFolders() {
                 const container = document.getElementById('folders-container');
-                const days = 31;
-                const icons = ['fa-folder', 'fa-folder-open', 'fa-file-alt', 'fa-chart-line', 'fa-coins', 'fa-cube', 'fa-brain'];
+                const days = 30;
+
+                // Iconos de inicio de otoño y variados para Septiembre
+                const icons = [
+                    'fa-leaf', 'fa-tree', 'fa-seedling', 'fa-cloud-sun', 'fa-cloud-rain',
+                    'fa-wind', 'fa-snowflake', 'fa-umbrella', 'fa-moon', 'fa-star',
+                    'fa-sun', 'fa-cloud-bolt', 'fa-water', 'fa-mountain-sun', 'fa-campground',
+                    'fa-fire', 'fa-mug-hot', 'fa-coffee', 'fa-wine-glass', 'fa-apple-alt',
+                    'fa-gem', 'fa-crown', 'fa-trophy', 'fa-medal', 'fa-flag-checkered',
+                    'fa-rocket', 'fa-bolt', 'fa-bullseye', 'fa-target', 'fa-crosshairs'
+                ];
+
+                // Colores de inicio de otoño y cálidos
+                const colors = [
+                    '#ffbb44', '#ff8800', '#ffaa33', '#cc7700', '#ff9933',
+                    '#ffcc00', '#ffdd44', '#ffaa00', '#ffbb33', '#ffee66',
+                    '#cc6600', '#dd8800', '#ff7733', '#ff9933', '#ffbb55',
+                    '#cc8833', '#ddaa44', '#ffbb55', '#ffcc66', '#ffdd77',
+                    '#ff3366', '#cc2244', '#ff4488', '#ff66aa', '#ff88cc',
+                    '#66ccff', '#33aaff', '#88ddff', '#44bbff', '#66ddff'
+                ];
 
                 for (let d = 1; d <= days; d++) {
                     const folder = document.createElement('div');
                     folder.classList.add('folder');
                     folder.dataset.day = d;
 
-                    const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                    const icon = icons[(d - 1) % icons.length];
+                    const color = colors[(d * 7) % colors.length];
 
-                    // Mostrar el día con formato "Día 1", "Día 2", ...
                     folder.innerHTML = `
-                        <i class="fas ${randomIcon} folder-icon"></i>
-                        <div class="folder-name">JULIO ${d}</div>
+                        <i class="fas ${icon} folder-icon" style="color: ${color};"></i>
+                        <div class="folder-name">SEPTIEMBRE ${d}</div>
                         <div class="folder-day">Día ${d}</div>
                     `;
 
@@ -541,10 +508,9 @@
             function openActionModal(day) {
                 const modal = document.getElementById('action-modal');
                 const modalTitle = document.getElementById('modal-title');
-                modalTitle.textContent = `JULIO · Día ${day}`;
+                modalTitle.textContent = `SEPTIEMBRE · Día ${day}`;
                 modal.classList.add('active');
 
-                // Reemplazar botones para evitar acumular listeners
                 const buyBtn = document.getElementById('buy-btn');
                 const sellBtn = document.getElementById('sell-btn');
 
@@ -553,9 +519,7 @@
                 buyBtn.parentNode.replaceChild(newBuy, buyBtn);
                 sellBtn.parentNode.replaceChild(newSell, sellBtn);
 
-                // Asignar listeners
                 document.getElementById('buy-btn').addEventListener('click', function() {
-                    // Redirige a buy/indexDia.html (ejemplo)
                     window.location.href = `buy/index${day}.html`;
                 });
 
@@ -586,10 +550,9 @@
             // ---------- INICIO ----------
             document.addEventListener('DOMContentLoaded', function() {
                 createParticles();
-                generateJulyFolders();
+                generateSeptemberFolders();
                 setupSearch();
 
-                // Cerrar modal
                 document.getElementById('close-modal').addEventListener('click', closeModal);
                 const modal = document.getElementById('action-modal');
                 modal.addEventListener('click', function(e) {

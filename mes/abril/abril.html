@@ -3,10 +3,11 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Yesly Adelay · Julio 2026</title>
+    <title>Yesly Adelay · Abril 2026</title>
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
     <style>
+        /* ===== Mismo estilo base, solo ajustes menores ===== */
         * {
             margin: 0;
             padding: 0;
@@ -63,12 +64,8 @@
         }
 
         @keyframes gradientMove {
-            0% {
-                background-position: 0% 50%;
-            }
-            100% {
-                background-position: 100% 50%;
-            }
+            0% { background-position: 0% 50%; }
+            100% { background-position: 100% 50%; }
         }
 
         .header .subtitle {
@@ -88,7 +85,6 @@
             color: #d0eaff;
         }
 
-        /* mes destacado */
         .month-badge {
             display: inline-block;
             margin: 20px auto 15px;
@@ -153,13 +149,12 @@
         .folder-icon {
             font-size: 2.8rem;
             margin-bottom: 10px;
-            color: #00ffff;
             text-shadow: 0 0 20px rgba(0, 255, 255, 0.6);
             transition: transform 0.3s;
         }
 
         .folder:hover .folder-icon {
-            transform: scale(1.1);
+            transform: scale(1.1) rotate(3deg);
         }
 
         .folder-name {
@@ -233,7 +228,7 @@
             letter-spacing: 1px;
         }
 
-        /* partículas */
+        /* Partículas */
         .particles {
             position: absolute;
             top: 0;
@@ -253,23 +248,13 @@
         }
 
         @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) rotate(0deg) scale(0.8);
-                opacity: 0;
-            }
-            10% {
-                opacity: 1;
-            }
-            90% {
-                opacity: 0.8;
-            }
-            100% {
-                transform: translateY(-100px) rotate(720deg) scale(1.2);
-                opacity: 0;
-            }
+            0% { transform: translateY(100vh) rotate(0deg) scale(0.8); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-100px) rotate(720deg) scale(1.2); opacity: 0; }
         }
 
-        /* modal */
+        /* Modal */
         .modal-overlay {
             position: fixed;
             top: 0;
@@ -308,10 +293,6 @@
 
         .modal-overlay.active .modal-content {
             transform: scale(1) translateY(0);
-        }
-
-        .modal-header {
-            margin-bottom: 25px;
         }
 
         .modal-header h2 {
@@ -364,13 +345,8 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
         }
 
-        .buy-btn:hover {
-            box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
-        }
-
-        .sell-btn:hover {
-            box-shadow: 0 0 30px rgba(255, 51, 102, 0.4);
-        }
+        .buy-btn:hover { box-shadow: 0 0 30px rgba(0, 255, 136, 0.4); }
+        .sell-btn:hover { box-shadow: 0 0 30px rgba(255, 51, 102, 0.4); }
 
         .close-btn {
             position: absolute;
@@ -390,50 +366,21 @@
         }
 
         @media (max-width: 768px) {
-            .header h1 {
-                font-size: 2.5rem;
-            }
-            .header .subtitle {
-                font-size: 1.1rem;
-            }
-            .grid-container {
-                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-                gap: 15px;
-                padding: 10px;
-            }
-            .folder {
-                padding: 15px 8px;
-            }
-            .folder-icon {
-                font-size: 2.4rem;
-            }
-            .action-buttons {
-                flex-direction: column;
-                gap: 12px;
-            }
-            .modal-content {
-                padding: 25px 18px;
-            }
-            .month-badge {
-                font-size: 1.6rem;
-                padding: 6px 24px;
-            }
+            .header h1 { font-size: 2.5rem; }
+            .header .subtitle { font-size: 1.1rem; }
+            .grid-container { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 15px; padding: 10px; }
+            .folder { padding: 15px 8px; }
+            .folder-icon { font-size: 2.4rem; }
+            .action-buttons { flex-direction: column; gap: 12px; }
+            .modal-content { padding: 25px 18px; }
+            .month-badge { font-size: 1.6rem; padding: 6px 24px; }
         }
 
         @media (max-width: 480px) {
-            .grid-container {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-            }
-            .header h1 {
-                font-size: 2rem;
-            }
-            .modal-header h2 {
-                font-size: 1.6rem;
-            }
-            .month-badge {
-                font-size: 1.3rem;
-                padding: 4px 18px;
-            }
+            .grid-container { grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); }
+            .header h1 { font-size: 2rem; }
+            .modal-header h2 { font-size: 1.6rem; }
+            .month-badge { font-size: 1.3rem; padding: 4px 18px; }
         }
     </style>
 </head>
@@ -445,7 +392,7 @@
             <h1>YESLY ADELAY</h1>
             <div class="subtitle">⚡ TRADING FUTURISTA ⚡</div>
             <p>Accede a nuestros documentos de análisis y estrategias de vanguardia</p>
-            <div class="month-badge">📅 JULIO 2026</div>
+            <div class="month-badge">🌸 ABRIL 2026</div>
         </div>
 
         <div class="search-container">
@@ -454,11 +401,11 @@
         </div>
 
         <div class="grid-container" id="folders-container">
-            <!-- generado por JS: días 1 al 31 -->
+            <!-- generado por JS: días 1 al 30 de abril -->
         </div>
 
         <div class="footer">
-            <p>© 2026 · Yesly Adelay Trading · Sistema Cuántico de Documentos · Julio</p>
+            <p>© 2026 · Yesly Adelay Trading · Sistema Cuántico de Documentos · Abril</p>
         </div>
     </div>
 
@@ -507,23 +454,39 @@
                 }
             }
 
-            // ---------- GENERAR CARPETAS (días 1-31, JULIO) ----------
-            function generateJulyFolders() {
+            // ---------- GENERAR CARPETAS (ABRIL: 30 días) ----------
+            function generateAprilFolders() {
                 const container = document.getElementById('folders-container');
-                const days = 31;
-                const icons = ['fa-folder', 'fa-folder-open', 'fa-file-alt', 'fa-chart-line', 'fa-coins', 'fa-cube', 'fa-brain'];
+                const days = 30;
+
+                // Lista de iconos más llamativos y variados
+                const icons = [
+                    'fa-rocket', 'fa-bolt', 'fa-star', 'fa-fire', 'fa-gem',
+                    'fa-crown', 'fa-crystal-ball', 'fa-meteor', 'fa-sun', 'fa-moon',
+                    'fa-cloud-bolt', 'fa-diamond', 'fa-crown', 'fa-wand-magic-sparkles',
+                    'fa-coins', 'fa-chart-pie', 'fa-chart-line', 'fa-chart-simple',
+                    'fa-bitcoin-sign', 'fa-arrow-trend-up', 'fa-arrow-trend-down',
+                    'fa-bullseye', 'fa-crosshairs', 'fa-target', 'fa-flag-checkered',
+                    'fa-trophy', 'fa-medal', 'fa-shield-halved', 'fa-lock', 'fa-unlock'
+                ];
+
+                // Colores vibrantes para los iconos
+                const colors = [
+                    '#00ffff', '#ff00ff', '#ffcc00', '#ff6600', '#00ff88',
+                    '#ff0066', '#66ff33', '#ff33cc', '#33ccff', '#ffcc33'
+                ];
 
                 for (let d = 1; d <= days; d++) {
                     const folder = document.createElement('div');
                     folder.classList.add('folder');
                     folder.dataset.day = d;
 
-                    const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                    const icon = icons[(d - 1) % icons.length];
+                    const color = colors[(d * 3) % colors.length];
 
-                    // Mostrar el día con formato "Día 1", "Día 2", ...
                     folder.innerHTML = `
-                        <i class="fas ${randomIcon} folder-icon"></i>
-                        <div class="folder-name">JULIO ${d}</div>
+                        <i class="fas ${icon} folder-icon" style="color: ${color};"></i>
+                        <div class="folder-name">ABRIL ${d}</div>
                         <div class="folder-day">Día ${d}</div>
                     `;
 
@@ -541,10 +504,9 @@
             function openActionModal(day) {
                 const modal = document.getElementById('action-modal');
                 const modalTitle = document.getElementById('modal-title');
-                modalTitle.textContent = `JULIO · Día ${day}`;
+                modalTitle.textContent = `ABRIL · Día ${day}`;
                 modal.classList.add('active');
 
-                // Reemplazar botones para evitar acumular listeners
                 const buyBtn = document.getElementById('buy-btn');
                 const sellBtn = document.getElementById('sell-btn');
 
@@ -553,9 +515,7 @@
                 buyBtn.parentNode.replaceChild(newBuy, buyBtn);
                 sellBtn.parentNode.replaceChild(newSell, sellBtn);
 
-                // Asignar listeners
                 document.getElementById('buy-btn').addEventListener('click', function() {
-                    // Redirige a buy/indexDia.html (ejemplo)
                     window.location.href = `buy/index${day}.html`;
                 });
 
@@ -586,10 +546,9 @@
             // ---------- INICIO ----------
             document.addEventListener('DOMContentLoaded', function() {
                 createParticles();
-                generateJulyFolders();
+                generateAprilFolders();
                 setupSearch();
 
-                // Cerrar modal
                 document.getElementById('close-modal').addEventListener('click', closeModal);
                 const modal = document.getElementById('action-modal');
                 modal.addEventListener('click', function(e) {
