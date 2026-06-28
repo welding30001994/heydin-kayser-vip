@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>YESLY ADELAY · Sistema Orbital Interactivo</title>
+    <title>YESLY ADELAY · 3 Órbitas Perfectas</title>
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
@@ -128,7 +128,7 @@
             color: transparent;
         }
 
-        /* HEADER - MUY COMPACTO */
+        /* HEADER */
         .glass-header {
             background: rgba(5, 10, 20, 0.65);
             backdrop-filter: blur(12px);
@@ -214,7 +214,7 @@
             box-shadow: 0 0 20px #ff3366;
         }
 
-        /* BIENVENIDA - MINI */
+        /* BIENVENIDA */
         .welcome-section {
             text-align: center;
             padding: 0.3rem 0.5rem 0.1rem;
@@ -236,7 +236,7 @@
             text-shadow: 0 0 8px rgba(0,255,255,0.15);
         }
 
-        /* RELOJ - MINI */
+        /* RELOJ */
         .time-container {
             display: flex;
             justify-content: center;
@@ -274,7 +274,7 @@
             text-shadow: 0 0 6px #ff44e6;
         }
 
-        /* ===== SISTEMA ORBITAL ===== */
+        /* ===== 3 ÓRBITAS PERFECTAS ===== */
         .orbital-wrapper {
             flex: 1;
             display: flex;
@@ -298,7 +298,7 @@
             margin: 0 auto;
         }
 
-        /* ICONO CENTRAL - NÚCLEO (oculto cuando se selecciona un módulo) */
+        /* ICONO CENTRAL */
         .center-icon {
             position: absolute;
             width: clamp(55px, 10vw, 95px);
@@ -344,23 +344,22 @@
             50% { transform: scale(1.05); box-shadow: 0 0 70px rgba(0,255,255,0.7), 0 0 100px rgba(255,68,230,0.2); }
         }
 
-        /* ANILLOS DECORATIVOS */
+        /* ANILLOS DECORATIVOS - 3 ÓRBITAS */
         .orbit-ring {
             position: absolute;
             border-radius: 50%;
-            border: 1px solid rgba(0, 255, 255, 0.07);
+            border: 1px solid rgba(0, 255, 255, 0.08);
             pointer-events: none;
         }
-        .orbit-ring-1 { width: 38%; height: 38%; animation: rotateOrbit 18s linear infinite; border-color: rgba(0,255,255,0.1); }
-        .orbit-ring-2 { width: 56%; height: 56%; animation: rotateOrbit 28s linear infinite reverse; border-color: rgba(255,68,230,0.07); }
-        .orbit-ring-3 { width: 74%; height: 74%; animation: rotateOrbit 38s linear infinite; border-color: rgba(0,255,255,0.05); }
-        .orbit-ring-4 { width: 90%; height: 90%; animation: rotateOrbit 48s linear infinite reverse; border-color: rgba(255,68,230,0.05); }
+        .orbit-ring-1 { width: 45%; height: 45%; animation: rotateOrbit 22s linear infinite; border-color: rgba(0,255,255,0.12); }
+        .orbit-ring-2 { width: 68%; height: 68%; animation: rotateOrbit 32s linear infinite reverse; border-color: rgba(255,68,230,0.08); }
+        .orbit-ring-3 { width: 90%; height: 90%; animation: rotateOrbit 42s linear infinite; border-color: rgba(0,255,255,0.06); }
         @keyframes rotateOrbit {
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
-        /* MÓDULOS */
+        /* MÓDULOS - TAMAÑOS POR ÓRBITA */
         .module-orbit {
             position: absolute;
             border-radius: 50%;
@@ -409,7 +408,7 @@
             }
         }
 
-        /* ESTADO SELECCIONADO - MODULO EN EL CENTRO */
+        /* ESTADO SELECCIONADO */
         .module-orbit.selected {
             position: absolute !important;
             left: 50% !important;
@@ -440,24 +439,34 @@
             50% { transform: translate(-50%, -50%) scale(1.45); box-shadow: 0 0 80px rgba(255, 68, 230, 0.9), 0 0 120px rgba(0, 255, 255, 0.4); }
         }
 
-        /* TAMAÑOS POR CAPA */
-        .layer-1 { width: clamp(38px, 6vw, 52px); height: clamp(38px, 6vw, 52px); }
-        .layer-1 i { font-size: clamp(0.85rem, 1.8vw, 1.2rem); }
-        .layer-1 span { font-size: clamp(0.3rem, 0.7vw, 0.4rem); max-width: 40px; }
+        /* TAMAÑOS POR ÓRBITA - Órbita 1 (interna) más pequeña, Órbita 3 (externa) más grande */
+        .orbit-1 { width: clamp(42px, 6.5vw, 58px); height: clamp(42px, 6.5vw, 58px); }
+        .orbit-1 i { font-size: clamp(0.9rem, 2vw, 1.3rem); }
+        .orbit-1 span { font-size: clamp(0.32rem, 0.7vw, 0.42rem); max-width: 42px; }
 
-        .layer-2 { width: clamp(45px, 7.5vw, 62px); height: clamp(45px, 7.5vw, 62px); }
-        .layer-2 i { font-size: clamp(1rem, 2.2vw, 1.5rem); }
-        .layer-2 span { font-size: clamp(0.32rem, 0.8vw, 0.45rem); max-width: 48px; }
+        .orbit-2 { width: clamp(52px, 8.5vw, 72px); height: clamp(52px, 8.5vw, 72px); }
+        .orbit-2 i { font-size: clamp(1.2rem, 2.6vw, 1.7rem); }
+        .orbit-2 span { font-size: clamp(0.38rem, 0.85vw, 0.5rem); max-width: 55px; }
 
-        .layer-3 { width: clamp(52px, 9vw, 75px); height: clamp(52px, 9vw, 75px); }
-        .layer-3 i { font-size: clamp(1.2rem, 2.8vw, 1.8rem); }
-        .layer-3 span { font-size: clamp(0.35rem, 0.9vw, 0.5rem); max-width: 58px; }
+        .orbit-3 { width: clamp(62px, 10.5vw, 88px); height: clamp(62px, 10.5vw, 88px); }
+        .orbit-3 i { font-size: clamp(1.5rem, 3.2vw, 2.1rem); }
+        .orbit-3 span { font-size: clamp(0.42rem, 1vw, 0.55rem); max-width: 68px; }
 
-        .layer-4 { width: clamp(58px, 10.5vw, 88px); height: clamp(58px, 10.5vw, 88px); }
-        .layer-4 i { font-size: clamp(1.4rem, 3.2vw, 2rem); }
-        .layer-4 span { font-size: clamp(0.38rem, 1vw, 0.55rem); max-width: 68px; }
+        /* OVERLAY */
+        .selection-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 68, 230, 0.15), transparent 70%);
+            pointer-events: none;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        .selection-overlay.active {
+            opacity: 1;
+        }
 
-        /* SECCIÓN DESCARGA - MINI */
+        /* DESCARGA */
         .download-section {
             background: rgba(0, 0, 0, 0.5);
             backdrop-filter: blur(12px);
@@ -510,7 +519,7 @@
             transform: scale(0.95);
         }
 
-        /* FOOTER - MINI */
+        /* FOOTER */
         footer {
             background: rgba(3, 5, 12, 0.8);
             backdrop-filter: blur(12px);
@@ -564,20 +573,6 @@
             font-size: 0.45rem;
             color: #9bc0e0;
             margin-top: 0.5rem;
-        }
-
-        /* OVERLAY DE SELECCIÓN - EFECTO DE BRILLO */
-        .selection-overlay {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(255, 68, 230, 0.15), transparent 70%);
-            pointer-events: none;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-        .selection-overlay.active {
-            opacity: 1;
         }
 
         /* Ajustes móviles */
@@ -640,7 +635,6 @@
 <div class="glow-overlay"></div>
 <div id="particles-js"></div>
 
-<!-- OVERLAY DE SELECCIÓN -->
 <div class="selection-overlay" id="selectionOverlay"></div>
 
 <div class="content">
@@ -673,7 +667,7 @@
     <main>
         <div class="welcome-section">
             <h1 class="welcome-title" id="welcomeMessage">BIENVENIDO, TRADER</h1>
-            <p class="welcome-subtitle">TOCA UN MÓDULO PARA SELECCIONAR</p>
+            <p class="welcome-subtitle">3 ÓRBITAS · 6 MÓDULOS CADA UNA</p>
         </div>
 
         <div class="time-container">
@@ -685,13 +679,12 @@
             </div>
         </div>
 
-        <!-- SISTEMA ORBITAL -->
+        <!-- SISTEMA DE 3 ÓRBITAS -->
         <div class="orbital-wrapper">
             <div class="orbital-container" id="orbitalContainer">
                 <div class="orbit-ring orbit-ring-1"></div>
                 <div class="orbit-ring orbit-ring-2"></div>
                 <div class="orbit-ring orbit-ring-3"></div>
-                <div class="orbit-ring orbit-ring-4"></div>
 
                 <div class="center-icon" id="centerIcon">
                     <i class="fas fa-crown"></i>
@@ -727,14 +720,14 @@
             <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank"><i class="fas fa-chart-line"></i></a>
         </div>
         <div class="copyright">
-            © 2025 YESLY ADELAY · SISTEMA ORBITAL INTERACTIVO
+            © 2025 YESLY ADELAY · 3 ÓRBITAS PERFECTAS
         </div>
     </footer>
 </div>
 
 <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
 <script>
-    // ========== FIREBASE CONFIG ==========
+    // ========== FIREBASE ==========
     const firebaseConfig = {
         apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
         authDomain: "beaver-trading.firebaseapp.com",
@@ -796,14 +789,8 @@
     updateClock();
     setInterval(updateClock, 1000);
 
-    // ===== SISTEMA ORBITAL CON SELECCIÓN =====
-    const layerConfig = [
-        { count: 4, radius: 0.20, className: 'layer-1', speedBase: 0.0035 },
-        { count: 5, radius: 0.34, className: 'layer-2', speedBase: 0.0026 },
-        { count: 5, radius: 0.48, className: 'layer-3', speedBase: 0.0018 },
-        { count: 4, radius: 0.62, className: 'layer-4', speedBase: 0.0012 }
-    ];
-
+    // ===== 3 ÓRBITAS PERFECTAS =====
+    // 18 módulos divididos en 3 órbitas de 6 cada una
     const modulesData = [
         { icon: 'fa-cubes', label: 'Módulos', link: 'modulos.html' },
         { icon: 'fa-chart-pie', label: 'Yeslyface', link: 'https://faceyesly.vercel.app' },
@@ -825,49 +812,41 @@
         { icon: 'fa-rocket', label: 'VIP', link: 'modulos.html' }
     ];
 
+    // Configuración de 3 órbitas: 6 módulos cada una
+    const orbitConfig = [
+        { count: 6, radius: 0.24, className: 'orbit-1', speedBase: 0.0030, label: 'Órbita 1' },
+        { count: 6, radius: 0.40, className: 'orbit-2', speedBase: 0.0020, label: 'Órbita 2' },
+        { count: 6, radius: 0.56, className: 'orbit-3', speedBase: 0.0012, label: 'Órbita 3' }
+    ];
+
     const container = document.getElementById('orbitalContainer');
     const modulesWrapper = document.getElementById('orbitModules');
     const centerIcon = document.getElementById('centerIcon');
     const selectionOverlay = document.getElementById('selectionOverlay');
 
-    let moduleIndex = 0;
-    const moduleAssignments = [];
+    let isSelected = false;
+    let animationId = null;
 
-    layerConfig.forEach((layer, layerIdx) => {
-        for (let i = 0; i < layer.count; i++) {
-            if (moduleIndex < modulesData.length) {
+    // Asignar módulos a órbitas (6 en cada una)
+    const moduleAssignments = [];
+    let moduleIdx = 0;
+
+    orbitConfig.forEach((orbit, orbitIdx) => {
+        for (let i = 0; i < orbit.count; i++) {
+            if (moduleIdx < modulesData.length) {
                 moduleAssignments.push({
-                    ...modulesData[moduleIndex],
-                    layerIdx: layerIdx,
-                    layerIndex: i,
-                    totalInLayer: layer.count,
-                    radius: layer.radius,
-                    className: layer.className,
-                    speedBase: layer.speedBase
+                    ...modulesData[moduleIdx],
+                    orbitIdx: orbitIdx,
+                    orbitIndex: i,
+                    totalInOrbit: orbit.count,
+                    radius: orbit.radius,
+                    className: orbit.className,
+                    speedBase: orbit.speedBase
                 });
-                moduleIndex++;
+                moduleIdx++;
             }
         }
     });
-
-    while (moduleIndex < modulesData.length) {
-        const lastLayer = layerConfig.length - 1;
-        const extra = moduleAssignments.filter(m => m.layerIdx === lastLayer).length;
-        moduleAssignments.push({
-            ...modulesData[moduleIndex],
-            layerIdx: lastLayer,
-            layerIndex: extra,
-            totalInLayer: extra + 1,
-            radius: layerConfig[lastLayer].radius,
-            className: layerConfig[lastLayer].className,
-            speedBase: layerConfig[lastLayer].speedBase
-        });
-        moduleIndex++;
-    }
-
-    let isSelected = false;
-    let selectedModule = null;
-    let animationId = null;
 
     const elements = [];
     moduleAssignments.forEach((mod, idx) => {
@@ -881,9 +860,7 @@
         elements.push({
             el: el,
             assignment: mod,
-            angle: (mod.layerIndex / mod.totalInLayer) * Math.PI * 2 + (mod.layerIdx * 0.25),
-            originalX: 0,
-            originalY: 0,
+            angle: (mod.orbitIndex / mod.totalInOrbit) * Math.PI * 2 + (mod.orbitIdx * 0.15),
             isSelected: false
         });
     });
@@ -892,24 +869,10 @@
         if (isSelected) return;
 
         isSelected = true;
-        selectedModule = el;
-
-        // Ocultar icono central
         centerIcon.classList.add('hidden');
-
-        // Activar overlay
         selectionOverlay.classList.add('active');
-
-        // Marcar el módulo como seleccionado
         el.classList.add('selected');
 
-        // Guardar la posición original para animación
-        const rect = el.getBoundingClientRect();
-        const containerRect = container.getBoundingClientRect();
-        el.dataset.origLeft = el.style.left;
-        el.dataset.origTop = el.style.top;
-
-        // Efecto de vibración en todos los demás módulos
         elements.forEach(item => {
             if (item.el !== el) {
                 item.el.style.transition = 'all 0.3s ease';
@@ -918,14 +881,11 @@
             }
         });
 
-        // Mostrar mensaje de confirmación
-        const label = mod.label;
         const subtitle = document.querySelector('.welcome-subtitle');
-        subtitle.textContent = `🔮 ${label} · SELECCIONADO · CARGANDO...`;
+        subtitle.textContent = `🔮 ${mod.label} · SELECCIONADO · CARGANDO...`;
         subtitle.style.color = '#ff44e6';
         subtitle.style.textShadow = '0 0 20px #ff44e6';
 
-        // Redirigir después de la animación
         setTimeout(() => {
             window.location.href = mod.link;
         }, 1200);
@@ -933,7 +893,6 @@
 
     function animateOrbit() {
         if (isSelected) {
-            // Si hay un módulo seleccionado, solo actualizar los demás
             elements.forEach(item => {
                 if (!item.el.classList.contains('selected')) {
                     const mod = item.assignment;
