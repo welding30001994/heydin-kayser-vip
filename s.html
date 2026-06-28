@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>YESLY ADELAY · Trading Quantum</title>
-    <!-- Firebase SDKs -->
+    <title>YESLY ADELAY · Sistema Orbital Interactivo</title>
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,19 +20,15 @@
         }
 
         body {
-            font-family: 'Rajdhani', 'Space Grotesk', sans-serif;
-            background: #02070f;
+            font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
+            background: #03050b;
             min-height: 100vh;
             position: relative;
-            overflow: hidden;
+            overflow-x: hidden;
             color: #eef5ff;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        /* FONDO PRINCIPAL CON IMAGEN YESLY */
-        .bg-layer {
+        .bg-image-layer {
             position: fixed;
             top: 0;
             left: 0;
@@ -42,30 +38,12 @@
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
+            opacity: 0.15;
             z-index: 0;
             pointer-events: none;
-            filter: brightness(0.20) contrast(1.4) saturate(1.1);
-            animation: zoomBg 25s infinite alternate ease-in-out;
         }
 
-        @keyframes zoomBg {
-            0% { transform: scale(1.05); filter: brightness(0.20) contrast(1.4); }
-            100% { transform: scale(1.2); filter: brightness(0.15) contrast(1.5); }
-        }
-
-        /* OVERLAY MULTICAPA */
-        .overlay-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 30% 40%, rgba(0, 200, 255, 0.05), rgba(0, 0, 0, 0.85), rgba(10, 0, 30, 0.7));
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .grid-holographic {
+        .cyber-grid {
             position: fixed;
             top: 0;
             left: 0;
@@ -74,968 +52,978 @@
             background-image: 
                 repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.03) 0px, rgba(0, 255, 255, 0.03) 1px, transparent 1px, transparent 40px),
                 repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.03) 0px, rgba(0, 255, 255, 0.03) 1px, transparent 1px, transparent 40px);
-            z-index: 2;
+            z-index: 1;
             pointer-events: none;
-            animation: gridPulse 6s infinite alternate;
         }
 
-        @keyframes gridPulse {
-            0% { opacity: 0.3; }
-            100% { opacity: 0.7; }
-        }
-
-        /* LÍNEA DE ESCÁNER */
-        .scanner-line {
+        .glow-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.6), rgba(255, 68, 230, 0.6), transparent);
-            z-index: 5;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.04), rgba(0, 0, 0, 0.92));
+            z-index: 2;
             pointer-events: none;
-            animation: scanDown 4.5s infinite linear;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
         }
 
-        @keyframes scanDown {
-            0% { top: -2px; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
-        }
-
-        /* PARTÍCULAS */
         #particles-js {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 3;
+            z-index: 0;
             pointer-events: none;
         }
 
-        /* CONTENEDOR PRINCIPAL */
-        .login-container {
+        .content {
             position: relative;
-            z-index: 20;
+            z-index: 15;
             width: 100%;
-            max-width: 460px;
-            padding: 1.5rem;
-            margin: 0 1rem;
-            animation: fadeInUp 0.8s ease forwards;
-            opacity: 0;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px) scale(0.98);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-        /* TARJETA GLASS */
-        .card-login {
-            background: rgba(4, 12, 26, 0.78);
-            backdrop-filter: blur(30px);
-            -webkit-backdrop-filter: blur(30px);
-            border-radius: 50px 30px 50px 30px;
-            border: 1px solid rgba(0, 255, 255, 0.15);
-            padding: 2.5rem 2rem;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(0, 255, 255, 0.03);
-            position: relative;
-            overflow: hidden;
-            transition: all 0.4s ease;
-        }
-
-        .card-login::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 255, 0.03), transparent, rgba(255, 68, 230, 0.03), transparent);
-            animation: spinSlow 25s linear infinite;
-            pointer-events: none;
-        }
-
-        .card-login::after {
-            content: '';
-            position: absolute;
-            inset: -1px;
-            border-radius: 50px 30px 50px 30px;
-            padding: 1px;
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), transparent, rgba(255, 68, 230, 0.15));
-            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-            -webkit-mask-composite: xor;
-            mask-composite: exclude;
-            pointer-events: none;
-        }
-
-        @keyframes spinSlow {
-            100% { transform: rotate(360deg); }
-        }
-
-        /* LOGO */
-        .logo-section {
-            text-align: center;
-            margin-bottom: 1.8rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .logo-icon {
-            font-size: 2.8rem;
-            color: #0cf;
-            filter: drop-shadow(0 0 30px cyan) drop-shadow(0 0 60px rgba(0, 200, 255, 0.2));
-            animation: pulseIcon 2s infinite alternate;
-            display: inline-block;
-        }
-
-        @keyframes pulseIcon {
-            0% { filter: drop-shadow(0 0 20px cyan) drop-shadow(0 0 40px rgba(0, 200, 255, 0.2)); }
-            100% { filter: drop-shadow(0 0 40px cyan) drop-shadow(0 0 80px #ff44e6) drop-shadow(0 0 100px rgba(255, 68, 230, 0.2)); }
-        }
-
-        .logo-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.5rem;
-            font-weight: 900;
-            background: linear-gradient(135deg, #ffffff, #0cf, #ff44e6);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradMove 3s infinite alternate;
-            letter-spacing: 3px;
-            margin-top: 4px;
-        }
-
-        @keyframes gradMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-
-        .logo-badge {
-            font-size: 0.5rem;
-            background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(255, 68, 230, 0.15));
-            border: 1px solid rgba(0, 255, 255, 0.2);
-            border-radius: 30px;
-            padding: 3px 16px;
-            font-weight: 700;
-            color: #0cf;
-            letter-spacing: 2px;
-            display: inline-block;
-            margin-top: 4px;
-            backdrop-filter: blur(5px);
-            text-transform: uppercase;
-        }
-
-        /* DESCRIPCIÓN EMPRESA */
-        .company-info {
-            text-align: center;
-            margin-bottom: 1.8rem;
-            position: relative;
-            z-index: 2;
-            padding: 12px 16px;
-            background: rgba(0, 255, 255, 0.03);
-            border-radius: 20px;
-            border: 1px solid rgba(0, 255, 255, 0.05);
-        }
-
-        .company-info p {
-            font-size: 0.8rem;
-            color: #8ab8d0;
-            line-height: 1.5;
-            font-weight: 400;
-            letter-spacing: 0.3px;
-        }
-
-        .company-info i {
-            color: #0cf;
-            margin: 0 4px;
-        }
-
-        .company-tag {
-            display: inline-block;
-            font-size: 0.6rem;
-            background: rgba(0, 255, 255, 0.08);
-            padding: 2px 12px;
-            border-radius: 20px;
-            color: #6ac4e0;
-            margin-top: 6px;
-            letter-spacing: 1px;
-        }
-
-        /* TÍTULO FORMULARIO */
-        .login-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 0.9rem;
-            font-weight: 700;
-            color: #8ac4e0;
-            text-align: center;
-            letter-spacing: 2px;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .login-title i {
-            color: #0cf;
-            margin: 0 6px;
-        }
-
-        /* FORMULARIO */
-        .form-group {
-            position: relative;
-            z-index: 2;
-            margin-bottom: 1rem;
-        }
-
-        .input-cyber {
-            width: 100%;
-            padding: 14px 20px 14px 48px;
-            background: rgba(0, 30, 50, 0.3);
-            border: 1.5px solid rgba(0, 255, 255, 0.08);
-            border-radius: 30px;
-            color: #fff;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.95rem;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-            outline: none;
-        }
-
-        .input-cyber:focus {
-            border-color: #0cf;
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
-            background: rgba(0, 30, 50, 0.5);
-        }
-
-        .input-cyber::placeholder {
-            color: #4a6a7a;
-            font-weight: 400;
-        }
-
-        .input-icon {
-            position: absolute;
-            left: 18px;
-            top: 50%;
-            transform: translateY(-50%);
-            color: #4a7a8a;
-            z-index: 3;
-            font-size: 1rem;
-            transition: all 0.3s ease;
-        }
-
-        .input-cyber:focus + .input-icon,
-        .input-cyber:focus ~ .input-icon {
-            color: #0cf;
-        }
-
-        /* BOTÓN */
-        .btn-login {
-            background: linear-gradient(135deg, #00ddff, #7a44ff, #00ddff);
-            background-size: 200% 200%;
-            width: 100%;
-            border: none;
-            border-radius: 30px;
-            padding: 14px;
-            font-weight: 800;
-            color: #000;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 1rem;
-            letter-spacing: 2px;
-            position: relative;
-            z-index: 2;
-            margin-top: 6px;
-            box-shadow: 0 5px 30px rgba(0, 200, 255, 0.3);
-            animation: btnGlow 3s infinite alternate;
-        }
-
-        @keyframes btnGlow {
-            0% { box-shadow: 0 5px 30px rgba(0, 200, 255, 0.2); }
-            100% { box-shadow: 0 5px 50px rgba(0, 200, 255, 0.5), 0 5px 70px rgba(255, 68, 230, 0.15); }
-        }
-
-        .btn-login:active {
-            transform: scale(0.97);
-        }
-
-        .btn-login:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 50px rgba(0, 200, 255, 0.4), 0 10px 70px rgba(255, 68, 230, 0.15);
-        }
-
-        .btn-login i {
-            margin-right: 10px;
-        }
-
-        /* ERROR */
-        .error-msg {
-            color: #ff6b7a;
-            font-size: 0.75rem;
-            text-align: center;
-            margin: 6px 0 10px;
-            position: relative;
-            z-index: 2;
-            min-height: 20px;
-        }
-
-        /* SWITCH */
-        .switch-section {
-            text-align: center;
-            margin-top: 1.2rem;
-            font-size: 0.8rem;
-            color: #4a7a8a;
-            position: relative;
-            z-index: 2;
-        }
-
-        .switch-section span {
-            color: #0cf;
-            cursor: pointer;
-            font-weight: 700;
-            transition: all 0.3s ease;
-            letter-spacing: 0.5px;
-        }
-
-        .switch-section span:hover {
-            text-shadow: 0 0 20px rgba(0, 200, 255, 0.3);
-        }
-
-        .switch-section i {
-            margin: 0 4px;
-            font-size: 0.7rem;
-        }
-
-        /* DIVIDER */
-        .divider {
+            min-height: 100vh;
             display: flex;
-            align-items: center;
-            gap: 16px;
-            margin: 1.2rem 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .divider-line {
-            flex: 1;
-            height: 1px;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.15), transparent);
-        }
-
-        .divider-text {
-            font-size: 0.6rem;
-            color: #4a6a7a;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            font-weight: 500;
-        }
-
-        /* SOCIAL LOGIN - REDES DE YESLY */
-        .social-login {
-            display: flex;
-            justify-content: center;
-            gap: 12px;
-            flex-wrap: wrap;
-            position: relative;
-            z-index: 2;
-        }
-
-        .social-btn {
-            width: 48px;
-            height: 48px;
-            border-radius: 50%;
-            background: rgba(0, 30, 50, 0.25);
-            border: 1px solid rgba(0, 255, 255, 0.08);
-            color: #8ac4e0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-        }
-
-        .social-btn:active {
-            transform: scale(0.9);
-        }
-
-        .social-btn:hover {
-            background: rgba(0, 255, 255, 0.1);
-            border-color: #0cf;
-            color: #0cf;
-            box-shadow: 0 0 30px rgba(0, 200, 255, 0.1);
-            transform: translateY(-2px);
-        }
-
-        .social-label {
-            font-size: 0.55rem;
-            color: #4a6a7a;
-            text-align: center;
-            width: 100%;
-            margin-top: 6px;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .social-label i {
-            color: #0cf;
-            opacity: 0.5;
-        }
-
-        /* FOOTER */
-        .footer-mini {
-            text-align: center;
-            margin-top: 1.5rem;
-            font-size: 0.55rem;
-            color: #3a5a6a;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 2;
-        }
-
-        .footer-mini i {
-            color: #0cf;
-            margin: 0 4px;
-            opacity: 0.6;
-        }
-
-        /* MODAL REGISTRO */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.95);
-            backdrop-filter: blur(30px);
-            z-index: 3000;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-
-        .modal-glass {
-            background: rgba(4, 12, 26, 0.98);
-            border-radius: 40px;
-            border: 1px solid rgba(0, 255, 255, 0.15);
-            max-width: 400px;
-            width: 100%;
-            padding: 2.2rem 1.8rem;
-            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.6), 0 0 60px rgba(0, 255, 255, 0.02);
-            position: relative;
-            overflow: hidden;
-        }
-
-        .modal-glass::before {
-            content: '';
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 255, 0.02), transparent, rgba(255, 68, 230, 0.02), transparent);
-            animation: spinSlow 20s linear infinite;
-            pointer-events: none;
-        }
-
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.5rem;
-            position: relative;
-            z-index: 2;
-        }
-
-        .modal-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.1rem;
-            color: #0cf;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: #6a8a9a;
-            font-size: 1.8rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-
-        .modal-close:active {
-            transform: rotate(90deg);
-            color: #fff;
-        }
-
-        .input-modal {
-            width: 100%;
-            padding: 14px 20px;
-            background: rgba(0, 30, 50, 0.3);
-            border: 1.5px solid rgba(0, 255, 255, 0.08);
-            border-radius: 30px;
-            color: #fff;
-            margin: 8px 0;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-            outline: none;
-        }
-
-        .input-modal:focus {
-            border-color: #0cf;
-            box-shadow: 0 0 40px rgba(0, 255, 255, 0.05);
-            background: rgba(0, 30, 50, 0.5);
-        }
-
-        .input-modal::placeholder {
-            color: #4a6a7a;
-        }
-
-        .btn-modal {
-            background: linear-gradient(135deg, #0cf, #7a44ff);
-            width: 100%;
-            border: none;
-            border-radius: 30px;
-            padding: 14px;
-            font-weight: 800;
-            color: #000;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 2;
-            margin-top: 10px;
-            box-shadow: 0 5px 30px rgba(0, 200, 255, 0.2);
-        }
-
-        .btn-modal:active {
-            transform: scale(0.97);
-        }
-
-        .btn-modal:hover {
-            box-shadow: 0 5px 40px rgba(0, 200, 255, 0.4);
-        }
-
-        .modal-error {
-            color: #ff6b7a;
-            font-size: 0.7rem;
-            margin: 4px 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .modal-switch {
-            text-align: center;
-            margin-top: 14px;
-            font-size: 0.7rem;
-            color: #4a7a8a;
-            position: relative;
-            z-index: 2;
-        }
-
-        .modal-switch span {
-            color: #0cf;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
-
-        .modal-switch span:hover {
-            text-shadow: 0 0 20px rgba(0, 200, 255, 0.3);
-        }
-
-        .terms-check {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.7rem;
-            margin: 12px 0;
-            position: relative;
-            z-index: 2;
-        }
-
-        .terms-check input {
-            accent-color: #0cf;
-            width: 18px;
-            height: 18px;
-            cursor: pointer;
-        }
-
-        .terms-check label {
-            color: #7aaabc;
-            cursor: pointer;
-        }
-
-        .terms-check label span {
-            color: #0cf;
-            cursor: pointer;
-            text-decoration: underline;
-            text-underline-offset: 2px;
+            flex-direction: column;
         }
 
         /* LOADER */
-        .loader-vip {
+        .loader-container {
             position: fixed;
             inset: 0;
-            background: #02070f;
+            background: #01010b;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 10000;
             transition: opacity 0.8s ease, visibility 0.8s;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(12px);
         }
-
-        .loader-vip.fade-out {
+        .loader-container.fade-out {
             opacity: 0;
             visibility: hidden;
         }
-
         .loader-ring {
             width: 70px;
             height: 70px;
-            border: 2px solid rgba(0, 255, 255, 0.05);
+            border: 3px solid rgba(0,255,255,0.2);
             border-top: 3px solid #0cf;
-            border-right: 3px solid #ff44e6;
+            border-right: 3px solid #f0f;
             border-radius: 50%;
-            animation: spinLoader 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            box-shadow: 0 0 60px rgba(0, 200, 255, 0.15);
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 25px cyan;
         }
-
-        @keyframes spinLoader {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
         }
-
         .loader-text {
-            margin-top: 25px;
+            margin-top: 20px;
+            font-size: 1.2rem;
             font-weight: 700;
-            letter-spacing: 4px;
-            font-family: 'Orbitron', monospace;
-            font-size: 0.9rem;
-            background: linear-gradient(135deg, #0cf, #ff44e6);
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, cyan, #ff44e6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
         }
 
-        .loader-sub {
+        /* HEADER - MUY COMPACTO */
+        .glass-header {
+            background: rgba(5, 10, 20, 0.65);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+        .nav-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .logo-area {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .logo-icon {
+            font-size: 1.2rem;
+            color: #0cf;
+            filter: drop-shadow(0 0 6px cyan);
+        }
+        .logo-text {
+            font-size: 0.85rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, #fff, #0cf);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: 0.5px;
+        }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .user-name {
+            color: #0cf;
+            font-size: clamp(0.6rem, 2vw, 0.85rem);
+            font-weight: 700;
+            text-shadow: 0 0 8px cyan;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0,255,255,0.06);
+            padding: 3px 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(0,255,255,0.2);
+        }
+        .user-name i {
+            font-size: 0.7rem;
+        }
+        .logout-btn {
+            background: transparent;
+            border: 1.5px solid #ff3366;
+            color: #ff3366;
+            padding: 3px 12px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
             font-size: 0.55rem;
-            color: #4a7a8a;
-            margin-top: 6px;
-            letter-spacing: 3px;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .logout-btn i {
+            font-size: 0.6rem;
+        }
+        .logout-btn:hover {
+            background: #ff3366;
+            color: black;
+            box-shadow: 0 0 20px #ff3366;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 480px) {
-            .card-login { padding: 1.8rem 1.2rem; border-radius: 40px 20px 40px 20px; }
-            .logo-title { font-size: 1.2rem; letter-spacing: 1px; }
-            .logo-icon { font-size: 2.2rem; }
-            .login-title { font-size: 0.8rem; }
-            .input-cyber { padding: 12px 16px 12px 42px; font-size: 0.85rem; }
-            .btn-login { font-size: 0.9rem; padding: 12px; }
-            .social-btn { width: 42px; height: 42px; font-size: 1rem; }
-            .login-container { padding: 0.8rem; }
-            .modal-glass { padding: 1.5rem 1rem; }
-            .company-info p { font-size: 0.7rem; }
-            .company-info { padding: 10px 12px; }
+        /* BIENVENIDA - MINI */
+        .welcome-section {
+            text-align: center;
+            padding: 0.3rem 0.5rem 0.1rem;
+        }
+        .welcome-title {
+            font-size: clamp(0.85rem, 3vw, 1.5rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(45deg, #fff, cyan, #ff44e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(0,255,255,0.2);
+            letter-spacing: 0.5px;
+        }
+        .welcome-subtitle {
+            font-size: clamp(0.5rem, 1.5vw, 0.75rem);
+            color: #b3e4ff;
+            text-shadow: 0 0 8px rgba(0,255,255,0.15);
         }
 
+        /* RELOJ - MINI */
+        .time-container {
+            display: flex;
+            justify-content: center;
+            margin: 0.1rem 0 0.3rem;
+            padding: 0 8px;
+        }
+        .neon-clock {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1.5px solid cyan;
+            border-radius: 40px;
+            padding: 3px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            box-shadow: 0 0 20px cyan;
+        }
+        .neon-clock i {
+            font-size: 0.8rem;
+            color: cyan;
+            filter: drop-shadow(0 0 6px cyan);
+        }
+        #current-time {
+            font-size: clamp(0.7rem, 2vw, 1rem);
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 8px cyan;
+            font-family: 'Orbitron', monospace;
+        }
+        #current-date {
+            font-size: clamp(0.45rem, 1.4vw, 0.65rem);
+            color: #ff44e6;
+            text-shadow: 0 0 6px #ff44e6;
+        }
+
+        /* ===== SISTEMA ORBITAL ===== */
+        .orbital-wrapper {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.2rem 0.5rem 0.5rem;
+            min-height: 45vh;
+            position: relative;
+        }
+
+        .orbital-container {
+            position: relative;
+            width: 100%;
+            max-width: 600px;
+            aspect-ratio: 1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            overflow: visible;
+            margin: 0 auto;
+        }
+
+        /* ICONO CENTRAL - NÚCLEO (oculto cuando se selecciona un módulo) */
+        .center-icon {
+            position: absolute;
+            width: clamp(55px, 10vw, 95px);
+            height: clamp(55px, 10vw, 95px);
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(0,255,255,0.2), rgba(10,20,40,0.95));
+            border: 2.5px solid cyan;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 40px rgba(0,255,255,0.4), inset 0 0 25px rgba(0,255,255,0.12);
+            z-index: 10;
+            animation: pulseCenter 3s ease-in-out infinite;
+            text-decoration: none;
+            color: white;
+            cursor: default;
+            pointer-events: none;
+            transition: all 0.5s ease;
+        }
+        .center-icon.hidden {
+            opacity: 0;
+            transform: scale(0.5);
+            pointer-events: none;
+        }
+        .center-icon i {
+            font-size: clamp(1.5rem, 3.5vw, 2.8rem);
+            color: cyan;
+            text-shadow: 0 0 25px cyan;
+        }
+        .center-icon span {
+            font-size: clamp(0.35rem, 0.8vw, 0.6rem);
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            background: linear-gradient(45deg, cyan, #ff44e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-top: 1px;
+        }
+        @keyframes pulseCenter {
+            0%, 100% { transform: scale(1); box-shadow: 0 0 40px rgba(0,255,255,0.4); }
+            50% { transform: scale(1.05); box-shadow: 0 0 70px rgba(0,255,255,0.7), 0 0 100px rgba(255,68,230,0.2); }
+        }
+
+        /* ANILLOS DECORATIVOS */
+        .orbit-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid rgba(0, 255, 255, 0.07);
+            pointer-events: none;
+        }
+        .orbit-ring-1 { width: 38%; height: 38%; animation: rotateOrbit 18s linear infinite; border-color: rgba(0,255,255,0.1); }
+        .orbit-ring-2 { width: 56%; height: 56%; animation: rotateOrbit 28s linear infinite reverse; border-color: rgba(255,68,230,0.07); }
+        .orbit-ring-3 { width: 74%; height: 74%; animation: rotateOrbit 38s linear infinite; border-color: rgba(0,255,255,0.05); }
+        .orbit-ring-4 { width: 90%; height: 90%; animation: rotateOrbit 48s linear infinite reverse; border-color: rgba(255,68,230,0.05); }
+        @keyframes rotateOrbit {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* MÓDULOS */
+        .module-orbit {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(12, 20, 32, 0.88);
+            backdrop-filter: blur(10px);
+            border: 2px solid rgba(0, 255, 255, 0.45);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 0 15px rgba(0,255,255,0.1);
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            z-index: 5;
+            will-change: transform;
+        }
+        .module-orbit i {
+            color: cyan;
+            text-shadow: 0 0 12px cyan;
+            pointer-events: none;
+            transition: all 0.4s ease;
+        }
+        .module-orbit span {
+            text-align: center;
+            line-height: 1.1;
+            background: linear-gradient(45deg, #fff, cyan);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            pointer-events: none;
+            font-weight: 800;
+            transition: all 0.4s ease;
+        }
+        .module-orbit:active {
+            transform: scale(0.85) !important;
+        }
         @media (min-width: 768px) {
-            .card-login { padding: 3rem 2.5rem; border-radius: 60px 35px 60px 35px; }
-            .logo-title { font-size: 2rem; }
-            .login-title { font-size: 1rem; }
+            .module-orbit:hover {
+                border-color: #ff44e6;
+                box-shadow: 0 0 35px rgba(255, 68, 230, 0.4);
+                transform: scale(1.1) !important;
+                z-index: 20;
+            }
+        }
+
+        /* ESTADO SELECCIONADO - MODULO EN EL CENTRO */
+        .module-orbit.selected {
+            position: absolute !important;
+            left: 50% !important;
+            top: 50% !important;
+            transform: translate(-50%, -50%) scale(1.3) !important;
+            z-index: 50 !important;
+            border-color: #ff44e6 !important;
+            box-shadow: 0 0 60px rgba(255, 68, 230, 0.7), 0 0 100px rgba(0, 255, 255, 0.3) !important;
+            background: rgba(20, 10, 40, 0.95) !important;
+            border-width: 3px !important;
+            pointer-events: none !important;
+            animation: selectedPulse 1s ease-in-out infinite !important;
+        }
+        .module-orbit.selected i {
+            color: #ff44e6 !important;
+            text-shadow: 0 0 30px #ff44e6 !important;
+            font-size: 1.8em !important;
+        }
+        .module-orbit.selected span {
+            background: linear-gradient(45deg, #fff, #ff44e6) !important;
+            -webkit-background-clip: text !important;
+            background-clip: text !important;
+            color: transparent !important;
+            font-size: 1.1em !important;
+        }
+        @keyframes selectedPulse {
+            0%, 100% { transform: translate(-50%, -50%) scale(1.3); box-shadow: 0 0 60px rgba(255, 68, 230, 0.7); }
+            50% { transform: translate(-50%, -50%) scale(1.45); box-shadow: 0 0 80px rgba(255, 68, 230, 0.9), 0 0 120px rgba(0, 255, 255, 0.4); }
+        }
+
+        /* TAMAÑOS POR CAPA */
+        .layer-1 { width: clamp(38px, 6vw, 52px); height: clamp(38px, 6vw, 52px); }
+        .layer-1 i { font-size: clamp(0.85rem, 1.8vw, 1.2rem); }
+        .layer-1 span { font-size: clamp(0.3rem, 0.7vw, 0.4rem); max-width: 40px; }
+
+        .layer-2 { width: clamp(45px, 7.5vw, 62px); height: clamp(45px, 7.5vw, 62px); }
+        .layer-2 i { font-size: clamp(1rem, 2.2vw, 1.5rem); }
+        .layer-2 span { font-size: clamp(0.32rem, 0.8vw, 0.45rem); max-width: 48px; }
+
+        .layer-3 { width: clamp(52px, 9vw, 75px); height: clamp(52px, 9vw, 75px); }
+        .layer-3 i { font-size: clamp(1.2rem, 2.8vw, 1.8rem); }
+        .layer-3 span { font-size: clamp(0.35rem, 0.9vw, 0.5rem); max-width: 58px; }
+
+        .layer-4 { width: clamp(58px, 10.5vw, 88px); height: clamp(58px, 10.5vw, 88px); }
+        .layer-4 i { font-size: clamp(1.4rem, 3.2vw, 2rem); }
+        .layer-4 span { font-size: clamp(0.38rem, 1vw, 0.55rem); max-width: 68px; }
+
+        /* SECCIÓN DESCARGA - MINI */
+        .download-section {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 0.6rem 1.2rem;
+            margin: 0.3rem 1.2rem 0.8rem;
+            border: 1.5px solid #ff44e6;
+            box-shadow: 0 0 25px rgba(255, 68, 230, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            text-align: center;
+        }
+        @media (min-width: 480px) {
+            .download-section {
+                flex-direction: row;
+                padding: 0.6rem 1.5rem;
+                margin: 0.3rem 1.5rem 0.8rem;
+            }
+        }
+        .download-info h2 {
+            font-size: clamp(0.75rem, 2.5vw, 1.1rem);
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 12px #ff44e6;
+        }
+        .download-info p {
+            font-size: clamp(0.5rem, 1.4vw, 0.75rem);
+            color: #aaffff;
+        }
+        .download-btn {
+            background: linear-gradient(145deg, #ff44e6, #7700ff);
+            border: none;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: clamp(0.65rem, 1.6vw, 0.85rem);
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 0 15px #ff44e6;
+            color: white;
+            white-space: nowrap;
+        }
+        .download-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* FOOTER - MINI */
+        footer {
+            background: rgba(3, 5, 12, 0.8);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 0.8rem 0.8rem 0.5rem;
+        }
+        .footer-logo {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            color: white;
+            text-shadow: 0 0 12px cyan;
+            margin-bottom: 0.5rem;
+        }
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin: 5px 0;
+        }
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: white;
+            transition: 0.25s;
+        }
+        .social-icons a:active {
+            background: cyan;
+            color: black;
+            transform: scale(0.9);
+        }
+        @media (min-width: 1024px) {
+            .social-icons a:hover {
+                background: cyan;
+                color: black;
+                box-shadow: 0 0 20px cyan;
+                transform: translateY(-2px);
+            }
+        }
+        .copyright {
+            text-align: center;
+            font-size: 0.45rem;
+            color: #9bc0e0;
+            margin-top: 0.5rem;
+        }
+
+        /* OVERLAY DE SELECCIÓN - EFECTO DE BRILLO */
+        .selection-overlay {
+            position: fixed;
+            inset: 0;
+            background: radial-gradient(circle at center, rgba(255, 68, 230, 0.15), transparent 70%);
+            pointer-events: none;
+            z-index: 40;
+            opacity: 0;
+            transition: opacity 0.6s ease;
+        }
+        .selection-overlay.active {
+            opacity: 1;
+        }
+
+        /* Ajustes móviles */
+        @media (max-width: 400px) {
+            .orbital-wrapper {
+                min-height: 38vh;
+                padding: 0.1rem 0.3rem 0.3rem;
+            }
+            .orbital-container {
+                max-width: 300px;
+                padding: 8px;
+            }
+            .module-orbit.selected {
+                transform: translate(-50%, -50%) scale(1.1) !important;
+            }
+            @keyframes selectedPulse {
+                0%, 100% { transform: translate(-50%, -50%) scale(1.1); }
+                50% { transform: translate(-50%, -50%) scale(1.2); }
+            }
+        }
+
+        @media (max-height: 550px) and (orientation: landscape) {
+            .orbital-wrapper {
+                min-height: 30vh;
+                padding: 0.1rem 0.5rem;
+            }
+            .orbital-container {
+                max-width: 350px;
+            }
+            .welcome-section {
+                padding: 0.1rem 0.5rem 0;
+            }
+            .welcome-title {
+                font-size: 0.9rem;
+            }
+            .time-container {
+                margin: 0.05rem 0 0.1rem;
+            }
+            .neon-clock {
+                padding: 2px 10px;
+            }
+            .download-section {
+                padding: 0.3rem 1rem;
+                margin: 0.2rem 1rem 0.4rem;
+            }
+            footer {
+                padding: 0.4rem 0.5rem 0.3rem;
+            }
+            .social-icons a {
+                width: 26px;
+                height: 26px;
+                font-size: 0.7rem;
+            }
         }
     </style>
 </head>
 <body>
-    <!-- CAPAS DE FONDO -->
-    <div class="bg-layer"></div>
-    <div class="overlay-glow"></div>
-    <div class="grid-holographic"></div>
-    <div class="scanner-line"></div>
-    <div id="particles-js"></div>
+<div class="bg-image-layer"></div>
+<div class="cyber-grid"></div>
+<div class="glow-overlay"></div>
+<div id="particles-js"></div>
 
+<!-- OVERLAY DE SELECCIÓN -->
+<div class="selection-overlay" id="selectionOverlay"></div>
+
+<div class="content">
     <!-- LOADER -->
-    <div class="loader-vip" id="loaderVip">
+    <div class="loader-container" id="loader">
         <div class="loader-ring"></div>
-        <div class="loader-text">YESLY ADELAY</div>
-        <div class="loader-sub">INICIALIZANDO ACCESO CUÁNTICO</div>
+        <div class="loader-text">YESLY ADELAY VIP</div>
+        <div style="margin-top: 15px; font-size:0.8rem; letter-spacing:2px;">CARGANDO...</div>
     </div>
 
-    <!-- LOGIN PRINCIPAL -->
-    <div class="login-container">
-        <div class="card-login">
-            <!-- LOGO -->
-            <div class="logo-section">
-                <i class="fas fa-chart-line logo-icon"></i>
-                <div class="logo-title">YESLY ADELAY</div>
-                <div class="logo-badge"><i class="fas fa-crown"></i> TRADING QUANTUM</div>
+    <header class="glass-header">
+        <div class="nav-container">
+            <div class="logo-area">
+                <i class="fas fa-crown logo-icon"></i>
+                <span class="logo-text">YESLY ADELAY</span>
             </div>
-
-            <!-- INFORMACIÓN EMPRESA -->
-            <div class="company-info">
-                <p>
-                    <i class="fas fa-robot"></i> IA Predictiva · Smart Money · Señales Láser
-                    <br>
-                    <i class="fas fa-clock"></i> Ejecución 0.2s · Precisión +98%
-                </p>
-                <span class="company-tag"><i class="fas fa-shield-alt"></i> Tecnología Cuántica</span>
+            <div class="user-profile" id="userProfile">
+                <span class="user-name" id="displayName">
+                    <i class="fas fa-user-astronaut"></i>
+                    <span>Trader</span>
+                </span>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>SALIR</span>
+                </button>
             </div>
+        </div>
+    </header>
 
-            <!-- TÍTULO -->
-            <div class="login-title">
-                <i class="fas fa-circle" style="font-size:0.4rem; vertical-align:middle;"></i>
-                ACCESO SEGURO
-                <i class="fas fa-circle" style="font-size:0.4rem; vertical-align:middle;"></i>
+    <main>
+        <div class="welcome-section">
+            <h1 class="welcome-title" id="welcomeMessage">BIENVENIDO, TRADER</h1>
+            <p class="welcome-subtitle">TOCA UN MÓDULO PARA SELECCIONAR</p>
+        </div>
+
+        <div class="time-container">
+            <div class="neon-clock">
+                <i class="fas fa-clock"></i>
+                <div id="current-time">--:--:--</div>
+                <i class="fas fa-calendar-alt"></i>
+                <div id="current-date">Cargando...</div>
             </div>
+        </div>
 
-            <!-- FORMULARIO -->
-            <div class="form-group">
-                <input type="email" id="loginEmail" class="input-cyber" placeholder="Correo electrónico">
-                <i class="fas fa-envelope input-icon"></i>
+        <!-- SISTEMA ORBITAL -->
+        <div class="orbital-wrapper">
+            <div class="orbital-container" id="orbitalContainer">
+                <div class="orbit-ring orbit-ring-1"></div>
+                <div class="orbit-ring orbit-ring-2"></div>
+                <div class="orbit-ring orbit-ring-3"></div>
+                <div class="orbit-ring orbit-ring-4"></div>
+
+                <div class="center-icon" id="centerIcon">
+                    <i class="fas fa-crown"></i>
+                    <span>YESLY</span>
+                </div>
+
+                <div id="orbitModules"></div>
             </div>
-            <div class="form-group">
-                <input type="password" id="loginPassword" class="input-cyber" placeholder="Contraseña">
-                <i class="fas fa-lock input-icon"></i>
+        </div>
+
+        <div class="download-section">
+            <div class="download-info">
+                <h2><i class="fas fa-bolt"></i> YESLY ADELAY APP</h2>
+                <p>Poder cuántico en tu bolsillo</p>
             </div>
-
-            <div id="loginError" class="error-msg"></div>
-
-            <button class="btn-login" id="doLoginBtn">
-                <i class="fas fa-unlock-alt"></i> INGRESAR AL SISTEMA
+            <button class="download-btn" onclick="window.location.href='app.html'">
+                <i class="fas fa-download"></i> DESCARGAR
             </button>
-
-            <!-- DIVIDER -->
-            <div class="divider">
-                <span class="divider-line"></span>
-                <span class="divider-text">conéctate con</span>
-                <span class="divider-line"></span>
-            </div>
-
-            <!-- SOCIAL LOGIN - TODAS LAS REDES DE YESLY -->
-            <div class="social-login">
-                <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank" class="social-btn" title="Blogger"><i class="fab fa-blogger"></i></a>
-                <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank" class="social-btn" title="YouTube"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank" class="social-btn" title="Facebook"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank" class="social-btn" title="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="https://t.me/yesly_adelay" target="_blank" class="social-btn" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
-                <a href="https://wa.me/593991987552" target="_blank" class="social-btn" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank" class="social-btn" title="MQL5"><i class="fas fa-chart-line"></i></a>
-            </div>
-            <div class="social-label">
-                <i class="fas fa-arrow-up"></i> Síguenos en nuestras redes <i class="fas fa-arrow-up"></i>
-            </div>
-
-            <!-- SWITCH -->
-            <div class="switch-section">
-                <i class="fas fa-chevron-left" style="font-size:0.5rem; opacity:0.3;"></i>
-                ¿Sin cuenta? <span id="openRegBtn">Regístrate ahora</span>
-                <i class="fas fa-chevron-right" style="font-size:0.5rem; opacity:0.3;"></i>
-            </div>
-
-            <div class="footer-mini">
-                <i class="fas fa-shield-alt"></i> Datos encriptados · IA Predictiva · Trading Quantum
-            </div>
         </div>
-    </div>
+    </main>
 
-    <!-- MODAL REGISTRO -->
-    <div id="registerModal" class="modal-overlay">
-        <div class="modal-glass">
-            <div class="modal-header">
-                <span class="modal-title"><i class="fas fa-crown"></i> REGISTRO VIP</span>
-                <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
-            </div>
-            <div id="registerError" class="modal-error"></div>
-            <input type="text" id="regName" class="input-modal" placeholder="Nombre completo">
-            <input type="email" id="regEmail" class="input-modal" placeholder="Correo electrónico">
-            <input type="password" id="regPassword" class="input-modal" placeholder="Contraseña (mínimo 6)">
-            <div class="terms-check">
-                <input type="checkbox" id="termsCheckbox">
-                <label>Acepto <span id="showTermsBtn">Términos y condiciones</span></label>
-            </div>
-            <button class="btn-modal" id="doRegisterBtn">ACTIVAR CUENTA</button>
-            <div class="modal-switch">¿Ya eres VIP? <span id="switchToLogin">Iniciar sesión</span></div>
+    <footer>
+        <div class="footer-logo">
+            <i class="fas fa-crown"></i> YESLY ADELAY TRADING VIP
         </div>
-    </div>
-
-    <!-- MODAL TÉRMINOS -->
-    <div id="termsModal" class="modal-overlay">
-        <div class="modal-glass">
-            <div class="modal-header">
-                <span class="modal-title"><i class="fas fa-file-contract"></i> TÉRMINOS</span>
-                <button class="modal-close" onclick="closeModal('termsModal')">&times;</button>
-            </div>
-            <div style="font-size:0.75rem; color:#8ab0c0; line-height:1.7; margin:12px 0; position:relative; z-index:2;">
-                Al registrarse en <strong style="color:#0cf;">YESLY ADELAY</strong>, acepta que las señales son informativas, el trading implica riesgo financiero, y declara ser mayor de edad. La plataforma usa IA predictiva, pero no garantiza resultados.
-                <br><br>
-                <i class="fas fa-shield-alt" style="color:#0cf;"></i> Datos encriptados · Seguridad avanzada
-            </div>
-            <button class="btn-modal" onclick="closeModal('termsModal')">ENTENDIDO</button>
+        <div class="social-icons">
+            <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank"><i class="fab fa-blogger"></i></a>
+            <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://t.me/yesly_adelay" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://wa.me/593991987552" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank"><i class="fas fa-chart-line"></i></a>
         </div>
-    </div>
+        <div class="copyright">
+            © 2025 YESLY ADELAY · SISTEMA ORBITAL INTERACTIVO
+        </div>
+    </footer>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // PARTICLES
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 60, density: { enable: true, value_area: 600 } },
-                color: { value: "#00ffff" },
-                shape: { type: "circle" },
-                opacity: { value: 0.25, random: true },
-                size: { value: 2, random: true },
-                line_linked: { enable: true, distance: 140, color: "#00ffff", opacity: 0.08, width: 1 },
-                move: { enable: true, speed: 1.2, direction: "none", random: true, out_mode: "out" }
-            },
-            interactivity: {
-                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
-            },
-            retina_detect: true
-        });
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // ========== FIREBASE CONFIG ==========
+    const firebaseConfig = {
+        apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+        authDomain: "beaver-trading.firebaseapp.com",
+        databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+        projectId: "beaver-trading",
+        storageBucket: "beaver-trading.firebasestorage.app",
+        messagingSenderId: "926610131904",
+        appId: "1:926610131904:web:c147bd337bd12b4d085625",
+        measurementId: "G-1K51WWF2ZJ"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
 
-        // FIREBASE
-        const firebaseConfig = {
-            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
-            authDomain: "beaver-trading.firebaseapp.com",
-            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
-            projectId: "beaver-trading",
-            storageBucket: "beaver-trading.firebasestorage.app",
-            messagingSenderId: "926610131904",
-            appId: "1:926610131904:web:c147bd337bd12b4d085625"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
+    // LOADER
+    window.addEventListener('load', () => {
+        setTimeout(() => {
+            const loader = document.getElementById('loader');
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.style.display = 'none', 800);
+        }, 1500);
+    });
 
-        // LOADER
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const loader = document.getElementById('loaderVip');
-                loader.classList.add('fade-out');
-                setTimeout(() => loader.style.display = 'none', 800);
-            }, 1500);
-        });
+    function showLoaderMsg(msg) {
+        const loader = document.getElementById('loader');
+        if (loader.style.display === 'none') loader.style.display = 'flex';
+        loader.classList.remove('fade-out');
+        document.querySelector('.loader-text').textContent = msg || 'PROCESANDO...';
+    }
+    function hideLoader() {
+        const loader = document.getElementById('loader');
+        loader.classList.add('fade-out');
+        setTimeout(() => loader.style.display = 'none', 600);
+    }
 
-        function showLoader(msg) {
-            const l = document.getElementById('loaderVip');
-            if (l.style.display === 'none') l.style.display = 'flex';
-            l.classList.remove('fade-out');
-            document.querySelector('.loader-text').innerText = msg || 'PROCESANDO';
-        }
+    // PARTICULAS
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 40, density: { enable: true, value_area: 500 } },
+            color: { value: "#00ffff" },
+            shape: { type: "circle" },
+            opacity: { value: 0.25, random: true },
+            size: { value: 1.5, random: true },
+            line_linked: { enable: true, distance: 100, color: "#00ffff", opacity: 0.1, width: 1 },
+            move: { enable: true, speed: 0.6, direction: "none", random: true, out_mode: "out" }
+        },
+        interactivity: {
+            events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+        },
+        retina_detect: true
+    });
 
-        function hideLoader() {
-            const l = document.getElementById('loaderVip');
-            l.classList.add('fade-out');
-            setTimeout(() => l.style.display = 'none', 500);
-        }
+    // RELOJ
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('current-time').textContent = now.toLocaleTimeString('es-ES', { hour12: false });
+        document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
 
-        // MODALES
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        window.closeModal = closeModal;
+    // ===== SISTEMA ORBITAL CON SELECCIÓN =====
+    const layerConfig = [
+        { count: 4, radius: 0.20, className: 'layer-1', speedBase: 0.0035 },
+        { count: 5, radius: 0.34, className: 'layer-2', speedBase: 0.0026 },
+        { count: 5, radius: 0.48, className: 'layer-3', speedBase: 0.0018 },
+        { count: 4, radius: 0.62, className: 'layer-4', speedBase: 0.0012 }
+    ];
 
-        document.getElementById('openRegBtn').onclick = () => openModal('registerModal');
-        document.getElementById('switchToLogin').onclick = () => { closeModal('registerModal'); };
-        document.getElementById('showTermsBtn').onclick = () => openModal('termsModal');
+    const modulesData = [
+        { icon: 'fa-cubes', label: 'Módulos', link: 'modulos.html' },
+        { icon: 'fa-chart-pie', label: 'Yeslyface', link: 'https://faceyesly.vercel.app' },
+        { icon: 'fa-chart-line', label: 'Gráfico', link: 'grafico.html' },
+        { icon: 'fa-broadcast-tower', label: 'Señales', link: 'senales.html' },
+        { icon: 'fa-sliders-h', label: 'Gestión', link: 'gestion.html' },
+        { icon: 'fa-coins', label: 'Inversión', link: 'invest.html' },
+        { icon: 'fa-chart-bar', label: 'Fibonacci', link: 'fibonacci.html' },
+        { icon: 'fa-comments', label: 'Chats', link: 'chats.html' },
+        { icon: 'fa-hand-holding-dollar', label: 'Pagos', link: 'pagos.html' },
+        { icon: 'fa-globe-americas', label: 'Hora', link: 'hora.html' },
+        { icon: 'fa-newspaper', label: 'Contenido', link: 'contenido.html' },
+        { icon: 'fa-hand-holding-usd', label: 'Préstamo', link: 'soporte.html' },
+        { icon: 'fa-video', label: 'Videos', link: 'https://subtle-eclair-8499ec.netlify.app/' },
+        { icon: 'fa-file-pdf', label: 'PDF', link: 'pdf.html' },
+        { icon: 'fa-user-tie', label: 'MT5', link: 'app-descarga.html' },
+        { icon: 'fa-cloud-download-alt', label: 'App', link: 'app.html' },
+        { icon: 'fa-share-alt', label: 'Redes', link: 'sociales.html' },
+        { icon: 'fa-rocket', label: 'VIP', link: 'modulos.html' }
+    ];
 
-        // LOGIN
-        document.getElementById('doLoginBtn').onclick = () => {
-            const email = document.getElementById('loginEmail').value.trim();
-            const pwd = document.getElementById('loginPassword').value;
-            if (!email || !pwd) {
-                document.getElementById('loginError').innerText = '⚠️ Completa todos los campos';
-                return;
-            }
-            showLoader('VERIFICANDO CREDENCIALES');
-            auth.signInWithEmailAndPassword(email, pwd)
-                .then(() => {
-                    document.querySelector('.loader-text').innerText = 'REDIRIGIENDO';
-                    setTimeout(() => window.location.href = 'home.html', 1300);
-                })
-                .catch(err => {
-                    hideLoader();
-                    document.getElementById('loginError').innerText = '❌ ' + err.message;
+    const container = document.getElementById('orbitalContainer');
+    const modulesWrapper = document.getElementById('orbitModules');
+    const centerIcon = document.getElementById('centerIcon');
+    const selectionOverlay = document.getElementById('selectionOverlay');
+
+    let moduleIndex = 0;
+    const moduleAssignments = [];
+
+    layerConfig.forEach((layer, layerIdx) => {
+        for (let i = 0; i < layer.count; i++) {
+            if (moduleIndex < modulesData.length) {
+                moduleAssignments.push({
+                    ...modulesData[moduleIndex],
+                    layerIdx: layerIdx,
+                    layerIndex: i,
+                    totalInLayer: layer.count,
+                    radius: layer.radius,
+                    className: layer.className,
+                    speedBase: layer.speedBase
                 });
-        };
+                moduleIndex++;
+            }
+        }
+    });
 
-        // REGISTER
-        document.getElementById('doRegisterBtn').onclick = () => {
-            const name = document.getElementById('regName').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
-            const pass = document.getElementById('regPassword').value;
-            const terms = document.getElementById('termsCheckbox').checked;
-            if (!name || !email || !pass) {
-                document.getElementById('registerError').innerText = '⚠️ Completa los campos';
-                return;
-            }
-            if (!terms) {
-                document.getElementById('registerError').innerText = '⚠️ Debes aceptar los términos';
-                return;
-            }
-            if (pass.length < 6) {
-                document.getElementById('registerError').innerText = '⚠️ Mínimo 6 caracteres';
-                return;
-            }
-            showLoader('CREANDO PERFIL VIP');
-            auth.createUserWithEmailAndPassword(email, pass)
-                .then((uc) => {
-                    db.ref('users/' + uc.user.uid).set({
-                        fullName: name,
-                        email,
-                        createdAt: firebase.database.ServerValue.TIMESTAMP,
-                        termsAccepted: true
-                    }).then(() => {
-                        document.querySelector('.loader-text').innerText = 'REGISTRO EXITOSO';
-                        setTimeout(() => window.location.href = 'home.html', 1400);
-                    });
-                })
-                .catch(err => {
-                    hideLoader();
-                    document.getElementById('registerError').innerText = '❌ ' + err.message;
-                });
-        };
+    while (moduleIndex < modulesData.length) {
+        const lastLayer = layerConfig.length - 1;
+        const extra = moduleAssignments.filter(m => m.layerIdx === lastLayer).length;
+        moduleAssignments.push({
+            ...modulesData[moduleIndex],
+            layerIdx: lastLayer,
+            layerIndex: extra,
+            totalInLayer: extra + 1,
+            radius: layerConfig[lastLayer].radius,
+            className: layerConfig[lastLayer].className,
+            speedBase: layerConfig[lastLayer].speedBase
+        });
+        moduleIndex++;
+    }
 
-        // AUTO REDIRECT SI YA ESTÁ LOGUEADO
-        auth.onAuthStateChanged((user) => {
-            if (user && (window.location.pathname === '/' || window.location.pathname.includes('index.html'))) {
-                window.location.href = 'home.html';
+    let isSelected = false;
+    let selectedModule = null;
+    let animationId = null;
+
+    const elements = [];
+    moduleAssignments.forEach((mod, idx) => {
+        const el = document.createElement('div');
+        el.className = `module-orbit ${mod.className}`;
+        el.dataset.index = idx;
+        el.dataset.link = mod.link;
+        el.innerHTML = `<i class="fas ${mod.icon}"></i><span>${mod.label}</span>`;
+        el.addEventListener('click', () => handleModuleClick(el, mod));
+        modulesWrapper.appendChild(el);
+        elements.push({
+            el: el,
+            assignment: mod,
+            angle: (mod.layerIndex / mod.totalInLayer) * Math.PI * 2 + (mod.layerIdx * 0.25),
+            originalX: 0,
+            originalY: 0,
+            isSelected: false
+        });
+    });
+
+    function handleModuleClick(el, mod) {
+        if (isSelected) return;
+
+        isSelected = true;
+        selectedModule = el;
+
+        // Ocultar icono central
+        centerIcon.classList.add('hidden');
+
+        // Activar overlay
+        selectionOverlay.classList.add('active');
+
+        // Marcar el módulo como seleccionado
+        el.classList.add('selected');
+
+        // Guardar la posición original para animación
+        const rect = el.getBoundingClientRect();
+        const containerRect = container.getBoundingClientRect();
+        el.dataset.origLeft = el.style.left;
+        el.dataset.origTop = el.style.top;
+
+        // Efecto de vibración en todos los demás módulos
+        elements.forEach(item => {
+            if (item.el !== el) {
+                item.el.style.transition = 'all 0.3s ease';
+                item.el.style.opacity = '0.3';
+                item.el.style.transform = 'scale(0.7)';
             }
         });
 
-        // ENTER KEY
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                const registerModal = document.getElementById('registerModal');
-                if (registerModal.style.display === 'flex') {
-                    document.getElementById('doRegisterBtn').click();
-                } else {
-                    document.getElementById('doLoginBtn').click();
+        // Mostrar mensaje de confirmación
+        const label = mod.label;
+        const subtitle = document.querySelector('.welcome-subtitle');
+        subtitle.textContent = `🔮 ${label} · SELECCIONADO · CARGANDO...`;
+        subtitle.style.color = '#ff44e6';
+        subtitle.style.textShadow = '0 0 20px #ff44e6';
+
+        // Redirigir después de la animación
+        setTimeout(() => {
+            window.location.href = mod.link;
+        }, 1200);
+    }
+
+    function animateOrbit() {
+        if (isSelected) {
+            // Si hay un módulo seleccionado, solo actualizar los demás
+            elements.forEach(item => {
+                if (!item.el.classList.contains('selected')) {
+                    const mod = item.assignment;
+                    item.angle += mod.speedBase * 0.3;
+                    if (item.angle > Math.PI * 2) item.angle -= Math.PI * 2;
+
+                    const rect = container.getBoundingClientRect();
+                    const size = Math.min(rect.width, rect.height);
+                    const centerX = size / 2;
+                    const centerY = size / 2;
+                    const radius = size * mod.radius;
+
+                    const x = centerX + radius * Math.cos(item.angle) - item.el.offsetWidth / 2;
+                    const y = centerY + radius * Math.sin(item.angle) - item.el.offsetHeight / 2;
+
+                    item.el.style.left = x + 'px';
+                    item.el.style.top = y + 'px';
+                    item.el.style.transform = 'translate(0, 0)';
                 }
-            }
+            });
+            animationId = requestAnimationFrame(animateOrbit);
+            return;
+        }
+
+        const rect = container.getBoundingClientRect();
+        const size = Math.min(rect.width, rect.height);
+        const centerX = size / 2;
+        const centerY = size / 2;
+
+        elements.forEach((item) => {
+            const mod = item.assignment;
+            item.angle += mod.speedBase;
+            if (item.angle > Math.PI * 2) item.angle -= Math.PI * 2;
+
+            const radius = size * mod.radius;
+            const x = centerX + radius * Math.cos(item.angle) - item.el.offsetWidth / 2;
+            const y = centerY + radius * Math.sin(item.angle) - item.el.offsetHeight / 2;
+
+            item.el.style.left = x + 'px';
+            item.el.style.top = y + 'px';
+            item.el.style.transform = 'translate(0, 0)';
         });
-    </script>
+
+        animationId = requestAnimationFrame(animateOrbit);
+    }
+
+    setTimeout(() => {
+        animateOrbit();
+    }, 100);
+
+    let resizeTimeout;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimeout);
+        resizeTimeout = setTimeout(() => {}, 200);
+    });
+
+    // AUTENTICACIÓN
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            window.location.href = 'index.html';
+        } else {
+            const userId = user.uid;
+            database.ref('users/' + userId).once('value').then((snapshot) => {
+                const userData = snapshot.val();
+                let displayName = 'Trader';
+                if (userData && userData.fullName) {
+                    displayName = userData.fullName.split(' ')[0];
+                } else if (userData && userData.name) {
+                    displayName = userData.name.split(' ')[0];
+                } else if (user.email) {
+                    displayName = user.email.split('@')[0];
+                }
+                document.querySelector('#displayName span').textContent = displayName;
+                document.getElementById('welcomeMessage').innerHTML = `BIENVENIDO, ${displayName.toUpperCase()}`;
+            }).catch(() => {
+                document.querySelector('#displayName span').textContent = 'TRADER';
+            });
+        }
+    });
+
+    // CERRAR SESIÓN
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        showLoaderMsg('Cerrando sesión...');
+        auth.signOut().then(() => {
+            setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+        }).catch((err) => {
+            alert('Error: ' + err.message);
+            hideLoader();
+        });
+    });
+</script>
 </body>
 </html>
