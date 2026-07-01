@@ -3,15 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
-    <title>YESLY ADELAY · Terminal Orbital VIP</title>
-    <!-- Firebase SDKs -->
+    <title>YESLY ADELAY · Blog Grid</title>
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database-compat.js"></script>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&family=Rajdhani:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
         * {
             margin: 0;
@@ -20,16 +20,15 @@
         }
 
         body {
-            font-family: 'Rajdhani', 'Space Grotesk', sans-serif;
+            font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
             background: #03050b;
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
-            color: #f0f4ff;
+            color: #eef5ff;
         }
 
-        /* FONDO */
-        .bg-layer {
+        .bg-image-layer {
             position: fixed;
             top: 0;
             left: 0;
@@ -39,65 +38,33 @@
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
+            opacity: 0.12;
             z-index: 0;
             pointer-events: none;
-            filter: brightness(0.30) contrast(1.2) saturate(1.3);
-            animation: zoomBg 30s infinite alternate ease-in-out;
         }
 
-        @keyframes zoomBg {
-            0% { transform: scale(1.02); filter: brightness(0.30) contrast(1.2); }
-            100% { transform: scale(1.15); filter: brightness(0.25) contrast(1.3); }
-        }
-
-        .overlay-glow {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, rgba(0, 200, 255, 0.06), rgba(0, 0, 0, 0.85), rgba(20, 0, 40, 0.5));
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .grid-holographic {
+        .cyber-grid {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             background-image: 
-                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.04) 0px, rgba(0, 255, 255, 0.04) 1px, transparent 1px, transparent 35px),
-                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.04) 0px, rgba(0, 255, 255, 0.04) 1px, transparent 1px, transparent 35px);
-            z-index: 2;
+                repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.03) 0px, rgba(0, 255, 255, 0.03) 1px, transparent 1px, transparent 40px),
+                repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.03) 0px, rgba(0, 255, 255, 0.03) 1px, transparent 1px, transparent 40px);
+            z-index: 1;
             pointer-events: none;
-            animation: gridPulse 5s infinite alternate;
         }
 
-        @keyframes gridPulse {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        .scanner-line {
+        .glow-overlay {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
-            height: 2px;
-            background: linear-gradient(90deg, transparent, rgba(0, 255, 255, 0.6), rgba(255, 68, 230, 0.6), transparent);
-            z-index: 3;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(0, 255, 255, 0.04), rgba(0, 0, 0, 0.92));
+            z-index: 2;
             pointer-events: none;
-            animation: scanDown 5s infinite linear;
-            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
-        }
-
-        @keyframes scanDown {
-            0% { top: -2px; opacity: 0; }
-            10% { opacity: 1; }
-            90% { opacity: 1; }
-            100% { top: 100%; opacity: 0; }
         }
 
         #particles-js {
@@ -106,20 +73,21 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 4;
+            z-index: 0;
             pointer-events: none;
         }
 
         .content {
             position: relative;
-            z-index: 20;
+            z-index: 15;
+            width: 100%;
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
         /* LOADER */
-        .loader-vip {
+        .loader-container {
             position: fixed;
             inset: 0;
             background: #01010b;
@@ -129,900 +97,637 @@
             align-items: center;
             z-index: 10000;
             transition: opacity 0.8s ease, visibility 0.8s;
-            backdrop-filter: blur(20px);
+            backdrop-filter: blur(12px);
         }
-        .loader-vip.fade-out {
+        .loader-container.fade-out {
             opacity: 0;
             visibility: hidden;
         }
         .loader-ring {
             width: 70px;
             height: 70px;
-            border: 3px solid rgba(0, 255, 255, 0.1);
+            border: 3px solid rgba(0,255,255,0.2);
             border-top: 3px solid #0cf;
-            border-right: 3px solid #ff44e6;
+            border-right: 3px solid #f0f;
             border-radius: 50%;
-            animation: spinLoader 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            box-shadow: 0 0 40px rgba(0, 200, 255, 0.3);
+            animation: spin 1s linear infinite;
+            box-shadow: 0 0 25px cyan;
         }
-        @keyframes spinLoader {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        @keyframes spin {
+            0% { transform: rotate(0deg);}
+            100% { transform: rotate(360deg);}
         }
         .loader-text {
-            margin-top: 25px;
+            margin-top: 20px;
+            font-size: 1.2rem;
             font-weight: 700;
-            letter-spacing: 5px;
-            font-family: 'Orbitron', monospace;
-            font-size: 0.9rem;
-            background: linear-gradient(135deg, #0cf, #ff44e6, #0cf);
-            background-size: 200% 200%;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, cyan, #ff44e6);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            animation: gradMove 2s infinite alternate;
-        }
-        @keyframes gradMove {
-            0% { background-position: 0% 50%; }
-            100% { background-position: 100% 50%; }
-        }
-        .loader-sub {
-            font-size: 0.6rem;
-            color: #6a8a9a;
-            margin-top: 8px;
-            letter-spacing: 3px;
         }
 
         /* HEADER */
-        .header-glass {
-            background: rgba(3, 8, 20, 0.7);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(0, 255, 255, 0.15);
-            padding: 0.5rem 1rem;
+        .glass-header {
+            background: rgba(5, 10, 20, 0.65);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 0.3rem 0.8rem;
             position: sticky;
             top: 0;
             z-index: 200;
         }
         .nav-container {
-            max-width: 1400px;
+            max-width: 1200px;
             margin: 0 auto;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 6px;
         }
-        .logo-brand {
+        .logo-area {
             display: flex;
             align-items: center;
-            gap: 8px;
-            cursor: pointer;
+            gap: 6px;
         }
         .logo-icon {
-            font-size: 1.5rem;
+            font-size: 1.2rem;
             color: #0cf;
-            filter: drop-shadow(0 0 15px cyan);
-            animation: pulseIcon 2s infinite alternate;
+            filter: drop-shadow(0 0 6px cyan);
         }
-        @keyframes pulseIcon {
-            0% { filter: drop-shadow(0 0 10px cyan); }
-            100% { filter: drop-shadow(0 0 30px cyan) drop-shadow(0 0 60px #ff44e6); }
-        }
-        .logo-name {
-            font-family: 'Orbitron', monospace;
-            font-size: 1rem;
-            font-weight: 800;
-            background: linear-gradient(135deg, #fff, #0cf, #ff44e6);
-            background-size: 200% 200%;
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            animation: gradMove 3s infinite alternate;
-            letter-spacing: 1px;
-        }
-        .badge-elite {
-            font-size: 0.45rem;
-            background: rgba(0, 255, 255, 0.12);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 2px 8px;
-            font-weight: 700;
-            color: #0cf;
-            letter-spacing: 1px;
-        }
-
-        /* ===== SISTEMA ORBITAL ===== */
-        .hero-section {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem 0.5rem 1rem 3.5rem;
-            width: 100%;
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        @media (max-width: 640px) {
-            .hero-section {
-                padding: 0.8rem 0.3rem 0.8rem 2.8rem;
-            }
-        }
-
-        .orbital-wrapper {
-            width: 100%;
-            max-width: 550px;
-            aspect-ratio: 1 / 1;
-            position: relative;
-            margin: 0 auto;
-        }
-
-        .orbital-container {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        /* ICONO CENTRAL - YESLY ADELAY */
-        .center-icon {
-            position: absolute;
-            width: clamp(70px, 12vw, 100px);
-            height: clamp(70px, 12vw, 100px);
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(0, 255, 255, 0.25), rgba(10, 20, 40, 0.95));
-            border: 2.5px solid cyan;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 0 50px rgba(0, 255, 255, 0.4), inset 0 0 30px rgba(0, 255, 255, 0.12);
-            z-index: 10;
-            animation: pulseCenter 3s ease-in-out infinite;
-            transition: all 0.5s ease;
-            pointer-events: none;
-            cursor: default;
-            text-align: center;
-            padding: 8px;
-        }
-        .center-icon.hidden {
-            opacity: 0;
-            transform: scale(0.5);
-            pointer-events: none;
-        }
-        .center-icon i {
-            font-size: clamp(1.8rem, 4vw, 3rem);
-            color: cyan;
-            text-shadow: 0 0 30px cyan;
-        }
-        .center-icon .center-text {
-            font-size: clamp(0.5rem, 1vw, 0.7rem);
+        .logo-text {
+            font-size: 0.85rem;
             font-weight: 900;
-            letter-spacing: 2px;
-            background: linear-gradient(45deg, cyan, #ff44e6);
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(135deg, #fff, #0cf);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
-            margin-top: 2px;
-            line-height: 1.2;
+            letter-spacing: 0.5px;
         }
-        @keyframes pulseCenter {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 50px rgba(0, 255, 255, 0.4); }
-            50% { transform: scale(1.05); box-shadow: 0 0 80px rgba(0, 255, 255, 0.7), 0 0 120px rgba(255, 68, 230, 0.2); }
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+        }
+        .user-name {
+            color: #0cf;
+            font-size: clamp(0.6rem, 2vw, 0.85rem);
+            font-weight: 700;
+            text-shadow: 0 0 8px cyan;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            background: rgba(0,255,255,0.06);
+            padding: 3px 10px;
+            border-radius: 30px;
+            border: 1px solid rgba(0,255,255,0.2);
+        }
+        .user-name i {
+            font-size: 0.7rem;
+        }
+        .logout-btn {
+            background: transparent;
+            border: 1.5px solid #ff3366;
+            color: #ff3366;
+            padding: 3px 12px;
+            border-radius: 25px;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.3s;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            font-size: 0.55rem;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .logout-btn i {
+            font-size: 0.6rem;
+        }
+        .logout-btn:hover {
+            background: #ff3366;
+            color: black;
+            box-shadow: 0 0 20px #ff3366;
         }
 
-        /* ANILLOS */
-        .orbit-ring {
-            position: absolute;
-            border-radius: 50%;
-            border: 1px solid rgba(0, 255, 255, 0.08);
-            pointer-events: none;
+        /* BIENVENIDA */
+        .welcome-section {
+            text-align: center;
+            padding: 0.5rem 0.5rem 0.2rem;
         }
-        .orbit-ring-1 { width: 42%; height: 42%; animation: rotateOrbit 22s linear infinite; border-color: rgba(0, 255, 255, 0.12); }
-        .orbit-ring-2 { width: 66%; height: 66%; animation: rotateOrbit 32s linear infinite reverse; border-color: rgba(255, 68, 230, 0.08); }
-        .orbit-ring-3 { width: 89%; height: 89%; animation: rotateOrbit 42s linear infinite; border-color: rgba(0, 255, 255, 0.06); }
-        @keyframes rotateOrbit {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
+        .welcome-title {
+            font-size: clamp(0.85rem, 3vw, 1.5rem);
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            background: linear-gradient(45deg, #fff, cyan, #ff44e6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 15px rgba(0,255,255,0.2);
+            letter-spacing: 0.5px;
+        }
+        .welcome-subtitle {
+            font-size: clamp(0.5rem, 1.5vw, 0.75rem);
+            color: #b3e4ff;
+            text-shadow: 0 0 8px rgba(0,255,255,0.15);
         }
 
-        /* MÓDULOS */
-        .module-orbit {
-            position: absolute;
-            border-radius: 50%;
-            background: rgba(12, 20, 32, 0.9);
+        /* RELOJ */
+        .time-container {
+            display: flex;
+            justify-content: center;
+            margin: 0.1rem 0 0.5rem;
+            padding: 0 8px;
+        }
+        .neon-clock {
+            background: rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(8px);
+            border: 1.5px solid cyan;
+            border-radius: 40px;
+            padding: 3px 12px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            flex-wrap: wrap;
+            justify-content: center;
+            box-shadow: 0 0 20px cyan;
+        }
+        .neon-clock i {
+            font-size: 0.8rem;
+            color: cyan;
+            filter: drop-shadow(0 0 6px cyan);
+        }
+        #current-time {
+            font-size: clamp(0.7rem, 2vw, 1rem);
+            font-weight: 800;
+            color: white;
+            text-shadow: 0 0 8px cyan;
+            font-family: 'Orbitron', monospace;
+        }
+        #current-date {
+            font-size: clamp(0.45rem, 1.4vw, 0.65rem);
+            color: #ff44e6;
+            text-shadow: 0 0 6px #ff44e6;
+        }
+
+        /* ===== GRID DE BLOGS ===== */
+        .blog-grid-wrapper {
+            flex: 1;
+            padding: 0.5rem 1rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+        }
+
+        .blog-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 1rem;
+        }
+
+        .blog-card {
+            background: rgba(8, 18, 35, 0.75);
             backdrop-filter: blur(12px);
-            border: 2px solid rgba(0, 255, 255, 0.4);
+            border: 1.5px solid rgba(0, 255, 255, 0.15);
+            border-radius: 24px;
+            padding: 1.2rem 0.8rem;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            text-align: center;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            box-shadow: 0 0 15px rgba(0, 255, 255, 0.1);
+            transition: all 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             text-decoration: none;
             color: white;
-            font-weight: 700;
-            z-index: 5;
-            will-change: transform;
-        }
-        .module-orbit i {
-            color: cyan;
-            text-shadow: 0 0 12px cyan;
-            pointer-events: none;
-            transition: all 0.4s ease;
-        }
-        .module-orbit span {
-            text-align: center;
-            line-height: 1.1;
-            background: linear-gradient(45deg, #fff, cyan);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            pointer-events: none;
-            font-weight: 800;
-            font-size: clamp(0.3rem, 0.7vw, 0.45rem);
-            transition: all 0.4s ease;
-        }
-        .module-orbit:active {
-            transform: scale(0.85) !important;
-        }
-        @media (min-width: 768px) {
-            .module-orbit:hover {
-                border-color: #ff44e6;
-                box-shadow: 0 0 35px rgba(255, 68, 230, 0.4);
-                transform: scale(1.1) !important;
-                z-index: 20;
-            }
-        }
-
-        /* TAMAÑOS POR ÓRBITA */
-        .orbit-1 { width: clamp(40px, 6vw, 52px); height: clamp(40px, 6vw, 52px); }
-        .orbit-1 i { font-size: clamp(0.9rem, 1.8vw, 1.3rem); }
-        .orbit-1 span { max-width: 38px; }
-
-        .orbit-2 { width: clamp(48px, 7.5vw, 64px); height: clamp(48px, 7.5vw, 64px); }
-        .orbit-2 i { font-size: clamp(1.1rem, 2.2vw, 1.5rem); }
-        .orbit-2 span { max-width: 50px; }
-
-        .orbit-3 { width: clamp(56px, 9vw, 78px); height: clamp(56px, 9vw, 78px); }
-        .orbit-3 i { font-size: clamp(1.3rem, 2.8vw, 1.8rem); }
-        .orbit-3 span { max-width: 62px; }
-
-        /* SELECCIONADO */
-        .module-orbit.selected {
-            position: absolute !important;
-            left: 50% !important;
-            top: 50% !important;
-            transform: translate(-50%, -50%) scale(1.3) !important;
-            z-index: 50 !important;
-            border-color: #ff44e6 !important;
-            box-shadow: 0 0 60px rgba(255, 68, 230, 0.7), 0 0 100px rgba(0, 255, 255, 0.3) !important;
-            background: rgba(20, 10, 40, 0.95) !important;
-            border-width: 3px !important;
-            pointer-events: none !important;
-            animation: selectedPulse 1s ease-in-out infinite !important;
-        }
-        .module-orbit.selected i {
-            color: #ff44e6 !important;
-            text-shadow: 0 0 30px #ff44e6 !important;
-            font-size: 1.8em !important;
-        }
-        .module-orbit.selected span {
-            background: linear-gradient(45deg, #fff, #ff44e6) !important;
-            -webkit-background-clip: text !important;
-            background-clip: text !important;
-            color: transparent !important;
-            font-size: 1.1em !important;
-        }
-        @keyframes selectedPulse {
-            0%, 100% { transform: translate(-50%, -50%) scale(1.3); box-shadow: 0 0 60px rgba(255, 68, 230, 0.7); }
-            50% { transform: translate(-50%, -50%) scale(1.45); box-shadow: 0 0 80px rgba(255, 68, 230, 0.9), 0 0 120px rgba(0, 255, 255, 0.4); }
-        }
-
-        .selection-overlay {
-            position: fixed;
-            inset: 0;
-            background: radial-gradient(circle at center, rgba(255, 68, 230, 0.12), transparent 70%);
-            pointer-events: none;
-            z-index: 40;
-            opacity: 0;
-            transition: opacity 0.6s ease;
-        }
-        .selection-overlay.active {
-            opacity: 1;
-        }
-
-        /* FOOTER */
-        .footer-cosmic {
-            text-align: center;
-            padding: 1rem 1rem 0.7rem;
-            font-size: 0.55rem;
-            border-top: 1px solid rgba(0, 255, 255, 0.08);
-            background: rgba(2, 6, 15, 0.85);
-            backdrop-filter: blur(10px);
-            color: #5a8a9a;
-            letter-spacing: 0.5px;
-            margin-top: auto;
-        }
-        .footer-cosmic i {
-            color: #0cf;
-            margin: 0 4px;
-        }
-
-        /* MODALES */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.92);
-            backdrop-filter: blur(25px);
-            z-index: 3000;
-            align-items: center;
-            justify-content: center;
-            padding: 1.5rem;
-        }
-        .modal-glass {
-            background: rgba(8, 18, 35, 0.98);
-            border-radius: 40px;
-            border: 2px solid rgba(0, 255, 255, 0.3);
-            max-width: 380px;
-            width: 100%;
-            padding: 2rem 1.5rem;
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.5), 0 0 50px rgba(0, 255, 255, 0.05);
+            min-height: 120px;
             position: relative;
             overflow: hidden;
         }
-        .modal-glass::before {
+
+        .blog-card::before {
             content: '';
             position: absolute;
             top: -50%;
             left: -50%;
             width: 200%;
             height: 200%;
-            background: conic-gradient(from 0deg, transparent, rgba(0, 255, 255, 0.02), transparent, rgba(255, 68, 230, 0.02), transparent);
-            animation: spinSlow 20s linear infinite;
+            background: radial-gradient(circle at center, rgba(0, 255, 255, 0.05), transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s ease;
             pointer-events: none;
         }
-        @keyframes spinSlow {
-            100% { transform: rotate(360deg); }
-        }
-        .modal-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 1.2rem;
-            position: relative;
-            z-index: 2;
-        }
-        .modal-title {
-            font-family: 'Orbitron', monospace;
-            font-size: 1.2rem;
-            color: #0cf;
-            font-weight: 700;
-        }
-        .modal-close {
-            background: none;
-            border: none;
-            color: #fff;
-            font-size: 1.5rem;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-        .modal-close:active {
-            transform: rotate(90deg);
-        }
-        .input-cyber {
-            width: 100%;
-            padding: 12px 18px;
-            background: rgba(0, 30, 50, 0.4);
-            border: 1.5px solid rgba(0, 255, 255, 0.15);
-            border-radius: 30px;
-            color: #fff;
-            margin: 8px 0;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.9rem;
-            transition: all 0.3s ease;
-            position: relative;
-            z-index: 2;
-        }
-        .input-cyber:focus {
-            outline: none;
-            border-color: #0cf;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.1);
-        }
-        .input-cyber::placeholder {
-            color: #5a7a8a;
-        }
-        .btn-modal {
-            background: linear-gradient(135deg, #0cf, #7a44ff);
-            width: 100%;
-            border: none;
-            border-radius: 30px;
-            padding: 12px;
-            font-weight: 800;
-            color: #000;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-family: 'Rajdhani', sans-serif;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            position: relative;
-            z-index: 2;
-            margin-top: 8px;
-            box-shadow: 0 5px 20px rgba(0, 200, 255, 0.3);
-        }
-        .btn-modal:active {
-            transform: scale(0.97);
-        }
-        .modal-error {
-            color: #ff6b7a;
-            font-size: 0.7rem;
-            margin: 4px 0;
-            position: relative;
-            z-index: 2;
-        }
-        .modal-switch {
-            text-align: center;
-            margin-top: 14px;
-            font-size: 0.7rem;
-            color: #6a8a9a;
-            position: relative;
-            z-index: 2;
-        }
-        .modal-switch span {
-            color: #0cf;
-            cursor: pointer;
-            font-weight: 600;
-        }
-        .terms-check {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.7rem;
-            margin: 10px 0;
-            position: relative;
-            z-index: 2;
-        }
-        .terms-check input {
-            accent-color: #0cf;
-            width: 16px;
-            height: 16px;
-        }
-        .terms-check label {
-            color: #8aaabc;
-        }
-        .terms-check label span {
-            color: #0cf;
-            cursor: pointer;
-            text-decoration: underline;
+
+        .blog-card:hover::before {
+            opacity: 1;
         }
 
-        /* RESPONSIVE */
-        @media (max-width: 480px) {
-            .orbital-wrapper { max-width: 320px; }
-            .logo-name { font-size: 0.75rem; }
-            .logo-icon { font-size: 1.2rem; }
-            .badge-elite { font-size: 0.4rem; padding: 1px 6px; }
-            .modal-glass { padding: 1.5rem 1rem; }
-            .module-orbit.selected {
-                transform: translate(-50%, -50%) scale(1.1) !important;
-            }
-            @keyframes selectedPulse {
-                0%, 100% { transform: translate(-50%, -50%) scale(1.1); }
-                50% { transform: translate(-50%, -50%) scale(1.2); }
-            }
+        .blog-card:active {
+            transform: scale(0.94);
+        }
+
+        .blog-card i {
+            font-size: 2rem;
+            color: cyan;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            margin-bottom: 6px;
+            transition: all 0.4s ease;
+        }
+
+        .blog-card:hover i {
+            color: #ff44e6;
+            text-shadow: 0 0 30px rgba(255, 68, 230, 0.5);
+            transform: scale(1.1) translateY(-2px);
+        }
+
+        .blog-card .blog-label {
+            font-weight: 700;
+            font-size: clamp(0.7rem, 1.2vw, 0.9rem);
+            background: linear-gradient(135deg, #fff, #aaffff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .blog-card .blog-sub {
+            font-size: 0.5rem;
+            color: #5a8a9a;
+            margin-top: 4px;
+            letter-spacing: 0.5px;
+        }
+
+        .blog-card.selected {
+            border-color: #ff44e6;
+            box-shadow: 0 0 40px rgba(255, 68, 230, 0.3), inset 0 0 30px rgba(255, 68, 230, 0.05);
+            transform: scale(1.03);
         }
 
         @media (min-width: 768px) {
-            .orbital-wrapper { max-width: 600px; }
+            .blog-card:hover {
+                border-color: #ff44e6;
+                box-shadow: 0 0 40px rgba(255, 68, 230, 0.2);
+                transform: translateY(-6px) scale(1.02);
+            }
         }
 
-        @media (max-height: 550px) and (orientation: landscape) {
-            .hero-section { padding: 0.3rem 0.5rem 0.3rem 3rem; }
-            .orbital-wrapper { max-width: 360px; }
-            .footer-cosmic { padding: 0.4rem 0.5rem; font-size: 0.45rem; }
+        @media (max-width: 480px) {
+            .blog-grid {
+                grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+                gap: 0.7rem;
+            }
+            .blog-card {
+                min-height: 100px;
+                padding: 0.9rem 0.5rem;
+                border-radius: 18px;
+            }
+            .blog-card i {
+                font-size: 1.6rem;
+            }
+        }
+
+        /* DESCARGA */
+        .download-section {
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(12px);
+            border-radius: 40px;
+            padding: 0.6rem 1.2rem;
+            margin: 0.3rem 1.2rem 0.8rem;
+            border: 1.5px solid #ff44e6;
+            box-shadow: 0 0 25px rgba(255, 68, 230, 0.25);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            text-align: center;
+        }
+        @media (min-width: 480px) {
+            .download-section {
+                flex-direction: row;
+                padding: 0.6rem 1.5rem;
+                margin: 0.3rem 1.5rem 0.8rem;
+            }
+        }
+        .download-info h2 {
+            font-size: clamp(0.75rem, 2.5vw, 1.1rem);
+            font-weight: 900;
+            color: white;
+            text-shadow: 0 0 12px #ff44e6;
+        }
+        .download-info p {
+            font-size: clamp(0.5rem, 1.4vw, 0.75rem);
+            color: #aaffff;
+        }
+        .download-btn {
+            background: linear-gradient(145deg, #ff44e6, #7700ff);
+            border: none;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: clamp(0.65rem, 1.6vw, 0.85rem);
+            font-weight: 900;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: 0.25s;
+            box-shadow: 0 0 15px #ff44e6;
+            color: white;
+            white-space: nowrap;
+        }
+        .download-btn:active {
+            transform: scale(0.95);
+        }
+
+        /* FOOTER */
+        footer {
+            background: rgba(3, 5, 12, 0.8);
+            backdrop-filter: blur(12px);
+            border-top: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 0.8rem 0.8rem 0.5rem;
+        }
+        .footer-logo {
+            text-align: center;
+            font-size: 0.8rem;
+            font-weight: 900;
+            font-family: 'Syne', sans-serif;
+            color: white;
+            text-shadow: 0 0 12px cyan;
+            margin-bottom: 0.5rem;
+        }
+        .social-icons {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin: 5px 0;
+        }
+        .social-icons a {
+            width: 32px;
+            height: 32px;
+            background: rgba(0, 255, 255, 0.05);
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            color: white;
+            transition: 0.25s;
+        }
+        .social-icons a:active {
+            background: cyan;
+            color: black;
+            transform: scale(0.9);
+        }
+        @media (min-width: 1024px) {
+            .social-icons a:hover {
+                background: cyan;
+                color: black;
+                box-shadow: 0 0 20px cyan;
+                transform: translateY(-2px);
+            }
+        }
+        .copyright {
+            text-align: center;
+            font-size: 0.45rem;
+            color: #9bc0e0;
+            margin-top: 0.5rem;
         }
     </style>
 </head>
 <body>
-    <!-- CAPAS DE FONDO -->
-    <div class="bg-layer"></div>
-    <div class="overlay-glow"></div>
-    <div class="grid-holographic"></div>
-    <div class="scanner-line"></div>
-    <div id="particles-js"></div>
+<div class="bg-image-layer"></div>
+<div class="cyber-grid"></div>
+<div class="glow-overlay"></div>
+<div id="particles-js"></div>
 
-    <!-- OVERLAY SELECCIÓN -->
-    <div class="selection-overlay" id="selectionOverlay"></div>
-
+<div class="content">
     <!-- LOADER -->
-    <div class="loader-vip" id="loaderVip">
+    <div class="loader-container" id="loader">
         <div class="loader-ring"></div>
-        <div class="loader-text">YESLY ADELAY</div>
-        <div class="loader-sub">INICIALIZANDO TERMINAL CUÁNTICA</div>
+        <div class="loader-text">YESLY ADELAY VIP</div>
+        <div style="margin-top: 15px; font-size:0.8rem; letter-spacing:2px;">CARGANDO...</div>
     </div>
 
-    <div class="content">
-        <!-- HEADER -->
-        <header class="header-glass">
-            <div class="nav-container">
-                <div class="logo-brand">
-                    <i class="fas fa-chart-line logo-icon"></i>
-                    <span class="logo-name">YESLY ADELAY</span>
-                    <span class="badge-elite">VIP ELITE</span>
-                </div>
-                <div style="display:flex; gap:6px;">
-                    <button class="btn-neon" id="openLoginBtn" style="font-size:0.6rem; padding:4px 12px; background:transparent; border:1.5px solid rgba(0,255,255,0.3); color:#0cf; border-radius:30px; cursor:pointer; font-weight:700;">
-                        <i class="fas fa-key"></i>
-                    </button>
-                    <button class="btn-neon btn-neon-filled" id="openRegBtn" style="font-size:0.6rem; padding:4px 12px; background:linear-gradient(135deg,#0cf,#814eff); border:none; color:#000; border-radius:30px; cursor:pointer; font-weight:800; box-shadow:0 0 15px rgba(0,200,255,0.3);">
-                        <i class="fas fa-crown"></i>
-                    </button>
-                </div>
+    <header class="glass-header">
+        <div class="nav-container">
+            <div class="logo-area">
+                <i class="fas fa-crown logo-icon"></i>
+                <span class="logo-text">YESLY ADELAY</span>
             </div>
-        </header>
+            <div class="user-profile" id="userProfile">
+                <span class="user-name" id="displayName">
+                    <i class="fas fa-user-astronaut"></i>
+                    <span>Trader</span>
+                </span>
+                <button class="logout-btn" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>SALIR</span>
+                </button>
+            </div>
+        </div>
+    </header>
 
-        <!-- HERO ORBITAL -->
-        <div class="hero-section">
-            <div class="orbital-wrapper">
-                <div class="orbital-container" id="orbitalContainer">
-                    <!-- 3 Anillos -->
-                    <div class="orbit-ring orbit-ring-1"></div>
-                    <div class="orbit-ring orbit-ring-2"></div>
-                    <div class="orbit-ring orbit-ring-3"></div>
+    <main>
+        <div class="welcome-section">
+            <h1 class="welcome-title" id="welcomeMessage">BIENVENIDO, TRADER</h1>
+            <p class="welcome-subtitle">SELECCIONA UN BLOG O GRID PARA VER</p>
+        </div>
 
-                    <!-- ICONO CENTRAL - YESLY ADELAY -->
-                    <div class="center-icon" id="centerIcon">
-                        <i class="fas fa-crown"></i>
-                        <span class="center-text">YESLY<br>ADELAY</span>
-                    </div>
-
-                    <!-- MÓDULOS -->
-                    <div id="orbitModules"></div>
-                </div>
+        <div class="time-container">
+            <div class="neon-clock">
+                <i class="fas fa-clock"></i>
+                <div id="current-time">--:--:--</div>
+                <i class="fas fa-calendar-alt"></i>
+                <div id="current-date">Cargando...</div>
             </div>
         </div>
 
-        <!-- FOOTER -->
-        <footer class="footer-cosmic">
-            <p><i class="fas fa-crown"></i> YESLY ADELAY TRADING · 3 ÓRBITAS · 3+3+3 MÓDULOS</p>
-            <p style="font-size:0.5rem; margin-top:3px;">Toca un módulo para acceder · El trading involucra riesgos</p>
-        </footer>
-    </div>
-
-    <!-- MODALES -->
-    <div id="loginModal" class="modal-overlay">
-        <div class="modal-glass">
-            <div class="modal-header">
-                <span class="modal-title"><i class="fas fa-key"></i> ACCESO VIP</span>
-                <button class="modal-close" onclick="closeModal('loginModal')">&times;</button>
+        <!-- GRID DE BLOGS -->
+        <div class="blog-grid-wrapper">
+            <div class="blog-grid" id="blogGrid">
+                <!-- Los blogs se generan con JS -->
             </div>
-            <div id="loginError" class="modal-error"></div>
-            <input type="email" id="loginEmail" class="input-cyber" placeholder="Correo electrónico">
-            <input type="password" id="loginPassword" class="input-cyber" placeholder="Contraseña">
-            <button class="btn-modal" id="doLoginBtn">INGRESAR</button>
-            <div class="modal-switch">¿Sin cuenta? <span id="switchToReg">Regístrate</span></div>
         </div>
-    </div>
 
-    <div id="registerModal" class="modal-overlay">
-        <div class="modal-glass">
-            <div class="modal-header">
-                <span class="modal-title"><i class="fas fa-crown"></i> REGISTRO VIP</span>
-                <button class="modal-close" onclick="closeModal('registerModal')">&times;</button>
+        <div class="download-section">
+            <div class="download-info">
+                <h2><i class="fas fa-bolt"></i> YESLY ADELAY APP</h2>
+                <p>Poder cuántico en tu bolsillo</p>
             </div>
-            <div id="registerError" class="modal-error"></div>
-            <input type="text" id="regName" class="input-cyber" placeholder="Nombre completo">
-            <input type="email" id="regEmail" class="input-cyber" placeholder="Correo electrónico">
-            <input type="password" id="regPassword" class="input-cyber" placeholder="Contraseña (mínimo 6)">
-            <div class="terms-check">
-                <input type="checkbox" id="termsCheckbox">
-                <label>Acepto <span id="showTermsBtn">Términos y condiciones</span></label>
-            </div>
-            <button class="btn-modal" id="doRegisterBtn">ACTIVAR CUENTA</button>
-            <div class="modal-switch">¿Ya eres VIP? <span id="switchToLogin">Iniciar sesión</span></div>
+            <button class="download-btn" onclick="window.location.href='app.html'">
+                <i class="fas fa-download"></i> DESCARGAR
+            </button>
         </div>
-    </div>
+    </main>
 
-    <div id="termsModal" class="modal-overlay">
-        <div class="modal-glass">
-            <div class="modal-header">
-                <span class="modal-title"><i class="fas fa-file-contract"></i> TÉRMINOS</span>
-                <button class="modal-close" onclick="closeModal('termsModal')">&times;</button>
-            </div>
-            <div style="font-size:0.75rem; color:#aac0d0; line-height:1.6; margin:12px 0; position:relative; z-index:2;">
-                Al registrarse en YESLY ADELAY, acepta que las señales son informativas, el trading implica riesgo financiero, y declara ser mayor de edad. La plataforma usa IA predictiva, pero no garantiza resultados.
-            </div>
-            <button class="btn-modal" onclick="closeModal('termsModal')">ENTENDIDO</button>
+    <footer>
+        <div class="footer-logo">
+            <i class="fas fa-crown"></i> YESLY ADELAY TRADING VIP
         </div>
-    </div>
+        <div class="social-icons">
+            <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank"><i class="fab fa-blogger"></i></a>
+            <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank"><i class="fab fa-youtube"></i></a>
+            <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank"><i class="fab fa-tiktok"></i></a>
+            <a href="https://t.me/yesly_adelay" target="_blank"><i class="fab fa-telegram-plane"></i></a>
+            <a href="https://wa.me/593991987552" target="_blank"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank"><i class="fas fa-chart-line"></i></a>
+        </div>
+        <div class="copyright">
+            © 2025 YESLY ADELAY · BLOG GRID VIP
+        </div>
+    </footer>
+</div>
 
-    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-    <script>
-        // ========== PARTICULAS ==========
-        particlesJS('particles-js', {
-            particles: {
-                number: { value: 50, density: { enable: true, value_area: 600 } },
-                color: { value: "#00ffff" },
-                shape: { type: "circle" },
-                opacity: { value: 0.3, random: true },
-                size: { value: 2, random: true },
-                line_linked: { enable: true, distance: 120, color: "#00ffff", opacity: 0.1, width: 1 },
-                move: { enable: true, speed: 1.2, direction: "none", random: true, out_mode: "out" }
-            },
-            interactivity: {
-                events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
-            },
-            retina_detect: true
-        });
+<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+<script>
+    // ========== FIREBASE ==========
+    const firebaseConfig = {
+        apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
+        authDomain: "beaver-trading.firebaseapp.com",
+        databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
+        projectId: "beaver-trading",
+        storageBucket: "beaver-trading.firebasestorage.app",
+        messagingSenderId: "926610131904",
+        appId: "1:926610131904:web:c147bd337bd12b4d085625"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const database = firebase.database();
 
-        // ========== FIREBASE ==========
-        const firebaseConfig = {
-            apiKey: "AIzaSyB1Cs2os3tTfrMbYSAmDeJAGnP4tTtsFdw",
-            authDomain: "beaver-trading.firebaseapp.com",
-            databaseURL: "https://beaver-trading-default-rtdb.firebaseio.com",
-            projectId: "beaver-trading",
-            storageBucket: "beaver-trading.firebasestorage.app",
-            messagingSenderId: "926610131904",
-            appId: "1:926610131904:web:c147bd337bd12b4d085625"
-        };
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-        const db = firebase.database();
-
-        // ========== LOADER ==========
-        window.addEventListener('load', () => {
-            setTimeout(() => {
-                const loader = document.getElementById('loaderVip');
-                loader.classList.add('fade-out');
-                setTimeout(() => loader.style.display = 'none', 800);
-            }, 1500);
-        });
-
-        function showLoader(msg) {
-            const l = document.getElementById('loaderVip');
-            if (l.style.display === 'none') l.style.display = 'flex';
-            l.classList.remove('fade-out');
-            document.querySelector('.loader-text').innerText = msg || 'PROCESANDO';
-        }
-        function hideLoader() {
-            const l = document.getElementById('loaderVip');
-            l.classList.add('fade-out');
-            setTimeout(() => l.style.display = 'none', 500);
-        }
-
-        // ========== SISTEMA ORBITAL - 9 MÓDULOS (3+3+3) ==========
-        const modulesData = [
-            // Órbita 1 (Interna) - Redes Sociales
-            { icon: 'fab fa-blogger', label: 'Blogger', link: 'https://yesly-adelay-trading.blogspot.com/', type: 'social' },
-            { icon: 'fab fa-youtube', label: 'YouTube', link: 'https://www.youtube.com/@yeslyadelay2026', type: 'social' },
-            { icon: 'fab fa-facebook-f', label: 'Facebook', link: 'https://www.facebook.com/profile.php?id=61590192674936', type: 'social' },
-            // Órbita 2 (Media) - Redes Sociales
-            { icon: 'fab fa-tiktok', label: 'TikTok', link: 'https://www.tiktok.com/@yeslyadelaytrading2026', type: 'social' },
-            { icon: 'fab fa-telegram-plane', label: 'Telegram', link: 'https://t.me/yesly_adelay', type: 'social' },
-            { icon: 'fab fa-whatsapp', label: 'WhatsApp', link: 'https://wa.me/593991987552', type: 'social' },
-            // Órbita 3 (Externa) - Red Social + Accesos
-            { icon: 'fas fa-chart-line', label: 'MQL5', link: 'https://www.mql5.com/en/channels/yesly_adelay_trading_2026', type: 'social' },
-            { icon: 'fas fa-key', label: 'Login', link: '#login', type: 'access' },
-            { icon: 'fas fa-crown', label: 'Registro', link: '#register', type: 'access' }
-        ];
-
-        const orbitConfig = [
-            { count: 3, radius: 0.24, className: 'orbit-1', speedBase: 0.0035 },
-            { count: 3, radius: 0.42, className: 'orbit-2', speedBase: 0.0022 },
-            { count: 3, radius: 0.60, className: 'orbit-3', speedBase: 0.0012 }
-        ];
-
-        const container = document.getElementById('orbitalContainer');
-        const modulesWrapper = document.getElementById('orbitModules');
-        const centerIcon = document.getElementById('centerIcon');
-        const selectionOverlay = document.getElementById('selectionOverlay');
-
-        let isSelected = false;
-        let animationId = null;
-
-        const moduleAssignments = [];
-        let moduleIdx = 0;
-
-        orbitConfig.forEach((orbit, orbitIdx) => {
-            for (let i = 0; i < orbit.count; i++) {
-                if (moduleIdx < modulesData.length) {
-                    moduleAssignments.push({
-                        ...modulesData[moduleIdx],
-                        orbitIdx: orbitIdx,
-                        orbitIndex: i,
-                        totalInOrbit: orbit.count,
-                        radius: orbit.radius,
-                        className: orbit.className,
-                        speedBase: orbit.speedBase
-                    });
-                    moduleIdx++;
-                }
-            }
-        });
-
-        const elements = [];
-        moduleAssignments.forEach((mod, idx) => {
-            const el = document.createElement('div');
-            el.className = `module-orbit ${mod.className}`;
-            el.dataset.index = idx;
-            el.dataset.link = mod.link;
-            el.dataset.type = mod.type || 'social';
-            el.innerHTML = `<i class="${mod.icon}"></i><span>${mod.label}</span>`;
-            
-            el.addEventListener('click', () => {
-                if (mod.type === 'social') {
-                    // Red social: abrir en nueva pestaña
-                    window.open(mod.link, '_blank');
-                    return;
-                }
-                if (mod.type === 'access') {
-                    if (mod.link === '#login') {
-                        openModal('loginModal');
-                    } else if (mod.link === '#register') {
-                        openModal('registerModal');
-                    }
-                    return;
-                }
-                // Otros: efecto de selección
-                handleModuleClick(el, mod);
-            });
-            
-            modulesWrapper.appendChild(el);
-            elements.push({
-                el: el,
-                assignment: mod,
-                angle: (mod.orbitIndex / mod.totalInOrbit) * Math.PI * 2 + (mod.orbitIdx * 0.2),
-                isSelected: false
-            });
-        });
-
-        function handleModuleClick(el, mod) {
-            if (isSelected) return;
-            isSelected = true;
-            centerIcon.classList.add('hidden');
-            selectionOverlay.classList.add('active');
-            el.classList.add('selected');
-
-            elements.forEach(item => {
-                if (item.el !== el) {
-                    item.el.style.transition = 'all 0.3s ease';
-                    item.el.style.opacity = '0.2';
-                    item.el.style.transform = 'scale(0.6)';
-                }
-            });
-
-            setTimeout(() => {
-                isSelected = false;
-                centerIcon.classList.remove('hidden');
-                selectionOverlay.classList.remove('active');
-                el.classList.remove('selected');
-                elements.forEach(item => {
-                    item.el.style.opacity = '1';
-                    item.el.style.transform = 'scale(1)';
-                });
-            }, 1200);
-        }
-
-        function animateOrbit() {
-            if (isSelected) {
-                elements.forEach(item => {
-                    if (!item.el.classList.contains('selected')) {
-                        const mod = item.assignment;
-                        item.angle += mod.speedBase * 0.3;
-                        if (item.angle > Math.PI * 2) item.angle -= Math.PI * 2;
-
-                        const rect = container.getBoundingClientRect();
-                        const size = Math.min(rect.width, rect.height);
-                        const centerX = size / 2;
-                        const centerY = size / 2;
-                        const radius = size * mod.radius;
-
-                        const x = centerX + radius * Math.cos(item.angle) - item.el.offsetWidth / 2;
-                        const y = centerY + radius * Math.sin(item.angle) - item.el.offsetHeight / 2;
-
-                        item.el.style.left = x + 'px';
-                        item.el.style.top = y + 'px';
-                        item.el.style.transform = 'translate(0, 0)';
-                    }
-                });
-                animationId = requestAnimationFrame(animateOrbit);
-                return;
-            }
-
-            const rect = container.getBoundingClientRect();
-            const size = Math.min(rect.width, rect.height);
-            const centerX = size / 2;
-            const centerY = size / 2;
-
-            elements.forEach((item) => {
-                const mod = item.assignment;
-                item.angle += mod.speedBase;
-                if (item.angle > Math.PI * 2) item.angle -= Math.PI * 2;
-
-                const radius = size * mod.radius;
-                const x = centerX + radius * Math.cos(item.angle) - item.el.offsetWidth / 2;
-                const y = centerY + radius * Math.sin(item.angle) - item.el.offsetHeight / 2;
-
-                item.el.style.left = x + 'px';
-                item.el.style.top = y + 'px';
-                item.el.style.transform = 'translate(0, 0)';
-            });
-
-            animationId = requestAnimationFrame(animateOrbit);
-        }
-
+    // LOADER
+    window.addEventListener('load', () => {
         setTimeout(() => {
-            animateOrbit();
-        }, 100);
+            const loader = document.getElementById('loader');
+            loader.classList.add('fade-out');
+            setTimeout(() => loader.style.display = 'none', 800);
+        }, 1500);
+    });
 
-        // ========== MODALES ==========
-        function openModal(id) { document.getElementById(id).style.display = 'flex'; }
-        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        window.closeModal = closeModal;
+    function showLoaderMsg(msg) {
+        const loader = document.getElementById('loader');
+        if (loader.style.display === 'none') loader.style.display = 'flex';
+        loader.classList.remove('fade-out');
+        document.querySelector('.loader-text').textContent = msg || 'PROCESANDO...';
+    }
+    function hideLoader() {
+        const loader = document.getElementById('loader');
+        loader.classList.add('fade-out');
+        setTimeout(() => loader.style.display = 'none', 600);
+    }
 
-        document.getElementById('openLoginBtn').onclick = () => openModal('loginModal');
-        document.getElementById('openRegBtn').onclick = () => openModal('registerModal');
-        document.getElementById('switchToReg').onclick = () => { closeModal('loginModal'); openModal('registerModal'); };
-        document.getElementById('switchToLogin').onclick = () => { closeModal('registerModal'); openModal('loginModal'); };
-        document.getElementById('showTermsBtn').onclick = () => openModal('termsModal');
+    // PARTICULAS
+    particlesJS('particles-js', {
+        particles: {
+            number: { value: 40, density: { enable: true, value_area: 500 } },
+            color: { value: "#00ffff" },
+            shape: { type: "circle" },
+            opacity: { value: 0.25, random: true },
+            size: { value: 1.5, random: true },
+            line_linked: { enable: true, distance: 100, color: "#00ffff", opacity: 0.1, width: 1 },
+            move: { enable: true, speed: 0.6, direction: "none", random: true, out_mode: "out" }
+        },
+        interactivity: {
+            events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } }
+        },
+        retina_detect: true
+    });
 
-        // ========== LOGIN ==========
-        document.getElementById('doLoginBtn').onclick = () => {
-            const email = document.getElementById('loginEmail').value.trim();
-            const pwd = document.getElementById('loginPassword').value;
-            if (!email || !pwd) { document.getElementById('loginError').innerText = 'Completa todos los campos'; return; }
-            showLoader('VERIFICANDO CREDENCIALES');
-            auth.signInWithEmailAndPassword(email, pwd)
-                .then(() => {
-                    document.querySelector('.loader-text').innerText = 'REDIRIGIENDO';
-                    setTimeout(() => window.location.href = 'home.html', 1300);
-                })
-                .catch(err => { hideLoader(); document.getElementById('loginError').innerText = err.message; });
-        };
+    // RELOJ
+    function updateClock() {
+        const now = new Date();
+        document.getElementById('current-time').textContent = now.toLocaleTimeString('es-ES', { hour12: false });
+        document.getElementById('current-date').textContent = now.toLocaleDateString('es-ES', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+    }
+    updateClock();
+    setInterval(updateClock, 1000);
 
-        // ========== REGISTER ==========
-        document.getElementById('doRegisterBtn').onclick = () => {
-            const name = document.getElementById('regName').value.trim();
-            const email = document.getElementById('regEmail').value.trim();
-            const pass = document.getElementById('regPassword').value;
-            const terms = document.getElementById('termsCheckbox').checked;
-            if (!name || !email || !pass) { document.getElementById('registerError').innerText = 'Completa los campos'; return; }
-            if (!terms) { document.getElementById('registerError').innerText = 'Debes aceptar los términos'; return; }
-            if (pass.length < 6) { document.getElementById('registerError').innerText = 'Mínimo 6 caracteres'; return; }
-            showLoader('CREANDO PERFIL VIP');
-            auth.createUserWithEmailAndPassword(email, pass)
-                .then((uc) => {
-                    db.ref('users/' + uc.user.uid).set({
-                        fullName: name,
-                        email,
-                        createdAt: firebase.database.ServerValue.TIMESTAMP,
-                        termsAccepted: true
-                    }).then(() => {
-                        document.querySelector('.loader-text').innerText = 'REGISTRO EXITOSO';
-                        setTimeout(() => window.location.href = 'home.html', 1400);
-                    });
-                })
-                .catch(err => { hideLoader(); document.getElementById('registerError').innerText = err.message; });
-        };
+    // ===== DATOS DE BLOGS =====
+    const blogsData = [
+        { icon: 'fa-blogger', label: 'Blogger', link: 'https://yesly-adelay-trading.blogspot.com/', sub: 'Blog oficial' },
+        { icon: 'fa-youtube', label: 'YouTube', link: 'https://www.youtube.com/@yeslyadelay2026', sub: 'Videos' },
+        { icon: 'fa-facebook', label: 'Facebook', link: 'https://www.facebook.com/profile.php?id=61590192674936', sub: 'Perfil' },
+        { icon: 'fa-tiktok', label: 'TikTok', link: 'https://www.tiktok.com/@yeslyadelaytrading2026', sub: 'Cortos' },
+        { icon: 'fa-telegram', label: 'Telegram', link: 'https://t.me/yesly_adelay', sub: 'Canal' },
+        { icon: 'fa-whatsapp', label: 'WhatsApp', link: 'https://wa.me/593991987552', sub: 'Contacto' },
+        { icon: 'fa-chart-line', label: 'MQL5', link: 'https://www.mql5.com/en/channels/yesly_adelay_trading_2026', sub: 'Señales' },
+        { icon: 'fa-facebook-messenger', label: 'Messenger', link: 'https://www.facebook.com/messages/t/61590192674936', sub: 'Chat' },
+        { icon: 'fa-instagram', label: 'Instagram', link: 'https://www.instagram.com/yesly_adelay/', sub: 'Perfil' },
+        { icon: 'fa-twitter', label: 'Twitter / X', link: 'https://twitter.com/yesly_adelay', sub: 'Tweets' },
+        { icon: 'fa-github', label: 'GitHub', link: 'https://github.com/yeslyadelay', sub: 'Código' },
+        { icon: 'fa-js', label: 'Web3', link: 'https://yesly-adelay-web3.vercel.app', sub: 'DApp' },
+        { icon: 'fa-file-pdf', label: 'PDF', link: 'pdf.html', sub: 'Documentos' },
+        { icon: 'fa-cubes', label: 'Módulos', link: 'modulos.html', sub: 'Herramientas' },
+        { icon: 'fa-robot', label: 'IA', link: 'https://chat.openai.com', sub: 'Asistente' },
+        { icon: 'fa-coins', label: 'Crypto', link: 'crypto.html', sub: 'Mercado' },
+        { icon: 'fa-newspaper', label: 'Noticias', link: 'noticias.html', sub: 'Actualidad' },
+        { icon: 'fa-rocket', label: 'VIP', link: 'vip.html', sub: 'Acceso' }
+    ];
 
-        // ========== AUTO REDIRECT ==========
-        auth.onAuthStateChanged((user) => {
-            if (user && (window.location.pathname === '/' || window.location.pathname.includes('index.html'))) {
-                window.location.href = 'home.html';
-            }
+    const blogGrid = document.getElementById('blogGrid');
+
+    blogsData.forEach((blog) => {
+        const card = document.createElement('div');
+        card.className = 'blog-card';
+        card.innerHTML = `
+            <i class="fas ${blog.icon}"></i>
+            <span class="blog-label">${blog.label}</span>
+            <span class="blog-sub">${blog.sub || 'Blog'}</span>
+        `;
+        card.addEventListener('click', () => {
+            // Efecto de selección
+            document.querySelectorAll('.blog-card').forEach(el => el.classList.remove('selected'));
+            card.classList.add('selected');
+            // Redirigir después de un breve momento
+            setTimeout(() => {
+                window.open(blog.link, '_blank');
+                card.classList.remove('selected');
+            }, 400);
         });
+        blogGrid.appendChild(card);
+    });
 
-        // Recalcular en resize
-        let resizeTimeout;
-        window.addEventListener('resize', () => {
-            clearTimeout(resizeTimeout);
-            resizeTimeout = setTimeout(() => {}, 200);
+    // ========== AUTENTICACIÓN ==========
+    auth.onAuthStateChanged((user) => {
+        if (!user) {
+            window.location.href = 'index.html';
+        } else {
+            const userId = user.uid;
+            database.ref('users/' + userId).once('value').then((snapshot) => {
+                const userData = snapshot.val();
+                let displayName = 'Trader';
+                if (userData && userData.fullName) {
+                    displayName = userData.fullName.split(' ')[0];
+                } else if (userData && userData.name) {
+                    displayName = userData.name.split(' ')[0];
+                } else if (user.email) {
+                    displayName = user.email.split('@')[0];
+                }
+                document.querySelector('#displayName span').textContent = displayName;
+                document.getElementById('welcomeMessage').innerHTML = `BIENVENIDO, ${displayName.toUpperCase()}`;
+            }).catch(() => {
+                document.querySelector('#displayName span').textContent = 'TRADER';
+            });
+        }
+    });
+
+    // CERRAR SESIÓN
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+        showLoaderMsg('Cerrando sesión...');
+        auth.signOut().then(() => {
+            setTimeout(() => { window.location.href = 'index.html'; }, 1000);
+        }).catch((err) => {
+            alert('Error: ' + err.message);
+            hideLoader();
         });
-    </script>
+    });
+</script>
 </body>
 </html>

@@ -1,852 +1,840 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes, viewport-fit=cover">
-  <title>Fibonacci Grid Pro | YESLY ADELAY · Sistema Cuántico</title>
-  <!-- Font Awesome 6 -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <!-- Google Fonts: fusión futurista -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
-  <!-- Librerías PDF -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
-      background: #03050b;
-      min-height: 100vh;
-      position: relative;
-      overflow-x: hidden;
-      color: #eef5ff;
-      padding: 20px;
-    }
-
-    /* FONDO PRINCIPAL CON IMAGEN TRANSPARENTE */
-    .bg-image-layer {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
-      background-size: cover;
-      background-position: center center;
-      background-repeat: no-repeat;
-      opacity: 0.28;
-      z-index: 0;
-      pointer-events: none;
-    }
-
-    .cyber-grid {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background-image: 
-        repeating-linear-gradient(0deg, rgba(0, 255, 255, 0.08) 0px, rgba(0, 255, 255, 0.08) 1px, transparent 1px, transparent 40px),
-        repeating-linear-gradient(90deg, rgba(0, 255, 255, 0.08) 0px, rgba(0, 255, 255, 0.08) 1px, transparent 1px, transparent 40px);
-      z-index: 1;
-      pointer-events: none;
-    }
-
-    .glow-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.12), rgba(0, 0, 0, 0.75));
-      z-index: 2;
-      pointer-events: none;
-    }
-
-    .content {
-      position: relative;
-      z-index: 10;
-      max-width: 1400px;
-      margin: 0 auto;
-    }
-
-    /* LOADER */
-    .loader-container {
-      position: fixed;
-      inset: 0;
-      background: #01010be6;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      z-index: 10000;
-      transition: opacity 0.8s ease, visibility 0.8s;
-      backdrop-filter: blur(12px);
-    }
-    .loader-container.fade-out {
-      opacity: 0;
-      visibility: hidden;
-    }
-    .loader-ring {
-      width: 80px;
-      height: 80px;
-      border: 3px solid rgba(0,255,255,0.2);
-      border-top: 3px solid #0cf;
-      border-right: 3px solid #f0f;
-      border-radius: 50%;
-      animation: spin 1s linear infinite;
-      box-shadow: 0 0 25px cyan;
-    }
-    @keyframes spin {
-      0% { transform: rotate(0deg);}
-      100% { transform: rotate(360deg);}
-    }
-    .loader-text {
-      margin-top: 25px;
-      font-size: 1.4rem;
-      font-weight: 800;
-      letter-spacing: 4px;
-      background: linear-gradient(45deg, cyan, #ff44e6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-    /* HEADER */
-    .glass-header {
-      background: rgba(5, 10, 20, 0.7);
-      backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(0, 255, 255, 0.5);
-      border-radius: 60px;
-      padding: 0.8rem 1.8rem;
-      margin-bottom: 2rem;
-    }
-    .nav-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-    .logo-icon {
-      font-size: 2rem;
-      color: #0cf;
-      filter: drop-shadow(0 0 8px cyan);
-    }
-    .logo-text {
-      font-size: 1.4rem;
-      font-weight: 900;
-      font-family: 'Syne', sans-serif;
-      background: linear-gradient(135deg, #fff, #0cf);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-    .social-mini {
-      display: flex;
-      gap: 12px;
-    }
-    .social-mini a {
-      color: #0cf;
-      font-size: 1.2rem;
-      transition: 0.2s;
-    }
-    .social-mini a:hover {
-      color: #ff44e6;
-      transform: translateY(-2px);
-    }
-
-    /* MAIN CARD */
-    .main-card {
-      background: rgba(8, 16, 28, 0.85);
-      backdrop-filter: blur(20px);
-      border-radius: 2rem;
-      border: 2px solid cyan;
-      box-shadow: 0 0 60px rgba(0, 255, 255, 0.3);
-      overflow: hidden;
-      padding: 1.8rem;
-      transition: 0.3s;
-    }
-    @media (max-width: 640px) {
-      .main-card { padding: 1.2rem; }
-    }
-
-    h1 {
-      font-size: clamp(1.6rem, 6vw, 2.2rem);
-      font-weight: 900;
-      background: linear-gradient(135deg, #fff, cyan, #ff44e6);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      margin-bottom: 0.25rem;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
-    .sub {
-      color: #9effff;
-      border-left: 4px solid #f97316;
-      padding-left: 14px;
-      margin-bottom: 1.5rem;
-      font-size: 0.85rem;
-      letter-spacing: 1px;
-    }
-
-    .action-buttons {
-      display: flex;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-      flex-wrap: wrap;
-    }
-    .action-btn {
-      flex: 1;
-      padding: 12px 20px;
-      border-radius: 60px;
-      font-weight: 800;
-      font-size: 0.9rem;
-      background: linear-gradient(145deg, #0cf, #0077ff);
-      color: black;
-      border: none;
-      cursor: pointer;
-      transition: 0.2s;
-      text-align: center;
-      font-family: 'Syne', sans-serif;
-      letter-spacing: 1px;
-    }
-    .action-btn:hover {
-      background: linear-gradient(145deg, #ff44e6, #a05eff);
-      color: white;
-      transform: translateY(-3px);
-      box-shadow: 0 0 20px #ff44e6;
-    }
-
-    .input-panel {
-      background: rgba(0, 255, 255, 0.05);
-      border-radius: 1.5rem;
-      padding: 1.2rem;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(0, 255, 255, 0.3);
-    }
-    .input-group {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      align-items: flex-end;
-    }
-    .field {
-      flex: 1;
-      min-width: 130px;
-    }
-    .field label {
-      display: block;
-      font-weight: 800;
-      font-size: 0.7rem;
-      text-transform: uppercase;
-      color: #0cf;
-      margin-bottom: 4px;
-      letter-spacing: 2px;
-    }
-    .field input {
-      width: 100%;
-      padding: 12px 15px;
-      border-radius: 1rem;
-      border: 2px solid rgba(0, 255, 255, 0.4);
-      background: rgba(0, 0, 0, 0.4);
-      color: white;
-      font-weight: 600;
-      font-size: 0.9rem;
-      font-family: monospace;
-    }
-    .field input:focus {
-      outline: none;
-      border-color: #ff44e6;
-      box-shadow: 0 0 15px #ff44e6;
-    }
-    .btn-calc {
-      background: linear-gradient(95deg, #0cf, #a05eff);
-      color: black;
-      border: none;
-      padding: 12px 24px;
-      border-radius: 60px;
-      font-weight: 900;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .btn-calc:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 0 25px cyan;
-    }
-
-    /* TABLAS FIBONACCI */
-    .fib-table, .grid-card, .history-card {
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(10px);
-      border-radius: 1.2rem;
-      overflow: hidden;
-      margin-bottom: 1.5rem;
-      border: 1px solid rgba(0, 255, 255, 0.3);
-    }
-    .fib-header, .grid-header, .history-header {
-      background: linear-gradient(135deg, #0f172a, #030712);
-      color: white;
-      padding: 0.8rem 1.2rem;
-      font-weight: 800;
-      display: flex;
-      justify-content: space-between;
-      flex-wrap: wrap;
-      gap: 0.5rem;
-      border-bottom: 1px solid cyan;
-    }
-    .fib-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.8rem 1.2rem;
-      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-      flex-wrap: wrap;
-      gap: 8px;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-    .fib-row:hover {
-      background: rgba(0, 255, 255, 0.1);
-      transform: translateX(4px);
-    }
-    .fib-row.selected {
-      background: rgba(249, 115, 22, 0.3);
-      border-left: 4px solid #f97316;
-    }
-    .fib-level { font-weight: 800; color: #0cf; min-width: 70px; }
-    .fib-price { font-family: monospace; font-weight: 700; color: #eef5ff; }
-    .fib-zone { font-size: 0.7rem; color: #9effff; }
-
-    .grid-row {
-      display: flex;
-      justify-content: space-between;
-      padding: 0.8rem 1.2rem;
-      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-      flex-wrap: wrap;
-      gap: 8px;
-    }
-    .grid-row:hover { background: rgba(0, 255, 255, 0.05); }
-    .level-name { font-weight: 800; color: #0cf; min-width: 90px; }
-    .level-price { font-family: monospace; font-weight: 700; color: #eef5ff; }
-
-    .tag-sell { background: #dc2626; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; box-shadow: 0 0 8px #dc2626; }
-    .tag-buy { background: #16a34a; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; box-shadow: 0 0 8px #16a34a; }
-    .tag-resist { background: #f97316; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
-    .tag-support { background: #0284c7; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
-    .tag-neutral { background: #475569; color: white; padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 700; }
-
-    .range-selector {
-      background: rgba(249, 115, 22, 0.15);
-      padding: 1rem;
-      border-radius: 1rem;
-      margin-bottom: 1.5rem;
-      display: flex;
-      gap: 1rem;
-      align-items: center;
-      flex-wrap: wrap;
-      border: 1px solid #f97316;
-    }
-    .range-selector select {
-      padding: 10px 14px;
-      border-radius: 0.8rem;
-      border: 1px solid cyan;
-      background: #0a0f1a;
-      color: white;
-      font-weight: 600;
-      cursor: pointer;
-      flex: 1;
-      min-width: 180px;
-    }
-    .range-selector button {
-      background: #f97316;
-      color: white;
-      border: none;
-      padding: 10px 24px;
-      border-radius: 40px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .range-selector button:hover {
-      background: #ff44e6;
-      transform: translateY(-2px);
-    }
-    .range-selector button.clear-btn { background: #475569; }
-    .range-selector button.clear-btn:hover { background: #ff44e6; }
-
-    .two-columns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 1.5rem;
-    }
-    @media (max-width: 900px) {
-      .two-columns { grid-template-columns: 1fr; }
-    }
-
-    .history-list { max-height: 300px; overflow-y: auto; }
-    .history-item {
-      padding: 0.8rem;
-      border-bottom: 1px solid rgba(0, 255, 255, 0.2);
-      font-size: 0.8rem;
-      cursor: pointer;
-      transition: 0.2s;
-    }
-    .history-item:hover { background: rgba(0, 255, 255, 0.1); }
-    .info-hover {
-      font-size: 0.7rem;
-      color: #6b88b0;
-      text-align: center;
-      padding: 0.5rem;
-    }
-
-    /* SOCIAL ZONE */
-    .social-zone {
-      margin-top: 2rem;
-      padding: 1.5rem;
-      text-align: center;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      border-top: 1px solid cyan;
-      border-bottom: 1px solid cyan;
-      border-radius: 2rem;
-    }
-    .social-title {
-      font-size: 1rem;
-      letter-spacing: 3px;
-      margin-bottom: 1rem;
-      color: #9effff;
-    }
-    .social-icons-flex {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
-      gap: 15px;
-    }
-    .social-icon-fut {
-      width: 50px;
-      height: 50px;
-      background: rgba(0, 200, 255, 0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 24px;
-      color: #0cf;
-      transition: 0.25s;
-      border: 1.5px solid #0cf;
-      text-decoration: none;
-    }
-    .social-icon-fut:hover {
-      background: cyan;
-      color: black;
-      transform: scale(1.1);
-      box-shadow: 0 0 25px cyan;
-    }
-
-    footer {
-      margin-top: 2rem;
-      text-align: center;
-      padding: 1rem;
-      color: #6b88b0;
-      font-size: 0.75rem;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yesly Adelay Trading</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: #0a0a1a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Fondo futurista con partículas */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(ellipse at 20% 50%, rgba(0, 255, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 50%, rgba(255, 0, 255, 0.05) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 100%, rgba(0, 255, 150, 0.03) 0%, transparent 50%);
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        /* Líneas de cuadrícula futurista */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 40px 40px;
+            z-index: 0;
+            pointer-events: none;
+        }
+        
+        .container {
+            background: rgba(10, 10, 30, 0.85);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 255, 255, 0.15);
+            box-shadow: 
+                0 0 40px rgba(0, 255, 255, 0.05),
+                inset 0 0 40px rgba(0, 255, 255, 0.02);
+            width: 90%;
+            max-width: 800px;
+            padding: 30px;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s ease;
+        }
+        
+        .container:hover {
+            box-shadow: 
+                0 0 60px rgba(0, 255, 255, 0.08),
+                inset 0 0 60px rgba(0, 255, 255, 0.03);
+        }
+        
+        h1 {
+            color: #00ffff;
+            margin-bottom: 25px;
+            font-size: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+            letter-spacing: 2px;
+        }
+        
+        h1 i {
+            color: #ff00ff;
+            font-size: 36px;
+            text-shadow: 0 0 30px rgba(255, 0, 255, 0.4);
+            animation: pulse-glow 2s ease-in-out infinite;
+        }
+        
+        @keyframes pulse-glow {
+            0%, 100% { text-shadow: 0 0 20px rgba(255, 0, 255, 0.3); }
+            50% { text-shadow: 0 0 40px rgba(255, 0, 255, 0.6); }
+        }
+        
+        .description {
+            color: rgba(0, 255, 255, 0.7);
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 17px;
+            border: 1px solid rgba(0, 255, 255, 0.08);
+            padding: 15px;
+            border-radius: 12px;
+            background: rgba(0, 255, 255, 0.03);
+        }
+        
+        /* Selector giratorio mejorado - Estilo futurista */
+        .wheel-selector {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 30px;
+            position: relative;
+        }
+        
+        .wheel-container {
+            position: relative;
+            width: 200px;
+            height: 200px;
+            margin: 20px auto;
+        }
+        
+        /* Anillo de neón alrededor de la rueda */
+        .wheel-container::before {
+            content: '';
+            position: absolute;
+            top: -4px;
+            left: -4px;
+            right: -4px;
+            bottom: -4px;
+            border-radius: 50%;
+            background: conic-gradient(
+                from 0deg,
+                #00ffff,
+                #ff00ff,
+                #00ffff,
+                #ff00ff,
+                #00ffff
+            );
+            opacity: 0.3;
+            z-index: 0;
+            animation: rotate-glow 4s linear infinite;
+        }
+        
+        @keyframes rotate-glow {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .wheel {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            background: conic-gradient(#0088ff 0deg 180deg, #ff0044 180deg 360deg);
+            position: relative;
+            box-shadow: 
+                0 0 30px rgba(0, 136, 255, 0.2),
+                inset 0 0 30px rgba(0, 0, 0, 0.5);
+            transition: transform 0.8s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            cursor: pointer;
+            z-index: 1;
+        }
+        
+        .wheel:hover {
+            box-shadow: 
+                0 0 50px rgba(0, 136, 255, 0.3),
+                inset 0 0 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .wheel-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 22px;
+            font-weight: bold;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 40px rgba(0, 255, 255, 0.3);
+            z-index: 2;
+            pointer-events: none;
+            letter-spacing: 2px;
+        }
+        
+        .wheel-indicator {
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 3;
+            pointer-events: none;
+        }
+        
+        .wheel-indicator::before {
+            content: '';
+            display: block;
+            width: 0;
+            height: 0;
+            border-left: 15px solid transparent;
+            border-right: 15px solid transparent;
+            border-top: 20px solid #00ffff;
+            filter: drop-shadow(0 0 15px rgba(0, 255, 255, 0.6));
+        }
+        
+        .wheel-label {
+            position: absolute;
+            font-weight: bold;
+            color: white;
+            text-shadow: 0 0 20px rgba(0, 0, 0, 0.8), 0 0 30px rgba(0, 255, 255, 0.2);
+            font-size: 18px;
+            letter-spacing: 1px;
+        }
+        
+        .label-buy {
+            top: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #0088ff;
+            text-shadow: 0 0 20px rgba(0, 136, 255, 0.3);
+        }
+        
+        .label-sell {
+            bottom: 25px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #ff0044;
+            text-shadow: 0 0 20px rgba(255, 0, 68, 0.3);
+        }
+        
+        .input-container {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .input-box {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .input-box label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: rgba(0, 255, 255, 0.8);
+            font-size: 16px;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(0, 255, 255, 0.1);
+        }
+        
+        input {
+            padding: 14px 18px;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            border-radius: 10px;
+            font-size: 18px;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            color: #00ffff;
+            transition: all 0.3s;
+            box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.5);
+        }
+        
+        input::placeholder {
+            color: rgba(0, 255, 255, 0.3);
+        }
+        
+        input:focus {
+            border-color: #00ffff;
+            outline: none;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.1), inset 0 2px 10px rgba(0, 0, 0, 0.5);
+            background: rgba(0, 0, 0, 0.6);
+        }
+        
+        .buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.15), rgba(255, 0, 255, 0.15));
+            color: #00ffff;
+            border: 1px solid rgba(0, 255, 255, 0.2);
+            padding: 14px 28px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 17px;
+            font-weight: bold;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            letter-spacing: 1px;
+            backdrop-filter: blur(10px);
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            border-color: #00ffff;
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.15), 0 7px 20px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(135deg, rgba(0, 255, 255, 0.25), rgba(255, 0, 255, 0.25));
+        }
+        
+        button.clear {
+            border-color: rgba(255, 0, 68, 0.3);
+            color: #ff0044;
+            background: linear-gradient(135deg, rgba(255, 0, 68, 0.1), rgba(255, 0, 0, 0.1));
+        }
+        
+        button.clear:hover {
+            border-color: #ff0044;
+            box-shadow: 0 0 30px rgba(255, 0, 68, 0.15);
+            background: linear-gradient(135deg, rgba(255, 0, 68, 0.2), rgba(255, 0, 0, 0.2));
+        }
+        
+        .results-container {
+            display: flex;
+            gap: 20px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .results {
+            text-align: left;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 255, 0.08);
+            flex: 1;
+            min-width: 300px;
+            backdrop-filter: blur(10px);
+            transition: all 0.3s ease;
+        }
+        
+        .results:hover {
+            border-color: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 30px rgba(0, 255, 255, 0.03);
+        }
+        
+        .results h2 {
+            color: #00ffff;
+            margin-bottom: 20px;
+            text-align: center;
+            font-size: 26px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.15);
+        }
+        
+        .result-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 12px;
+        }
+        
+        .result-item {
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(0, 255, 255, 0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s;
+        }
+        
+        .result-item:hover {
+            transform: translateX(5px);
+            border-color: rgba(0, 255, 255, 0.15);
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.03);
+        }
+        
+        .result-item.extension {
+            background: rgba(255, 200, 0, 0.05);
+            border-color: rgba(255, 200, 0, 0.1);
+        }
+        
+        .result-item.extension-advanced {
+            background: rgba(255, 0, 255, 0.05);
+            border-color: rgba(255, 0, 255, 0.15);
+            border-left: 3px solid #ff00ff;
+        }
+        
+        .result-item span {
+            color: rgba(255, 255, 255, 0.8);
+        }
+        
+        .percentage {
+            font-weight: bold;
+            font-size: 18px;
+        }
+        
+        .level-236 { color: #4dc3ff; }
+        .level-382 { color: #00ff88; }
+        .level-500 { color: #ffcc00; }
+        .level-618 { color: #ff4466; }
+        .level-786 { color: #b388ff; }
+        .level-1618 { color: #ff8800; }
+        .level-2618 { color: #00ffcc; }
+        .level-0382 { color: #ff66b2; }
+        .level-4236 { color: #aa66ff; }
+        
+        .fib-sequence {
+            margin-top: 20px;
+            font-style: italic;
+            color: rgba(0, 255, 255, 0.4);
+            text-align: center;
+            font-size: 16px;
+            padding: 12px;
+            background: rgba(0, 255, 255, 0.03);
+            border-radius: 8px;
+            border: 1px solid rgba(0, 255, 255, 0.05);
+        }
+        
+        .explanation {
+            margin-top: 30px;
+            padding: 20px;
+            background: rgba(0, 255, 255, 0.03);
+            border-radius: 12px;
+            border-left: 3px solid #00ffff;
+            border: 1px solid rgba(0, 255, 255, 0.08);
+        }
+        
+        .explanation h3 {
+            color: #00ffff;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-shadow: 0 0 20px rgba(0, 255, 255, 0.1);
+        }
+        
+        .explanation h3 i {
+            color: #ff00ff;
+            text-shadow: 0 0 20px rgba(255, 0, 255, 0.2);
+        }
+        
+        .explanation p {
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        /* Scrollbar personalizada */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.3);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: rgba(0, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(0, 255, 255, 0.5);
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px 20px;
+            }
+            
+            h1 {
+                font-size: 28px;
+            }
+            
+            .input-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .input-box {
+                width: 100%;
+                max-width: 280px;
+            }
+            
+            .buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            button {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+            
+            .results-container {
+                flex-direction: column;
+            }
+            
+            .results {
+                min-width: auto;
+            }
+            
+            .wheel-container {
+                width: 180px;
+                height: 180px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 24px;
+            }
+            
+            h1 i {
+                font-size: 28px;
+            }
+            
+            .wheel-container {
+                width: 160px;
+                height: 160px;
+            }
+            
+            .wheel-text {
+                font-size: 20px;
+            }
+            
+            .label-buy, .label-sell {
+                font-size: 16px;
+            }
+            
+            input {
+                padding: 12px 15px;
+                font-size: 16px;
+            }
+            
+            button {
+                padding: 12px 20px;
+                font-size: 16px;
+            }
+            
+            .results {
+                padding: 20px 15px;
+            }
+            
+            .results h2 {
+                font-size: 22px;
+            }
+        }
+    </style>
 </head>
 <body>
-<div class="bg-image-layer"></div>
-<div class="cyber-grid"></div>
-<div class="glow-overlay"></div>
-
-<div class="content">
-  <div class="loader-container" id="loader">
-    <div class="loader-ring"></div>
-    <div class="loader-text">FIBONACCI GRID PRO</div>
-    <div style="margin-top: 20px; font-size:0.9rem;">CARGANDO SISTEMA CUÁNTICO</div>
-  </div>
-
-  <div class="glass-header">
-    <div class="nav-container">
-      <div class="logo-area">
-        <i class="fas fa-chart-line logo-icon"></i>
-        <span class="logo-text">YESLY ADELAY | FIBONACCI GRID</span>
-      </div>
-      <div class="social-mini">
-        <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank"><i class="fab fa-blogger"></i></a>
-        <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank"><i class="fab fa-youtube"></i></a>
-        <a href="https://t.me/yesly_adelay" target="_blank"><i class="fab fa-telegram"></i></a>
-      </div>
-    </div>
-  </div>
-
-  <div class="main-card" id="reportContent">
-    <h1><i class="fas fa-chart-simple"></i> Fibonacci Grid Pro</h1>
-    <div class="sub">Sistema de Cuadrículas · Selecciona dos niveles para crear una nueva escala Fibonacci</div>
-
-    <div class="action-buttons">
-      <button id="downloadPDFBtn" class="action-btn"><i class="fas fa-file-pdf"></i> DESCARGAR PDF</button>
-      <button id="saveOperationBtn" class="action-btn"><i class="fas fa-save"></i> GUARDAR OPERACIÓN</button>
-    </div>
-
-    <div class="input-panel">
-      <div class="input-group">
-        <div class="field"><label><i class="fas fa-arrow-up"></i> MÁXIMO</label><input type="text" id="maxInput" value="4735.81"></div>
-        <div class="field"><label><i class="fas fa-arrow-down"></i> MÍNIMO</label><input type="text" id="minInput" value="4319.45"></div>
-        <button class="btn-calc" id="updateBtn"><i class="fas fa-sync-alt"></i> CALCULAR</button>
-      </div>
-    </div>
-
-    <!-- Niveles Fibonacci base -->
-    <div class="fib-table">
-      <div class="fib-header">
-        <span>📐 NIVELES FIBONACCI (BASE)</span>
-        <span>✨ Haz clic en dos niveles: MÁXIMO y MÍNIMO</span>
-      </div>
-      <div id="fibLevelsList"></div>
-      <div class="info-hover"><i class="fas fa-hand-pointer"></i> Clic para seleccionar | Primer clic = MÁXIMO, segundo = MÍNIMO</div>
-    </div>
-
-    <!-- Selector de rango -->
-    <div class="range-selector">
-      <span style="font-weight:800; color:#0cf;">🎯 SELECCIONA DOS NIVELES:</span>
-      <select id="selectMax"><option value="">MÁXIMO</option></select>
-      <select id="selectMin"><option value="">MÍNIMO</option></select>
-      <button id="applyRangeBtn">APLICAR RANGO</button>
-      <button id="clearRangeBtn" class="clear-btn">LIMPIAR</button>
-    </div>
-
-    <!-- Nueva escala Fibonacci -->
-    <div id="newScaleSection" style="display:none;">
-      <div class="fib-table">
-        <div class="fib-header">
-          <span>📐 NUEVA ESCALA FIBONACCI</span>
-          <span id="newScaleRange" style="color:#0cf;"></span>
+    <div class="container">
+        <h1><i class="fas fa-rocket"></i> Yesly Adelay Trading</h1>
+        
+        <p class="description">
+            <i class="fas fa-microchip" style="color: #ff00ff; margin-right: 8px;"></i>
+            Programas de formación avanzada. Tecnología cuántica, inteligencia artificial y estrategias probadas para maximizar tus ganancias. 
+            <span style="color: #00ffff; display: block; margin-top: 10px; font-size: 14px;">
+                <i class="fas fa-shield-alt"></i> Protége siempre tu capital. Un buen trader sobrevive para operar otro día.
+            </span>
+        </p>
+        
+        <div class="wheel-selector">
+            <div class="wheel-container">
+                <div class="wheel" id="mode-wheel">
+                    <div class="wheel-text" id="wheel-mode">BUY</div>
+                    <div class="wheel-indicator"></div>
+                    <div class="wheel-label label-buy">BUY</div>
+                    <div class="wheel-label label-sell">SELL</div>
+                </div>
+            </div>
         </div>
-        <div id="newScaleList"></div>
-      </div>
-
-      <div class="two-columns">
-        <div class="grid-card">
-          <div class="grid-header">📊 RANGO: 0% → 23.6% (SELL/BUY)</div>
-          <div id="range1Grid"></div>
+        
+        <div class="input-container">
+            <div class="input-box">
+                <label for="fib2"><i class="fas fa-arrow-up" style="color: #0088ff; margin-right: 5px;"></i> Punto A (Máximo):</label>
+                <input type="number" id="fib2" placeholder="0.0000" min="0" step="any">
+            </div>
+            <div class="input-box">
+                <label for="fib1"><i class="fas fa-arrow-down" style="color: #ff0044; margin-right: 5px;"></i> Punto B (Mínimo):</label>
+                <input type="number" id="fib1" placeholder="0.0000" min="0" step="any">
+            </div>
         </div>
-        <div class="grid-card">
-          <div class="grid-header">📈 RANGO: 76.2% → 100% (BUY/SELL)</div>
-          <div id="range2Grid"></div>
+        
+        <div class="buttons">
+            <button onclick="calculateLevels()">
+                <i class="fas fa-calculator"></i> Calcular Niveles
+            </button>
+            <button class="clear" onclick="clearFields()">
+                <i class="fas fa-broom"></i> Limpiar
+            </button>
         </div>
-      </div>
+        
+        <div class="results-container">
+            <div class="results" id="retracement-results" style="display: none;">
+                <h2><i class="fas fa-level-down-alt"></i> Retrocesos</h2>
+                <div class="result-grid" id="retracement-items"></div>
+            </div>
+            
+            <div class="results" id="extension-results" style="display: none;">
+                <h2><i class="fas fa-level-up-alt"></i> Extensiones</h2>
+                <div class="result-grid" id="extension-items"></div>
+            </div>
+        </div>
+        
+        <p class="fib-sequence" id="sequence-info" style="display: none;"></p>
+        
+        <div class="explanation">
+            <h3><i class="fas fa-brain"></i> ¿Cómo funciona?</h3>
+            <p>El trading es 80% psicología y 20% técnica. Controlar tus emociones es la clave del éxito. <span style="color: #00ffff;">La tecnología cuántica</span> y la <span style="color: #ff00ff;">inteligencia artificial</span> potencian tus decisiones.</p>
+        </div>
     </div>
 
-    <div class="history-card">
-      <div class="history-header">📜 HISTORIAL DE OPERACIONES GUARDADAS</div>
-      <div id="historyList" class="history-list"></div>
-    </div>
-  </div>
-
-  <!-- REDES SOCIALES COMPLETAS -->
-  <div class="social-zone">
-    <div class="social-title"><i class="fas fa-globe"></i> CONECTA CON LA ÉLITE <i class="fas fa-globe"></i></div>
-    <div class="social-icons-flex">
-      <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank" class="social-icon-fut"><i class="fab fa-blogger"></i></a>
-      <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank" class="social-icon-fut"><i class="fab fa-youtube"></i></a>
-      <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank" class="social-icon-fut"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank" class="social-icon-fut"><i class="fab fa-tiktok"></i></a>
-      <a href="https://t.me/yesly_adelay" target="_blank" class="social-icon-fut"><i class="fab fa-telegram-plane"></i></a>
-      <a href="https://wa.me/593991987552" target="_blank" class="social-icon-fut"><i class="fab fa-whatsapp"></i></a>
-      <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank" class="social-icon-fut"><i class="fas fa-chart-line"></i></a>
-    </div>
-  </div>
-
-  <footer>
-    <i class="fas fa-crown"></i> YESLY ADELAY TRADING · Fibonacci Grid Cuántico
-  </footer>
-</div>
-
-<script>
-  // LOADER
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      const loader = document.getElementById('loader');
-      loader.classList.add('fade-out');
-      setTimeout(() => loader.style.display = 'none', 800);
-    }, 1500);
-  });
-
-  let currentMax = 4735.81;
-  let currentMin = 4319.45;
-  let baseLevels = {};
-  let selectedMaxPrice = null;
-  let selectedMaxLabel = null;
-  let selectedMinPrice = null;
-  let selectedMinLabel = null;
-  let newScaleLevels = {};
-
-  const maxInput = document.getElementById('maxInput');
-  const minInput = document.getElementById('minInput');
-  const updateBtn = document.getElementById('updateBtn');
-  const fibLevelsList = document.getElementById('fibLevelsList');
-  const selectMax = document.getElementById('selectMax');
-  const selectMin = document.getElementById('selectMin');
-  const applyRangeBtn = document.getElementById('applyRangeBtn');
-  const clearRangeBtn = document.getElementById('clearRangeBtn');
-  const newScaleSection = document.getElementById('newScaleSection');
-  const newScaleList = document.getElementById('newScaleList');
-  const newScaleRange = document.getElementById('newScaleRange');
-  const range1Grid = document.getElementById('range1Grid');
-  const range2Grid = document.getElementById('range2Grid');
-  const downloadPDFBtn = document.getElementById('downloadPDFBtn');
-  const saveOperationBtn = document.getElementById('saveOperationBtn');
-  const historyList = document.getElementById('historyList');
-
-  let operationsHistory = JSON.parse(localStorage.getItem('fibonacci_operations') || '[]');
-
-  function formatPrice(value) {
-    return value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }).replace(/,/g, '');
-  }
-
-  function calculateBaseLevels(max, min) {
-    const diff = max - min;
-    return {
-      '0%': max,
-      '23.6%': max - (diff * 0.236),
-      '38.2%': max - (diff * 0.382),
-      '50%': max - (diff * 0.50),
-      '61.8%': max - (diff * 0.618),
-      '76.2%': max - (diff * 0.762),
-      '100%': min
-    };
-  }
-
-  function getZoneText(level) {
-    if (level === '0%') return '🔴 Zona Resistencia';
-    if (level === '100%') return '🟢 Zona Soporte';
-    if (level === '23.6%' || level === '38.2%') return '📉 SELL - Zona venta';
-    if (level === '50%') return '⚖️ NEUTRO';
-    if (level === '61.8%' || level === '76.2%') return '📈 BUY - Zona compra';
-    return '';
-  }
-
-  function renderBaseFibonacci() {
-    baseLevels = calculateBaseLevels(currentMax, currentMin);
-    const fibOrder = ['0%', '23.6%', '38.2%', '50%', '61.8%', '76.2%', '100%'];
-    let html = '';
-    fibOrder.forEach(level => {
-      const price = baseLevels[level];
-      const zoneText = getZoneText(level);
-      const isSelected = (selectedMaxPrice === price) || (selectedMinPrice === price);
-      const selectedClass = isSelected ? 'selected' : '';
-      html += `<div class="fib-row ${selectedClass}" onclick="selectBaseLevel('${level}', ${price})">
-        <div class="fib-level">${level}</div>
-        <div class="fib-price">${formatPrice(price)}</div>
-        <div class="fib-zone">${zoneText}</div>
-      </div>`;
-    });
-    fibLevelsList.innerHTML = html;
-    
-    let options = '<option value="">MÁXIMO</option>';
-    fibOrder.forEach(level => { options += `<option value="${level}|${baseLevels[level]}">${level} - ${formatPrice(baseLevels[level])}</option>`; });
-    selectMax.innerHTML = options;
-    options = '<option value="">MÍNIMO</option>';
-    fibOrder.forEach(level => { options += `<option value="${level}|${baseLevels[level]}">${level} - ${formatPrice(baseLevels[level])}</option>`; });
-    selectMin.innerHTML = options;
-  }
-
-  window.selectBaseLevel = function(level, price) {
-    if (selectedMaxPrice === null) {
-      selectedMaxPrice = price;
-      selectedMaxLabel = level;
-      alert(`✅ MÁXIMO seleccionado: ${level} = ${formatPrice(price)}\nAhora selecciona el MÍNIMO (precio menor)`);
-    } else if (selectedMinPrice === null) {
-      if (price >= selectedMaxPrice) {
-        alert(`❌ El MÍNIMO debe ser menor que el MÁXIMO (${formatPrice(selectedMaxPrice)})`);
-        return;
-      }
-      selectedMinPrice = price;
-      selectedMinLabel = level;
-      alert(`✅ MÍNIMO seleccionado: ${level} = ${formatPrice(price)}\n¡Nueva escala Fibonacci creada!`);
-      generateNewScale();
-    } else {
-      selectedMaxPrice = price;
-      selectedMaxLabel = level;
-      selectedMinPrice = null;
-      selectedMinLabel = null;
-      alert(`✅ Selección reiniciada. MÁXIMO: ${level} = ${formatPrice(price)}`);
-      newScaleSection.style.display = 'none';
-    }
-    renderBaseFibonacci();
-  };
-
-  function generateNewScale() {
-    if (selectedMaxPrice === null || selectedMinPrice === null) return;
-    const newMax = selectedMaxPrice;
-    const newMin = selectedMinPrice;
-    const diff = newMax - newMin;
-    newScaleLevels = {
-      '0%': newMax,
-      '23.6%': newMax - (diff * 0.236),
-      '38.2%': newMax - (diff * 0.382),
-      '50%': newMax - (diff * 0.50),
-      '61.8%': newMax - (diff * 0.618),
-      '76.2%': newMax - (diff * 0.762),
-      '100%': newMin
-    };
-    const fibOrder = ['0%', '23.6%', '38.2%', '50%', '61.8%', '76.2%', '100%'];
-    let html = '';
-    fibOrder.forEach(level => {
-      const price = newScaleLevels[level];
-      html += `<div class="fib-row"><div class="fib-level">${level}</div><div class="fib-price">${formatPrice(price)}</div><div class="fib-zone">${getZoneText(level)}</div></div>`;
-    });
-    newScaleList.innerHTML = html;
-    newScaleRange.innerHTML = `${selectedMaxLabel} → ${selectedMinLabel}`;
-    generateRange1();
-    generateRange2();
-    newScaleSection.style.display = 'block';
-  }
-  
-  function generateRange1() {
-    const startPrice = newScaleLevels['0%'];
-    const endPrice = newScaleLevels['23.6%'];
-    const diffTotal = startPrice - endPrice;
-    const levels = [
-      { pct: 0, name: '0%', type: 'resist' },
-      { pct: 4.72, name: '4.72%', type: 'sell' },
-      { pct: 9.44, name: '9.44%', type: 'sell' },
-      { pct: 14.16, name: '14.16%', type: 'buy' },
-      { pct: 18.88, name: '18.88%', type: 'buy' },
-      { pct: 23.6, name: '23.6%', type: 'support' }
-    ];
-    let html = `<div class="grid-row" style="background:rgba(0,255,255,0.1);font-weight:800;"><div class="level-name">NIVEL</div><div class="level-price">PRECIO</div><div class="level-tag">SEÑAL</div></div>`;
-    for (let level of levels) {
-      let price = (level.pct === 0) ? startPrice : (level.pct === 23.6) ? endPrice : startPrice - (diffTotal * level.pct / 100);
-      let tagClass = '', tagText = '';
-      if (level.type === 'resist') { tagClass = 'tag-resist'; tagText = '🔴 RESISTENCIA'; }
-      else if (level.type === 'sell') { tagClass = 'tag-sell'; tagText = '🔻 SELL'; }
-      else if (level.type === 'buy') { tagClass = 'tag-buy'; tagText = '📈 BUY'; }
-      else if (level.type === 'support') { tagClass = 'tag-support'; tagText = '🟢 SOPORTE'; }
-      html += `<div class="grid-row"><div class="level-name">🏔️ ${level.name}</div><div class="level-price">${formatPrice(price)}</div><div class="level-tag"><span class="${tagClass}">${tagText}</span></div></div>`;
-    }
-    range1Grid.innerHTML = html;
-  }
-  
-  function generateRange2() {
-    const startPrice = newScaleLevels['76.2%'];
-    const endPrice = newScaleLevels['100%'];
-    const globalDiff = currentMax - currentMin;
-    const levels = [
-      { pct: 76.2, name: '76.2%', type: 'resist' },
-      { pct: 80.92, name: '80.92%', type: 'sell' },
-      { pct: 85.64, name: '85.64%', type: 'sell' },
-      { pct: 90.36, name: '90.36%', type: 'buy' },
-      { pct: 95.08, name: '95.08%', type: 'buy' },
-      { pct: 100, name: '100%', type: 'support' }
-    ];
-    let html = `<div class="grid-row" style="background:rgba(0,255,255,0.1);font-weight:800;"><div class="level-name">NIVEL</div><div class="level-price">PRECIO</div><div class="level-tag">SEÑAL</div></div>`;
-    for (let level of levels) {
-      let price = (level.pct === 76.2) ? startPrice : (level.pct === 100) ? endPrice : currentMax - (globalDiff * level.pct / 100);
-      let tagClass = '', tagText = '';
-      if (level.type === 'resist') { tagClass = 'tag-resist'; tagText = '🔴 RESISTENCIA'; }
-      else if (level.type === 'sell') { tagClass = 'tag-sell'; tagText = '🔻 SELL'; }
-      else if (level.type === 'buy') { tagClass = 'tag-buy'; tagText = '📈 BUY'; }
-      else if (level.type === 'support') { tagClass = 'tag-support'; tagText = '🟢 SOPORTE'; }
-      html += `<div class="grid-row"><div class="level-name">🏔️ ${level.name}</div><div class="level-price">${formatPrice(price)}</div><div class="level-tag"><span class="${tagClass}">${tagText}</span></div></div>`;
-    }
-    range2Grid.innerHTML = html;
-  }
-  
-  function applyRangeFromSelect() {
-    const maxVal = selectMax.value;
-    const minVal = selectMin.value;
-    if (!maxVal || !minVal) { alert("Selecciona ambos niveles"); return; }
-    const [maxLabel, maxPrice] = maxVal.split('|');
-    const [minLabel, minPrice] = minVal.split('|');
-    if (parseFloat(minPrice) >= parseFloat(maxPrice)) { alert("El MÍNIMO debe ser menor"); return; }
-    selectedMaxPrice = parseFloat(maxPrice);
-    selectedMaxLabel = maxLabel;
-    selectedMinPrice = parseFloat(minPrice);
-    selectedMinLabel = minLabel;
-    generateNewScale();
-    renderBaseFibonacci();
-  }
-  
-  function clearSelection() {
-    selectedMaxPrice = null; selectedMaxLabel = null; selectedMinPrice = null; selectedMinLabel = null;
-    newScaleSection.style.display = 'none';
-    selectMax.value = ''; selectMin.value = '';
-    renderBaseFibonacci();
-  }
-  
-  function updateAllValues() {
-    let rawMax = maxInput.value.replace(/,/g, '');
-    let rawMin = minInput.value.replace(/,/g, '');
-    let newMax = parseFloat(rawMax);
-    let newMin = parseFloat(rawMin);
-    if (isNaN(newMax) || isNaN(newMin) || newMax <= newMin) { alert("Valores inválidos"); return; }
-    currentMax = newMax; currentMin = newMin;
-    maxInput.value = formatPrice(currentMax);
-    minInput.value = formatPrice(currentMin);
-    clearSelection();
-    renderBaseFibonacci();
-  }
-  
-  function saveOperation() {
-    const now = new Date();
-    operationsHistory.unshift({ date: now.toLocaleString(), max: currentMax, min: currentMin, timestamp: Date.now() });
-    if (operationsHistory.length > 20) operationsHistory.pop();
-    localStorage.setItem('fibonacci_operations', JSON.stringify(operationsHistory));
-    renderHistory();
-    alert('✅ Operación guardada');
-  }
-  
-  function renderHistory() {
-    if (operationsHistory.length === 0) { historyList.innerHTML = '<div style="padding:1rem;text-align:center;">📭 No hay operaciones</div>'; return; }
-    let html = '';
-    operationsHistory.forEach((op, idx) => {
-      html += `<div class="history-item" onclick="loadOperation(${idx})"><strong>${op.date}</strong> | Máx: ${formatPrice(op.max)} | Mín: ${formatPrice(op.min)}</div>`;
-    });
-    historyList.innerHTML = html;
-  }
-  
-  window.loadOperation = function(idx) {
-    const op = operationsHistory[idx];
-    currentMax = op.max; currentMin = op.min;
-    maxInput.value = formatPrice(currentMax);
-    minInput.value = formatPrice(currentMin);
-    clearSelection();
-    renderBaseFibonacci();
-  };
-  
-  async function downloadPDF() {
-    const element = document.getElementById('reportContent');
-    const canvas = await html2canvas(element, { scale: 2, backgroundColor: '#0a0f1a' });
-    const imgData = canvas.toDataURL('image/png');
-    const { jsPDF } = window.jspdf;
-    const pdf = new jsPDF('p', 'mm', 'a4');
-    const imgWidth = 190;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
-    pdf.addImage(imgData, 'PNG', 10, 10, imgWidth, imgHeight);
-    pdf.save(`Fibonacci_Grid_${new Date().toISOString().slice(0,19)}.pdf`);
-  }
-  
-  updateBtn.onclick = updateAllValues;
-  applyRangeBtn.onclick = applyRangeFromSelect;
-  clearRangeBtn.onclick = clearSelection;
-  downloadPDFBtn.onclick = downloadPDF;
-  saveOperationBtn.onclick = saveOperation;
-  
-  renderBaseFibonacci();
-  renderHistory();
-</script>
+    <script>
+        let currentMode = 'buy';
+        let wheelRotation = 0;
+        const wheel = document.getElementById('mode-wheel');
+        const wheelText = document.getElementById('wheel-mode');
+        
+        // Configurar la rueda giratoria
+        function setupWheel() {
+            wheel.addEventListener('click', toggleMode);
+            wheel.addEventListener('touchstart', handleTouchStart, false);
+            wheel.addEventListener('touchmove', handleTouchMove, false);
+            
+            // Actualizar la rueda según el modo actual
+            updateWheel();
+        }
+        
+        let xDown = null;
+        let yDown = null;
+        
+        function handleTouchStart(evt) {
+            const firstTouch = evt.touches[0];
+            xDown = firstTouch.clientX;
+            yDown = firstTouch.clientY;
+        }
+        
+        function handleTouchMove(evt) {
+            if (!xDown || !yDown) {
+                return;
+            }
+            
+            const xUp = evt.touches[0].clientX;
+            const yUp = evt.touches[0].clientY;
+            
+            const xDiff = xDown - xUp;
+            const yDiff = yDown - yUp;
+            
+            if (Math.abs(xDiff) > Math.abs(yDiff)) {
+                if (xDiff > 0) {
+                    setMode('sell');
+                } else {
+                    setMode('buy');
+                }
+            } else {
+                if (yDiff > 0) {
+                    setMode('buy');
+                } else {
+                    setMode('sell');
+                }
+            }
+            
+            xDown = null;
+            yDown = null;
+        }
+        
+        function toggleMode() {
+            setMode(currentMode === 'buy' ? 'sell' : 'buy');
+        }
+        
+        function setMode(mode) {
+            currentMode = mode;
+            updateWheel();
+            
+            if (document.getElementById('fib1').value && document.getElementById('fib2').value) {
+                calculateLevels();
+            }
+        }
+        
+        function updateWheel() {
+            if (currentMode === 'buy') {
+                wheelRotation = 0;
+                wheelText.textContent = 'BUY';
+                wheelText.style.color = '#0088ff';
+                wheel.style.background = 'conic-gradient(#0088ff 0deg 180deg, #ff0044 180deg 360deg)';
+            } else {
+                wheelRotation = 180;
+                wheelText.textContent = 'SELL';
+                wheelText.style.color = '#ff0044';
+                wheel.style.background = 'conic-gradient(#ff0044 0deg 180deg, #0088ff 180deg 360deg)';
+            }
+            
+            wheel.style.transform = `rotate(${wheelRotation}deg)`;
+        }
+        
+        function calculateLevels() {
+            const fib1 = parseFloat(document.getElementById('fib1').value);
+            const fib2 = parseFloat(document.getElementById('fib2').value);
+            
+            if (isNaN(fib1) || isNaN(fib2) || fib1 < 0 || fib2 < 0) {
+                alert("⚠️ Por favor, ingresa dos números válidos (no negativos).");
+                return;
+            }
+            
+            if (fib1 === fib2) {
+                alert("⚠️ Los números no pueden ser iguales.");
+                return;
+            }
+            
+            const min = Math.min(fib1, fib2);
+            const max = Math.max(fib1, fib2);
+            const difference = max - min;
+            
+            const nextFib = min + max;
+            
+            let retracements = {};
+            let extensions = {};
+            
+            if (currentMode === 'buy') {
+                // Modo BUY: Retrocesos por debajo del máximo, -0.382% por encima del máximo
+                retracements = {
+                    '78.6%': max - difference * 0.786,
+                    '61.8%': max - difference * 0.618,
+                    '50.0%': max - difference * 0.5,
+                    '38.2%': max - difference * 0.382,
+                    '23.6%': max - difference * 0.236,
+                    '-0.382%': max + difference * 0.382  // Correcto: por encima del máximo
+                };
+                
+                extensions = {
+                    '161.8%': max + difference * 0.618,
+                    '261.8%': max + difference * 1.618,
+                    '423.6%': max + difference * 3.236
+                };
+            } else {
+                // Modo SELL: Retrocesos por encima del mínimo, -0.382% por debajo del mínimo
+                retracements = {
+                    '78.6%': min + difference * 0.786,
+                    '61.8%': min + difference * 0.618,
+                    '50.0%': min + difference * 0.5,
+                    '38.2%': min + difference * 0.382,
+                    '23.6%': min + difference * 0.236,
+                    '-0.382%': min - difference * 0.382  // Correcto: por debajo del mínimo
+                };
+                
+                extensions = {
+                    '161.8%': min - difference * 0.618,
+                    '261.8%': min - difference * 1.618,
+                    '423.6%': min - difference * 3.236
+                };
+            }
+            
+            const retracementItems = document.getElementById('retracement-items');
+            retracementItems.innerHTML = '';
+            
+            for (const [level, value] of Object.entries(retracements)) {
+                const item = document.createElement('div');
+                if (level === '-0.382%') {
+                    item.className = 'result-item extension-advanced';
+                } else {
+                    item.className = 'result-item';
+                }
+                
+                let colorClass = 'level-' + level.replace('.', '').replace('%', '').replace('-', '0');
+                
+                item.innerHTML = `
+                    <span><strong>Nivel ${level}:</strong></span> 
+                    <span class="percentage ${colorClass}">${value.toFixed(4)}</span>
+                `;
+                retracementItems.appendChild(item);
+            }
+            
+            const extensionItems = document.getElementById('extension-items');
+            extensionItems.innerHTML = '';
+            
+            for (const [level, value] of Object.entries(extensions)) {
+                const item = document.createElement('div');
+                if (level === '423.6%') {
+                    item.className = 'result-item extension-advanced';
+                } else {
+                    item.className = 'result-item extension';
+                }
+                
+                let colorClass = 'level-' + level.replace('.', '').replace('%', '');
+                
+                item.innerHTML = `
+                    <span><strong>Nivel ${level}:</strong></span> 
+                    <span class="percentage ${colorClass}">${value.toFixed(4)}</span>
+                `;
+                extensionItems.appendChild(item);
+            }
+            
+            document.getElementById('sequence-info').textContent = 
+                `⚡ Basado en la secuencia: ..., ${min}, ${max}, ${nextFib}, ... ⚡`;
+            
+            document.getElementById('retracement-results').style.display = 'block';
+            document.getElementById('extension-results').style.display = 'block';
+            document.getElementById('sequence-info').style.display = 'block';
+        }
+        
+        function clearFields() {
+            document.getElementById('fib1').value = '';
+            document.getElementById('fib2').value = '';
+            document.getElementById('retracement-results').style.display = 'none';
+            document.getElementById('extension-results').style.display = 'none';
+            document.getElementById('sequence-info').style.display = 'none';
+        }
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            setupWheel();
+            
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach(input => {
+                input.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        calculateLevels();
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
