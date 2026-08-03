@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="light">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes, viewport-fit=cover">
@@ -22,23 +22,68 @@
 
         body {
             font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            background: #f0f4f8;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
-            color: #1a2332;
+            transition: background 0.3s ease, color 0.3s ease;
         }
 
-        /* ===== FONDO SIMPLE ===== */
+        /* ===== TEMA CLARO (default) ===== */
+        [data-theme="light"] {
+            --bg-primary: #f0f4f8;
+            --bg-secondary: #ffffff;
+            --bg-card: #ffffff;
+            --text-primary: #1a2332;
+            --text-secondary: #4a5a6f;
+            --text-muted: #6b7a8f;
+            --border-color: #e2e8f0;
+            --shadow-color: rgba(0,0,0,0.06);
+            --input-bg: #f7f9fc;
+            --header-bg: #ffffff;
+            --footer-border: #e2e8f0;
+            --modal-overlay: rgba(0,0,0,0.4);
+        }
+
+        /* ===== TEMA OSCURO ===== */
+        [data-theme="dark"] {
+            --bg-primary: #0d1117;
+            --bg-secondary: #161b22;
+            --bg-card: #1c2333;
+            --text-primary: #e6edf3;
+            --text-secondary: #b0c4de;
+            --text-muted: #8b949e;
+            --border-color: #30363d;
+            --shadow-color: rgba(0,0,0,0.3);
+            --input-bg: #0d1117;
+            --header-bg: #161b22;
+            --footer-border: #30363d;
+            --modal-overlay: rgba(0,0,0,0.7);
+        }
+
+        body {
+            background: var(--bg-primary);
+            color: var(--text-primary);
+        }
+
+        /* ===== FONDO ===== */
         .bg-layer {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: linear-gradient(135deg, #e8edf5 0%, #d5dde8 100%);
+            background: var(--bg-primary);
             z-index: 0;
             pointer-events: none;
+            transition: background 0.3s ease;
+        }
+
+        [data-theme="light"] .bg-layer {
+            background: linear-gradient(135deg, #e8edf5 0%, #d5dde8 100%);
+        }
+
+        [data-theme="dark"] .bg-layer {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
         }
 
         /* ===== CONTENIDO ===== */
@@ -53,14 +98,16 @@
 
         /* ===== HEADER ===== */
         .header-simple {
-            background: #ffffff;
-            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            background: var(--header-bg);
+            box-shadow: 0 2px 12px var(--shadow-color);
             padding: 0.75rem 1.5rem;
             position: sticky;
             top: 0;
             z-index: 100;
             border-radius: 12px;
             margin-bottom: 1.5rem;
+            transition: background 0.3s ease, box-shadow 0.3s ease;
+            border: 1px solid var(--border-color);
         }
 
         .nav-container {
@@ -85,7 +132,7 @@
         .logo-name {
             font-size: 1.1rem;
             font-weight: 800;
-            color: #1a2332;
+            color: var(--text-primary);
             letter-spacing: -0.5px;
         }
 
@@ -103,14 +150,15 @@
         .header-actions {
             display: flex;
             gap: 8px;
+            align-items: center;
         }
 
         .btn-header {
             font-size: 0.6rem;
             padding: 6px 14px;
-            border: 1.5px solid #d0d8e3;
+            border: 1.5px solid var(--border-color);
             background: transparent;
-            color: #1a2332;
+            color: var(--text-primary);
             border-radius: 20px;
             cursor: pointer;
             font-weight: 600;
@@ -119,7 +167,7 @@
         }
 
         .btn-header:hover {
-            background: #f0f4f8;
+            background: var(--bg-primary);
         }
 
         .btn-header-primary {
@@ -131,6 +179,26 @@
         .btn-header-primary:hover {
             background: #1e6bcc;
             border-color: #1e6bcc;
+        }
+
+        /* Botón de tema */
+        .theme-toggle {
+            background: var(--bg-primary);
+            border: 1.5px solid var(--border-color);
+            color: var(--text-primary);
+            border-radius: 50%;
+            width: 32px;
+            height: 32px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .theme-toggle:hover {
+            transform: rotate(30deg);
         }
 
         /* ===== HERO ===== */
@@ -150,14 +218,14 @@
             font-size: clamp(1.4rem, 5vw, 2.2rem);
             font-weight: 800;
             text-align: center;
-            color: #1a2332;
+            color: var(--text-primary);
             letter-spacing: -0.5px;
             margin-bottom: 0.2rem;
         }
 
         .sub-tag {
             font-size: clamp(0.7rem, 1.5vw, 0.9rem);
-            color: #6b7a8f;
+            color: var(--text-muted);
             letter-spacing: 0.5px;
             margin-bottom: 1.8rem;
             text-align: center;
@@ -166,12 +234,12 @@
 
         /* ===== TARJETA ===== */
         .auth-card {
-            background: #ffffff;
+            background: var(--bg-card);
             border-radius: 20px;
             padding: 2rem 1.8rem;
             width: 100%;
-            box-shadow: 0 8px 40px rgba(0, 0, 0, 0.06), 0 2px 8px rgba(0, 0, 0, 0.03);
-            border: 1px solid rgba(0, 0, 0, 0.04);
+            box-shadow: 0 8px 40px var(--shadow-color), 0 2px 8px var(--shadow-color);
+            border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
 
@@ -185,7 +253,7 @@
         .card-header .title {
             font-size: 1rem;
             font-weight: 700;
-            color: #1a2332;
+            color: var(--text-primary);
         }
 
         .card-header .title i {
@@ -196,7 +264,7 @@
         .card-toggle {
             display: flex;
             gap: 4px;
-            background: #f0f4f8;
+            background: var(--bg-primary);
             border-radius: 30px;
             padding: 3px;
         }
@@ -204,7 +272,7 @@
         .card-toggle button {
             background: transparent;
             border: none;
-            color: #6b7a8f;
+            color: var(--text-muted);
             padding: 5px 14px;
             border-radius: 30px;
             font-size: 0.6rem;
@@ -215,9 +283,9 @@
         }
 
         .card-toggle button.active {
-            background: #ffffff;
-            color: #1a2332;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            box-shadow: 0 2px 8px var(--shadow-color);
         }
 
         /* ===== FORMULARIOS ===== */
@@ -232,7 +300,7 @@
         .auth-form label {
             font-size: 0.7rem;
             font-weight: 600;
-            color: #4a5a6f;
+            color: var(--text-secondary);
             display: block;
             margin-bottom: 4px;
             letter-spacing: 0.3px;
@@ -241,10 +309,10 @@
         .input-cyber {
             width: 100%;
             padding: 11px 16px;
-            background: #f7f9fc;
-            border: 1.5px solid #e2e8f0;
+            background: var(--input-bg);
+            border: 1.5px solid var(--border-color);
             border-radius: 12px;
-            color: #1a2332;
+            color: var(--text-primary);
             font-family: 'Inter', sans-serif;
             font-size: 0.9rem;
             transition: all 0.2s ease;
@@ -253,12 +321,12 @@
         .input-cyber:focus {
             outline: none;
             border-color: #2a7de1;
-            background: #ffffff;
+            background: var(--bg-card);
             box-shadow: 0 0 0 3px rgba(42, 125, 225, 0.08);
         }
 
         .input-cyber::placeholder {
-            color: #9aabbd;
+            color: var(--text-muted);
         }
 
         .btn-auth {
@@ -301,7 +369,7 @@
             gap: 8px;
             font-size: 0.7rem;
             margin: 12px 0 6px 0;
-            color: #4a5a6f;
+            color: var(--text-secondary);
         }
 
         .terms-check input {
@@ -321,7 +389,7 @@
             text-align: center;
             margin-top: 1.2rem;
             font-size: 0.75rem;
-            color: #6b7a8f;
+            color: var(--text-muted);
         }
 
         .auth-footer .switch-link {
@@ -335,15 +403,75 @@
             text-decoration: underline;
         }
 
+        /* ===== REDES SOCIALES ===== */
+        .social-section {
+            margin-top: 1.5rem;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .social-section .social-label {
+            font-size: 0.6rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: var(--text-muted);
+            text-align: center;
+            margin-bottom: 0.8rem;
+            font-weight: 600;
+        }
+
+        .social-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .social-link {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--bg-primary);
+            color: var(--text-secondary);
+            border: 1px solid var(--border-color);
+            transition: all 0.25s ease;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+
+        .social-link:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 4px 12px var(--shadow-color);
+        }
+
+        .social-link .fab, .social-link .fas {
+            font-size: 1rem;
+        }
+
+        /* Colores específicos en hover */
+        .social-link:hover .fa-reddit { color: #ff4500; }
+        .social-link:hover .fa-pinterest { color: #e60023; }
+        .social-link:hover .fa-telegram { color: #0088cc; }
+        .social-link:hover .fa-facebook { color: #1877f2; }
+        .social-link:hover .fa-linkedin { color: #0a66c2; }
+        .social-link:hover .fa-tiktok { color: #000000; }
+        .social-link:hover .fa-blog { color: #f57c00; }
+        .social-link:hover .fa-instagram { color: #e4405f; }
+        .social-link:hover .fa-whatsapp { color: #25d366; }
+        .social-link:hover .fa-chart-line { color: #2a7de1; }
+
         /* ===== FOOTER ===== */
         .footer-simple {
             text-align: center;
             padding: 1.2rem 0.5rem 0.5rem;
             font-size: 0.6rem;
-            color: #8a9aaf;
+            color: var(--text-muted);
             letter-spacing: 0.3px;
             margin-top: 1.5rem;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid var(--footer-border);
         }
 
         .footer-simple i {
@@ -356,7 +484,7 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(0, 0, 0, 0.4);
+            background: var(--modal-overlay);
             backdrop-filter: blur(6px);
             z-index: 1000;
             align-items: center;
@@ -365,13 +493,14 @@
         }
 
         .modal-glass {
-            background: #ffffff;
+            background: var(--bg-card);
             border-radius: 20px;
             max-width: 380px;
             width: 100%;
             padding: 2rem 1.8rem;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 20px 60px var(--shadow-color);
             animation: modalIn 0.25s ease;
+            border: 1px solid var(--border-color);
         }
 
         @keyframes modalIn {
@@ -389,7 +518,7 @@
         .modal-title {
             font-size: 1rem;
             font-weight: 700;
-            color: #1a2332;
+            color: var(--text-primary);
         }
 
         .modal-title i {
@@ -400,7 +529,7 @@
         .modal-close {
             background: none;
             border: none;
-            color: #6b7a8f;
+            color: var(--text-muted);
             font-size: 1.5rem;
             cursor: pointer;
             transition: all 0.2s ease;
@@ -408,12 +537,12 @@
         }
 
         .modal-close:hover {
-            color: #1a2332;
+            color: var(--text-primary);
         }
 
         .modal-body {
             font-size: 0.8rem;
-            color: #4a5a6f;
+            color: var(--text-secondary);
             line-height: 1.6;
             margin: 12px 0 18px;
         }
@@ -441,7 +570,8 @@
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(255, 255, 255, 0.92);
+            background: var(--modal-overlay);
+            backdrop-filter: blur(6px);
             z-index: 10000;
             flex-direction: column;
             justify-content: center;
@@ -451,7 +581,7 @@
         .loader-ring {
             width: 48px;
             height: 48px;
-            border: 3px solid #e2e8f0;
+            border: 3px solid var(--border-color);
             border-top-color: #2a7de1;
             border-radius: 50%;
             animation: spinLoader 0.7s linear infinite;
@@ -465,7 +595,7 @@
             margin-top: 20px;
             font-weight: 600;
             font-size: 0.85rem;
-            color: #1a2332;
+            color: var(--text-primary);
             letter-spacing: 1px;
         }
 
@@ -491,6 +621,14 @@
             }
             .tagline {
                 font-size: 1.4rem;
+            }
+            .social-link {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+            .social-link .fab, .social-link .fas {
+                font-size: 0.8rem;
             }
         }
 
@@ -537,6 +675,9 @@
                     <span class="badge-elite">VIP</span>
                 </div>
                 <div class="header-actions">
+                    <button class="theme-toggle" id="themeToggle" title="Cambiar tema">
+                        <i class="fas fa-moon" id="themeIcon"></i>
+                    </button>
                     <button class="btn-header" id="openLoginBtn">
                         <i class="fas fa-key"></i>
                     </button>
@@ -602,6 +743,43 @@
                         ¿Ya eres VIP? <span class="switch-link" id="switchToLogin">Iniciar sesión</span>
                     </div>
                 </form>
+
+                <!-- REDES SOCIALES -->
+                <div class="social-section">
+                    <div class="social-label">Síguenos en redes</div>
+                    <div class="social-grid">
+                        <a href="https://www.reddit.com/user/Both-Buyer-640/" target="_blank" class="social-link" title="Reddit">
+                            <i class="fab fa-reddit"></i>
+                        </a>
+                        <a href="https://www.pinterest.com/welding30001994/yesly/" target="_blank" class="social-link" title="Pinterest">
+                            <i class="fab fa-pinterest"></i>
+                        </a>
+                        <a href="https://t.me/yesly_adelay" target="_blank" class="social-link" title="Telegram">
+                            <i class="fab fa-telegram"></i>
+                        </a>
+                        <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank" class="social-link" title="Facebook">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="https://www.linkedin.com/in/miguel-fonseca-a8553a423/" target="_blank" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank" class="social-link" title="TikTok">
+                            <i class="fab fa-tiktok"></i>
+                        </a>
+                        <a href="https://yesly-adelay-trading.blogspot.com" target="_blank" class="social-link" title="Blog">
+                            <i class="fas fa-blog"></i>
+                        </a>
+                        <a href="https://www.instagram.com/yesly_adelay2026/" target="_blank" class="social-link" title="Instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="https://api.whatsapp.com/send/?phone=593991987552&text&type=phone_number&app_absent=0" target="_blank" class="social-link" title="WhatsApp">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                        <a href="https://www.mql5.com/en/channels/yesly2026" target="_blank" class="social-link" title="MQL5">
+                            <i class="fas fa-chart-line"></i>
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -640,6 +818,28 @@
         firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
         const db = firebase.database();
+
+        // ========== TEMA CLARO/OSCURO ==========
+        const themeToggle = document.getElementById('themeToggle');
+        const themeIcon = document.getElementById('themeIcon');
+        const html = document.documentElement;
+
+        // Cargar tema guardado
+        const savedTheme = localStorage.getItem('theme') || 'light';
+        html.setAttribute('data-theme', savedTheme);
+        updateThemeIcon(savedTheme);
+
+        themeToggle.addEventListener('click', () => {
+            const current = html.getAttribute('data-theme');
+            const next = current === 'light' ? 'dark' : 'light';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('theme', next);
+            updateThemeIcon(next);
+        });
+
+        function updateThemeIcon(theme) {
+            themeIcon.className = theme === 'light' ? 'fas fa-moon' : 'fas fa-sun';
+        }
 
         // ========== UI ELEMENTS ==========
         const loginForm = document.getElementById('loginForm');
