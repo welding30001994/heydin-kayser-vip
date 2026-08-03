@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -14,6 +13,7 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
+        /* ===== VARIABLES ===== */
         :root {
             --primary: #00f0ff;
             --accent: #ff44e6;
@@ -27,6 +27,7 @@
             --folder-hover: #ff44e6;
         }
 
+        /* ===== RESET & BASE ===== */
         * {
             margin: 0;
             padding: 0;
@@ -35,17 +36,14 @@
 
         body {
             font-family: 'Rajdhani', 'Orbitron', 'Syne', sans-serif;
-            background: var(--darker);
             min-height: 100vh;
             position: relative;
             overflow-x: hidden;
             color: #eef5ff;
-            background-image: 
-                radial-gradient(circle at 15% 25%, rgba(0, 240, 255, 0.05) 0%, transparent 40%),
-                radial-gradient(circle at 85% 75%, rgba(255, 68, 230, 0.05) 0%, transparent 40%),
-                linear-gradient(to bottom, var(--darker), var(--dark));
+            background: var(--darker);
         }
 
+        /* ===== FONDO CON IMAGEN TRANSPARENTE ===== */
         .bg-image-layer {
             position: fixed;
             top: 0;
@@ -56,11 +54,12 @@
             background-size: cover;
             background-position: center center;
             background-repeat: no-repeat;
-            opacity: 0.06;
+            opacity: 0.10;
             z-index: 0;
             pointer-events: none;
         }
 
+        /* ===== CAPAS DE FONDO ===== */
         .grid-overlay {
             position: fixed;
             top: 0;
@@ -86,6 +85,7 @@
             pointer-events: none;
         }
 
+        /* ===== CONTENIDO ===== */
         .content {
             position: relative;
             z-index: 15;
@@ -95,18 +95,18 @@
             flex-direction: column;
         }
 
-        /* LOADER */
+        /* ===== LOADER ===== */
         .loader-container {
             position: fixed;
             inset: 0;
-            background: #01010b;
+            background: rgba(1, 1, 11, 0.92);
+            backdrop-filter: blur(16px);
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
             z-index: 10000;
             transition: opacity 0.8s ease, visibility 0.8s;
-            backdrop-filter: blur(12px);
         }
         .loader-container.fade-out {
             opacity: 0;
@@ -137,14 +137,15 @@
             color: transparent;
         }
 
-        /* HEADER */
+        /* ===== HEADER ===== */
         header {
             position: sticky;
             top: 0;
             z-index: 200;
             padding: 10px 0;
-            background: rgba(10, 10, 26, 0.88);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 26, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-bottom: 1px solid rgba(0, 240, 255, 0.15);
         }
 
@@ -223,7 +224,7 @@
             background: rgba(0, 240, 255, 0.1);
         }
 
-        /* BIENVENIDA */
+        /* ===== BIENVENIDA ===== */
         .welcome-section {
             text-align: center;
             padding: 18px 20px 5px;
@@ -248,7 +249,7 @@
             margin-top: 4px;
         }
 
-        /* RELOJ */
+        /* ===== RELOJ ===== */
         .time-container {
             display: flex;
             justify-content: center;
@@ -258,7 +259,8 @@
 
         .neon-clock {
             background: var(--card-bg);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border: 1.5px solid var(--primary);
             border-radius: 40px;
             padding: 6px 20px;
@@ -294,7 +296,8 @@
 
         .folder-wrapper {
             background: var(--card-bg);
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
             border-radius: 12px;
             border: 1px solid rgba(0, 240, 255, 0.08);
             margin-bottom: 10px;
@@ -434,10 +437,11 @@
         .folder-wrapper.folder-vip .folder-icon { background: rgba(255, 215, 0, 0.15); color: #ffd700; }
         .folder-wrapper.folder-vip .folder-header { border-left: 3px solid #ffd700; }
 
-        /* DESCARGA */
+        /* ===== DESCARGA ===== */
         .download-section {
             background: var(--card-bg);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-radius: 12px;
             padding: 16px 25px;
             margin: 5px 20px 25px;
@@ -498,10 +502,11 @@
             transform: scale(0.95);
         }
 
-        /* FOOTER */
+        /* ===== FOOTER ===== */
         footer {
-            background: rgba(10, 10, 26, 0.85);
-            backdrop-filter: blur(10px);
+            background: rgba(10, 10, 26, 0.82);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border-top: 1px solid rgba(0, 240, 255, 0.15);
             padding: 25px 20px 18px;
             text-align: center;
@@ -538,6 +543,7 @@
             transition: all 0.3s ease;
             text-decoration: none;
             touch-action: manipulation;
+            backdrop-filter: blur(4px);
         }
 
         .social-icons a:hover {
@@ -726,6 +732,7 @@
     </style>
 </head>
 <body>
+    <!-- CAPAS DE FONDO -->
     <div class="bg-image-layer"></div>
     <div class="grid-overlay"></div>
     <div class="glow-overlay"></div>
@@ -790,18 +797,23 @@
             </div>
         </main>
 
+        <!-- FOOTER CON REDES SOCIALES -->
         <footer>
             <div class="footer-logo">
                 <i class="fas fa-crown"></i> YESLY ADELAY TRADING VIP
             </div>
             <div class="social-icons">
-                <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank"><i class="fab fa-blogger"></i></a>
-                <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank"><i class="fab fa-youtube"></i></a>
-                <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank"><i class="fab fa-tiktok"></i></a>
-                <a href="https://t.me/yesly_adelay" target="_blank"><i class="fab fa-telegram-plane"></i></a>
-                <a href="https://wa.me/593991987552" target="_blank"><i class="fab fa-whatsapp"></i></a>
-                <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank"><i class="fas fa-chart-line"></i></a>
+                <a href="https://yesly-adelay-trading.blogspot.com/" target="_blank" title="Blog"><i class="fab fa-blogger"></i></a>
+                <a href="https://www.youtube.com/@yeslyadelay2026" target="_blank" title="YouTube"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank" title="Facebook"><i class="fab fa-facebook-f"></i></a>
+                <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank" title="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://t.me/yesly_adelay" target="_blank" title="Telegram"><i class="fab fa-telegram-plane"></i></a>
+                <a href="https://wa.me/593991987552" target="_blank" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank" title="MQL5"><i class="fas fa-chart-line"></i></a>
+                <a href="https://www.reddit.com/user/Both-Buyer-640/" target="_blank" title="Reddit"><i class="fab fa-reddit"></i></a>
+                <a href="https://www.pinterest.com/welding30001994/yesly/" target="_blank" title="Pinterest"><i class="fab fa-pinterest"></i></a>
+                <a href="https://www.linkedin.com/in/miguel-fonseca-a8553a423/" target="_blank" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+                <a href="https://www.instagram.com/yesly_adelay2026/" target="_blank" title="Instagram"><i class="fab fa-instagram"></i></a>
             </div>
             <div class="copyright">
                 © 2025 YESLY ADELAY · DASHBOARD VIP
