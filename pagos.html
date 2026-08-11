@@ -6,7 +6,7 @@
     <title>YESLY ADELAY | Programas Cuánticos de Trading</title>
     <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- Google Fonts: fusión futurista élite -->
+    <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Syne:wght@400;700;800;900&family=Rajdhani:wght@300;500;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -40,7 +40,6 @@
             color: #eef5ff;
         }
 
-        /* FONDO PRINCIPAL CON IMAGEN YESLY.jpg */
         .bg-image-layer {
             position: fixed;
             top: 0;
@@ -196,7 +195,6 @@
             .glass-header { padding: 0.8rem 1.2rem; }
         }
 
-        /* SOCIAL HEADER ICONS */
         .social-header {
             display: flex;
             gap: 1rem;
@@ -214,7 +212,7 @@
             .social-header { display: none; }
         }
 
-        /* HERO SECTION */
+        /* HERO */
         .hero {
             text-align: center;
             padding: 3rem 0 4rem;
@@ -256,7 +254,7 @@
             box-shadow: 0 0 35px cyan;
         }
 
-        /* COURSES SECTION */
+        /* COURSES */
         .courses-section {
             padding: 2rem 0 4rem;
         }
@@ -346,9 +344,10 @@
             color: #ff44e6;
         }
         .course-card .price small {
-            font-size: 0.9rem;
+            font-size: 0.8rem;
             color: #ffaa00;
             display: block;
+            font-weight: 400;
         }
         .info-item {
             margin-bottom: 0.8rem;
@@ -383,7 +382,7 @@
             box-shadow: 0 0 25px cyan;
         }
 
-        /* SOCIAL ZONE - SECCIÓN REDES SOCIALES */
+        /* SOCIAL ZONE */
         .social-zone {
             margin: 3rem 0 2rem;
             padding: 2rem 1.5rem;
@@ -631,65 +630,46 @@
     <section class="courses-section" id="courses">
         <h2 class="section-title">PROGRAMAS CUÁNTICOS VIP</h2>
         <div class="courses-grid">
-            <!-- BASIC QUANTUM -->
+            <!-- CURSO 1: $100 -->
             <div class="course-card">
-                <h3><i class="fas fa-atom"></i> BASIC QUANTUM</h3>
-                <div class="price">50<small>Inscripción: $20</small></div>
-                <div class="info-item"><i class="fas fa-calendar-week"></i> 12 semanas (3 meses)</div>
-                <div class="info-item"><i class="fas fa-coins"></i> Capital: $20 - $500</div>
-                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias: $5-$20 diarios</div>
-                <div class="info-item"><i class="fas fa-chart-line"></i> Ganancias mensuales $150-$600</div>
-                <button class="buy-button" onclick="openPaymentModal('BASIC QUANTUM', 50)"><i class="fas fa-crown"></i> ACCEDER</button>
+                <h3><i class="fas fa-atom"></i> QUANTUM START</h3>
+                <div class="price">100<small>Pago mensual · 4 meses</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 4 meses de duración</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital sugerido: $20 - $500</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias estimadas: $5-$20/día</div>
+                <button class="buy-button" onclick="openPaymentModal('QUANTUM START', 100)"><i class="fas fa-crown"></i> ACCEDER</button>
             </div>
-            <!-- INTERMEDIATE NEO -->
+            <!-- CURSO 2: $200 -->
             <div class="course-card">
-                <h3><i class="fas fa-microchip"></i> INTERMEDIATE NEO</h3>
-                <div class="price">100<small>Inscripción: $20</small></div>
-                <div class="info-item"><i class="fas fa-calendar-week"></i> 24 semanas (6 meses)</div>
-                <div class="info-item"><i class="fas fa-coins"></i> Capital: $500 - $1000</div>
-                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $900-$1500</div>
-                <button class="buy-button" onclick="openPaymentModal('INTERMEDIATE NEO', 100)"><i class="fas fa-crown"></i> ACCEDER</button>
+                <h3><i class="fas fa-microchip"></i> QUANTUM PRO</h3>
+                <div class="price">200<small>Pago mensual · 4 meses</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 4 meses de duración</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital sugerido: $500 - $1000</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias estimadas: $30-$60/día</div>
+                <button class="buy-button" onclick="openPaymentModal('QUANTUM PRO', 200)"><i class="fas fa-crown"></i> ACCEDER</button>
             </div>
-            <!-- ADVANCED ALPHA -->
+            <!-- CURSO 3: $300 -->
             <div class="course-card">
-                <h3><i class="fas fa-brain"></i> ADVANCED ALPHA</h3>
-                <div class="price">170<small>Inscripción: $20</small></div>
-                <div class="info-item"><i class="fas fa-calendar-week"></i> 12 semanas (3 meses)</div>
-                <div class="info-item"><i class="fas fa-coins"></i> Capital: $1000 - $3000</div>
-                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $1500-$3000</div>
-                <button class="buy-button" onclick="openPaymentModal('ADVANCED ALPHA', 170)"><i class="fas fa-crown"></i> ACCEDER</button>
+                <h3><i class="fas fa-brain"></i> QUANTUM ELITE</h3>
+                <div class="price">300<small>Pago mensual · 4 meses</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 4 meses de duración</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital sugerido: $1000 - $3000</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias estimadas: $50-$100/día</div>
+                <button class="buy-button" onclick="openPaymentModal('QUANTUM ELITE', 300)"><i class="fas fa-crown"></i> ACCEDER</button>
             </div>
-            <!-- SAPPHIRE PRO -->
+            <!-- CURSO 4: $400 -->
             <div class="course-card">
-                <h3><i class="fas fa-gem"></i> SAPPHIRE PRO</h3>
-                <div class="price">270<small>Inscripción: $20</small></div>
-                <div class="info-item"><i class="fas fa-calendar-week"></i> 24 semanas (6 meses)</div>
-                <div class="info-item"><i class="fas fa-coins"></i> Capital: $3000 - $7000</div>
-                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $3000-$9000</div>
-                <button class="buy-button" onclick="openPaymentModal('SAPPHIRE PRO', 270)"><i class="fas fa-crown"></i> ACCEDER</button>
-            </div>
-            <!-- PLATINUM ELITE -->
-            <div class="course-card">
-                <h3><i class="fas fa-trophy"></i> PLATINUM ELITE</h3>
-                <div class="price">420<small>Inscripción: $20</small></div>
-                <div class="info-item"><i class="fas fa-calendar-week"></i> 12 semanas (3 meses)</div>
-                <div class="info-item"><i class="fas fa-coins"></i> Capital: $3000 - $7000</div>
-                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $9000-$24000</div>
-                <button class="buy-button" onclick="openPaymentModal('PLATINUM ELITE', 420)"><i class="fas fa-crown"></i> ACCEDER</button>
-            </div>
-            <!-- GOLD MASTER -->
-            <div class="course-card">
-                <h3><i class="fas fa-crown"></i> GOLD MASTER</h3>
-                <div class="price">720<small>Inscripción: $20</small></div>
-                <div class="info-item"><i class="fas fa-calendar-week"></i> 12 semanas (3 meses)</div>
-                <div class="info-item"><i class="fas fa-coins"></i> Capital: $7000 - $13000</div>
-                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias mensuales $24000-$90000</div>
-                <button class="buy-button" onclick="openPaymentModal('GOLD MASTER', 720)"><i class="fas fa-crown"></i> ACCEDER</button>
+                <h3><i class="fas fa-gem"></i> QUANTUM MASTER</h3>
+                <div class="price">400<small>Pago mensual · 4 meses</small></div>
+                <div class="info-item"><i class="fas fa-calendar-week"></i> 4 meses de duración</div>
+                <div class="info-item"><i class="fas fa-coins"></i> Capital sugerido: $3000 - $7000</div>
+                <div class="info-item"><i class="fas fa-chart-simple"></i> Ganancias estimadas: $100-$250/día</div>
+                <button class="buy-button" onclick="openPaymentModal('QUANTUM MASTER', 400)"><i class="fas fa-crown"></i> ACCEDER</button>
             </div>
         </div>
     </section>
 
-    <!-- SECCIÓN DE REDES SOCIALES - YESLY ADELAY -->
+    <!-- SECCIÓN DE REDES SOCIALES -->
     <div class="social-zone">
         <div class="social-title"><i class="fas fa-globe"></i> CONECTA CON LA ÉLITE <i class="fas fa-globe"></i></div>
         <div class="social-icons-flex">
@@ -698,8 +678,12 @@
             <a href="https://www.facebook.com/profile.php?id=61590192674936" target="_blank" class="social-icon-fut"><i class="fab fa-facebook-f"></i></a>
             <a href="https://www.tiktok.com/@yeslyadelaytrading2026" target="_blank" class="social-icon-fut"><i class="fab fa-tiktok"></i></a>
             <a href="https://t.me/yesly_adelay" target="_blank" class="social-icon-fut"><i class="fab fa-telegram-plane"></i></a>
-            <a href="https://wa.me/593991987552" target="_blank" class="social-icon-fut"><i class="fab fa-whatsapp"></i></a>
-            <a href="https://www.mql5.com/en/channels/yesly_adelay_trading_2026" target="_blank" class="social-icon-fut"><i class="fas fa-chart-line"></i></a>
+            <a href="https://api.whatsapp.com/send/?phone=593991987552&text&type=phone_number&app_absent=0" target="_blank" class="social-icon-fut"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://www.mql5.com/en/channels/yesly2026" target="_blank" class="social-icon-fut"><i class="fas fa-chart-line"></i></a>
+            <a href="https://www.reddit.com/user/Both-Buyer-640/" target="_blank" class="social-icon-fut"><i class="fab fa-reddit"></i></a>
+            <a href="https://www.pinterest.com/welding30001994/yesly/" target="_blank" class="social-icon-fut"><i class="fab fa-pinterest"></i></a>
+            <a href="https://www.linkedin.com/in/miguel-fonseca-a8553a423/" target="_blank" class="social-icon-fut"><i class="fab fa-linkedin"></i></a>
+            <a href="https://www.instagram.com/yesly_adelay2026/" target="_blank" class="social-icon-fut"><i class="fab fa-instagram"></i></a>
         </div>
     </div>
 
@@ -720,7 +704,7 @@
             <p><strong>Tipo de Cuenta:</strong> Ahorros</p>
             <p><strong>Número de Cuenta:</strong> <span class="highlight">2203838240</span></p>
             <p><strong>Titular:</strong> Miguel Alexander Fonseca Carranza</p>
-            <p><strong>Monto Total:</strong> <span class="highlight" id="modalCoursePrice">$0</span> (Incluye inscripción $20)</p>
+            <p><strong>Monto Mensual:</strong> <span class="highlight" id="modalCoursePrice">$0</span></p>
             <p><strong>USDT (BEP20):</strong> TJujJqGa14F56TKDqWtz3yFvk4EubnxdeD</p>
         </div>
         <div class="qr-container">
@@ -762,7 +746,6 @@
 </div>
 
 <script>
-    // LOADER
     window.addEventListener('load', () => {
         setTimeout(() => {
             const loader = document.getElementById('loader');
@@ -772,8 +755,8 @@
     });
 
     function openPaymentModal(courseName, price) {
-        document.getElementById('modalCourseTitle').textContent = courseName + ' - $' + price;
-        document.getElementById('modalCoursePrice').textContent = '$' + price + ' USD';
+        document.getElementById('modalCourseTitle').textContent = courseName + ' - $' + price + '/mes';
+        document.getElementById('modalCoursePrice').textContent = '$' + price + ' USD (mensual)';
         document.getElementById('paymentModal').style.display = 'flex';
         document.body.style.overflow = 'hidden';
     }

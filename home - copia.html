@@ -3,611 +3,1177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NEO·GASTOS · Control Financiero 2077</title>
+    <title>Yeslyface · Red Social</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Orbitron:wght@400;700;900&display=swap');
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
         }
 
         body {
-            background: radial-gradient(circle at 20% 20%, #0a0f1e, #030514);
-            font-family: 'Inter', sans-serif;
+            background: linear-gradient(145deg, #f0f4ff 0%, #d9e2f0 100%);
             min-height: 100vh;
-            color: #ccd6f0;
-            padding: 2rem 1rem;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        /* Efecto de líneas de grid futurista */
-        body::before {
-            content: "";
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background-image: 
-                linear-gradient(rgba(0, 255, 255, 0.05) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0, 255, 255, 0.05) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-            z-index: 0;
-        }
-
-        .container {
-            max-width: 1300px;
-            margin: 0 auto;
-            position: relative;
-            z-index: 2;
-            backdrop-filter: blur(2px);
-        }
-
-        /* Header cyber */
-        .header {
             display: flex;
+            justify-content: center;
             align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 1.5rem;
-            margin-bottom: 3rem;
-            padding: 1.5rem 2rem;
-            background: rgba(10, 20, 30, 0.6);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            box-shadow: 0 0 30px rgba(0, 180, 255, 0.2);
-            backdrop-filter: blur(10px);
-            border-radius: 40px 40px 20px 20px;
+            padding: 20px;
+            transition: background 0.3s ease, background-image 0.3s ease;
         }
 
-        .title {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 800;
-            font-size: clamp(1.8rem, 5vw, 2.8rem);
-            background: linear-gradient(135deg, #a0f0ff, #6b8cff, #c084fc);
+        body.dark-mode {
+            background: #1a1a2e;
+            background-image: none;
+        }
+
+        body.bg-image {
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        body.dark-mode.bg-image {
+            background-image: url('https://raw.githubusercontent.com/welding30001994/heydin-kayser-vip/refs/heads/main/YESLY.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+
+        .app-container {
+            width: 100%;
+            max-width: 500px;
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-radius: 48px;
+            box-shadow: 0 30px 50px rgba(0, 20, 40, 0.25);
+            padding: 24px 20px 32px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        body.dark-mode .app-container {
+            background: rgba(20, 20, 40, 0.85);
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #eee;
+        }
+
+        body.dark-mode .app-container .logo span {
+            background: linear-gradient(135deg, #a8b5ff, #d4a5ff);
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            letter-spacing: 2px;
-            text-shadow: 0 0 15px cyan;
+            background-clip: text;
+            color: transparent;
         }
 
-        .title span {
-            font-size: 1rem;
-            background: rgba(0, 255, 255, 0.2);
-            padding: 0.3rem 1rem;
-            border-radius: 40px;
-            border: 1px solid cyan;
-            color: #b0f0ff;
-            margin-left: 15px;
-            letter-spacing: 1px;
+        body.dark-mode .home-header h2 {
+            color: #d4d4ff;
         }
 
-        .total-card {
-            background: rgba(0, 15, 30, 0.8);
-            border: 1px solid #00ffff;
+        body.dark-mode .user-badge span {
+            background: #2a2a4a;
+            color: #eee;
+        }
+
+        body.dark-mode .publish-box {
+            background: #2a2a4a;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .publish-box textarea {
+            color: #eee;
+            background: transparent;
+        }
+
+        body.dark-mode .publish-actions {
+            border-top-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .publish-actions .left-icons i {
+            color: #9b6bff;
+        }
+
+        body.dark-mode .post {
+            background: #2a2a4a;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .post-header .username {
+            color: #d4d4ff;
+        }
+
+        body.dark-mode .post-content {
+            color: #e0e0e0;
+        }
+
+        body.dark-mode .post-actions {
+            border-top-color: rgba(255, 255, 255, 0.08);
+        }
+
+        body.dark-mode .post-actions button {
+            color: #aaa;
+        }
+
+        body.dark-mode .post-actions button:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .post-actions button.liked {
+            color: #ff6b6b;
+        }
+
+        body.dark-mode .comments-section {
+            border-top-color: rgba(255, 255, 255, 0.08);
+        }
+
+        body.dark-mode .comment .comment-user {
+            color: #a8b5ff;
+        }
+
+        body.dark-mode .comment .comment-text {
+            color: #ddd;
+        }
+
+        body.dark-mode .comment-input input {
+            background: #1a1a3a;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #eee;
+        }
+
+        body.dark-mode .chat-mini {
+            background: #2a2a4a;
+            border-color: rgba(255, 255, 255, 0.05);
+        }
+
+        body.dark-mode .chat-mini .chat-header {
+            color: #d4d4ff;
+        }
+
+        body.dark-mode .chat-messages {
+            background: #1a1a3a;
+            color: #ddd;
+        }
+
+        body.dark-mode .chat-messages .msg {
+            background: #2a2a4a;
+            color: #eee;
+        }
+
+        body.dark-mode .chat-messages .msg.me {
+            background: #4a6cf7;
+            color: white;
+        }
+
+        body.dark-mode .chat-input input {
+            background: #1a1a3a;
+            border-color: rgba(255, 255, 255, 0.1);
+            color: #eee;
+        }
+
+        body.dark-mode .home-header .theme-toggle {
+            background: #2a2a4a;
+            color: #eee;
+        }
+
+        .home-header .theme-toggle {
+            background: white;
+            border: none;
             border-radius: 30px;
-            padding: 1.2rem 2.5rem;
-            text-align: center;
-            box-shadow: 0 0 30px rgba(0, 255, 255, 0.4), inset 0 0 10px rgba(0,255,200,0.3);
-            backdrop-filter: blur(8px);
-        }
-
-        .total-label {
-            font-size: 0.9rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #9cdbff;
-        }
-
-        .total-amount {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 3rem;
-            font-weight: 900;
-            line-height: 1.2;
-            background: linear-gradient(to right, #fff, #7df9ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            text-shadow: 0 0 25px cyan;
-        }
-
-        /* Panel de registro */
-        .panel {
-            background: rgba(8, 18, 28, 0.7);
-            backdrop-filter: blur(15px);
-            border: 1px solid rgba(64, 224, 255, 0.5);
-            border-radius: 40px;
-            padding: 2rem;
-            margin-bottom: 3rem;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.8), 0 0 0 2px rgba(0,255,200,0.1) inset;
-        }
-
-        .panel h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.8rem;
-            margin-bottom: 2rem;
+            padding: 6px 14px;
+            font-size: 14px;
+            cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 15px;
-            color: #b0f5ff;
-            text-shadow: 0 0 5px cyan;
+            gap: 6px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: 0.2s;
+            color: #1a2a6c;
         }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1.5rem;
-            align-items: end;
+        .home-header .theme-toggle:hover {
+            transform: scale(1.03);
         }
 
-        .input-group {
+        body.dark-mode .home-header .theme-toggle {
+            background: #2a2a4a;
+            color: #eee;
+        }
+
+        .logo {
+            text-align: center;
+            margin-bottom: 28px;
+        }
+
+        .logo i {
+            font-size: 48px;
+            background: linear-gradient(135deg, #4a6cf7, #9b6bff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-right: 6px;
+        }
+
+        .logo span {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            letter-spacing: -0.5px;
+        }
+
+        .auth-section-hidden {
+            display: none !important;
+        }
+
+        .home-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .home-header h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #1a2a6c;
+        }
+
+        .home-header h2 i {
+            color: #4a6cf7;
+            margin-right: 8px;
+        }
+
+        .user-badge {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .user-badge span {
+            font-weight: 600;
+            color: #1a2a6c;
+            background: white;
+            padding: 6px 16px;
+            border-radius: 30px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+        }
+
+        .user-badge button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: #7f8c8d;
+            cursor: pointer;
+            transition: 0.2s;
+            padding: 8px;
+            border-radius: 30px;
+        }
+
+        .user-badge button:hover {
+            background: rgba(0, 0, 0, 0.04);
+            color: #c0392b;
+        }
+
+        .publish-box {
+            background: white;
+            border-radius: 32px;
+            padding: 16px 18px;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+            margin-bottom: 24px;
+        }
+
+        .publish-box textarea {
+            width: 100%;
+            border: none;
+            resize: none;
+            padding: 10px 0 6px;
+            font-size: 15px;
+            outline: none;
+            background: transparent;
+            min-height: 60px;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
+        }
+
+        .publish-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 6px;
+            border-top: 1px solid #f0f2f5;
+            padding-top: 12px;
+        }
+
+        .publish-actions .left-icons {
+            display: flex;
+            gap: 16px;
+            color: #4a6cf7;
+            font-size: 20px;
+        }
+
+        .publish-actions .left-icons i {
+            cursor: pointer;
+            transition: 0.2s;
+            opacity: 0.7;
+        }
+
+        .publish-actions .left-icons i:hover {
+            opacity: 1;
+            transform: scale(1.1);
+        }
+
+        .publish-actions button {
+            background: #4a6cf7;
+            border: none;
+            color: white;
+            padding: 10px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .publish-actions button:hover {
+            background: #3a5bd9;
+            transform: scale(0.97);
+        }
+
+        .feed {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 16px;
+            max-height: 500px;
+            overflow-y: auto;
+            padding-right: 4px;
+            margin-bottom: 18px;
         }
 
-        .input-group label {
-            font-size: 0.9rem;
+        .feed::-webkit-scrollbar {
+            width: 4px;
+        }
+
+        .feed::-webkit-scrollbar-thumb {
+            background: #b0c4de;
+            border-radius: 10px;
+        }
+
+        .post {
+            background: white;
+            border-radius: 28px;
+            padding: 16px 18px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .post-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 8px;
+        }
+
+        .post-header .avatar {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, #9b6bff, #4a6cf7);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
             font-weight: 600;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: #80e0ff;
+            font-size: 16px;
         }
 
-        .input-group input, .input-group select {
-            background: rgba(0, 30, 50, 0.8);
-            border: 1px solid #00b8ff;
-            border-radius: 40px;
-            padding: 14px 20px;
-            font-size: 1rem;
-            color: #ffffff;
-            outline: none;
-            transition: 0.3s;
-            font-family: 'Inter', sans-serif;
+        .post-header .username {
+            font-weight: 600;
+            color: #1a2a6c;
         }
 
-        .input-group input:focus, .input-group select:focus {
-            border-color: #ff77ff;
-            box-shadow: 0 0 20px #ff77ff, 0 0 5px #00ffff inset;
-            background: rgba(0, 20, 40, 0.9);
+        .post-header .time {
+            margin-left: auto;
+            color: #7f8c8d;
+            font-size: 12px;
         }
 
-        .input-group input::placeholder {
-            color: #a0b0c0;
-            opacity: 0.6;
+        .post-content {
+            font-size: 15px;
+            line-height: 1.6;
+            color: #1e2a3a;
+            padding: 4px 0 8px;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            font-family: 'Segoe UI', Roboto, system-ui, sans-serif;
         }
 
-        .btn-neon {
-            background: transparent;
-            border: 2px solid #0ff;
-            border-radius: 60px;
-            padding: 14px 32px;
-            font-weight: 700;
-            font-size: 1.3rem;
-            text-transform: uppercase;
-            letter-spacing: 3px;
-            color: #0ff;
+        .post-image {
+            margin-top: 10px;
+            border-radius: 20px;
+            max-width: 100%;
+            background: #e9edf5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100px;
+            color: #6b7a8f;
+            font-size: 14px;
+            border: 1px dashed #b0c4de;
+        }
+
+        .post-image i {
+            font-size: 28px;
+            margin-right: 8px;
+            color: #4a6cf7;
+        }
+
+        .post-actions {
+            display: flex;
+            gap: 20px;
+            margin: 12px 0 8px;
+            padding-top: 10px;
+            border-top: 1px solid #f0f2f5;
+        }
+
+        .post-actions button {
+            background: none;
+            border: none;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #5a6b7c;
+            font-size: 14px;
             cursor: pointer;
-            transition: 0.3s;
-            box-shadow: 0 0 15px #0ff;
-            font-family: 'Orbitron', sans-serif;
-            backdrop-filter: blur(5px);
-            margin-top: 1.8rem;
+            padding: 4px 12px;
+            border-radius: 20px;
+            transition: 0.2s;
+            font-weight: 500;
         }
 
-        .btn-neon:hover {
-            background: #0ff;
-            color: #000;
-            box-shadow: 0 0 45px cyan, 0 0 90px blue;
-            border-color: cyan;
-            font-weight: 800;
+        .post-actions button:hover {
+            background: #f0f4ff;
         }
 
-        /* Tablero de estadísticas */
-        .stats-grid {
-            display: grid;
-            grid-template-columns: 2fr 1.2fr;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
+        .post-actions button.liked {
+            color: #e74c3c;
         }
 
-        @media (max-width: 800px) {
-            .stats-grid {
-                grid-template-columns: 1fr;
+        .post-actions button.liked i {
+            font-weight: 900;
+        }
+
+        .post-actions button i {
+            font-size: 18px;
+        }
+
+        .post-actions .share-btn {
+            color: #4a6cf7;
+        }
+
+        .comments-section {
+            margin-top: 12px;
+            padding-top: 12px;
+            border-top: 1px solid #f0f2f5;
+        }
+
+        .comment {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .comment .comment-user {
+            font-weight: 600;
+            color: #1a2a6c;
+            min-width: 60px;
+        }
+
+        .comment .comment-text {
+            color: #2c3e50;
+            word-break: break-word;
+            white-space: pre-wrap;
+        }
+
+        .comment-input {
+            display: flex;
+            gap: 10px;
+            margin-top: 8px;
+        }
+
+        .comment-input input {
+            flex: 1;
+            border: 1px solid #e9edf5;
+            border-radius: 60px;
+            padding: 8px 16px;
+            outline: none;
+            font-size: 14px;
+            background: #f8faff;
+        }
+
+        .comment-input input:focus {
+            border-color: #4a6cf7;
+        }
+
+        .comment-input button {
+            background: #4a6cf7;
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 60px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .comment-input button:hover {
+            background: #3a5bd9;
+        }
+
+        .chat-mini {
+            background: white;
+            border-radius: 32px;
+            padding: 14px 18px;
+            margin-top: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+            border: 1px solid rgba(0, 0, 0, 0.02);
+        }
+
+        .chat-mini .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #1a2a6c;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .chat-mini .chat-header i {
+            font-size: 20px;
+            color: #4a6cf7;
+        }
+
+        .chat-messages {
+            background: #f8faff;
+            border-radius: 24px;
+            padding: 10px 14px;
+            min-height: 60px;
+            max-height: 80px;
+            overflow-y: auto;
+            font-size: 14px;
+            color: #2c3e50;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            margin-bottom: 10px;
+        }
+
+        .chat-messages .msg {
+            background: white;
+            padding: 6px 14px;
+            border-radius: 30px;
+            display: inline-block;
+            max-width: 80%;
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.02);
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .chat-messages .msg.me {
+            align-self: flex-end;
+            background: #4a6cf7;
+            color: white;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 10px;
+        }
+
+        .chat-input input {
+            flex: 1;
+            border: 1px solid #e9edf5;
+            border-radius: 60px;
+            padding: 10px 18px;
+            outline: none;
+            font-size: 14px;
+            background: #f8faff;
+        }
+
+        .chat-input input:focus {
+            border-color: #4a6cf7;
+        }
+
+        .chat-input button {
+            background: #4a6cf7;
+            border: none;
+            color: white;
+            width: 48px;
+            border-radius: 60px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .chat-input button:hover {
+            background: #3a5bd9;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        .loading-spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #fff;
+            animation: spin 0.8s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
             }
         }
 
-        .card {
-            background: rgba(8, 18, 28, 0.6);
-            backdrop-filter: blur(12px);
-            border: 1px solid rgba(0, 255, 255, 0.3);
-            border-radius: 30px;
-            padding: 1.8rem;
-            box-shadow: 0 10px 30px -10px black, 0 0 0 1px rgba(0,255,255,0.2) inset;
-        }
-
-        .card h3 {
-            font-family: 'Orbitron', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 1.8rem;
-            color: #a0f0ff;
-            border-bottom: 2px solid cyan;
-            padding-bottom: 8px;
-            display: inline-block;
-        }
-
-        /* Lista de gastos */
-        .gastos-lista {
-            max-height: 350px;
-            overflow-y: auto;
-            padding-right: 8px;
-        }
-
-        .gasto-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 18px;
-            margin-bottom: 10px;
-            background: rgba(0, 40, 60, 0.4);
-            border-left: 6px solid #0ff;
-            border-radius: 20px;
-            backdrop-filter: blur(4px);
-            transition: 0.2s;
-            border: 1px solid rgba(0,255,255,0.3);
-        }
-
-        .gasto-item:hover {
-            background: rgba(0, 70, 100, 0.6);
-            border-left-width: 12px;
-            box-shadow: 0 0 20px cyan;
-        }
-
-        .gasto-info {
-            display: flex;
-            flex-direction: column;
-        }
-
-        .gasto-desc {
-            font-weight: 600;
-            font-size: 1.2rem;
-            color: #ffffff;
-        }
-
-        .gasto-cat {
-            font-size: 0.85rem;
-            color: #7ff0ff;
-            text-transform: uppercase;
-        }
-
-        .gasto-monto {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 700;
-            font-size: 1.6rem;
-            background: linear-gradient(135deg, #fff, #7ef0ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .btn-eliminar {
-            background: none;
-            border: 1px solid #ff5577;
-            color: #ff99aa;
-            border-radius: 30px;
-            padding: 6px 16px;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.2s;
-            font-size: 0.8rem;
-            margin-left: 15px;
-        }
-
-        .btn-eliminar:hover {
-            background: #ff5577;
-            color: black;
-            box-shadow: 0 0 30px red;
-        }
-
-        /* Categorías (gráfico de barras conceptual) */
-        .categoria-bar {
-            margin: 15px 0;
-        }
-
-        .cat-label {
-            display: flex;
-            justify-content: space-between;
-            font-weight: 600;
-            margin-bottom: 5px;
-            color: #c0eaff;
-        }
-
-        .barra-fondo {
-            background: rgba(0, 30, 50, 0.8);
-            height: 30px;
-            border-radius: 30px;
-            border: 1px solid #0ff;
-            overflow: hidden;
-            box-shadow: inset 0 2px 8px black;
-        }
-
-        .barra-llenado {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #00f0ff, #aa4aff);
-            box-shadow: 0 0 20px #4abfff;
-            border-radius: 30px;
-            transition: width 0.4s ease;
-        }
-
-        .cat-valor {
-            font-family: 'Orbitron', sans-serif;
-            color: #fff;
-            text-shadow: 0 0 5px cyan;
-        }
-
-        .reset-btn {
-            background: transparent;
-            border: 1px dashed #ff7760;
-            color: #ffaaa0;
-            padding: 8px 20px;
-            border-radius: 40px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 20px;
-            transition: 0.2s;
-            font-size: 0.9rem;
-        }
-
-        .reset-btn:hover {
-            background: #ff5555;
-            color: black;
-            border: 1px solid red;
-        }
-
-        footer {
+        .auth-loading {
             text-align: center;
-            margin-top: 4rem;
-            color: #6080a0;
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.7rem;
-            letter-spacing: 2px;
+            padding: 40px 20px;
+            color: #4a6cf7;
+        }
+
+        .auth-loading i {
+            font-size: 48px;
+            margin-bottom: 16px;
+            animation: spin 1s linear infinite;
+        }
+
+        .auth-loading p {
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        @media (max-width: 480px) {
+            .app-container {
+                padding: 16px;
+                border-radius: 32px;
+            }
+            .home-header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .user-badge {
+                justify-content: space-between;
+            }
         }
     </style>
 </head>
 <body>
-<div class="container">
-    <div class="header">
-        <div class="title">
-            💳 NEO·GASTOS <span>v.2077</span>
+    <div class="app-container">
+
+        <!-- AUTH SECTION (oculto, solo para mostrar loading) -->
+        <div id="auth-section">
+            <div class="logo">
+                <i class="fas fa-feather-alt"></i>
+                <span>Yeslyface</span>
+            </div>
+            <div class="auth-loading">
+                <i class="fas fa-spinner"></i>
+                <p>Conectando con Yeslyface...</p>
+            </div>
         </div>
-        <div class="total-card">
-            <div class="total-label">TOTAL GASTADO</div>
-            <div class="total-amount" id="totalDisplay">$0</div>
+
+        <!-- HOME -->
+        <div id="home-section" style="display:none;">
+            <div class="home-header">
+                <h2><i class="fas fa-home"></i> Yeslyface</h2>
+                <div class="user-badge">
+                    <button class="theme-toggle" id="themeToggle">
+                        <i class="fas fa-moon"></i> <span id="themeLabel">Claro</span>
+                    </button>
+                    <span id="displayUsername">Usuario</span>
+                    <button id="logoutBtn" title="Cerrar sesión"><i class="fas fa-sign-out-alt"></i></button>
+                </div>
+            </div>
+
+            <div class="publish-box">
+                <textarea id="postText" placeholder="¿Qué estás pensando, Yesly?"></textarea>
+                <div class="publish-actions">
+                    <div class="left-icons">
+                        <i class="fas fa-image" id="fakePhotoBtn" title="Subir foto (simulado)"></i>
+                        <i class="fas fa-smile" title="Emoji"></i>
+                    </div>
+                    <button id="publishBtn"><i class="fas fa-pen-fancy" style="margin-right: 6px;"></i> Publicar</button>
+                </div>
+            </div>
+
+            <div class="feed" id="feedContainer"></div>
+
+            <div class="chat-mini">
+                <div class="chat-header">
+                    <i class="fas fa-comment-dots"></i> Chat rápido · Yesly
+                </div>
+                <div class="chat-messages" id="chatMessages">
+                    <div class="msg">👋 ¡Bienvenido a Yeslyface!</div>
+                </div>
+                <div class="chat-input">
+                    <input type="text" id="chatInput" placeholder="Escribe un mensaje...">
+                    <button id="chatSendBtn"><i class="fas fa-paper-plane"></i></button>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="panel">
-        <h2>⍟ REGISTRO ENERGÉTICO ⍟</h2>
-        <div class="form-grid">
-            <div class="input-group">
-                <label>DESCRIPCIÓN</label>
-                <input type="text" id="descInput" placeholder="ej. Internet, Comida..." maxlength="30">
-            </div>
-            <div class="input-group">
-                <label>MONTO $</label>
-                <input type="number" id="montoInput" placeholder="0.00" min="0" step="0.01">
-            </div>
-            <div class="input-group">
-                <label>CATEGORÍA</label>
-                <select id="categoriaSelect">
-                    <option value="Servicios Básicos">⚡ Servicios Básicos</option>
-                    <option value="Comidas">🍕 Comidas</option>
-                    <option value="Otros">🔮 Otros</option>
-                </select>
-            </div>
-            <button class="btn-neon" id="agregarBtn">+ AGREGAR</button>
-        </div>
-    </div>
-
-    <div class="stats-grid">
-        <!-- Lista de gastos recientes -->
-        <div class="card">
-            <h3>📋 ÚLTIMOS REGISTROS</h3>
-            <div class="gastos-lista" id="gastosLista">
-                <!-- acá se renderizan los gastos -->
-            </div>
-            <button class="reset-btn" id="resetBtn">⟲ LIMPIAR TODO</button>
-        </div>
-
-        <!-- Análisis por categoría (barras) -->
-        <div class="card">
-            <h3>📊 ANÁLISIS SECTORIAL</h3>
-            <div id="categoriasContainer">
-                <div class="categoria-bar">
-                    <div class="cat-label"><span>⚡ Servicios Básicos</span> <span class="cat-valor" id="totalServicios">$0</span></div>
-                    <div class="barra-fondo"><div class="barra-llenado" id="barraServicios" style="width:0%"></div></div>
-                </div>
-                <div class="categoria-bar">
-                    <div class="cat-label"><span>🍕 Comidas</span> <span class="cat-valor" id="totalComidas">$0</span></div>
-                    <div class="barra-fondo"><div class="barra-llenado" id="barraComidas" style="width:0%"></div></div>
-                </div>
-                <div class="categoria-bar">
-                    <div class="cat-label"><span>🔮 Otros</span> <span class="cat-valor" id="totalOtros">$0</span></div>
-                    <div class="barra-fondo"><div class="barra-llenado" id="barraOtros" style="width:0%"></div></div>
-                </div>
-            </div>
-            <p style="margin-top: 20px; color: #8ab3ff; font-size: 0.9rem; border-left: 2px solid cyan; padding-left: 15px;">
-                ⚡ Proyección: <span id="categoriaMayor">—</span>
-            </p>
-        </div>
-    </div>
-    <footer>✦ SISTEMA DE GASTOS HOGAR · ALMACENAMIENTO LOCAL ✦</footer>
-</div>
-
-<script>
-    (function() {
-        // ---- DATOS ----
-        let gastos = [];
-
-        // Cargar de localStorage si existe
-        const STORAGE_KEY = 'neoGastos';
-        const stored = localStorage.getItem(STORAGE_KEY);
-        if (stored) {
-            try {
-                gastos = JSON.parse(stored);
-            } catch (e) {
-                gastos = [];
+    <script type="importmap">
+        {
+            "imports": {
+                "firebase/app": "https://www.gstatic.com/firebasejs/10.14.1/firebase-app.js",
+                "firebase/auth": "https://www.gstatic.com/firebasejs/10.14.1/firebase-auth.js",
+                "firebase/database": "https://www.gstatic.com/firebasejs/10.14.1/firebase-database.js"
             }
         }
+    </script>
 
-        // Elementos DOM
-        const totalDisplay = document.getElementById('totalDisplay');
-        const gastosLista = document.getElementById('gastosLista');
-        const agregarBtn = document.getElementById('agregarBtn');
-        const descInput = document.getElementById('descInput');
-        const montoInput = document.getElementById('montoInput');
-        const categoriaSelect = document.getElementById('categoriaSelect');
-        const resetBtn = document.getElementById('resetBtn');
+    <script type="module">
+        import { initializeApp } from "firebase/app";
+        import {
+            getAuth,
+            signInWithEmailAndPassword,
+            onAuthStateChanged,
+            signOut,
+            updateProfile
+        } from "firebase/auth";
+        import { getDatabase, ref, set, push, onValue, update, get, child } from "firebase/database";
 
-        // Spans de totales por categoría
-        const totalServiciosSpan = document.getElementById('totalServicios');
-        const totalComidasSpan = document.getElementById('totalComidas');
-        const totalOtrosSpan = document.getElementById('totalOtros');
-        // Barras
-        const barraServicios = document.getElementById('barraServicios');
-        const barraComidas = document.getElementById('barraComidas');
-        const barraOtros = document.getElementById('barraOtros');
-        const categoriaMayorSpan = document.getElementById('categoriaMayor');
+        // Configuración Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCpFnSLx-ZUq6j27T-w_nvsdSvUrNs688g",
+            authDomain: "heyding-kayser.firebaseapp.com",
+            databaseURL: "https://heyding-kayser-default-rtdb.firebaseio.com",
+            projectId: "heyding-kayser",
+            storageBucket: "heyding-kayser.firebasestorage.app",
+            messagingSenderId: "231005618306",
+            appId: "1:231005618306:web:b349379b513145b6e6349b",
+            measurementId: "G-0F9T839VVZ"
+        };
 
-        // Funciones de render
-        function renderTodo() {
-            // Calcular totales
-            const total = gastos.reduce((acc, g) => acc + g.monto, 0);
-            totalDisplay.textContent = '$' + total.toFixed(2);
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const database = getDatabase(app);
+        const postsRef = ref(database, 'posts');
+        const chatRef = ref(database, 'chat');
 
-            // Por categoría
-            const servicios = gastos.filter(g => g.categoria === 'Servicios Básicos').reduce((acc, g) => acc + g.monto, 0);
-            const comidas = gastos.filter(g => g.categoria === 'Comidas').reduce((acc, g) => acc + g.monto, 0);
-            const otros = gastos.filter(g => g.categoria === 'Otros').reduce((acc, g) => acc + g.monto, 0);
+        // Credenciales predefinidas
+        const DEFAULT_EMAIL = "yesly@yeslyface.com";
+        const DEFAULT_PASSWORD = "yesly123";
 
-            totalServiciosSpan.textContent = '$' + servicios.toFixed(2);
-            totalComidasSpan.textContent = '$' + comidas.toFixed(2);
-            totalOtrosSpan.textContent = '$' + otros.toFixed(2);
+        // DOM
+        const authSection = document.getElementById('auth-section');
+        const homeSection = document.getElementById('home-section');
+        const displayUsername = document.getElementById('displayUsername');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const postText = document.getElementById('postText');
+        const publishBtn = document.getElementById('publishBtn');
+        const feedContainer = document.getElementById('feedContainer');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSendBtn = document.getElementById('chatSendBtn');
+        const themeToggle = document.getElementById('themeToggle');
+        const themeLabel = document.getElementById('themeLabel');
 
-            // Calcular porcentajes para barras (máximo de categoría o total general)
-            const maxCategoria = Math.max(servicios, comidas, otros, 0.01);
-            const porcentajeServicios = (servicios / maxCategoria) * 100;
-            const porcentajeComidas = (comidas / maxCategoria) * 100;
-            const porcentajeOtros = (otros / maxCategoria) * 100;
+        let currentUser = null;
+        let postsCache = {};
+        let isDark = false;
+        let isBgImage = true;
 
-            barraServicios.style.width = (maxCategoria > 0 ? porcentajeServicios : 0) + '%';
-            barraComidas.style.width = (maxCategoria > 0 ? porcentajeComidas : 0) + '%';
-            barraOtros.style.width = (maxCategoria > 0 ? porcentajeOtros : 0) + '%';
-
-            // Determinar categoría con mayor gasto
-            const valores = [
-                { nombre: 'Servicios Básicos', valor: servicios },
-                { nombre: 'Comidas', valor: comidas },
-                { nombre: 'Otros', valor: otros }
-            ];
-            const mayor = valores.reduce((max, item) => item.valor > max.valor ? item : max, { nombre: 'Ninguno', valor: 0 });
-            categoriaMayorSpan.textContent = mayor.valor > 0 ? `${mayor.nombre} ($${mayor.valor.toFixed(2)})` : '—';
-
-            // Render lista de gastos
-            if (gastos.length === 0) {
-                gastosLista.innerHTML = `<div style="padding: 30px; text-align: center; color: #6fa8bb; border: 1px dashed cyan; border-radius: 40px;">⍟ No hay registros. Añade uno. ⍟</div>`;
-            } else {
-                let html = '';
-                // Mostrar de más nuevo a más viejo (invertir para que último sea primero)
-                [...gastos].reverse().forEach((gasto, index) => {
-                    const originalIndex = gastos.length - 1 - index;
-                    html += `
-                        <div class="gasto-item">
-                            <div class="gasto-info">
-                                <span class="gasto-desc">${gasto.descripcion}</span>
-                                <span class="gasto-cat">${gasto.categoria}</span>
-                            </div>
-                            <div style="display: flex; align-items: center;">
-                                <span class="gasto-monto">$${gasto.monto.toFixed(2)}</span>
-                                <button class="btn-eliminar" data-index="${originalIndex}">✕</button>
-                            </div>
-                        </div>
-                    `;
-                });
-                gastosLista.innerHTML = html;
-
-                // Asignar eventos a botones eliminar
-                document.querySelectorAll('.btn-eliminar').forEach(btn => {
-                    btn.addEventListener('click', (e) => {
-                        e.stopPropagation();
-                        const idx = btn.getAttribute('data-index');
-                        if (idx !== null) {
-                            eliminarGasto(parseInt(idx));
-                        }
-                    });
-                });
-            }
-
-            // Guardar en localStorage
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(gastos));
+        // ========== TEMA ==========
+        function applyTheme() {
+            document.body.classList.toggle('dark-mode', isDark);
+            document.body.classList.toggle('bg-image', isBgImage);
+            themeLabel.textContent = isDark ? 'Oscuro' : 'Claro';
+            themeToggle.innerHTML = isDark ?
+                '<i class="fas fa-sun"></i> <span id="themeLabel">Oscuro</span>' :
+                '<i class="fas fa-moon"></i> <span id="themeLabel">Claro</span>';
         }
 
-        function eliminarGasto(index) {
-            if (index >= 0 && index < gastos.length) {
-                gastos.splice(index, 1);
-                renderTodo();
-            }
-        }
-
-        function agregarGasto() {
-            const desc = descInput.value.trim();
-            const monto = parseFloat(montoInput.value);
-            const categoria = categoriaSelect.value;
-
-            if (!desc) {
-                alert('⚠️ Ingresa una descripción.');
-                return;
-            }
-            if (isNaN(monto) || monto <= 0) {
-                alert('⚠️ Monto inválido (debe ser mayor a 0).');
-                return;
-            }
-
-            gastos.push({
-                descripcion: desc,
-                monto: monto,
-                categoria: categoria
-            });
-
-            // Resetear campos
-            descInput.value = '';
-            montoInput.value = '';
-            categoriaSelect.value = 'Servicios Básicos'; // default
-
-            renderTodo();
-        }
-
-        function resetAll() {
-            if (gastos.length > 0 && confirm('¿Eliminar TODOS los registros? Esta acción es permanente.')) {
-                gastos = [];
-                renderTodo();
-            }
-        }
-
-        // Event listeners
-        agregarBtn.addEventListener('click', agregarGasto);
-
-        resetBtn.addEventListener('click', resetAll);
-
-        // Permitir enter en campos (opcional)
-        [descInput, montoInput].forEach(input => {
-            input.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') agregarGasto();
-            });
+        themeToggle.addEventListener('click', () => {
+            isDark = !isDark;
+            applyTheme();
         });
 
-        // Inicializar render
-        renderTodo();
-    })();
-</script>
+        isBgImage = true;
+        applyTheme();
+
+        // ========== FUNCIONES UI ==========
+        function renderFeed(postsData) {
+            feedContainer.innerHTML = '';
+            if (!postsData) {
+                feedContainer.innerHTML =
+                    '<div style="text-align:center;color:#6b7a8f;padding:20px;">No hay publicaciones aún.</div>';
+                return;
+            }
+            postsCache = postsData;
+            const postsArray = Object.keys(postsData).map(key => ({
+                id: key,
+                ...postsData[key]
+            })).sort((a, b) => (b.timestamp || 0) - (a.timestamp || 0));
+
+            postsArray.forEach(post => {
+                const postDiv = document.createElement('div');
+                postDiv.className = 'post';
+                postDiv.dataset.postId = post.id;
+
+                const avatarLetter = (post.user || 'U').charAt(0).toUpperCase();
+                const imageHtml = post.image ?
+                    `<div class="post-image"><i class="fas fa-image"></i> ${post.image}</div>` :
+                    '';
+                const timeStr = post.timestamp ? new Date(post.timestamp).toLocaleString() : 'ahora';
+
+                const likes = post.likes || {};
+                const likeCount = Object.keys(likes).length;
+                const isLiked = currentUser && likes[currentUser.uid] === true;
+
+                const comments = post.comments || {};
+                const commentsArray = Object.keys(comments).map(key => ({
+                    id: key,
+                    ...comments[key]
+                })).sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+
+                let commentsHtml = '';
+                if (commentsArray.length > 0) {
+                    commentsHtml = commentsArray.map(c =>
+                        `<div class="comment">
+                            <span class="comment-user">${c.user || 'Anónimo'}</span>
+                            <span class="comment-text">${c.text || ''}</span>
+                        </div>`
+                    ).join('');
+                }
+
+                postDiv.innerHTML = `
+                    <div class="post-header">
+                        <div class="avatar">${avatarLetter}</div>
+                        <div class="username">${post.user || 'Usuario'}</div>
+                        <div class="time">${timeStr}</div>
+                    </div>
+                    <div class="post-content">${post.text || ''}</div>
+                    ${imageHtml}
+                    <div class="post-actions">
+                        <button class="like-btn ${isLiked ? 'liked' : ''}" data-postid="${post.id}">
+                            <i class="fas fa-heart"></i> <span class="like-count">${likeCount}</span>
+                        </button>
+                        <button class="comment-toggle" data-postid="${post.id}">
+                            <i class="fas fa-comment"></i> <span>${commentsArray.length}</span>
+                        </button>
+                        <button class="share-btn" data-postid="${post.id}">
+                            <i class="fas fa-share-alt"></i> Compartir
+                        </button>
+                    </div>
+                    <div class="comments-section" id="comments-${post.id}" style="display:none;">
+                        ${commentsHtml}
+                        <div class="comment-input">
+                            <input type="text" class="comment-input-field" placeholder="Escribe un comentario..." data-postid="${post.id}">
+                            <button class="comment-submit" data-postid="${post.id}">Comentar</button>
+                        </div>
+                    </div>
+                `;
+                feedContainer.appendChild(postDiv);
+            });
+
+            document.querySelectorAll('.like-btn').forEach(btn => {
+                btn.addEventListener('click', handleLike);
+            });
+
+            document.querySelectorAll('.comment-toggle').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const postId = btn.dataset.postid;
+                    const section = document.getElementById(`comments-${postId}`);
+                    if (section) {
+                        section.style.display = section.style.display === 'none' ? 'block' : 'none';
+                    }
+                });
+            });
+
+            document.querySelectorAll('.comment-submit').forEach(btn => {
+                btn.addEventListener('click', handleCommentSubmit);
+            });
+
+            document.querySelectorAll('.comment-input-field').forEach(input => {
+                input.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        const btn = input.parentElement.querySelector('.comment-submit');
+                        if (btn) btn.click();
+                    }
+                });
+            });
+
+            document.querySelectorAll('.share-btn').forEach(btn => {
+                btn.addEventListener('click', handleShare);
+            });
+        }
+
+        function renderChat(chatData) {
+            chatMessages.innerHTML = '';
+            if (!chatData) {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'msg';
+                msgDiv.textContent = '👋 ¡Bienvenido a Yeslyface!';
+                chatMessages.appendChild(msgDiv);
+                return;
+            }
+            const chatArray = Object.keys(chatData).map(key => ({
+                id: key,
+                ...chatData[key]
+            })).sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+
+            chatArray.forEach(msg => {
+                const msgDiv = document.createElement('div');
+                msgDiv.className = 'msg';
+                if (currentUser && msg.user === currentUser.uid) {
+                    msgDiv.classList.add('me');
+                }
+                msgDiv.textContent = msg.text || '';
+                chatMessages.appendChild(msgDiv);
+            });
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function showHome(user) {
+            currentUser = user;
+            displayUsername.textContent = user.displayName || user.email?.split('@')[0] || 'Usuario';
+            authSection.style.display = 'none';
+            homeSection.style.display = 'block';
+            loadPosts();
+            loadChat();
+        }
+
+        function showAuth() {
+            currentUser = null;
+            homeSection.style.display = 'none';
+            authSection.style.display = 'block';
+        }
+
+        // ========== FUNCIONES FIREBASE ==========
+        function loadPosts() {
+            onValue(postsRef, (snapshot) => {
+                const data = snapshot.val();
+                renderFeed(data);
+            });
+        }
+
+        function loadChat() {
+            onValue(chatRef, (snapshot) => {
+                const data = snapshot.val();
+                renderChat(data);
+            });
+        }
+
+        async function savePost(text, image = null) {
+            if (!currentUser) return;
+            if (!text.trim() && !image) return;
+            try {
+                const newPostRef = push(postsRef);
+                await set(newPostRef, {
+                    user: currentUser.displayName || currentUser.email?.split('@')[0] || 'Usuario',
+                    text: text.trim() || '(sin texto)',
+                    image: image,
+                    timestamp: Date.now(),
+                    userId: currentUser.uid,
+                    likes: {},
+                    comments: {}
+                });
+            } catch (error) {
+                console.error('Error al guardar publicación:', error);
+                alert('Error al publicar. Intenta de nuevo.');
+            }
+        }
+
+        async function saveChatMessage(msg) {
+            if (!currentUser) return;
+            if (!msg.trim()) return;
+            try {
+                const newChatRef = push(chatRef);
+                await set(newChatRef, {
+                    user: currentUser.uid,
+                    text: msg.trim(),
+                    timestamp: Date.now(),
+                    displayName: currentUser.displayName || currentUser.email?.split('@')[0] || 'Usuario'
+                });
+            } catch (error) {
+                console.error('Error al guardar mensaje:', error);
+            }
+        }
+
+        // ========== MANEJADORES ==========
+        async function handleLike(e) {
+            const btn = e.currentTarget;
+            const postId = btn.dataset.postid;
+            if (!currentUser) return;
+            if (!postId) return;
+
+            const postRef = child(postsRef, postId);
+            try {
+                const snapshot = await get(postRef);
+                const postData = snapshot.val();
+                if (!postData) return;
+
+                const likes = postData.likes || {};
+                const isLiked = likes[currentUser.uid] === true;
+
+                if (isLiked) {
+                    delete likes[currentUser.uid];
+                } else {
+                    likes[currentUser.uid] = true;
+                }
+
+                await update(postRef, { likes });
+            } catch (error) {
+                console.error('Error al dar like:', error);
+            }
+        }
+
+        async function handleCommentSubmit(e) {
+            const btn = e.currentTarget;
+            const postId = btn.dataset.postid;
+            const input = btn.parentElement.querySelector('.comment-input-field');
+            if (!currentUser || !postId || !input) return;
+            const text = input.value.trim();
+            if (!text) return;
+
+            const postRef = child(postsRef, postId);
+            try {
+                const snapshot = await get(postRef);
+                const postData = snapshot.val();
+                if (!postData) return;
+
+                const comments = postData.comments || {};
+                const newCommentRef = push(ref(database, `posts/${postId}/comments`));
+                await set(newCommentRef, {
+                    user: currentUser.displayName || currentUser.email?.split('@')[0] || 'Usuario',
+                    text: text,
+                    timestamp: Date.now(),
+                    userId: currentUser.uid
+                });
+                input.value = '';
+            } catch (error) {
+                console.error('Error al comentar:', error);
+            }
+        }
+
+        async function handleShare(e) {
+            const btn = e.currentTarget;
+            const postId = btn.dataset.postid;
+            if (!postId) return;
+
+            try {
+                const snapshot = await get(child(postsRef, postId));
+                const postData = snapshot.val();
+                if (!postData) return;
+
+                const shareText = `📤 Compartió: "${postData.text || 'Publicación'}"`;
+                await savePost(shareText);
+                alert('¡Publicación compartida!');
+            } catch (error) {
+                console.error('Error al compartir:', error);
+                alert('Error al compartir. Intenta de nuevo.');
+            }
+        }
+
+        // ========== EVENTOS UI ==========
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                showAuth();
+                // Intentar auto-login nuevamente
+                await autoLogin();
+            } catch (error) {
+                console.error('Error al cerrar sesión:', error);
+            }
+        });
+
+        publishBtn.addEventListener('click', async () => {
+            const text = postText.value;
+            if (!text.trim()) {
+                alert('Escribe algo para publicar.');
+                return;
+            }
+            await savePost(text);
+            postText.value = '';
+        });
+
+        document.getElementById('fakePhotoBtn').addEventListener('click', async () => {
+            if (!currentUser) return;
+            await savePost('📸 Foto compartida', 'imagen-simulada.jpg');
+        });
+
+        chatSendBtn.addEventListener('click', async () => {
+            const msg = chatInput.value.trim();
+            if (!msg) return;
+            await saveChatMessage(msg);
+            chatInput.value = '';
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                e.preventDefault();
+                chatSendBtn.click();
+            }
+        });
+
+        // ========== AUTO-LOGIN ==========
+        async function autoLogin() {
+            try {
+                // Mostrar loading
+                authSection.style.display = 'block';
+                homeSection.style.display = 'none';
+                
+                await signInWithEmailAndPassword(auth, DEFAULT_EMAIL, DEFAULT_PASSWORD);
+                console.log('✅ Auto-login exitoso');
+            } catch (error) {
+                console.error('❌ Error en auto-login:', error);
+                // Si falla, mostrar mensaje de error
+                authSection.innerHTML = `
+                    <div class="logo">
+                        <i class="fas fa-feather-alt"></i>
+                        <span>Yeslyface</span>
+                    </div>
+                    <div style="text-align:center;padding:20px;color:#c0392b;">
+                        <i class="fas fa-exclamation-circle" style="font-size:40px;margin-bottom:12px;"></i>
+                        <p>Error al conectar con el servidor.</p>
+                        <p style="font-size:14px;margin-top:8px;">Verifica tu conexión a internet.</p>
+                        <button onclick="location.reload()" style="margin-top:16px;padding:12px 32px;background:#4a6cf7;color:white;border:none;border-radius:30px;font-weight:600;cursor:pointer;">
+                            Reintentar
+                        </button>
+                    </div>
+                `;
+            }
+        }
+
+        // ========== AUTH STATE ==========
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                showHome(user);
+            } else {
+                showAuth();
+                // Intentar auto-login si no hay usuario
+                autoLogin();
+            }
+        });
+
+        // Iniciar auto-login al cargar la página
+        showAuth();
+        autoLogin();
+
+        console.log('✅ Yeslyface - Auto-login activado');
+        console.log('📧 Email:', DEFAULT_EMAIL);
+        console.log('🔑 Contraseña:', DEFAULT_PASSWORD);
+    </script>
 </body>
 </html>
